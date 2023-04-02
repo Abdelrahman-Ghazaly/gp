@@ -15,11 +15,6 @@ const userSchema = joi.object({
     phone: joi.string().required(),
 });
 
-const logInSchema = joi.object({
-    email: joi.string().email().required(),
-    password: joi.string().min(5).max(10).required(),
-});
-
 const addOrderSchema = joi.object({
     address: joi.string().min(5).max(50).required(),
     cost: joi.number().required(),
@@ -34,8 +29,6 @@ const ProductSchema = joi.object({
 });
 
 exports.validateUserData = validatior(userSchema);
-
-exports.validateLogIn = validatior(logInSchema);
 
 exports.validateOrderData = validatior(addOrderSchema);
 

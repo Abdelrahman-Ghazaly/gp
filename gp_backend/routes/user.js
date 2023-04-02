@@ -3,7 +3,11 @@ const auth = require("../middleware/is_auth");
 const userController = require("../controller/user");
 const router = express.Router();
 
-// router.get("/:id", auth.verifyUser , userController.editUser);
+router.get(
+    "/view/profile/:userId",
+    auth.verifyLogedin,
+    userController.viewProfile
+);
 
 // router.delete("/:id", auth.verifyAdmin, userController.deleteUser);
 

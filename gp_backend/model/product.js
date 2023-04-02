@@ -27,17 +27,6 @@ const productSchema = new Schema({
         ref: "User",
         required: true,
     },
-    reports: [
-        {
-            report_type: String,
-            description: String,
-            user_id: {
-                type: Schema.Types.ObjectId,
-                ref: "User",
-                required: true,
-            },
-        },
-    ],
 });
 
 const Product = mongoose.model("Product", productSchema);
@@ -145,7 +134,6 @@ exports.search = async (query, category, minPrice, maxPrice) => {
             filters.price = {};
             filters.price.$lt = parseInt(maxPrice)+1;
         }
-        console.log(filters);
         const result = await Product.find(filters);
         return result;
     } catch (err) {

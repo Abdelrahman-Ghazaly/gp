@@ -1,26 +1,32 @@
+const { User } = require("./user");
 
-
-exports.addProductToCart = async (cartID, productID) => {
+exports.addProductToFav = async (userId, productId) => {
     try {
-        let query;
-        const checkForItem = await checkForItemInCart(cartID, productID);
-        if (checkForItem.rowsAffected[0]) {
-            query =
-                "UPDATE [defaultUser].[CartItem] SET quantity=quantity+1  WHERE cartID=@cartID AND ProductID=@productID;";
-        } else {
-            query =
-                "INSERT INTO [defaultUser].[CartItem] (cartID,ProductID) Values (@cartID,   @productID);";
-        }
-        const result = await DBconnection()
-            .request()
-            .input("cartID", sql.Int, `${cartID}`)
-            .input("productID", sql.Int, `${productID}`)
-            .query(query);
-        return result.rowsAffected[0];
+        const user = await User.findById(userId);
+        user.favourite.push(productId);
+        const result = await user.save();
+        console.log(result);
+        return result;
     } catch (err) {
         console.log(err);
         throw new Error();
     }
 };
 
-
+exports.removeProductFromFav = async (userId, productId) => {
+    try {
+        const result = await User.updateOne(
+            { _id: userId },
+            {
+                $pullAll: {
+                    favourite: [{ _id: productId }],
+                },
+            }
+        );
+        console.log(result);
+        return result;
+    } catch (err) {
+        console.log(err);
+        throw new Error();
+    }
+};

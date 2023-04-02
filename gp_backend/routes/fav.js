@@ -1,23 +1,17 @@
 const express = require("express");
 const auth = require("../middleware/is_auth");
-const cartController = require("../controller/fav");
+const favController = require("../controller/fav");
 const router = express.Router();
 
-//add Product to cart
-// router.post("/", auth.verifyUserCart, cartController.addProductToCart);
+//add Product to fav
+router.post("/add/:productId", auth.verifyLogedin, favController.addProductToFav);
 
-// //delete product from cart
-// router.delete("/", auth.verifyUserCart, cartController.deleteProductFromCart);
 
-// //clear Cart
-// router.delete(
-//     "/clear",
-//     auth.verifyUserCart,
-//     cartController.clearProductsFromCart
-// );
-
-// //get cart products
-// router.get("/:id", auth.verifyUser, cartController.getCartProducts);
+router.post(
+    "/remove/:productId",
+    auth.verifyLogedin,
+    favController.removeProductFromFav
+);
 
 
 module.exports = router;

@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+const ObjectId = mongoose.Types.ObjectId;
 const Schema = mongoose.Schema;
 
 const userSchema = new Schema({
@@ -25,21 +26,34 @@ const userSchema = new Schema({
     },
     favourite: [
         {
-            type: Schema.Types.ObjectId,
-            ref: "Product",
+            _id: {
+                type: Schema.Types.ObjectId,
+                ref: "Product",
+            },
         },
     ],
 });
 
 const User = mongoose.model("User", userSchema);
 
-
 module.exports.User = User;
-
 
 exports.viewProfile = async (id) => {
     try {
-        const result = await User.find({_id: id})
+        console.log(id);
+        const result = await User.aggregate([
+            {
+                $match: { _id: new ObjectId(id) },
+            },
+            {
+                $lookup: {
+                    from: "products",
+                    localField: "_id",
+                    foreignField: "user_id",
+                    as: "product-logs",
+                },
+            },
+        ]);
         return result;
     } catch (err) {
         console.log(err);

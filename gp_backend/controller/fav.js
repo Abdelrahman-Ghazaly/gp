@@ -1,14 +1,12 @@
 const db = require("../model/fav");
 const errors = require("../util/error_handling");
 
-
-
-exports.addProductToCart = async (req, res, next) => {
+exports.addProductToFav = async (req, res, next) => {
     try {
-        const { cartID, productID } = req.body;
-        const result = await db.addProductToCart(cartID, productID);
+        const {productId} = req.params;
+        const result = await db.addProductToFav(req.user.id, productId);
         if (result) {
-            res.status(201).json({ message: "product added to cart Successfully" });
+            res.status(200).json({ message: "product added to favourite Successfully" });
         } else {
             throw new Error();
         }
@@ -18,4 +16,19 @@ exports.addProductToCart = async (req, res, next) => {
     }
 };
 
-
+exports.removeProductFromFav = async (req, res, next) => {
+    try {
+        const { productId } = req.params;
+        const result = await db.removeProductFromFav(req.user.id, productId);
+        if (result) {
+            res.status(200).json({
+                message: "product removed from favourite Successfully",
+            });
+        } else {
+            throw new Error();
+        }
+    } catch (err) {
+        console.log(err);
+        next(err);
+    }
+};

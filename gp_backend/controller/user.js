@@ -3,21 +3,12 @@ const crypto = require("crypto-js");
 const errors = require("../util/error_handling");
 const { validateUserData } = require("../util/validation");
 
-exports.editUser = async (req, res, next) => {
+exports.viewProfile = async (req, res, next) => {
     try {
-        const { email, name, password } = req.body;
-        const id = req.params.id;
-        const { error } = validateUserData(req.body);
-        if (error) {
-            errors.validationError(error.details);
-        }
-        const hashedPassword = crypto.AES.encrypt(
-            password,
-            process.env.PASSWORD_SECRET
-        );
-        const result = await db.editUser(id, name, email, hashedPassword);
+        const userId = req.params.userId;
+        const result = await db.viewProfile(userId);
         if (result) {
-            res.status(200).json(result);
+            res.status(200).json({"user-data":result[0]});
         } else {
             errors.notFoundError();
         }
@@ -26,4 +17,4 @@ exports.editUser = async (req, res, next) => {
         next(err);
     }
 };
-//comment
+
