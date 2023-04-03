@@ -1,4 +1,5 @@
 import React , {useState} from 'react'
+import { Link } from 'react-router-dom';
 import {
   Drawer,
   IconButton,
@@ -15,7 +16,6 @@ import {
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import InboxIcon from '@mui/icons-material/MoveToInbox';
 import AccountBoxIcon from '@mui/icons-material/AccountBox';
-import InventoryIcon from '@mui/icons-material/Inventory';
 import StorefrontIcon from '@mui/icons-material/Storefront';
 import ExpandLess from '@mui/icons-material/ExpandLess';
 import ExpandMore from '@mui/icons-material/ExpandMore';
@@ -50,11 +50,6 @@ const ListItems = [
     name : 'View Profile',
     icon : <AccountBoxIcon />,
     link : '/viewprofile'
-  },
-  {
-    name : 'Products Uploaded',
-    icon : <InventoryIcon />,
-    link : '/uploaded'
   }
 ]
 
@@ -116,10 +111,12 @@ const DrawerNav = ({open , handleDrawerClose , Categories}) => {
           <Collapse in={openNestedList} timeout="auto" unmountOnExit>
             <List component="div" disablePadding>
               {Categories.map((cat) => (
-                <ListItemButton key={cat.categoryName} sx={{ pl: 4 }}>
-                  <ListItemIcon>{cat.icon}</ListItemIcon>
-                  <ListItemText primary={cat.categoryName} />
-                </ListItemButton>
+                <Link to={`/categorypage/${cat.categoryName}`}>
+                  <ListItemButton key={cat.categoryName} sx={{ pl: 4 }}>
+                    <ListItemIcon>{cat.icon}</ListItemIcon>
+                    <ListItemText primary={cat.categoryName} />
+                  </ListItemButton>
+                </Link>
               ))}
             </List>
           </Collapse>
@@ -127,14 +124,16 @@ const DrawerNav = ({open , handleDrawerClose , Categories}) => {
       )}
 
       <Divider />
-
+      {/* View Profile And Uploaded Products*/}
       <List>
-        {ListItems.slice(-2).map((data) => (
+        {ListItems.slice(-1).map((data) => (
           <ListItem key={data.name} disablePadding>
-            <ListItemButton>
-              <ListItemIcon>{data.icon}</ListItemIcon>
-              <ListItemText primary={data.name} />
-            </ListItemButton>
+            <Link to={data.link} style={{ width: "100%" }}>
+              <ListItemButton>
+                <ListItemIcon>{data.icon}</ListItemIcon>
+                <ListItemText primary={data.name} />
+              </ListItemButton>
+            </Link>
           </ListItem>
         ))}
       </List>

@@ -1,26 +1,36 @@
-import { Grid, TextField } from '@mui/material';
+import { Grid } from '@mui/material';
 import React , { useRef, useState, useEffect  , memo, useCallback , useMemo} from 'react'
 import {AddImageButton , ImageStyle} from '../../../Styles/forms'
 
 const UploadImage = memo(({ imageValue }) => {
+  const [image, setImage] = useState();
   const [imageList, setImageList] = useState([]);
   const fileInputRef = useRef();
 
-  const handleImageInput = useCallback((e) => {
-    const files = e.target.files;
-      const uploadedImages = Array.from(files).map((file) =>
-      URL.createObjectURL(file)
-    );
-    setImageList(prev => [...prev , ...uploadedImages]);
-
-  } , [])
-
+  const handleImageInput = (e) => {
+    const file = e.target.files[0];
+    if (file && file.type.substr(0, 5) === "image" ) {
+      setImage(file);
+    } else {
+      setImage(null);
+    }
+  };
 
   useEffect(() => {
-    if(imageList !== []){
-      imageValue(imageList)
+    if (image) {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setImageList(() => [...imageList, reader.result.toString()]);
+      };
+      reader.readAsDataURL(image);
     }
+  }, [image]);
+
+  useEffect(() => {
+    imageValue(imageList)
   },[imageList])
+
+console.log(imageList);
 
 console.log("Many Rerenders In Upload Image")
 
@@ -32,6 +42,9 @@ console.log("Many Rerenders In Upload Image")
           <img
             src={i}
             style={ImageStyle}
+            onClick={() => {
+              setImage(null);
+            }}
             alt=""
           />
           <div style={{ textAlign: "center" }}>{index + 1}</div>
@@ -60,7 +73,6 @@ console.log("Many Rerenders In Upload Image")
         <input
           hidden
           type="file"
-          required
           style={{ display: "none" }}
           ref={fileInputRef}
           accept="image/*"
@@ -68,7 +80,6 @@ console.log("Many Rerenders In Upload Image")
             handleImageInput(e);
           }}
         />
-
       </Grid>
     </div>
   );

@@ -1,31 +1,38 @@
-import React , {useRef , useState , use , useCallback, useEffect} from 'react'
-import { createPortal } from 'react-dom';
+import React , {useRef } from 'react'
 import {SearchContainer , SearchIconWrapper , StyledInputBase} from '../../../Styles/Search'
 import SearchIcon from '@mui/icons-material/Search';
-import ProductList from '../../UI/ProductList';
-import useFetch from '../../../CustomHooks/api/useFetch';
-import { Box } from '@mui/material';
+import { useNavigate } from 'react-router-dom';
+import {useDispatch } from 'react-redux'
+import { fetchDataByTitle } from '../../../Store/searchReducer';
 
-const Search = ({getTerm}) => {
-  const [term , setTerm] = useState('')
+const Search = () => {
+  const inputRef = useRef('')
+  const dispatch = useDispatch()
+  const navigate = useNavigate()
 
-  useEffect(() => {
-    getTerm(term)
-  },[term])
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const inputValue = inputRef.current.value
+    await dispatch(fetchDataByTitle(inputValue))
+    navigate("/searchPage")
+  }
+
   return (
     <>
-    <SearchContainer >
-    <SearchIconWrapper>
-      <SearchIcon />
-    </SearchIconWrapper>
-      <StyledInputBase
-        placeholder="Search…"
-        inputProps={{ "aria-label": "search" }}
-        onChange={e => setTerm(e.target.value)}
-      />
-  </SearchContainer>
+      <SearchContainer>
+        <SearchIconWrapper>
+          <SearchIcon />
+        </SearchIconWrapper>
+        <form onSubmit={handleSubmit}>
+          <StyledInputBase
+            placeholder="Search…"
+            inputProps={{ "aria-label": "search" }}
+            inputRef={inputRef}
+          />
+        </form>
+      </SearchContainer>
     </>
-);
+  );
 }
 
 export default Search

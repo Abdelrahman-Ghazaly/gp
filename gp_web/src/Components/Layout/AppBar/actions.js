@@ -1,4 +1,4 @@
-import { ListItemButton, ListItemIcon, Divider, Container, Box } from "@mui/material";
+import { ListItemButton, ListItemIcon, Divider, Container, Badge } from "@mui/material";
 import React , {useState} from "react";
 import { Link, useNavigate } from "react-router-dom";
 import {
@@ -10,20 +10,13 @@ import {
 import AccountCircle from "@mui/icons-material/AccountCircle";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import AddIcon from "@mui/icons-material/Add";
-import AddProductForm from "../../../Pages/AddProductForm/index.js";
+import { useSelector } from "react-redux";
 
 const Actions = ({ match }) => {
   const navigate = useNavigate();
-  const [open, setOpen] = useState(false);
-  const [showComponent , setShowComponent] = useState(false)
+  const favList = useSelector(state => state.favorite.favList)
+  const favLength = favList.length
 
-  // const handleToggleModal = () => {
-  //   setShowComponent(true)
-  //   setOpen(prevState => !prevState);
-  // }
-  // const Toggle = () => {
-  //   setShowComponent(true)
-  // }
   const Component = match
     ? ActionIconsContainerMobile
     : ActionIconsContainerDesktop;
@@ -34,7 +27,7 @@ const Actions = ({ match }) => {
         {match ? (
           <>
             <ListItemButton
-              onClick={() => navigate("/")}
+                onClick={() => navigate("/favorite")}
               sx={{
                 justifyContent: "center",
               }}
@@ -45,8 +38,11 @@ const Actions = ({ match }) => {
                   justifyContent: "center",
                   color: "inherit",
                 }}
+
               >
+               <Badge badgeContent={favLength} color="error">
                 <FavoriteIcon />
+               </Badge>
               </ListItemIcon>
             </ListItemButton>
 
@@ -86,7 +82,7 @@ const Actions = ({ match }) => {
             <Divider orientation="vertical" flexItem />
 
             <ListItemButton
-              onClick={() => navigate("/")}
+                onClick={() => navigate("/favorite")}
               sx={{
                 justifyContent: "center",
               }}
@@ -98,7 +94,9 @@ const Actions = ({ match }) => {
                   color: "black",
                 }}
               >
+               <Badge badgeContent={favLength} color="error">
                 <FavoriteIcon />
+                </Badge>
               </ListItemIcon>
             </ListItemButton>
           </>

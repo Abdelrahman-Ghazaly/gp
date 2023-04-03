@@ -19,7 +19,7 @@ const useFetch = (url) => {
 
     useEffect(() => {
         fetchData(url)
-    },[url])
+    },[fetchData , url])
 
     return {data , loading , error}
 }

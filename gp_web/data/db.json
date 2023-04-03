@@ -9,7 +9,11 @@
         "Suitable for : Indoor use",
         "Room : Bedroom"
       ],
-      "image": "https://d13r0hznkpv24o.cloudfront.net/media/catalog/product/cache/e9da42a1907d51557ab3b33bb058386d/y/-/y-admiral-bd-kids-bedroom-3.png",
+      "image": [
+        "https://d13r0hznkpv24o.cloudfront.net/media/catalog/product/cache/e9da42a1907d51557ab3b33bb058386d/y/-/y-admiral-bd-kids-bedroom-3.png",
+        "https://d13r0hznkpv24o.cloudfront.net/media/catalog/product/cache/e9da42a1907d51557ab3b33bb058386d/y/-/y-admiral-bd-kids-bedroom-3.png",
+        "https://d13r0hznkpv24o.cloudfront.net/media/catalog/product/cache/e9da42a1907d51557ab3b33bb058386d/y/-/y-admiral-bd-kids-bedroom-3.png"
+      ],
       "category": "Bed",
       "price": "29,000 EGP"
     },
@@ -468,5 +472,7 @@
       "category": "Dresser",
       "price": "9,266 EGP"
     }
-  ]
+  ],
+  "Favorite": [],
+  "UploadProducts": []
 }
