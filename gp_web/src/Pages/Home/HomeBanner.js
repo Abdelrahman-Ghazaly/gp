@@ -1,6 +1,6 @@
 import React from "react";
 import { CategoriesList , CategoriesListItem } from "../../Styles/home";
-
+import { Link } from "react-router-dom";
 
 import { Navigation, Pagination, Scrollbar, A11y, Autoplay } from "swiper";
 import { Swiper, SwiperSlide } from "swiper/react";
@@ -21,41 +21,46 @@ const HomeBanner = ({match , Categories}) => {
 
 
   return (
-      <>
-        {!match && (
-          <CategoriesList>
-            {Categories.map((cat) => (
-              <CategoriesListItem key={cat.categoryName}>{cat.icon}{cat.categoryName}</CategoriesListItem>
-            ))}
-          </CategoriesList>
-        )}
-        <Swiper
-          modules={[Navigation, Pagination, Scrollbar, A11y, Autoplay]}
-          spaceBetween={0}
-          slidesPerView={1}
-          autoplay={true}
-          pagination={{ clickable: true }}
-          style={{ width: "auto", height: "auto" }}
-        >
-          {images.map((img, imgIndex) => {
-            return (
-              <SwiperSlide className="" key={imgIndex}>
-                <img
-                  src={img}
-                  className=""
-                  alt={img}
-                  style={{
-                    width: "100%",
-                    height: `${match ? "200px" : "500px"}`,
-                    objectFit: "cover",
-                    borderRadius: "15px",
-                  }}
-                />
-              </SwiperSlide>
-            );
-          })}
-        </Swiper>
-      </>
+    <>
+      {!match && (
+        <CategoriesList>
+          {Categories.map((cat) => (
+            <CategoriesListItem key={cat.categoryName}>
+              <Link to={`/categorypage/${cat.categoryName}`}>
+                {cat.icon}
+                {cat.categoryName}
+              </Link>
+            </CategoriesListItem>
+          ))}
+        </CategoriesList>
+      )}
+      <Swiper
+        modules={[Navigation, Pagination, Scrollbar, A11y, Autoplay]}
+        spaceBetween={0}
+        slidesPerView={1}
+        autoplay={true}
+        pagination={{ clickable: true }}
+        style={{ width: "auto", height: "auto" }}
+      >
+        {images.map((img, imgIndex) => {
+          return (
+            <SwiperSlide className="" key={imgIndex}>
+              <img
+                src={img}
+                className=""
+                alt={img}
+                style={{
+                  width: "100%",
+                  height: `${match ? "200px" : "500px"}`,
+                  objectFit: "cover",
+                  borderRadius: "15px",
+                }}
+              />
+            </SwiperSlide>
+          );
+        })}
+      </Swiper>
+    </>
   );
 };
 

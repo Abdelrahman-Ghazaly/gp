@@ -3,8 +3,9 @@ import { useForm } from "react-hook-form";
 import {Box , Container , TextField , MenuItem , InputAdornment , Button} from '@mui/material';
 import { UploadFormContainer , UploadFormTitle} from '../../Styles/forms';
 import UploadImage from '../../Components/UI/Forms/UploadImage'
-import useSendRequest from '../../CustomHooks/api/useSendRequest'
+import { uploadProduct } from '../../Store/productReducer';
 import { useNavigate , Link } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
 // Import Icon From MUI
 import SubtitlesIcon from '@mui/icons-material/Subtitles';
 import DescriptionIcon from '@mui/icons-material/Description';
@@ -37,9 +38,7 @@ const CategoriesList = [
     },
   ]
 const AddProductForm = () => {
-
-    const Url = "http://localhost:8000/Products"
-    const { sendRequest } = useSendRequest()
+    const dispatch = useDispatch()
     const navigate = useNavigate()
     const pricePattern = `(\d+\.\d{1,2})`
     const defaultValues = {title : '' , description : '' , image : [] , category : '' , price : ''}
@@ -50,7 +49,7 @@ const AddProductForm = () => {
 
         if(data.image.length != 0){
           console.log(data);
-          await sendRequest(data , Url , "POST")
+          dispatch(uploadProduct(data))
           navigate("/")
         }
       }
@@ -170,6 +169,7 @@ const AddProductForm = () => {
                     <CurrencyPoundIcon />
                   </InputAdornment>
                 ),
+                inputProps: { min: 0 }
               }}
               {...register("price", {
                 required: "Please Enter the Product's Price",

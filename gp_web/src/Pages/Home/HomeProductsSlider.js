@@ -34,7 +34,6 @@ const arrayOfCategories = [
 
 const HomeProductsSlider = ({ match }) => {
   const { data , loading , error} = useFetch("http://localhost:8000/Products");
-
   const scrollRef = useRef(null);
 
   const CategoryTitleStyle = {
