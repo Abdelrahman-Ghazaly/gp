@@ -7,7 +7,7 @@ const router = express.Router();
 router.post("/add/:productId", auth.verifyLogedin, favController.addProductToFav);
 
 
-router.post(
+router.delete(
     "/remove/:productId",
     auth.verifyLogedin,
     favController.removeProductFromFav
