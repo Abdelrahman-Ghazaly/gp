@@ -1,5 +1,5 @@
 import 'package:dartz/dartz.dart';
-import 'package:gp_flutter/features/auction/domain/entities/auction_product.dart';
+import '../entities/auction_product.dart';
 
 import '../../../../core/error/failure.dart';
 

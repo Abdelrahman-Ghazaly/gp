@@ -1,6 +1,6 @@
 import 'package:dartz/dartz.dart';
-import 'package:gp_flutter/core/error/failure.dart';
-import 'package:gp_flutter/features/e_commerce/domain/entities/furniture_entity.dart';
+import '../../../../core/error/failure.dart';
+import '../entities/furniture_entity.dart';
 
 abstract class ECommerceRepository {
   Future<Either<Failure, FurnitureEntity>> getFurniture(int furnitureId);

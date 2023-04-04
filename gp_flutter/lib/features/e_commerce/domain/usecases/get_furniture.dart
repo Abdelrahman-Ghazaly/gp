@@ -1,15 +1,18 @@
-import 'package:equatable/equatable.dart';
-import 'package:gp_flutter/core/error/failure.dart';
 import 'package:dartz/dartz.dart';
-import 'package:gp_flutter/features/e_commerce/domain/entities/furniture_entity.dart';
-import 'package:gp_flutter/features/e_commerce/domain/repositories/e_commerce_repository.dart';
+import 'package:equatable/equatable.dart';
 
-class GetFurniture {
+import '../../../../core/error/failure.dart';
+import '../../../../core/use_case/use_case.dart';
+import '../entities/furniture_entity.dart';
+import '../repositories/e_commerce_repository.dart';
+
+class GetFurniture implements BaseUseCase {
   final ECommerceRepository repository;
 
   GetFurniture({required this.repository});
 
-  Future<Either<Failure, FurnitureEntity>> call(Params params) async {
+  @override
+  Future<Either<Failure, FurnitureEntity>> call(params) async {
     return await repository.getFurniture(params.furnitureId);
   }
 }
