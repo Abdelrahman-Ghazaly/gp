@@ -4,7 +4,7 @@ require("dotenv").config();
 
 const verifyToken = (req, res, next, checkUser) => {
     try {
-        const authHeader = req.headers.Authorization;
+        const authHeader = req.headers.token;
         if (authHeader) {
             const token = authHeader.split(" ")[1];
             try {
