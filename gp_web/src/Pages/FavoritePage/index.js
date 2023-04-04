@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect  , useState , useCallback} from 'react'
 import {useDispatch , useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import AppBar from '../../Components/Layout/AppBar';
@@ -13,17 +13,21 @@ const FavoritePage = () => {
     const theme = useTheme();
     const match = useMediaQuery(theme.breakpoints.down("sm"));
     const dispatch = useDispatch()
+    const userData = useSelector(state => state.auth)
+    let tokenId = userData.userData?.accessToken
 
     useEffect(() => {
-        dispatch(fetchFavList())
-    },[dispatch])
+        dispatch(fetchFavList(tokenId))
+    },[dispatch , tokenId])
 
 
     const list = useSelector(state => state.favorite.favList)
     const listLength = list.length
     const loading = useSelector(state => state.favorite.loading)
     console.log(list)
+
     const removeItem = (itemId) => {
+      console.log(itemId)
         dispatch(removeFromFavorites(itemId))
     }
 
@@ -32,20 +36,20 @@ const FavoritePage = () => {
             <div style={{marginTop : '45px'}}>
                 {list.map((item) => {
                     return (
-                        <div key={item.id} style={{display : 'flex' , justifyContent: 'space-around' , alignItems : 'center' , marginBottom : '20px'}}>
+                        <div key={item._id} style={{display : 'flex' , justifyContent: 'space-around' , alignItems : 'center' , marginBottom : '20px'}}>
                             <div style={{width : '30%'}}>
-                                <Link to={`/product/${item.id}`}>
-                                    {/* <img style={{aspectRatio : '3/2' , objectFit : 'contain' ,  width: `${match ? "100% " : "50%"}`}} src={typeof item.imgURL == "string" ?  item.imgURL : item.imgURL[0]} alt={item.title}/> */}
+                                <Link to={`/product/${item._id}`}>
+                                    <img style={{aspectRatio : '3/2' , objectFit : 'contain' ,  width: `${match ? "100% " : "50%"}`}} src={typeof item.imgURL == "string" ?  item.imgURL : item.imgURL[0]} alt={item.title}/>
                                 </Link>
                             </div>
                                 <div style={{width : '100%' , fontSize : `${match ? "13px" : "20px"}`}}>
-                                    <Link to={`/product/${item.id}`}>
+                                    <Link to={`/product/${item._id}`}>
                                         <h2>{item.title}</h2>
-                                        <h3>{item.price?.$numberDecimal}</h3>
+                                        <h3>{item.price}</h3>
                                     </Link>
                                 </div>
                             <div>
-                                <Button variant='contained' color="error" onClick={() => removeItem(item.id)}>Remove</Button>
+                                <Button variant='contained' color="error" onClick={() => removeItem(item._id)}>Remove</Button>
                             </div>
                         </div>
                     )

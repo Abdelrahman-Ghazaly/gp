@@ -20,7 +20,7 @@ const Actions = ({ match }) => {
   const navigate = useNavigate();
   const favList = useSelector(state => state.favorite.favList)
   const {userData} = useSelector(state => state.auth)
-  console.log(userData);
+
   const favLength = favList.length
 
   const Component = match

@@ -39,11 +39,11 @@ const ProductView = () => {
   const {data , loading} = useFetch(`http://localhost:5000/product/view/item/${id}`)
   const dispatch = useDispatch();
 
-  const AddProduct = () => {
-     dispatch(
-       addToFavorites(data)
-     );
-  }
+  const AddProduct = (itemId) => {
+    dispatch(
+      addToFavorites(itemId)
+    );
+ }
   const theme = useTheme();
   const match = useMediaQuery(theme.breakpoints.down("md"));
 
@@ -133,7 +133,7 @@ const ProductView = () => {
                   <h3 style={{marginBottom : '15px'}}>Description :</h3>
                   <p style={{marginBottom : '15px'}}>{data.description}</p>
                   <Button
-                    onClick={AddProduct}
+                    onClick={() => AddProduct(data._id)}
                     sx={{
                       backgroundColor: "black",
                       "&:hover": { background: "#009933" },
