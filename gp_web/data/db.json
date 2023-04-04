@@ -473,6 +473,18 @@
       "price": "9,266 EGP"
     }
   ],
-  "Favorite": [],
+  "Favorite": [
+    {
+      "_id": "640e494863d562063ae8f227",
+      "title": "bed fshe5",
+      "description": "bed gamed fsh5",
+      "imgURL": "https://www.ikea.com/eg/en/images/products/gladstad-upholstered-bed-frame-kabusa-light-grey__1056449_ph182866_s5.jpg?f=s",
+      "category": "bed",
+      "price": 800,
+      "user_id": "640a1b60c446a7a8e47b9e40",
+      "__v": 0,
+      "id": 1
+    }
+  ],
   "UploadProducts": []
 }

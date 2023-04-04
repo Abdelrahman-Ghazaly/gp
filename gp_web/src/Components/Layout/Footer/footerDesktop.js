@@ -1,5 +1,5 @@
 import React from "react";
-import {  Box, Divider } from "@mui/material";
+import { Divider } from "@mui/material";
 import FooterHeader from "./FooterHeader";
 import ContentBox from "./ContentBox";
 

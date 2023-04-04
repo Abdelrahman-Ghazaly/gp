@@ -5,17 +5,23 @@ import {
   TextField,
   Button,
 } from "@mui/material";
-import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { LoginBox } from "../../Styles/login";
 // Import Icons From MUI Icons
 import EmailIcon from '@mui/icons-material/Email';
-import PasswordIcon from '@mui/icons-material/Password';
 import { Visibility, VisibilityOff } from "@mui/icons-material";
+import { useDispatch  , useSelector} from "react-redux";
+import { userLogin } from "../../Store/authReducer";
 
 const LoginForm = () => {
+  const dispatch = useDispatch()
+  const navigate = useNavigate()
+
+  const {userToken , userData , error} = useSelector(state =>  state.auth)
+  const [isLoggedIn , setIsLoggedIn] = useState(false)
+
   const [showPassword, setShowPassword] = useState(false);
   const handleClickShowPassword = () => setShowPassword((show) => !show);
 
@@ -23,8 +29,23 @@ const LoginForm = () => {
   const {register , handleSubmit , formState : {errors}} = useForm({defaultValues : defaultValues})
 
   const handleSubmitForm = (data) => {
-    console.log(data)
+    console.log(userData);
+    console.log(error);
+
+        dispatch(userLogin(data))
+          .then((res) => {
+            if (res.meta.requestStatus === "fulfilled")
+              setIsLoggedIn((prev) => !prev);
+          })
+          .catch((err) => {
+            console.log(err);
+          });
+
+        if (isLoggedIn) {
+          navigate("/");
+        }
   }
+
   return (
     <LoginBox>
         <Link to="/">
@@ -71,7 +92,7 @@ const LoginForm = () => {
           {...register("password", {
             required: "Please Enter Your Password",
             minLength: {
-              value: 6,
+              value: 5,
               message: "Minimum Length is 6",
             },
           })}
@@ -92,7 +113,9 @@ const LoginForm = () => {
             <Link to="/auth/signup">Sign Up</Link>
           </span>
         </h4>
+
       </Box>
+      {error ? <h2>{error}</h2> : null}
     </LoginBox>
   );
 };

@@ -1,13 +1,19 @@
 import { createSlice , createAsyncThunk } from "@reduxjs/toolkit";
 
+
 export const addToFavorites = createAsyncThunk(
     'favorites/add',
-    async (item, thunkAPI ) => {
+    async (itemId, thunkAPI ) => {
         try {
-          const response = await fetch("http://localhost:8000/Favorite", {
+          let userToken = thunkAPI.getState().auth.userToken
+          console.log(userToken)
+          console.log(itemId)
+          const response = await fetch(`http://localhost:5000/fav/add/${itemId}`, {
             method: "POST",
-            body: JSON.stringify(item),
-            headers: { "Content-Type": "application/json" },
+            headers: {
+              token : "Bearer " + userToken,
+              'Content-Type' : 'application/json'
+            },
           });
           const data = await response.json();
           return data;
@@ -21,7 +27,7 @@ export const removeFromFavorites = createAsyncThunk(
     'favorites/remove',
     async (itemId, thunkAPI) => {
       try {
-        await fetch(`http://localhost:8000/Favorite/${itemId}` , {method : "DELETE",})
+        await fetch(`http://localhost:5000/fav/remove/${itemId}` , {method : "DELETE",})
         return itemId;
       } catch (error) {
         return thunkAPI.rejectWithValue(error.response.data);
@@ -33,7 +39,14 @@ export const fetchFavList = createAsyncThunk(
     "favorite/fetch",
     async (thunkAPI) => {
       try {
-        const response = await fetch("http://localhost:8000/Favorite");
+        let userToken = thunkAPI.getState().auth.userToken
+        const response = await fetch("http://localhost:8000/Favorite" ,{
+          method: "GET",
+          headers: {
+            token : "Bearer " + userToken,
+            'Content-Type' : 'application/json'
+          }
+        });
         if (!response.ok) {
           throw new Error("Fetching Error");
         }
@@ -62,6 +75,7 @@ const favoriteSlice = createSlice({
           })
           .addCase(addToFavorites.fulfilled, (state, action) => {
             state.status = 'succeeded';
+            console.log(action.payload)
             const existingIndex = state.favList.findIndex((favItem) => favItem.id === action.payload.id);
             if (existingIndex === -1) {
               state.favList.push(action.payload);

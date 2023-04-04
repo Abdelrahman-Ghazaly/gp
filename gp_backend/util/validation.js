@@ -13,6 +13,7 @@ const userSchema = joi.object({
     confirmPassword: joi.any().valid(joi.ref("password")).required(),
     address: joi.string().min(5).required(),
     phone: joi.string().required(),
+    
 });
 
 const addOrderSchema = joi.object({

@@ -1,4 +1,5 @@
 import React , {useState} from 'react'
+import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import {
   Drawer,
@@ -56,7 +57,7 @@ const ListItems = [
 const DrawerNav = ({open , handleDrawerClose , Categories}) => {
   const theme = useTheme()
   const match = useMediaQuery(theme.breakpoints.down('sm'))
-
+  const {userData} = useSelector(state => state.auth)
   const [openNestedList, setOpenNestedList] = useState(false);
 
   const handleClick = () => {
@@ -87,7 +88,7 @@ const DrawerNav = ({open , handleDrawerClose , Categories}) => {
       </DrawerHeader>
 
       <Divider />
-
+      {/* Inbox And Auction */}
       <List>
         {ListItems.slice(0, 2).map((data) => (
           <ListItem key={data.name} disablePadding>
@@ -99,6 +100,7 @@ const DrawerNav = ({open , handleDrawerClose , Categories}) => {
         ))}
       </List>
 
+      {/* List Of Categories in Mobile Mode (Responsive) */}
       {match && (
         <List>
           <ListItemButton onClick={handleClick}>
@@ -124,19 +126,22 @@ const DrawerNav = ({open , handleDrawerClose , Categories}) => {
       )}
 
       <Divider />
-      {/* View Profile And Uploaded Products*/}
-      <List>
-        {ListItems.slice(-1).map((data) => (
-          <ListItem key={data.name} disablePadding>
-            <Link to={data.link} style={{ width: "100%" }}>
-              <ListItemButton>
-                <ListItemIcon>{data.icon}</ListItemIcon>
-                <ListItemText primary={data.name} />
-              </ListItemButton>
-            </Link>
-          </ListItem>
-        ))}
-      </List>
+
+      {/* View Profile */}
+      {userData && (
+              <List>
+              {ListItems.slice(-1).map((data) => (
+                <ListItem key={data.name} disablePadding>
+                  <Link to={data.link} style={{ width: "100%" }}>
+                    <ListItemButton>
+                      <ListItemIcon>{data.icon}</ListItemIcon>
+                      <ListItemText primary={data.name} />
+                    </ListItemButton>
+                  </Link>
+                </ListItem>
+              ))}
+            </List>
+      )}
     </Drawer>
   );
 }

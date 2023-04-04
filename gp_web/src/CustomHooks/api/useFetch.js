@@ -5,7 +5,7 @@ const useFetch = (url) => {
     const [loading, setLoading] = useState(true)
     const [error, setError] = useState(null)
 
-    const fetchData = useCallback(async (url) => {
+    const fetchData = useCallback(async (url , tokenId) => {
         try{
             const response = await fetch(url)
             const urlData = await response.json()

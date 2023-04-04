@@ -6,14 +6,12 @@ import {
   Container,
   AppBar,
   IconButton,
-  Modal,
-  Box,
 } from "@mui/material";
 
 import MenuIcon from '@mui/icons-material/Menu';
 import Actions from './actions.js';
 import { Link } from 'react-router-dom';
-import Logo from '../../../assets/logo_transparent.jpg'
+
 
 const AppBarDesktop = ({match}) => {
     const [open, setOpen] = useState(false);

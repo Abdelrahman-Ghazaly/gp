@@ -8,17 +8,20 @@ import { Container, Grid } from '@mui/material'
 import LoadingSpinner from '../../Components/UI/Common/LoadingSpinner'
 import FilterPage from './FilterPage'
 import { useSelector , useDispatch } from 'react-redux';
-import { filterByCategory } from '../../Store/filterReducer'
+import { filterProducts } from '../../Store/filterReducer'
 
 const CategoryPage = () => {
     const {name} = useParams();
     const dispatch = useDispatch()
     const {filteredData , loading } = useSelector(state => state.filter)
-    // const {data , loading} = useFetch(`http://localhost:8000/Products?category=${name}`)
+    // const {data , loading} = useFetch(`http://localhost:5000/product/search/product/?category=${name}`)
+
     useEffect(() => {
-        dispatch(filterByCategory(name))
+        dispatch(filterProducts(name))
     } , [dispatch , name])
+
     console.log(filteredData);
+    
   return (
     <>
       <AppBar />
@@ -34,7 +37,7 @@ const CategoryPage = () => {
           >
             {filteredData.map((item) => {
               return (
-                <Grid item xs={12} sm={6} md={4} key={item.id}>
+                <Grid item xs={12} sm={6} md={4} key={item._id}>
                   <ProductCard item={item} />
                 </Grid>
               );

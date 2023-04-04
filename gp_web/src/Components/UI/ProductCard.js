@@ -22,25 +22,25 @@ const ActionContainer = styled(CardActions)(() => ({
 const ProductCard = ({ item }) => {
   const dispatch = useDispatch();
 
-  const AddProduct = () => {
+  const AddProduct = (itemId) => {
      dispatch(
-       addToFavorites(item)
+       addToFavorites(itemId)
      );
   }
 
   return (
     <Card sx={{ maxWidth : '483px' , borderRadius : '15px' , border : 'none' , userSelect : 'none'}}>
-       <Link to={`/product/${item.id}`}>
+       <Link to={`/product/${item._id}`}>
       <CardMedia
         component="img"
         alt="green iguana"
         height="250px"
-        image={typeof item.image == "string" ?  item.image : item.image[0]}
+        image={typeof item.imgURL == "string" ?  item.imgURL : item.imgURL[0]}
         sx={{objectFit : "contain" , background : '#F5F5F5'}}
       />
       </Link>
       <CardContent>
-      <Link to={`/product/${item.id}`}>
+      <Link to={`/product/${item._id}`}>
         <Typography gutterBottom  sx={{fontSize : '24px' , fontWeight : '700'}} component="div">
           {item.title}
         </Typography>
@@ -51,10 +51,10 @@ const ProductCard = ({ item }) => {
       </CardContent>
       <ActionContainer>
         <Typography variant="h5" color="#4BB4B4">
-          {item.price}
+          {item.price.$numberDecimal}
         </Typography>
 
-        <IconButton aria-label="add to favorites" sx={{"&:hover" : {color : 'red'} }} onClick={AddProduct}>
+        <IconButton aria-label="add to favorites" sx={{"&:hover" : {color : 'red'} }} onClick={() => AddProduct(item._id)}>
           <FavoriteIcon sx={{fontSize : '30px'}}/>
         </IconButton>
       </ActionContainer>

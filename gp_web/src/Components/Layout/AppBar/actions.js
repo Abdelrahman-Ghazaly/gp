@@ -1,5 +1,5 @@
-import { ListItemButton, ListItemIcon, Divider, Container, Badge } from "@mui/material";
-import React , {useState} from "react";
+import { ListItemButton, ListItemIcon, Divider , Badge , Box } from "@mui/material";
+import React  from "react";
 import { Link, useNavigate } from "react-router-dom";
 import {
   ActionIconsContainerMobile,
@@ -8,13 +8,19 @@ import {
   MyList,
 } from "../../../Styles/appbar.js";
 import AccountCircle from "@mui/icons-material/AccountCircle";
+import LogoutIcon from '@mui/icons-material/Logout';
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import AddIcon from "@mui/icons-material/Add";
-import { useSelector } from "react-redux";
+import { useDispatch , useSelector } from "react-redux";
+import { authSliceAction } from "../../../Store/authReducer/index.js";
+
 
 const Actions = ({ match }) => {
+  const dispatch = useDispatch()
   const navigate = useNavigate();
   const favList = useSelector(state => state.favorite.favList)
+  const {userData} = useSelector(state => state.auth)
+  console.log(userData);
   const favLength = favList.length
 
   const Component = match
@@ -103,9 +109,8 @@ const Actions = ({ match }) => {
         )}
 
         <Divider orientation="vertical" flexItem />
-
+        <Box style={{all : 'unset'}} onClick={() => navigate(`${userData ? "/" : "/auth/login"}`)}>
         <ListItemButton
-          onClick={() => navigate("/auth/login")}
           sx={{
             justifyContent: "center",
           }}
@@ -116,10 +121,12 @@ const Actions = ({ match }) => {
               justifyContent: "center",
               color: "black",
             }}
+            onClick={() => dispatch(authSliceAction.logout())}
           >
-            <AccountCircle />
+            {userData ? <LogoutIcon /> : <AccountCircle />}
           </ListItemIcon>
         </ListItemButton>
+        </Box>
       </MyList>
     </Component>
   );

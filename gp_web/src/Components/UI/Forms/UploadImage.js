@@ -1,5 +1,5 @@
 import { Grid } from '@mui/material';
-import React , { useRef, useState, useEffect  , memo, useCallback , useMemo} from 'react'
+import React , { useRef, useState, useEffect  , memo , useMemo} from 'react'
 import {AddImageButton , ImageStyle} from '../../../Styles/forms'
 
 const UploadImage = memo(({ imageValue }) => {
@@ -29,11 +29,6 @@ const UploadImage = memo(({ imageValue }) => {
   useEffect(() => {
     imageValue(imageList)
   },[imageList])
-
-console.log(imageList);
-
-console.log("Many Rerenders In Upload Image")
-
 
   const renderLoop = useMemo(() => {
     return imageList?.map((i, index) => {

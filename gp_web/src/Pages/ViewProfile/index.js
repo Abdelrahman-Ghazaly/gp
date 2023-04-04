@@ -1,4 +1,4 @@
-import React , {useEffect} from 'react'
+import React , {useEffect , useState , useCallback} from 'react'
 import ProductImage from '../../assets/productImage.png'
 import { useSelector , useDispatch} from 'react-redux'
 import { fetchUploadedProduct } from '../../Store/productReducer'
@@ -8,15 +8,48 @@ import { Container , Box , Divider , Button} from '@mui/material';
 import { deleteProduct } from '../../Store/productReducer'
 import { useTheme } from "@mui/material/styles";
 import { useMediaQuery } from "@mui/material";
+import useFetch from '../../CustomHooks/api/useFetch';
 import { BoxUserInfoContainer , Span} from '../../Styles/viewprofile';
 
 
 const ViewProfile = () => {
+    const [data, setData] = useState([])
+    const [loading, setLoading] = useState(true)
+    const [error, setError] = useState(null)
+
     const theme = useTheme();
     const match = useMediaQuery(theme.breakpoints.down("sm"));
     const dispatch = useDispatch()
-    const {uploadedList , loading} = useSelector(state => state.product)
-    console.log(uploadedList);
+    const {uploadedList} = useSelector(state => state.product)
+    const userData = useSelector(state => state.auth)
+    let userId = userData.userData?._id
+    let tokenId = userData.userData?.accessToken
+    console.log(userId , tokenId)
+
+
+    const fetchData = useCallback(async (url , tokenId) => {
+        try{
+            const response = await fetch(url , {
+                method : 'GET',
+                headers: {
+                    token : "Bearer " + tokenId,
+                    'Content-Type' : 'application/json'
+                  },
+            })
+            const urlData = await response.json()
+            setData(urlData["user-data"])
+            setLoading(false)
+        }catch(error){
+            setLoading(false)
+            setError(error)
+        }
+    } , [])
+
+    useEffect(() => {
+        fetchData(`http://localhost:5000/user/view/profile/${userId}` , tokenId)
+    },[fetchData , userId , tokenId])
+
+
     useEffect(() => {
         dispatch(fetchUploadedProduct())
     } , [dispatch])
@@ -32,12 +65,12 @@ const ViewProfile = () => {
                 <h3>Account Information</h3>
             <Box style={{margin : '30px' , display : 'flex' , justifyContent : 'center' , alignItems : 'center' , gap : '30px' , flexDirection : `${match ? 'column' : 'row'}`}}>
                 <BoxUserInfoContainer>
-                    <h3>Name : <Span>Ahmed Rashad</Span></h3>
-                    <h3>Email : <Span>ahmed@gmail.com</Span></h3>
+                                <h3>Name : <Span>{data?.name}</Span></h3>
+                                <h3>Email : <Span>{data?.email}</Span></h3>
                 </BoxUserInfoContainer>
                 <BoxUserInfoContainer>
-                    <h3>Address : <Span>45 sf ST, ewfdwefw</Span></h3>
-                    <h3>Phone Number : <Span>01060068417</Span></h3>
+                            <h3>Address : <Span>{data?.address}</Span></h3>
+                            <h3>Phone Number : <Span>{data?.phone}</Span></h3>
                 </BoxUserInfoContainer>
             </Box>
             <Divider />
