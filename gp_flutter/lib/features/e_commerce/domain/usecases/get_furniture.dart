@@ -9,7 +9,6 @@ class GetFurniture {
 
   GetFurniture({required this.repository});
 
-  @override
   Future<Either<Failure, FurnitureEntity>> call(Params params) async {
     return await repository.getFurniture(params.furnitureId);
   }
