@@ -36,7 +36,7 @@ const ReportList = [
 
 const ProductView = () => {
   let {id} = useParams()
-  const {data , loading} = useFetch(`http://localhost:8000/Products/${id}`)
+  const {data , loading} = useFetch(`http://localhost:5000/product/view/item/${id}`)
   const dispatch = useDispatch();
 
   const AddProduct = () => {
@@ -57,7 +57,7 @@ const ProductView = () => {
   }
 
   const renderImages = () => {
-    if (typeof data.image !== "string") {
+    if (typeof data.imgURL !== "string") {
       return (
         <>
           <Swiper
@@ -66,7 +66,7 @@ const ProductView = () => {
             thumbs={{ swiper: thumbsSwiper }}
             modules={[FreeMode, Navigation, Thumbs]}
           >
-            {data.image.map((img, idx) => {
+            {data.imgURL.map((img, idx) => {
               return (
                 <SwiperSlide key={idx}>
                   <img style={{ aspectRatio : '3/3' , width : '100%' , objectFit : 'contain' , borderRadius : '15px'}} src={img} alt="product_image" />
@@ -83,7 +83,7 @@ const ProductView = () => {
             watchSlidesProgress={true}
             modules={[FreeMode, Navigation, Thumbs]}
           >
-            {data.image.map((img, idx) => {
+            {data.imgURL.map((img, idx) => {
               return (
                 <SwiperSlide key={idx}>
                   <img style={{ width: "100%" , aspectRatio : '3/3' , objectFit : 'contain'  , borderRadius : '15px'}} src={img} alt="product_image" />
@@ -94,7 +94,7 @@ const ProductView = () => {
         </>
       );
     } else {
-      return <img style={{ width: "100%" , aspectRatio : '3/3' , objectFit : 'contain' , borderRadius : '15px'}} src={data.image} alt="product_image" />;
+      return <img style={{ width: "100%" , aspectRatio : '3/3' , objectFit : 'contain' , borderRadius : '15px'}} src={data.imgURL} alt="product_image" />;
     }
   }
 

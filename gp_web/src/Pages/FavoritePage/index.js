@@ -22,7 +22,7 @@ const FavoritePage = () => {
     const list = useSelector(state => state.favorite.favList)
     const listLength = list.length
     const loading = useSelector(state => state.favorite.loading)
-
+    console.log(list)
     const removeItem = (itemId) => {
         dispatch(removeFromFavorites(itemId))
     }
@@ -35,13 +35,13 @@ const FavoritePage = () => {
                         <div key={item.id} style={{display : 'flex' , justifyContent: 'space-around' , alignItems : 'center' , marginBottom : '20px'}}>
                             <div style={{width : '30%'}}>
                                 <Link to={`/product/${item.id}`}>
-                                    <img style={{aspectRatio : '3/2' , objectFit : 'contain' ,  width: `${match ? "100% " : "50%"}`}} src={typeof item.image == "string" ?  item.image : item.image[0]} alt={item.title}/>
+                                    {/* <img style={{aspectRatio : '3/2' , objectFit : 'contain' ,  width: `${match ? "100% " : "50%"}`}} src={typeof item.imgURL == "string" ?  item.imgURL : item.imgURL[0]} alt={item.title}/> */}
                                 </Link>
                             </div>
                                 <div style={{width : '100%' , fontSize : `${match ? "13px" : "20px"}`}}>
                                     <Link to={`/product/${item.id}`}>
                                         <h2>{item.title}</h2>
-                                        <h3>{item.price}</h3>
+                                        <h3>{item.price?.$numberDecimal}</h3>
                                     </Link>
                                 </div>
                             <div>

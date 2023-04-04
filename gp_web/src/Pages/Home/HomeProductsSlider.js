@@ -1,4 +1,4 @@
-import React, { useEffect, useRef , useState } from "react";
+import React, { useRef } from "react";
 import ProductSlider from "../../Components/UI/ProductSlider";
 import useFetch from "../../CustomHooks/api/useFetch";
 import { dataFilter } from "../../Utilities/HelperFun";
@@ -8,33 +8,36 @@ import { motion } from "framer-motion";
 const arrayOfCategories = [
   {
     id : 1,
-    name : "Bed",
+    name : "bed",
   },
   {
     id : 2,
-    name : "Sofa",
+    name : "sofa",
   },
   {
     id : 3,
-    name : "Lamp",
+    name : "lamp",
   },
   {
     id : 4,
-    name : "Chair",
+    name : "chair",
   },
   {
     id : 5,
-    name : "Table",
+    name : "table",
   },
   {
     id : 6,
-    name : "Dresser",
+    name : "dresser",
   }
 ];
 
 const HomeProductsSlider = ({ match }) => {
-  const { data , loading , error} = useFetch("http://localhost:8000/Products");
+  const { data , loading , error} = useFetch("http://localhost:5000/product/view");
   const scrollRef = useRef(null);
+  const getAllObjestInOneArray = Object.values(data)
+  const mixedData = [].concat(...getAllObjestInOneArray)
+
 
   const CategoryTitleStyle = {
     color: "#20284f",
@@ -58,7 +61,7 @@ const HomeProductsSlider = ({ match }) => {
         {arrayOfCategories.map((item) => (
 
             <motion.div
-            key={item.id}
+              key={item.id}
               initial={{ opacity: 0, scale: 0.5, y: -150 }}
               whileInView={{
                 opacity: 1,
@@ -76,7 +79,8 @@ const HomeProductsSlider = ({ match }) => {
               <h1 style={CategoryTitleStyle} >{item.name}</h1>
               <ProductSlider
                 match={match}
-                productsArray={dataFilter(data , item.name)}
+                productsArray={dataFilter(mixedData , item.name)}
+                //productsArray={data}
               />
             </motion.div>
 

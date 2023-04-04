@@ -7,7 +7,7 @@ import {
 } from "@mui/material";
 
 import React, { useState , useRef } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { LoginBox } from "../../Styles/login";
 
 import { useForm } from "react-hook-form";
@@ -18,21 +18,26 @@ import PersonIcon from '@mui/icons-material/Person';
 import LocationOnIcon from "@mui/icons-material/LocationOn";
 import DialpadIcon from "@mui/icons-material/Dialpad";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
+import { useDispatch } from "react-redux";
+import { userRegister } from "../../Store/authReducer";
 
 const SignupForm = () => {
+  const dispatch = useDispatch()
+  const navigate = useNavigate()
   const [showPassword, setShowPassword] = useState(false);
   const handleClickShowPassword = () => setShowPassword((show) => !show);
 
   const phoneNumberPattern =
     /(\+\d{1,3}\s?)?((\(\d{3}\)\s?)|(\d{3})(\s|-?))(\d{3}(\s|-?))(\d{4})(\s?(([E|e]xt[:|.|]?)|x|X)(\s?\d+))?/g;
-  const defaultValues = {email: "", password: "", confirmPassword: "", address: "", fullName: "", phoneNumber: ""};
+  const defaultValues = {email: "", password: "", confirmPassword: "", address: "", name: "", phone: ""};
   const {register, handleSubmit, formState: { errors }, watch,} = useForm({ defaultValues: defaultValues });
   const password = useRef({});
   password.current = watch("password", "");
   const handleSubmitForm = (data, e) => {
     e.preventDefault();
     if (errors && data.password === data.confirmPassword) {
-      console.log(data);
+        dispatch(userRegister(data))
+        navigate("/auth/login")
     }
   };
   return (
@@ -99,8 +104,8 @@ const SignupForm = () => {
           {...register("password", {
             required: "Please Enter Your Password",
             minLength: {
-              value: 6,
-              message: "Minimum Length is 6",
+              value: 5,
+              message: "Minimum Length is 5",
             },
           })}
           error={!!errors.password}
@@ -147,7 +152,7 @@ const SignupForm = () => {
               </InputAdornment>
             ),
           }}
-          {...register("fullName", {
+          {...register("name", {
             required: "Please Enter Your Full Name",
           })}
           error={!!errors.fullName}
@@ -189,7 +194,7 @@ const SignupForm = () => {
               </InputAdornment>
             ),
           }}
-          {...register("phoneNumber", {
+          {...register("phone", {
             required: true,
             pattern: {
               value: phoneNumberPattern,
