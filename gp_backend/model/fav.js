@@ -2,11 +2,12 @@ const { User } = require("./user");
 
 exports.addProductToFav = async (userId, productId) => {
     try {
-        const user = await User.findById(userId);
-        user.favourite.push(productId);
-        const result = await user.save();
-        console.log(result);
-        return result;
+        const result = await User.findByIdAndUpdate(
+            { _id: userId },
+            { $push: { favourite: { _id: productId } } },
+            { new: true }
+        ).populate("favourite._id");
+        return result.favourite.at(-1);
     } catch (err) {
         console.log(err);
         throw new Error();
@@ -23,8 +24,18 @@ exports.removeProductFromFav = async (userId, productId) => {
                 },
             }
         );
-        console.log(result);
         return result;
+    } catch (err) {
+        console.log(err);
+        throw new Error();
+    }
+};
+
+
+exports.getFav = async (userId) => {
+    try {
+        const result = await User.findById(userId).populate("favourite._id");
+        return result.favourite;
     } catch (err) {
         console.log(err);
         throw new Error();

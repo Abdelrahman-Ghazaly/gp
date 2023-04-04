@@ -13,5 +13,10 @@ router.post(
     favController.removeProductFromFav
 );
 
+router.get(
+    "/get",
+    auth.verifyLogedin,
+    favController.getFav
+);
 
 module.exports = router;
