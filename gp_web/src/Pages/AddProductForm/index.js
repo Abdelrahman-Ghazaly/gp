@@ -49,7 +49,14 @@ const AddProductForm = () => {
 
         if(data.imgURL.length != 0){
           console.log(data);
-          // dispatch(uploadProduct(data))
+          const formData = new FormData();
+              formData.append("title", data.title);
+              formData.append("description", data.description);
+              formData.append("images", data.imgURL);
+              formData.append("category" , data.category)
+              formData.append("price" , data.price)
+          console.log(formData.get("images"))
+           dispatch(uploadProduct(formData))
           navigate("/")
         }
     }
