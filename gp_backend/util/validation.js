@@ -16,21 +16,14 @@ const userSchema = joi.object({
     
 });
 
-const addOrderSchema = joi.object({
-    address: joi.string().min(5).max(50).required(),
-    cost: joi.number().required(),
-});
 
 const ProductSchema = joi.object({
     title: joi.string().min(3).max(15).required(),
     description: joi.string().min(5).max(50).required(),
-    imgURL: joi.string().uri().required(),
     category: joi.string().min(3).max(15).required(),
     price: joi.number().required(),
 });
 
 exports.validateUserData = validatior(userSchema);
-
-exports.validateOrderData = validatior(addOrderSchema);
 
 exports.validateProductData = validatior(ProductSchema);
