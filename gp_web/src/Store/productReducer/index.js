@@ -47,21 +47,21 @@ export const deleteProduct = createAsyncThunk(
   }
 );
 
-export const fetchUploadedProduct = createAsyncThunk(
-  "fetchUploadedProduct/productSlice",
-  async (thunkAPI) => {
-    try {
-        const response = await fetch("http://localhost:8000/UploadProducts");
-        if (!response.ok) {
-          throw new Error("Fetching Error");
-        }
-        const data = await response.json();
-        return data;
-      } catch (error) {
-        return thunkAPI.rejectWithValue(error.response.data);
-      }
-  }
-);
+// export const fetchUploadedProduct = createAsyncThunk(
+//   "fetchUploadedProduct/productSlice",
+//   async (thunkAPI) => {
+//     try {
+//         const response = await fetch("http://localhost:8000/UploadProducts");
+//         if (!response.ok) {
+//           throw new Error("Fetching Error");
+//         }
+//         const data = await response.json();
+//         return data;
+//       } catch (error) {
+//         return thunkAPI.rejectWithValue(error.response.data);
+//       }
+//   }
+// );
 
 const initialState = {uploadedList : [] , loading : true , error : null}
 
@@ -83,10 +83,10 @@ const productSlice = createSlice({
                 state.uploadedList = state.uploadedList.filter((item) => item.id !== itemId);
                 state.loading = false
             })
-            .addCase(fetchUploadedProduct.fulfilled , (state , action) => {
-                state.uploadedList = action.payload
-                state.loading = false
-            })
+            // .addCase(fetchUploadedProduct.fulfilled , (state , action) => {
+            //     state.uploadedList = action.payload
+            //     state.loading = false
+            // })
     }
 })
 
