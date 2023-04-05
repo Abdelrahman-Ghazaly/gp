@@ -1,5 +1,4 @@
 import 'package:dio/dio.dart';
-import 'package:flutter/material.dart';
 import 'package:gp_flutter/core/app_constants/app_values.dart';
 import 'package:gp_flutter/core/error/exceptions.dart';
 import 'package:gp_flutter/core/network/error_message_model.dart';
@@ -7,7 +6,7 @@ import 'package:gp_flutter/features/e_commerce/data/models/furniture_model.dart'
 
 import '../../domain/entities/furniture_entity.dart';
 
-abstract class MovMovieRemoteDataSource {
+abstract class FurnitureRemoteDataSource {
   Future<FurnitureEntity> getFurnitureById({required int furnitureId});
 
   Future<List<FurnitureEntity>> getPopularFurnitureByCategory();
@@ -23,14 +22,14 @@ abstract class MovMovieRemoteDataSource {
   Future<String> uploadFurniture({required FurnitureEntity furniture});
 }
 
-class MovieRemoteDataSourceImpl extends MovMovieRemoteDataSource {
-  static final MovieRemoteDataSourceImpl _singleton =
-      MovieRemoteDataSourceImpl._internal();
+class FurnitureRemoteDataSourceImpl extends FurnitureRemoteDataSource {
+  static final FurnitureRemoteDataSourceImpl _singleton =
+      FurnitureRemoteDataSourceImpl._internal();
 
-  factory MovieRemoteDataSourceImpl() {
+  factory FurnitureRemoteDataSourceImpl() {
     return _singleton;
   }
-  MovieRemoteDataSourceImpl._internal();
+  FurnitureRemoteDataSourceImpl._internal();
 
   final Dio _dio = Dio();
 
