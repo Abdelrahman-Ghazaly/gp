@@ -43,6 +43,7 @@ const HomeProductsSlider = ({ match }) => {
     color: "#20284f",
     padding: "18px 5px",
     fontSize: `${!match ? "35px" : "30px"}`,
+    textTransform : 'capitalize'
   };
 
   return (
@@ -80,7 +81,6 @@ const HomeProductsSlider = ({ match }) => {
               <ProductSlider
                 match={match}
                 productsArray={dataFilter(mixedData , item.name)}
-                //productsArray={data}
               />
             </motion.div>
 

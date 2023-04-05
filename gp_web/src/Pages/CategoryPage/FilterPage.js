@@ -1,5 +1,5 @@
 import { Box, Button, InputAdornment, MenuItem, TextField } from '@mui/material'
-import React , {useEffect, useState , useRef} from 'react'
+import React , { useRef } from 'react'
 import AttachMoneyIcon from '@mui/icons-material/AttachMoney';
 import { Categories } from '../../Utilities/CommonVariables/categoriesVariableList';
 import { useTheme } from "@mui/material/styles";
@@ -23,13 +23,14 @@ const FilterPage = () => {
         e.preventDefault()
         let minValue = minInput.current.value
         let maxValue = maxInput.current.value
-        const selectedValue = selectInput.current.value
+        let selectedValue = selectInput.current.value
 
         dispatch(filterAction.setMinPrice(minValue))
         dispatch(filterAction.setMaxPrice(maxValue))
         dispatch(filterProducts(selectedValue))
-        minInput.current.valueOf = ''
-        maxInput.current.valueOf = ''
+        minInput.current.value = ''
+        maxInput.current.value = ''
+
     }
 
   return (
@@ -51,7 +52,7 @@ const FilterPage = () => {
             id="outlined-select-currency"
             select
             label="Select Category"
-            defaultValue={selectInput.current.value}
+            defaultValue=''
             style={{ width: "30%", flexGrow: `${match ? "1" : "0"}`}}
             inputRef={selectInput}
             // onChange = {e => setSelectValue(e.target.value)}

@@ -6,6 +6,7 @@ export const addToFavorites = createAsyncThunk(
   async (itemId, thunkAPI) => {
     try {
       let userToken = thunkAPI.getState().auth.userToken;
+      console.log(itemId)
       let favList = thunkAPI.getState().favorite.favList;
       const existingIndex = favList.findIndex(
         (favItem) => favItem._id === itemId
