@@ -29,9 +29,8 @@ exports.uploadToFirebase = async (req, res, next) => {
     try {
         const images = req.files;
         console.log(images)
-        console.log(req)
         const imageURLs = [];
-        if (!images) {
+        if (!images[0]) {
             errors.validationError("no images sent");
         }
         for (const image of images) {
