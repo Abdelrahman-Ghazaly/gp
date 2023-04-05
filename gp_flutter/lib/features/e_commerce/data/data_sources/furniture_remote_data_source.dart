@@ -1,12 +1,12 @@
 import 'package:dio/dio.dart';
+
 import '../../../../core/app_constants/api_constants.dart';
 import '../../../../core/app_constants/app_values.dart';
 import '../../../../core/error/exceptions.dart';
 import '../../../../core/network/error_message_model.dart';
-import '../models/furniture_model.dart';
-
 import '../../domain/entities/furniture_entity.dart';
 import '../../domain/entities/search_query_entity.dart';
+import '../models/furniture_model.dart';
 
 abstract class FurnitureRemoteDataSource {
   Future<List<FurnitureEntity>> getPopularFurnitureByCategory();

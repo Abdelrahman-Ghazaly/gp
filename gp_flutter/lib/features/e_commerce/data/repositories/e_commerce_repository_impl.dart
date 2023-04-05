@@ -1,17 +1,13 @@
-import '../../../../core/error/exceptions.dart';
-import '../data_sources/furniture_remote_data_source.dart';
-import '../../domain/entities/search_query_entity.dart';
-
-import '../../domain/entities/furniture_entity.dart';
-
-import '../../../../core/error/failure.dart';
-
-import '../../../../core/app_constants/app_values.dart';
-
 import 'package:dartz/dartz.dart';
 
+import '../../../../core/app_constants/app_values.dart';
+import '../../../../core/error/exceptions.dart';
+import '../../../../core/error/failure.dart';
 import '../../../../core/network/network.dart';
+import '../../domain/entities/furniture_entity.dart';
+import '../../domain/entities/search_query_entity.dart';
 import '../../domain/repositories/e_commerce_repository.dart';
+import '../data_sources/furniture_remote_data_source.dart';
 
 typedef _RepositoryFunction = Future<List<FurnitureEntity>> Function();
 
