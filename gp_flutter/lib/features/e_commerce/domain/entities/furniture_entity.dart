@@ -4,7 +4,7 @@ class FurnitureEntity extends Equatable {
   final int id;
   final String title;
   final String description;
-  final String imageUrl;
+  final List<String> imageUrls;
   final String category;
   final String price;
   final String sellerId;
@@ -13,7 +13,7 @@ class FurnitureEntity extends Equatable {
     required this.id,
     required this.title,
     required this.description,
-    required this.imageUrl,
+    required this.imageUrls,
     required this.category,
     required this.price,
     required this.sellerId,
@@ -25,7 +25,7 @@ class FurnitureEntity extends Equatable {
       id,
       title,
       description,
-      imageUrl,
+      imageUrls,
       category,
       price,
       sellerId,

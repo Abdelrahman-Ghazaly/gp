@@ -1,30 +1,29 @@
-import 'package:equatable/equatable.dart';
-import '../../../../core/error/failure.dart';
 import 'package:dartz/dartz.dart';
-import '../../../../core/use_case/use_case.dart';
+import 'package:equatable/equatable.dart';
 
+import '../../../../core/error/failure.dart';
+import '../../../../core/use_case/use_case.dart';
 import '../entities/furniture_entity.dart';
 import '../repositories/e_commerce_repository.dart';
 
-class GetFurnitureFromSearch
+class GetFurnitureFromSearchByMinPrice
     implements BaseUseCase<List<FurnitureEntity>, Params> {
   final ECommerceRepository repository;
 
-  GetFurnitureFromSearch({required this.repository});
+  GetFurnitureFromSearchByMinPrice({required this.repository});
 
   @override
   Future<Either<Failure, List<FurnitureEntity>>> call(Params params) async {
-    return await repository.getFurnitureFromSearch(
-      searchQuery: params.searchQuery,
-    );
+    return repository.getFurnitureFromSearchByMinPrice(
+        minPrice: params.minPrice);
   }
 }
 
 class Params extends Equatable {
-  final String searchQuery;
+  final int minPrice;
 
-  const Params({required this.searchQuery});
+  const Params({required this.minPrice});
 
   @override
-  List<Object?> get props => [searchQuery];
+  List<Object?> get props => [minPrice];
 }

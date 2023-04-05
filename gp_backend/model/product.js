@@ -10,10 +10,10 @@ const productSchema = new Schema({
         type: String,
         required: true,
     },
-    imgURL: {
+    imgURL: [{
         type: String,
         required: true,
-    },
+    }],
     category: {
         type: String,
         required: true,
@@ -31,9 +31,9 @@ const productSchema = new Schema({
 
 const Product = mongoose.model("Product", productSchema);
 
-exports.createProduct = async (productData, user_id) => {
+exports.createProduct = async (productData, user_id, imgURL) => {
     try {
-        const { title, description, imgURL, category, price } = productData;
+        const { title, description, category, price } = productData;
         const product = new Product({
             title,
             description,
@@ -57,6 +57,19 @@ exports.deleteProduct = async (productId, user_id) => {
             user_id: user_id,
         });
         return result;
+    } catch (err) {
+        console.log(err);
+        throw new Error();
+    }
+};
+
+exports.getProductImagesForDeletation = async (productId, user_id) => {
+    try {
+        const result = await Product.find({
+            _id: productId,
+            user_id: user_id,
+        });
+        return result[0];
     } catch (err) {
         console.log(err);
         throw new Error();

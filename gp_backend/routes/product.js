@@ -3,13 +3,20 @@ const auth = require("../middleware/is_auth");
 const productController = require("../controller/product");
 const router = express.Router();
 
-router.post("/upload", auth.verifyLogedin, productController.createProduct);
+router.post(
+    "/upload",
+    auth.verifyLogedin,
+    productController.uploadImage,
+    productController.uploadToFirebase,
+    productController.createProduct
+);
 
 // router.put("/:id", auth.verifyAdmin, productController.updateProduct);
 
 router.delete(
     "/delete/:productId",
     auth.verifyLogedin,
+    productController.deleteProductImages,
     productController.deleteProduct
 );
 

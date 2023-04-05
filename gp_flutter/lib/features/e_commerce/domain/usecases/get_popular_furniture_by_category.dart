@@ -5,11 +5,11 @@ import '../../../../core/use_case/use_case.dart';
 import '../entities/furniture_entity.dart';
 import '../repositories/e_commerce_repository.dart';
 
-class GetPopularFurniture
+class GetPopularFurniturebyCategory
     implements BaseUseCase<List<FurnitureEntity>, NoParams> {
   final ECommerceRepository repository;
 
-  GetPopularFurniture({required this.repository});
+  GetPopularFurniturebyCategory({required this.repository});
 
   @override
   Future<Either<Failure, List<FurnitureEntity>>> call(NoParams noParams) async {
