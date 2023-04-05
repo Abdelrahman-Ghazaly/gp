@@ -19,7 +19,7 @@ const LoginForm = () => {
   const dispatch = useDispatch()
   const navigate = useNavigate()
 
-  const {userToken , userData , error} = useSelector(state =>  state.auth)
+  const { userData , error} = useSelector(state =>  state.auth)
   const [isLoggedIn , setIsLoggedIn] = useState(false)
 
   const [showPassword, setShowPassword] = useState(false);
@@ -35,7 +35,7 @@ const LoginForm = () => {
         dispatch(userLogin(data))
           .then((res) => {
             if (res.meta.requestStatus === "fulfilled")
-              setIsLoggedIn((prev) => !prev);
+              setIsLoggedIn(true);
           })
           .catch((err) => {
             console.log(err);

@@ -27,11 +27,11 @@ const UploadImage = memo(({ imageValue }) => {
   }, [image]);
 
   useEffect(() => {
-    imageValue(imageList)
+    imageValue(imageList.slice(0, 4))
   },[imageList])
 
   const renderLoop = useMemo(() => {
-    return imageList?.map((i, index) => {
+    return imageList.slice(0, 4)?.map((i, index) => {
       return (
         <Grid item xs={2} sm={4} md={4} key={index}>
           <img
@@ -70,7 +70,7 @@ const UploadImage = memo(({ imageValue }) => {
           type="file"
           style={{ display: "none" }}
           ref={fileInputRef}
-          accept="image/*"
+          accept="image/jpeg , image/png , image/jpg"
           onChange={(e) => {
             handleImageInput(e);
           }}

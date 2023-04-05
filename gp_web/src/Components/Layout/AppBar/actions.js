@@ -31,11 +31,12 @@ const Actions = ({ match }) => {
     <Component>
       <MyList type="row">
         {match ? (
-          <>
+          <Box style={{display : 'flex'  ,justifyContent : 'center' , alignItems : 'center'}}>
             <ListItemButton
-                onClick={() => navigate("/favorite")}
+                onClick={() => navigate(`${userData ? "/favorite" : "/auth/login"}`)}
               sx={{
                 justifyContent: "center",
+                flex : '1 1 100%'
               }}
             >
               <ListItemIcon
@@ -43,6 +44,7 @@ const Actions = ({ match }) => {
                   display: "flex",
                   justifyContent: "center",
                   color: "inherit",
+
                 }}
 
               >
@@ -54,13 +56,14 @@ const Actions = ({ match }) => {
 
             <Divider orientation="vertical" flexItem />
 
-            <Link to="/upload">
+            <Link to={`${userData ? "/upload" : "/auth/login"}`}>
             <ListItemIcon
               sx={{
                 display: "flex",
                 justifyContent: "center",
                 userSelect: "none",
                 marginLeft: "9px",
+                flex : '1 1 100%'
               }}
             >
               <SellButton>
@@ -68,10 +71,10 @@ const Actions = ({ match }) => {
               </SellButton>
             </ListItemIcon>
             </Link>
-          </>
+          </Box>
         ) : (
           <>
-          <Link to="/upload">
+          <Link to={`${userData ? "/upload" : "/auth/login"}`}>
           <ListItemIcon
               sx={{
                 display: "flex",
@@ -88,7 +91,7 @@ const Actions = ({ match }) => {
             <Divider orientation="vertical" flexItem />
 
             <ListItemButton
-                onClick={() => navigate("/favorite")}
+                onClick={() => navigate(`${userData ? "/favorite" : "/auth/login"}`)}
               sx={{
                 justifyContent: "center",
               }}
@@ -105,14 +108,17 @@ const Actions = ({ match }) => {
                 </Badge>
               </ListItemIcon>
             </ListItemButton>
+
           </>
         )}
 
         <Divider orientation="vertical" flexItem />
-        <Box style={{all : 'unset'}} onClick={() => navigate(`${userData ? "/" : "/auth/login"}`)}>
+
+        <Link to={`${userData ? "/" : "/auth/login"}`}>
         <ListItemButton
           sx={{
             justifyContent: "center",
+            width : '100%'
           }}
         >
           <ListItemIcon
@@ -126,7 +132,7 @@ const Actions = ({ match }) => {
             {userData ? <LogoutIcon /> : <AccountCircle />}
           </ListItemIcon>
         </ListItemButton>
-        </Box>
+        </Link>
       </MyList>
     </Component>
   );

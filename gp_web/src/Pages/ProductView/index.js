@@ -1,5 +1,5 @@
 import React , {useState} from 'react'
-import { Box, Container  , Grid , Button , TextField , MenuItem} from '@mui/material'
+import { Box, Container  , Grid , Button , TextField , MenuItem, Fade, Alert, AlertTitle} from '@mui/material'
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import { useParams } from 'react-router-dom'
 import { useForm } from "react-hook-form";
@@ -9,8 +9,9 @@ import useFetch from '../../CustomHooks/api/useFetch'
 import AppBar from '../../Components/Layout/AppBar'
 import Footer from '../../Components/Layout/Footer';
 import LoadingSpinner from '../../Components/UI/Common/LoadingSpinner';
-import { useDispatch } from 'react-redux';
+import { useDispatch  , useSelector} from 'react-redux';
 import { addToFavorites } from '../../Store/favoriteReducer';
+import { sendReport } from '../../Store/reportReducer';
 
 // Swiper Imports
 import { Swiper, SwiperSlide } from "swiper/react";
@@ -37,7 +38,9 @@ const ReportList = [
 const ProductView = () => {
   let {id} = useParams()
   const {data , loading} = useFetch(`http://localhost:5000/product/view/item/${id}`)
+
   const dispatch = useDispatch();
+  const {userData} = useSelector(state => state.auth)
 
   const AddProduct = (itemId) => {
     dispatch(
@@ -46,14 +49,36 @@ const ProductView = () => {
  }
   const theme = useTheme();
   const match = useMediaQuery(theme.breakpoints.down("md"));
+  const [show , setIsShow] = useState(false)
 
   const [thumbsSwiper, setThumbsSwiper] = useState(null);
-  const defaultValues = {reportType : '' , reportDescription : ''}
+  const defaultValues = {report_type: '' , description : ''}
   const {register, handleSubmit, formState: { errors }} = useForm({ defaultValues: defaultValues });
 
   const reportFormHandler = (reportValues , e) => {
     e.preventDefault();
-    console.log(Object.assign(data , reportValues));
+    dispatch(sendReport({reportValues , id}))
+  }
+ 
+
+  const rednerToast = () => {
+    return (
+      <Fade
+        in={show}
+        timeout={{ enter: 1000, exit: 1000 }}
+        addEndListener={() => {
+          setTimeout(() => {
+            setIsShow(false);
+          }, 4000);
+        }}
+        style={{marginTop : '15px' , width : `${match ? "100% " : "60%"}` , borderRadius : "15px" }}
+      >
+        <Alert severity="warning" variant="standard" className="alert">
+          <AlertTitle>Warning</AlertTitle>
+          Please login first to add item to favorite
+        </Alert>
+      </Fade>
+    );
   }
 
   const renderImages = () => {
@@ -117,7 +142,7 @@ const ProductView = () => {
                     {renderImages()}
                   </div>
                 </Grid>
-                <Grid item xs={0} sm={6} md={6} >
+                <Grid item xs={0} sm={6} md={6} style={{marginBottom : '15px'}}>
                   <h1 style={{marginBottom : '15px'}}>{data.title}</h1>
                   <h3 style={{marginBottom : '15px'}}>
                     Category :{" "}
@@ -133,7 +158,7 @@ const ProductView = () => {
                   <h3 style={{marginBottom : '15px'}}>Description :</h3>
                   <p style={{marginBottom : '15px'}}>{data.description}</p>
                   <Button
-                    onClick={() => AddProduct(data._id)}
+                    onClick={userData ? () => AddProduct(data._id) : () => setIsShow(true)}
                     sx={{
                       backgroundColor: "black",
                       "&:hover": { background: "#009933" },
@@ -145,71 +170,74 @@ const ProductView = () => {
                   >
                     Add To Favorite
                   </Button>
+                  {show && rednerToast()}
                 </Grid>
               </Grid>
-              <Box
-                style={{
-                  border: "2px solid red",
-                  padding: "8px 18px",
-                  margin: "15px 0",
-                  borderRadius: "15px",
-                  textAlign: "center",
-                }}
-                component="form"
-                noValidate
-                onSubmit={handleSubmit(reportFormHandler)}
-              >
-                <h2
-                  style={{
-                    color: "red",
-                    textAlign: "center",
-                    marginBottom: "15px",
-                  }}
-                >
-                  Report{" "}
-                </h2>
-                <TextField
-                  fullWidth
-                  defaultValue={defaultValues.reportType}
-                  margin="normal"
-                  select
-                  label="Select Report Type"
-                  name="reportType"
-                  {...register("reportType", {
-                    required: "Please Enter The Report Type",
-                  })}
-                  error={!!errors.reportType}
-                  helperText={errors.reportType?.message}
-                  style={{ display: "inline-block" }}
-                >
-                  {ReportList.map((option) => (
-                    <MenuItem key={option.id} value={option.reportName}>
-                      {option.reportName}
-                    </MenuItem>
-                  ))}
-                </TextField>
-                <TextField
-                  margin="normal"
-                  multiline
-                  fullWidth
-                  row={1}
-                  label="Description"
-                  name="reportDescription"
-                  {...register("reportDescription", {
-                    required: "Please Enter Description",
-                  })}
-                  error={!!errors.reportDescription}
-                  helperText={errors.reportDescription?.message}
-                />
-                <Button
-                  type="submit"
-                  style={{ background: "red" }}
-                  variant="contained"
-                >
-                  {" "}
-                  Send Report
-                </Button>
-              </Box>
+              {userData && (
+                              <Box
+                              style={{
+                                border: "2px solid red",
+                                padding: "8px 18px",
+                                margin: "15px 0",
+                                borderRadius: "15px",
+                                textAlign: "center",
+                              }}
+                              component="form"
+                              noValidate
+                              onSubmit={handleSubmit(reportFormHandler)}
+                            >
+                              <h2
+                                style={{
+                                  color: "red",
+                                  textAlign: "center",
+                                  marginBottom: "15px",
+                                }}
+                              >
+                                Report{" "}
+                              </h2>
+                              <TextField
+                                fullWidth
+                                defaultValue={defaultValues.report_type}
+                                margin="normal"
+                                select
+                                label="Select Report Type"
+                                name="report_type"
+                                {...register("report_type", {
+                                  required: "Please Enter The Report Type",
+                                })}
+                                error={!!errors.report_type}
+                                helperText={errors.report_type?.message}
+                                style={{ display: "inline-block" }}
+                              >
+                                {ReportList.map((option) => (
+                                  <MenuItem key={option.id} value={option.reportName}>
+                                    {option.reportName}
+                                  </MenuItem>
+                                ))}
+                              </TextField>
+                              <TextField
+                                margin="normal"
+                                multiline
+                                fullWidth
+                                row={1}
+                                label="Description"
+                                name="description"
+                                {...register("description", {
+                                  required: "Please Enter Description",
+                                })}
+                                error={!!errors.description}
+                                helperText={errors.description?.message}
+                              />
+                              <Button
+                                type="submit"
+                                style={{ background: "red" }}
+                                variant="contained"
+                              >
+                                {" "}
+                                Send Report
+                              </Button>
+                            </Box>
+              )}
             </Container>
           </Box>
         )}

@@ -9,6 +9,8 @@ export const filterProducts = createAsyncThunk('filterSlice/filterByCategory' , 
     if(minPrice  && maxPrice){
         const response = await fetch(`http://localhost:5000/product/search/product/?category=${transformValue}&minPrice=${minPrice}&maxPrice=${maxPrice}`)
         const data = await response.json()
+        minPrice = null
+        maxPrice = null
         return data
     }else {
         const response = await fetch(`http://localhost:5000/product/search/product/?category=${transformValue}`)
@@ -47,12 +49,10 @@ const filterSlice = createSlice({
   initialState: initialState,
   reducers: {
     setMinPrice: (state, action) => {
-        console.log(action.payload)
-      state.minPrice = action.payload;
+        state.minPrice = action.payload;
     },
     setMaxPrice: (state, action) => {
-        console.log(action.payload)
-      state.maxPrice = action.payload;
+        state.maxPrice = action.payload;
     },
   },
   extraReducers: (builder) => {

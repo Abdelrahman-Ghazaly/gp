@@ -2,24 +2,33 @@ import { createSlice , createAsyncThunk } from "@reduxjs/toolkit";
 
 
 export const addToFavorites = createAsyncThunk(
-    'favorites/add',
-    async (itemId, thunkAPI ) => {
-        try {
-          let userToken = thunkAPI.getState().auth.userToken
-          const response = await fetch(`http://localhost:5000/fav/add/${itemId}`, {
+  "favorites/add",
+  async (itemId, thunkAPI) => {
+    try {
+      let userToken = thunkAPI.getState().auth.userToken;
+      let favList = thunkAPI.getState().favorite.favList;
+      const existingIndex = favList.findIndex(
+        (favItem) => favItem._id === itemId
+      );
+      if (existingIndex === -1) {
+        const response = await fetch(
+          `http://localhost:5000/fav/add/${itemId}`,
+          {
             method: "POST",
             headers: {
-              token : "Bearer " + userToken,
-              'Content-Type' : 'application/json'
+              token: "Bearer " + userToken,
+              "Content-Type": "application/json",
             },
-          });
-          const data = await response.json();
-          return data;
-        } catch (error) {
-          return thunkAPI.rejectWithValue(error.response.data);
-        }
+          }
+        );
+        const data = await response.json();
+        return data;
+      }
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error.response.data);
     }
-  );
+  }
+);
 
 export const removeFromFavorites = createAsyncThunk(
     'favorites/remove',
@@ -80,7 +89,6 @@ const favoriteSlice = createSlice({
           })
           .addCase(addToFavorites.fulfilled, (state, action) => {
             state.status = 'succeeded';
-            console.log(action.payload)
             const existingIndex = state.favList.findIndex((favItem) => favItem._id === action.payload._id);
             if (existingIndex === -1) {
               state.favList.push(action.payload);

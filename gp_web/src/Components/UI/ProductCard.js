@@ -5,12 +5,16 @@ import {
   CardMedia,
   Typography,
   IconButton,
+  Alert,
+  Stack,
+  Fade,
+  AlertTitle,
 } from "@mui/material";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import { styled } from "@mui/material/styles";
-import React from "react";
+import React , {useState } from "react";
 import {Link} from 'react-router-dom'
-import { useDispatch } from "react-redux";
+import { useDispatch , useSelector} from "react-redux";
 import { addToFavorites } from "../../Store/favoriteReducer";
 
 const ActionContainer = styled(CardActions)(() => ({
@@ -20,13 +24,35 @@ const ActionContainer = styled(CardActions)(() => ({
 }));
 
 const ProductCard = ({ item }) => {
+  const [show , setIsShow] = useState(false)
   const dispatch = useDispatch();
-
+  const {userData} = useSelector(state => state.auth)
+  
   const AddProduct = (itemId) => {
      dispatch(
        addToFavorites(itemId)
      );
   }
+
+  const rednerToast = () => {
+    return (
+      <Fade
+        in={show}
+        timeout={{ enter: 1000, exit: 1000 }}
+        addEndListener={() => {
+          setTimeout(() => {
+            setIsShow(false);
+          }, 4000);
+        }}
+      >
+        <Alert severity="warning" variant="standard" className="alert">
+          <AlertTitle>Warning</AlertTitle>
+          Please login first to add item to favorite
+        </Alert>
+      </Fade>
+    );
+  }
+
 
   return (
     <Card sx={{ maxWidth : '483px' , borderRadius : '15px' , border : 'none' , userSelect : 'none'}}>
@@ -50,14 +76,15 @@ const ProductCard = ({ item }) => {
         </Typography>
       </CardContent>
       <ActionContainer>
-        <Typography variant="h5" color="#4BB4B4">
-          {item.price.$numberDecimal}
+        <Typography variant="h5" color="#4BB4B4" style={{fontWeight : 'bold'}}>
+          {item.price.$numberDecimal || item.price}$
         </Typography>
 
-        <IconButton aria-label="add to favorites" sx={{"&:hover" : {color : 'red'} }} onClick={() => AddProduct(item._id)}>
+        <IconButton aria-label="add to favorites" sx={{"&:hover" : {color : 'red'} }} onClick={userData ? () => AddProduct(item._id) : () => setIsShow(true)}>
           <FavoriteIcon sx={{fontSize : '30px'}}/>
         </IconButton>
       </ActionContainer>
+      {show && rednerToast()}
     </Card>
   );
 };

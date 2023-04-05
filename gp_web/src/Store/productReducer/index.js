@@ -4,10 +4,14 @@ export const uploadProduct = createAsyncThunk(
   "uploadProduct/productSlice",
   async (item , thunkAPI) => {
     try {
-        const response = await fetch("http://localhost:8000/UploadProducts", {
+        let userToken = thunkAPI.getState().auth.userToken;
+        const response = await fetch("http://localhost:5000/upload", {
           method: "POST",
           body: JSON.stringify(item),
-          headers: { "Content-Type": "application/json" },
+          headers: {
+            token: "Bearer " + userToken,
+            "Content-Type": "application/json",
+          },
         });
         const data = await response.json();
         return data;
@@ -19,13 +23,20 @@ export const uploadProduct = createAsyncThunk(
 
 export const deleteProduct = createAsyncThunk(
   "deleteProduct/productSlice",
-  async (itemId , thunkAPI) => {
+  async (itemId, thunkAPI) => {
     try {
-        await fetch(`http://localhost:8000/UploadProducts/${itemId}` , {method : "DELETE",})
-        return itemId;
-      } catch (error) {
-        return thunkAPI.rejectWithValue(error.response.data);
-      }
+      let userToken = thunkAPI.getState().auth.userToken;
+      await fetch(` http://localhost:5000/delete/${itemId}`, {
+        method: "DELETE",
+        headers: {
+          token: "Bearer " + userToken,
+          "Content-Type": "application/json",
+        },
+      });
+      return itemId;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error.response.data);
+    }
   }
 );
 

@@ -24,7 +24,7 @@ const ViewProfile = () => {
     const userData = useSelector(state => state.auth)
     let userId = userData.userData?._id
     let tokenId = userData.userData?.accessToken
-    console.log(userId , tokenId)
+
 
 
     const fetchData = useCallback(async (url , tokenId) => {
@@ -57,6 +57,9 @@ const ViewProfile = () => {
     const removeProduct = (itemId) => {
         dispatch(deleteProduct(itemId))
     }
+
+    console.log(data)
+
   return (
     <>
         <AppBar />
@@ -94,7 +97,7 @@ const ViewProfile = () => {
                                                 <h3>Price:  {item.price}$</h3>
                                         </div>
                                     <div>
-                                        <Button variant='contained' color="error" onClick={() => removeProduct(item.id)}>Remove</Button>
+                                        <Button variant='contained' color="error" onClick={() => removeProduct(item._id)}>Remove</Button>
                                     </div>
                                 </div>
                             )
