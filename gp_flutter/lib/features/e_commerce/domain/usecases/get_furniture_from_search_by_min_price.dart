@@ -1,30 +1,30 @@
-import 'package:dartz/dartz.dart';
 import 'package:equatable/equatable.dart';
+import 'package:gp_flutter/core/error/failure.dart';
 
-import '../../../../core/error/failure.dart';
+import 'package:dartz/dartz.dart';
+
 import '../../../../core/use_case/use_case.dart';
 import '../entities/furniture_entity.dart';
 import '../repositories/e_commerce_repository.dart';
 
-class GetFurnitureFromFavorite
+class GetFurnitureFromSearchByMinPrice
     implements BaseUseCase<List<FurnitureEntity>, Params> {
   final ECommerceRepository repository;
 
-  GetFurnitureFromFavorite({required this.repository});
+  GetFurnitureFromSearchByMinPrice({required this.repository});
 
   @override
   Future<Either<Failure, List<FurnitureEntity>>> call(Params params) async {
-    return await repository.getFurnitureFromFavorite(
-      userId: params.userId,
-    );
+    return repository.getFurnitureFromSearchByMinPrice(
+        minPrice: params.minPrice);
   }
 }
 
 class Params extends Equatable {
-  final int userId;
+  final int minPrice;
 
-  const Params({required this.userId});
+  const Params({required this.minPrice});
 
   @override
-  List<Object?> get props => [userId];
+  List<Object?> get props => [minPrice];
 }

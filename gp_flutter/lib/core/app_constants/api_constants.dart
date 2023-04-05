@@ -1,13 +1,23 @@
 class ApiConstants {
   static const String baseUrl = 'http://localhost:5000/';
 
-  static const String popularFurnitureByCategoryPath = '${baseUrl}view';
+  //Product End Points
 
-  static const String furnitureByIdPath = '${baseUrl}view/item/';
+  static const String productBaseUrl = '${baseUrl}product/';
 
-  static const String furnitureFromSearchPath = '${baseUrl}search/';
+  static const String popularFurnitureByCategoryPath = '${productBaseUrl}view';
 
-  static const String uploadFurniturePath = '${baseUrl}upload';
+  static String furnitureFromSearcByQueryhPath(String query) =>
+      '${productBaseUrl}search/search/product/?query=$query';
 
-  static const String deleteFurniturePath = '${baseUrl}delete/';
+  static const String uploadFurniturePath = '${productBaseUrl}upload';
+
+  static String deleteFurniturePath(productId) =>
+      '${productBaseUrl}delete/$productId';
+
+  //User End Points
+
+  static const String userBaseUrl = '${baseUrl}user/';
+
+  static const String viewProfilePath = '${userBaseUrl}view/profile/';
 }
