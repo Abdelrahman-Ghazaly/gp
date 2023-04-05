@@ -58,7 +58,7 @@ const ViewProfile = () => {
         dispatch(deleteProduct(itemId))
     }
 
-    console.log(data.product-logs)
+    console.log(data)
 
   return (
     <>
