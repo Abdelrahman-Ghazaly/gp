@@ -9,19 +9,20 @@ import LoadingSpinner from '../../Components/UI/Common/LoadingSpinner'
 import FilterPage from './FilterPage'
 import { useSelector , useDispatch } from 'react-redux';
 import { filterProducts } from '../../Store/filterReducer'
+import useFetch from '../../CustomHooks/api/useFetch'
 
 const CategoryPage = () => {
     const {name} = useParams();
     const dispatch = useDispatch()
     const {filteredData , loading } = useSelector(state => state.filter)
-    // const {data , loading} = useFetch(`http://localhost:5000/product/search/product/?category=${name}`)
+     //const {data , loading} = useFetch(`http://localhost:5000/product/search/product/?category=${name}`)
     let filteredDataLength = filteredData.length
 
     useEffect(() => {
         dispatch(filterProducts(name))
     } , [dispatch , name])
 
-    console.log(filteredData);
+
     
   return (
     <>

@@ -43,8 +43,8 @@ const FavoritePage = () => {
                             </div>
                                 <div style={{width : '100%' , fontSize : `${match ? "13px" : "20px"}`}}>
                                     <Link to={`/product/${item._id}`}>
-                                        <h2>{item.title}</h2>
-                                        <h3>{item.price}</h3>
+                                        <h2 style={{textTransform : 'capitalize'}}>{item.title}</h2>
+                                        <h3>{item.price}$</h3>
                                     </Link>
                                 </div>
                             <div>

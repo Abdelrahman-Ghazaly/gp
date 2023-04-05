@@ -115,7 +115,7 @@ const LoginForm = () => {
         </h4>
 
       </Box>
-      {error ? <h2>{error}</h2> : null}
+      {error ? <h2 style={{textTransform : 'capitalize' , color : 'red'}}>{error}</h2> : null}
     </LoginBox>
   );
 };

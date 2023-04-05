@@ -67,7 +67,7 @@ const ProductCard = ({ item }) => {
       </Link>
       <CardContent>
       <Link to={`/product/${item._id}`}>
-        <Typography gutterBottom  sx={{fontSize : '24px' , fontWeight : '700'}} component="div">
+        <Typography gutterBottom  sx={{fontSize : '24px' , fontWeight : '700' , textTransform : 'capitalize'}} component="div">
           {item.title}
         </Typography>
         </Link>
