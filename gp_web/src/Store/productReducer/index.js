@@ -5,12 +5,19 @@ export const uploadProduct = createAsyncThunk(
   async (item , thunkAPI) => {
     try {
         let userToken = thunkAPI.getState().auth.userToken;
-        const response = await fetch("http://localhost:5000/upload", {
+        // const formData = new FormData();
+        //     formData.append("title", item.title);
+        //     formData.append("description", item.description);
+        //     formData.append("imgURL", item.imgURL);
+        //     formData.append("category" , item.category)
+        //     formData.append("price" , item.price)
+         console.log(item)
+
+        const response = await fetch("http://localhost:5000/product/upload", {
           method: "POST",
-          body: JSON.stringify(item),
+          body: item,
           headers: {
             token: "Bearer " + userToken,
-            "Content-Type": "application/json",
           },
         });
         const data = await response.json();
@@ -26,7 +33,7 @@ export const deleteProduct = createAsyncThunk(
   async (itemId, thunkAPI) => {
     try {
       let userToken = thunkAPI.getState().auth.userToken;
-      await fetch(` http://localhost:5000/delete/${itemId}`, {
+      await fetch(` http://localhost:5000/product/delete/${itemId}`, {
         method: "DELETE",
         headers: {
           token: "Bearer " + userToken,
