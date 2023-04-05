@@ -1,9 +1,9 @@
 import 'package:dio/dio.dart';
-import 'package:gp_flutter/core/app_constants/api_constants.dart';
-import 'package:gp_flutter/core/app_constants/app_values.dart';
-import 'package:gp_flutter/core/error/exceptions.dart';
-import 'package:gp_flutter/core/network/error_message_model.dart';
-import 'package:gp_flutter/features/e_commerce/data/models/furniture_model.dart';
+import '../../../../core/app_constants/api_constants.dart';
+import '../../../../core/app_constants/app_values.dart';
+import '../../../../core/error/exceptions.dart';
+import '../../../../core/network/error_message_model.dart';
+import '../models/furniture_model.dart';
 
 import '../../domain/entities/furniture_entity.dart';
 import '../../domain/entities/search_query_entity.dart';
@@ -47,66 +47,60 @@ class FurnitureRemoteDataSourceImpl extends FurnitureRemoteDataSource {
   factory FurnitureRemoteDataSourceImpl() {
     return _singleton;
   }
+
   FurnitureRemoteDataSourceImpl._internal();
+
   final Dio _dio = Dio();
 
   @override
-  Future<List<FurnitureEntity>> getPopularFurnitureByCategory() async {
-    Response response = await _dio.get(
-      ApiConstants.popularFurnitureByCategoryPath,
-    );
-    if (response.statusCode == 200) {
-      return List.from(
-        [response.data].map((element) => FurnitureModel.fromMap(element)),
+  Future<List<FurnitureEntity>> getPopularFurnitureByCategory() =>
+      _getFurnitureList(
+        ApiConstants.popularFurnitureByCategoryPath,
       );
-    } else {
-      throw ServerException(
-        errorMessageModel: ErrorMessageModel.fromJson(response.data),
-      );
-    }
-  }
 
   @override
   Future<List<FurnitureEntity>> getFurnitureFromSearchByQuery(
-      {required String searchQuery}) {
-    // TODO: implement getFurnitureFromSearchByQuery
-    throw UnimplementedError();
-  }
+          {required String searchQuery}) =>
+      _getFurnitureList(
+        ApiConstants.furnitureFromSearcByQueryhPath(searchQuery),
+      );
 
   @override
   Future<List<FurnitureEntity>> getFurnitureFromSearchByCategory(
-      {required Category category}) {
-    // TODO: implement getFurnitureFromSearchByCategory
-    throw UnimplementedError();
-  }
+          {required Category category}) =>
+      _getFurnitureList(
+        ApiConstants.furnitureFromSearcByCategory(category),
+      );
 
   @override
   Future<List<FurnitureEntity>> getFurnitureFromSearchByCategoryAndPrice(
-      {required CategoryQueryEntity categoryQueryEntity}) {
-    // TODO: implement getFurnitureFromSearchByCategoryAndPrice
-    throw UnimplementedError();
-  }
+          {required CategoryQueryEntity categoryQueryEntity}) =>
+      _getFurnitureList(
+        ApiConstants.furnitureFromSearcByCategoryAndPricePath(
+          categoryQueryEntity,
+        ),
+      );
 
   @override
   Future<List<FurnitureEntity>> getFurnitureFromSearchByMaxPrice(
-      {required int maxPrice}) {
-    // TODO: implement getFurnitureFromSearchByMaxPrice
-    throw UnimplementedError();
-  }
+          {required int maxPrice}) =>
+      _getFurnitureList(
+        ApiConstants.furnitureFromSearcByMaxPricePath(maxPrice),
+      );
 
   @override
   Future<List<FurnitureEntity>> getFurnitureFromSearchByMinPrice(
-      {required int minPrice}) {
-    // TODO: implement getFurnitureFromSearchByMinPrice
-    throw UnimplementedError();
-  }
+          {required int minPrice}) =>
+      _getFurnitureList(
+        ApiConstants.furnitureFromSearcByMinPricePath(minPrice),
+      );
 
   @override
   Future<List<FurnitureEntity>> getFurnitureFromSearchByPriceRange(
-      {required int minPrice, required int maxPrice}) {
-    // TODO: implement getFurnitureFromSearchByPriceRange
-    throw UnimplementedError();
-  }
+          {required int minPrice, required int maxPrice}) =>
+      _getFurnitureList(
+        ApiConstants.furnitureFromSearcByPriceRangePath(minPrice, maxPrice),
+      );
 
   @override
   Future<String> uploadFurniture({required FurnitureEntity furniture}) {
@@ -118,5 +112,23 @@ class FurnitureRemoteDataSourceImpl extends FurnitureRemoteDataSource {
   Future<String> deleteProduct({required int productId}) {
     // TODO: implement deleteProduct
     throw UnimplementedError();
+  }
+
+  Future<List<FurnitureEntity>> _getFurnitureList(String url) async {
+    Response response = await _dio.get(
+      url,
+      data: {
+        'Content-Type': 'application / json',
+      },
+    );
+    if (response.statusCode == 200) {
+      return List.from(
+        [response.data].map((element) => FurnitureModel.fromMap(element)),
+      );
+    } else {
+      throw ServerException(
+        errorMessageModel: ErrorMessageModel.fromJson(response.data),
+      );
+    }
   }
 }

@@ -1,8 +1,8 @@
 import 'package:equatable/equatable.dart';
-import 'package:gp_flutter/core/error/failure.dart';
+import '../../../../core/error/failure.dart';
 
 import 'package:dartz/dartz.dart';
-import 'package:gp_flutter/features/e_commerce/domain/entities/search_query_entity.dart';
+import '../entities/search_query_entity.dart';
 
 import '../../../../core/use_case/use_case.dart';
 import '../entities/furniture_entity.dart';
