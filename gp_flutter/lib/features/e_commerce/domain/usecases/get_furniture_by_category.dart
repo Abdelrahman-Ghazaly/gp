@@ -21,7 +21,7 @@ class GetFurnitureByCategory
 }
 
 class Params extends Equatable {
-  final int categoryId;
+  final String categoryId;
 
   const Params({required this.categoryId});
 

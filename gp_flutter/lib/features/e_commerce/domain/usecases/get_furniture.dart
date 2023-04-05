@@ -6,14 +6,14 @@ import '../../../../core/use_case/use_case.dart';
 import '../entities/furniture_entity.dart';
 import '../repositories/e_commerce_repository.dart';
 
-class GetFurniture implements BaseUseCase<FurnitureEntity, Params> {
+class GetFurnitureById implements BaseUseCase<FurnitureEntity, Params> {
   final ECommerceRepository repository;
 
-  GetFurniture({required this.repository});
+  GetFurnitureById({required this.repository});
 
   @override
   Future<Either<Failure, FurnitureEntity>> call(Params params) async {
-    return await repository.getFurniture(
+    return await repository.getFurnitureById(
       furnitureId: params.furnitureId,
     );
   }
