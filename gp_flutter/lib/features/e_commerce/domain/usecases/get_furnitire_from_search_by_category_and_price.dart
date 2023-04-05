@@ -1,11 +1,10 @@
-import 'package:equatable/equatable.dart';
-import '../../../../core/error/failure.dart';
-
 import 'package:dartz/dartz.dart';
-import '../entities/search_query_entity.dart';
+import 'package:equatable/equatable.dart';
 
+import '../../../../core/error/failure.dart';
 import '../../../../core/use_case/use_case.dart';
 import '../entities/furniture_entity.dart';
+import '../entities/search_query_entity.dart';
 import '../repositories/e_commerce_repository.dart';
 
 class GetFurnitireFromSearchByCategoryAndPrice

@@ -1,5 +1,5 @@
-import 'app_constants.dart';
 import '../../features/e_commerce/domain/entities/search_query_entity.dart';
+import 'app_constants.dart';
 
 class ApiConstants {
   static const String baseUrl = 'http://localhost:5000/';
