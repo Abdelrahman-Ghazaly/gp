@@ -2,22 +2,22 @@ import '../../features/e_commerce/domain/entities/search_query_entity.dart';
 import 'app_constants.dart';
 
 class ApiConstants {
-  static const String baseUrl = 'http://localhost:5000/';
+  static const String _baseUrl = 'http://10.0.2.2:5000/';
 
   //? Product End Points
 
-  static const String productBaseUrl = '${baseUrl}product/';
+  static const String _productBaseUrl = '${_baseUrl}product/';
 
-  static const String popularFurnitureByCategoryPath = '${productBaseUrl}view';
+  static const String popularFurnitureByCategoryPath = '${_productBaseUrl}view';
 
-  static const String uploadFurniturePath = '${productBaseUrl}upload';
+  static const String uploadFurniturePath = '${_productBaseUrl}upload';
 
   static String deleteFurniturePath(productId) =>
-      '${productBaseUrl}delete/$productId';
+      '${_productBaseUrl}delete/$productId';
 
   //? Search End Points
 
-  static const String productSearchBaseUrl = '${baseUrl}search/product/?';
+  static const String productSearchBaseUrl = '${_baseUrl}search/product/?';
 
   static String furnitureFromSearcByQueryhPath(String query) =>
       '${productSearchBaseUrl}query=$query';
@@ -43,7 +43,7 @@ class ApiConstants {
 
   //? User End Points
 
-  static const String userBaseUrl = '${baseUrl}user/';
+  static const String _userBaseUrl = '${_baseUrl}user/';
 
-  static const String viewProfilePath = '${userBaseUrl}view/profile/';
+  static const String viewProfilePath = '${_userBaseUrl}view/profile/';
 }
