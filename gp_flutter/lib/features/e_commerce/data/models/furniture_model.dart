@@ -5,15 +5,16 @@ class FurnitureModel extends FurnitureEntity {
     required super.id,
     required super.title,
     required super.description,
-    required super.imageUrls,
+    super.imageUrls,
     required super.category,
     required super.price,
     required super.sellerId,
+    super.rawImage,
   });
 
   factory FurnitureModel.fromMap(Map<String, dynamic> map) {
     return FurnitureModel(
-      id: map['_id']?.toInt() ?? 0,
+      id: map['_id'] ?? '',
       title: map['title'] ?? '',
       description: map['description'] ?? '',
       imageUrls: map['imgURL'] ?? [],
@@ -28,10 +29,10 @@ class FurnitureModel extends FurnitureEntity {
       '_id': id,
       'title': title,
       'description': description,
-      'imgURL': imageUrls,
+      'imgURL': rawImage,
       'category': category,
       'price': price,
-      'user_id': sellerId,
+//      'user_id': sellerId,
     };
   }
 }

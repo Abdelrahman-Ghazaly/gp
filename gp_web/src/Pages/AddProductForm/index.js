@@ -52,10 +52,10 @@ const AddProductForm = () => {
           const formData = new FormData();
               formData.append("title", data.title);
               formData.append("description", data.description);
-              formData.append("images", data.imgURL);
+              formData.append("imgURL", data.imgURL[0]);
               formData.append("category" , data.category)
               formData.append("price" , data.price)
-          console.log(formData.get("images"))
+          console.log(formData.get("imgURL"))
            dispatch(uploadProduct(formData))
           navigate("/")
         }

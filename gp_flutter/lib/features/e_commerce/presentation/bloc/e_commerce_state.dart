@@ -22,6 +22,17 @@ class Loaded extends ECommerceState {
   List<Object> get props => [furnitureList];
 }
 
+class Success extends ECommerceState {
+  final String message;
+
+  const Success({
+    required this.message,
+  });
+
+  @override
+  List<Object> get props => [message];
+}
+
 class Error extends ECommerceState {
   final String message;
 

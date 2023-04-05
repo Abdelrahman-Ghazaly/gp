@@ -1,12 +1,15 @@
+import 'dart:convert';
+
 import 'package:equatable/equatable.dart';
 
 class FurnitureEntity extends Equatable {
-  final int id;
+  final String id;
   final String title;
   final String description;
-  final List<String> imageUrls;
+  final List<String>? imageUrls;
+  final String? rawImage;
   final String category;
-  final String price;
+  final int price;
   final String sellerId;
 
   const FurnitureEntity({
@@ -17,10 +20,11 @@ class FurnitureEntity extends Equatable {
     required this.category,
     required this.price,
     required this.sellerId,
+    this.rawImage,
   });
 
   @override
-  List<Object> get props {
+  List<Object?> get props {
     return [
       id,
       title,
