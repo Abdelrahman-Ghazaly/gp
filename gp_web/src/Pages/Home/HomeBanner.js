@@ -27,7 +27,7 @@ const HomeBanner = ({match , Categories}) => {
           {Categories.map((cat) => (
             <CategoriesListItem key={cat.categoryName}>
               <Link to={`/categorypage/${cat.categoryName}`}>
-                {cat.icon}
+                <span style={{display : 'flex' , justifyContent : 'center' , alignItems : 'center'}}>{cat.icon}</span>
                 {cat.categoryName}
               </Link>
             </CategoriesListItem>

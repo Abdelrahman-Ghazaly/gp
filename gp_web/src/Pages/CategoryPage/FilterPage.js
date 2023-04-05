@@ -12,12 +12,13 @@ const FilterPage = () => {
     // const [maxValue , setMaxValue] = useState(0)
     const minInput = useRef(0)
     const maxInput = useRef(0)
-    const selectInput = useRef()
+    const selectInput = useRef('')
     // const [selectValue , setSelectValue] = useState('')
     const dispatch = useDispatch()
 
     const theme = useTheme();
     const match = useMediaQuery(theme.breakpoints.down("sm"));
+
     const handleSubmit = async (e) => {
         e.preventDefault()
         let minValue = minInput.current.value
@@ -27,64 +28,77 @@ const FilterPage = () => {
         dispatch(filterAction.setMinPrice(minValue))
         dispatch(filterAction.setMaxPrice(maxValue))
         dispatch(filterProducts(selectedValue))
-        minInput.current.value = ''
-        maxInput.current.value = ''
+        minInput.current.valueOf = ''
+        maxInput.current.valueOf = ''
     }
 
   return (
     <div>
-        <form onSubmit={handleSubmit}>
-        <Box style={{display : 'flex' , alignItems : 'center' , justifyContent: 'center' , border : '2px solid black' , borderRadius : '15px' , padding : '20px' , margin : '15px' , flexWrap : 'wrap'}}>
-        <TextField
-        id="outlined-select-currency"
-        select
-        label="Select Category"
-        defaultValue=""
-        style={{width : '30%', flexGrow : `${match ? '1' : '0'}` }}
-        inputRef = {selectInput}
-        // onChange = {e => setSelectValue(e.target.value)}
-      >
-        {Categories.map((option) => (
-          <MenuItem key={option.categoryName} value={option.categoryName}>
-            {option.categoryName}
-          </MenuItem>
-        ))}
-      </TextField>
-      <TextField
-        placeholder="Min"
-        variant="outlined"
-        type="number"
-        style={{ width: "120px", marginLeft: "20px" }}
-        InputProps={{
-          endAdornment: (
-            <InputAdornment position="end">
-              <AttachMoneyIcon />
-            </InputAdornment>
-          ),
-          inputProps: { min: 0 }
-        }}
-        inputRef = {minInput}
-        // onChange = {e => setMinValue(e.target.value)}
-      />
-      <TextField
-        placeholder="Max"
-        variant="outlined"
-        type="number"
-        style={{ width: "120px", margin: "20px" }}
-        InputProps={{
-          endAdornment: (
-            <InputAdornment position="end">
-              <AttachMoneyIcon />
-            </InputAdornment>
-          ),
-          inputProps: { min: 0 }
-        }}
-         inputRef = {maxInput}
-        // onChange = {e => setMaxValue(e.target.value)}
-      />
-      <Button type="submit" variant='contained'>GO</Button>
+      <form onSubmit={handleSubmit}>
+        <Box
+          style={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            borderRadius: "15px",
+            padding: "20px",
+            margin: "25px",
+            flexWrap: "wrap",
+            boxShadow : `rgba(100, 100, 111, 0.2) 0px 7px 29px 0px`
+          }}
+        >
+          <TextField
+            id="outlined-select-currency"
+            select
+            label="Select Category"
+            defaultValue={selectInput.current.value}
+            style={{ width: "30%", flexGrow: `${match ? "1" : "0"}`}}
+            inputRef={selectInput}
+            // onChange = {e => setSelectValue(e.target.value)}
+          >
+            {Categories.map((option) => (
+              <MenuItem key={option.categoryName} value={option.categoryName}>
+                {option.categoryName}
+              </MenuItem>
+            ))}
+          </TextField>
+          <TextField
+            placeholder="Min"
+            variant="outlined"
+            type="number"
+            style={{ width: "120px", marginLeft: "20px" }}
+            InputProps={{
+              endAdornment: (
+                <InputAdornment position="end">
+                  <AttachMoneyIcon />
+                </InputAdornment>
+              ),
+              inputProps: { min: 0 },
+            }}
+            inputRef={minInput}
+            // onChange = {e => setMinValue(e.target.value)}
+          />
+          <TextField
+            placeholder="Max"
+            variant="outlined"
+            type="number"
+            style={{ width: "120px", margin: "20px" }}
+            InputProps={{
+              endAdornment: (
+                <InputAdornment position="end">
+                  <AttachMoneyIcon />
+                </InputAdornment>
+              ),
+              inputProps: { min: 0 },
+            }}
+            inputRef={maxInput}
+            // onChange = {e => setMaxValue(e.target.value)}
+          />
+          <Button style={{padding : '12px'}} type="submit" variant="contained">
+            GO
+          </Button>
         </Box>
-        </form>
+      </form>
     </div>
   );
 }

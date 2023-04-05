@@ -4,6 +4,7 @@ import favoriteReducer from './favoriteReducer';
 import productReducer from './productReducer';
 import filterReducer from './filterReducer';
 import authReducer from './authReducer';
+import reportReducer from './reportReducer';
 
 export const store = configureStore({
   reducer: {
@@ -11,6 +12,7 @@ export const store = configureStore({
     favorite: favoriteReducer,
     product: productReducer,
     filter : filterReducer,
-    auth : authReducer
+    auth : authReducer,
+    report : reportReducer
   },
 });
