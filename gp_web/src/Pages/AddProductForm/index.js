@@ -41,22 +41,22 @@ const AddProductForm = () => {
     const dispatch = useDispatch()
     const navigate = useNavigate()
     const pricePattern = `(\d+\.\d{1,2})`
-    const defaultValues = {title : '' , description : '' , image : [] , category : '' , price : ''}
+    const defaultValues = {title : '' , description : '' , imgURL : [] , category : '' , price : ''}
     const {register, handleSubmit, formState: { errors } , setValue} = useForm({ defaultValues: defaultValues });
 
     const handleSubmitForm = async (data, e) => {
         e.preventDefault();
 
-        if(data.image.length != 0){
+        if(data.imgURL.length != 0){
           console.log(data);
-          dispatch(uploadProduct(data))
+          // dispatch(uploadProduct(data))
           navigate("/")
         }
-      }
+    }
  
       // Get Image Array
     const imageValue = useCallback((imgArray) => {
-          setValue("image", imgArray);
+          setValue("imgURL", imgArray);
     } , [setValue])
 
     return (
@@ -153,6 +153,8 @@ const AddProductForm = () => {
                 </MenuItem>
               ))}
             </TextField>
+
+            <h3 style={{textAlign : "center" , color : 'red'}}>*Only 4 Images Are Allowed*</h3>
 
             {/* Upload Product Component */}
             <UploadImage imageValue={imageValue} />

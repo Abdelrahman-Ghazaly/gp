@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:gp_flutter/core/theme/theme.dart';
-import 'package:gp_flutter/features/e_commerce/presentation/screens/home_screen.dart';
+
+import 'core/theme/theme.dart';
+import 'features/e_commerce/presentation/screens/home_screen.dart';
 
 void main() {
   runApp(const MyApp());
