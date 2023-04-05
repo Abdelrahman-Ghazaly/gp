@@ -1,4 +1,6 @@
-class FurnitureEntity {
+import 'package:equatable/equatable.dart';
+
+class FurnitureEntity extends Equatable {
   final int id;
   final String title;
   final String description;
@@ -7,7 +9,7 @@ class FurnitureEntity {
   final String price;
   final String sellerId;
 
-  FurnitureEntity({
+  const FurnitureEntity({
     required this.id,
     required this.title,
     required this.description,
@@ -16,4 +18,17 @@ class FurnitureEntity {
     required this.price,
     required this.sellerId,
   });
+
+  @override
+  List<Object> get props {
+    return [
+      id,
+      title,
+      description,
+      imageUrl,
+      category,
+      price,
+      sellerId,
+    ];
+  }
 }

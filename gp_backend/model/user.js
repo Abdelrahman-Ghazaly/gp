@@ -29,6 +29,7 @@ const userSchema = new Schema({
             _id: {
                 type: Schema.Types.ObjectId,
                 ref: "Product",
+                unique: true,
             },
         },
     ],
