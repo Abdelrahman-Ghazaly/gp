@@ -23,7 +23,7 @@ const storage = getStorage();
 exports.uploadImage = multer({
     storage: multer.memoryStorage(),
     fileFilter: multerConfig.fileFilter,
-}).array((fieldName = "images"), (maxCount = 4));
+}).array((fieldName = "imgURL"), (maxCount = 4));
 
 exports.uploadToFirebase = async (req, res, next) => {
     try {
