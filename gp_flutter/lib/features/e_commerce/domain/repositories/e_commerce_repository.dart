@@ -1,4 +1,5 @@
 import 'package:dartz/dartz.dart';
+import 'package:gp_flutter/features/e_commerce/data/models/furniture_model.dart';
 
 import '../../../../core/app_constants/app_constants.dart';
 import '../../../../core/error/failure.dart';
@@ -40,7 +41,7 @@ abstract class ECommerceRepository {
   });
 
   Future<Either<Failure, String>> uploadFurniture({
-    required FurnitureEntity furniture,
+    required FurnitureModel furniture,
   });
 
   Future<Either<Failure, String>> deleteProduct({

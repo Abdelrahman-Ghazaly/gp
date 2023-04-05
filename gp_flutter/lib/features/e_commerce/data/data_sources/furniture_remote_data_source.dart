@@ -32,7 +32,7 @@ abstract class FurnitureRemoteDataSource {
   });
 
   Future<String> uploadFurniture({
-    required FurnitureEntity furniture,
+    required FurnitureModel furniture,
   });
 
   Future<String> deleteProduct({
@@ -103,9 +103,25 @@ class FurnitureRemoteDataSourceImpl extends FurnitureRemoteDataSource {
       );
 
   @override
-  Future<String> uploadFurniture({required FurnitureEntity furniture}) {
-    // TODO: implement uploadFurniture
-    throw UnimplementedError();
+  Future<String> uploadFurniture({required FurnitureModel furniture}) async {
+    Response response = await _dio.post(
+      ApiConstants.uploadFurniturePath,
+      queryParameters: {
+        'method': "POST",
+        'body': furniture.toMap(),
+        'headers': {
+          'token':
+              "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0MGNlMzNiYTEwZTE0ZWQxYzk4N2M0ZiIsImlzQWRtaW4iOmZhbHNlLCJpYXQiOjE2ODA3MzE3NjgsImV4cCI6MTY4MDk5MDk2OH0.M4jqvht5T8Izccn0ysO_34VxhsbE7VBwIoqkjhR931U",
+        },
+      },
+    );
+    if (response.statusCode == 200) {
+      return 'Uploaded Succesfully';
+    } else {
+      throw ServerException(
+        errorMessageModel: ErrorMessageModel.fromJson(response.data),
+      );
+    }
   }
 
   @override
@@ -123,7 +139,7 @@ class FurnitureRemoteDataSourceImpl extends FurnitureRemoteDataSource {
     );
     if (response.statusCode == 200) {
       return List.from(
-        [response.data].map((element) => FurnitureModel.fromMap(element)),
+        response.data.map((element) => FurnitureModel.fromMap(element)),
       );
     } else {
       throw ServerException(

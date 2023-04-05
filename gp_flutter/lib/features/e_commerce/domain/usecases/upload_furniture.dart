@@ -1,9 +1,9 @@
 import 'package:dartz/dartz.dart';
 import 'package:equatable/equatable.dart';
+import 'package:gp_flutter/features/e_commerce/data/models/furniture_model.dart';
 
 import '../../../../core/error/failure.dart';
 import '../../../../core/use_case/use_case.dart';
-import '../entities/furniture_entity.dart';
 import '../repositories/e_commerce_repository.dart';
 
 class UploadFurniture implements BaseUseCase<String, Params> {
@@ -20,7 +20,7 @@ class UploadFurniture implements BaseUseCase<String, Params> {
 }
 
 class Params extends Equatable {
-  final FurnitureEntity furniture;
+  final FurnitureModel furniture;
 
   const Params({required this.furniture});
 
