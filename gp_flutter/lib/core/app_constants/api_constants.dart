@@ -17,33 +17,51 @@ class ApiConstants {
 
   //? Search End Points
 
-  static const String productSearchBaseUrl = '${_baseUrl}search/product/?';
+  static const String _productSearchBaseUrl =
+      '${_productBaseUrl}search/product/?';
 
   static String furnitureFromSearcByQueryhPath(String query) =>
-      '${productSearchBaseUrl}query=$query';
+      '${_productSearchBaseUrl}query=$query';
 
   static String furnitureFromSearcByCategory(Category category) =>
-      '${productSearchBaseUrl}category=$category';
+      '${_productSearchBaseUrl}category=${_getCatergory(category)}';
 
   static String furnitureFromSearcByMinPricePath(int minPrice) =>
-      '${productSearchBaseUrl}minPrice=$minPrice';
+      '${_productSearchBaseUrl}minPrice=$minPrice';
 
   static String furnitureFromSearcByMaxPricePath(int maxPrice) =>
-      '${productSearchBaseUrl}maxPrice=$maxPrice';
+      '${_productSearchBaseUrl}maxPrice=$maxPrice';
 
   static String furnitureFromSearcByPriceRangePath(
     int minPrice,
     int maxPrice,
   ) =>
-      '${productSearchBaseUrl}minPrice=$minPrice&maxPrice=$maxPrice';
+      '${_productSearchBaseUrl}minPrice=$minPrice&maxPrice=$maxPrice';
 
   static String furnitureFromSearcByCategoryAndPricePath(
           CategoryQueryEntity categoryQueryEntity) =>
-      '${productSearchBaseUrl}category=${categoryQueryEntity.category}&minPrice=${categoryQueryEntity.minPrice}&maxPrice=${categoryQueryEntity.maxPrice}';
+      '${_productSearchBaseUrl}category=${_getCatergory(categoryQueryEntity.category)}&minPrice=${categoryQueryEntity.minPrice}&maxPrice=${categoryQueryEntity.maxPrice}';
 
   //? User End Points
 
   static const String _userBaseUrl = '${_baseUrl}user/';
 
   static const String viewProfilePath = '${_userBaseUrl}view/profile/';
+}
+
+String _getCatergory(Category category) {
+  switch (category) {
+    case Category.bed:
+      return 'bed';
+    case Category.chair:
+      return 'chair';
+    case Category.sofa:
+      return 'sofa';
+    case Category.lamp:
+      return 'lamp';
+    case Category.table:
+      return 'table';
+    case Category.dresser:
+      return 'dresser';
+  }
 }
