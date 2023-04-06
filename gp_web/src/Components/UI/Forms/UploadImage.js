@@ -5,37 +5,30 @@ import {AddImageButton , ImageStyle} from '../../../Styles/forms'
 const UploadImage = memo(({ imageValue }) => {
   const [image, setImage] = useState();
   const [imageList, setImageList] = useState([]);
+  const [imageFiles, setImageFiles] = useState([]);
   const fileInputRef = useRef();
+  const formData = new FormData();
 
   const handleImageInput = (e) => {
-    const file = e.target.files[0];
-    const formData = new FormData();
-    formData.append("IMAGE" , e.target.files[0])
-    console.log(formData.get("IMAGE"))
+    let files = e.target.files;
 
-    if (file && file.type.substr(0, 5) === "image" ) {
-      setImage(file);
-    } else {
-      setImage(null);
-    }
+    setImageFiles([...imageFiles, ...files]);
+
   };
 
   useEffect(() => {
-    if (image) {
-      const reader = new FileReader();
-      reader.onloadend = (e) => {
-        setImageList(() => [...imageList, e.target.result]);
-      };
-      reader.readAsDataURL(image);
-      // console.log(reader.readAsDataURL(image))
+    for (let i = 0; i < imageFiles.length; i++) {
+      formData.append(`image_${i}`, imageFiles[i]);
     }
-  }, [image]);
+  }, [imageFiles]);
 
 
+  //console.log(testImage)
+  console.log(imageFiles)
 
   useEffect(() => {
-    imageValue(imageList.slice(0, 4))
-  },[imageList])
+    imageValue(imageFiles.slice(0 , 4))
+  },[imageFiles])
 
   const renderLoop = useMemo(() => {
     return imageList.slice(0, 4)?.map((i, index) => {

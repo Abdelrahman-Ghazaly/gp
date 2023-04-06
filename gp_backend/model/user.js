@@ -51,7 +51,7 @@ exports.viewProfile = async (id) => {
                     from: "products",
                     localField: "_id",
                     foreignField: "user_id",
-                    as: "product-logs",
+                    as: "product_logs",
                 },
             },
         ]);

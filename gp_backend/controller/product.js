@@ -23,14 +23,14 @@ const storage = getStorage();
 exports.uploadImage = multer({
     storage: multer.memoryStorage(),
     fileFilter: multerConfig.fileFilter,
-}).array((fieldName = "images"), (maxCount = 4));
+}).array((fieldName = "imgURL"), (maxCount = 4));
 
 exports.uploadToFirebase = async (req, res, next) => {
     try {
-        const images = req.files;
+        const images = req.files;backen
         console.log(images)
         const imageURLs = [];
-        if (!images) {
+        if (!images[0]) {
             errors.validationError("no images sent");
         }
         for (const image of images) {

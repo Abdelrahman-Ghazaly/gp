@@ -13,16 +13,14 @@ const userSchema = joi.object({
     confirmPassword: joi.any().valid(joi.ref("password")).required(),
     address: joi.string().min(5).required(),
     phone: joi.string().required(),
-    
 });
 
 
 const ProductSchema = joi.object({
-    title: joi.string().min(3).max(15).required(),
-    description: joi.string().min(5).max(50).required(),
-    category: joi.string().min(3).max(15).required(),
+    title: joi.string().min(3).required(),
+    description: joi.string().min(3).required(),
+    category: joi.string().min(3).required(),
     price: joi.number().required(),
-    images: joi.required()
 });
 
 exports.validateUserData = validatior(userSchema);

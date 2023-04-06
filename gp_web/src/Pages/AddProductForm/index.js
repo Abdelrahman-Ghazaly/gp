@@ -38,10 +38,11 @@ const CategoriesList = [
     },
   ]
 const AddProductForm = () => {
+    const formData = new FormData();
     const dispatch = useDispatch()
     const navigate = useNavigate()
     const pricePattern = `(\d+\.\d{1,2})`
-    const defaultValues = {title : '' , description : '' , imgURL : [] , category : '' , price : ''}
+    const defaultValues = {title : '' , description : '' , imgURL : null , category : '' , price : ''}
     const {register, handleSubmit, formState: { errors } , setValue} = useForm({ defaultValues: defaultValues });
 
     const handleSubmitForm = async (data, e) => {
@@ -49,13 +50,15 @@ const AddProductForm = () => {
 
         if(data.imgURL.length != 0){
           console.log(data);
-          const formData = new FormData();
+          // const formData = new FormData();
               formData.append("title", data.title);
               formData.append("description", data.description);
-              formData.append("images", data.imgURL);
+              for(var i = 0 ; i < data.imgURL.length ; i ++){
+                formData.append("imgURL", data.imgURL[i]);
+              }
               formData.append("category" , data.category)
               formData.append("price" , data.price)
-          console.log(formData.get("images"))
+          console.log(formData.get("imgURL"))
            dispatch(uploadProduct(formData))
           navigate("/")
         }
