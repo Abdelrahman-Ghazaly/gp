@@ -14,27 +14,27 @@ import CurrencyPoundIcon from '@mui/icons-material/CurrencyPound';
 const CategoriesList = [
     {
         id : 0,
-      categoryName : 'Bed',
+      categoryName : 'bed',
     },
     {
         id : 1,
-      categoryName : 'Chair',
+      categoryName : 'chair',
     },
     {
         id : 2,
-      categoryName : 'Dresser',
+      categoryName : 'dresser',
     },
     {
         id : 3,
-      categoryName : 'Table',
+      categoryName : 'table',
     },
     {
         id : 4,
-      categoryName : 'Sofa',
+      categoryName : 'sofa',
     },
     {
         id : 5,
-      categoryName : 'Lamp',
+      categoryName : 'lamp',
     },
   ]
 const AddProductForm = () => {
@@ -45,12 +45,10 @@ const AddProductForm = () => {
     const defaultValues = {title : '' , description : '' , imgURL : null , category : '' , price : ''}
     const {register, handleSubmit, formState: { errors } , setValue} = useForm({ defaultValues: defaultValues });
 
-    const handleSubmitForm = async (data, e) => {
+    const handleSubmitForm =  (data, e) => {
         e.preventDefault();
 
         if(data.imgURL.length != 0){
-          console.log(data);
-          // const formData = new FormData();
               formData.append("title", data.title);
               formData.append("description", data.description);
               for(var i = 0 ; i < data.imgURL.length ; i ++){
@@ -58,9 +56,9 @@ const AddProductForm = () => {
               }
               formData.append("category" , data.category)
               formData.append("price" , data.price)
-          console.log(formData.get("imgURL"))
-           dispatch(uploadProduct(formData))
-          navigate("/")
+
+              dispatch(uploadProduct(formData))
+              navigate("/")
         }
     }
  
@@ -158,7 +156,7 @@ const AddProductForm = () => {
               helperText={errors.category?.message}
             >
               {CategoriesList.map((option) => (
-                <MenuItem key={option.id} value={option.categoryName}>
+                <MenuItem key={option.id} value={option.categoryName} style={{textTransform : 'capitalize'}}>
                   {option.categoryName}
                 </MenuItem>
               ))}

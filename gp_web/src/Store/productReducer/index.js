@@ -5,14 +5,8 @@ export const uploadProduct = createAsyncThunk(
   async (item , thunkAPI) => {
     try {
         let userToken = thunkAPI.getState().auth.userToken;
-        // const formData = new FormData();
-        //     formData.append("title", item.title);
-        //     formData.append("description", item.description);
-        //     formData.append("imgURL", item.imgURL);
-        //     formData.append("category" , item.category)
-        //     formData.append("price" , item.price)
-         console.log(item)
-
+        console.log(userToken)
+        console.log(item)
         const response = await fetch("http://localhost:5000/product/upload", {
           method: "POST",
           body: item,
@@ -72,11 +66,16 @@ const productSlice = createSlice({
     extraReducers : builder => {
         builder
             .addCase(uploadProduct.fulfilled , (state , action) => {
+              console.log("Fulfilled ")
                 const existingIndex = state.uploadedList.findIndex((favItem) => favItem.id === action.payload.id);
                 if (existingIndex === -1) {
                   state.uploadedList.push(action.payload);
                 }
                 state.loading = false
+            })
+            .addCase(uploadProduct.pending , (state , action) => {
+              console.log(action.payload.message)
+              state.loading = true
             })
             .addCase(deleteProduct.fulfilled, (state, action) => {
                 const itemId = action.payload;

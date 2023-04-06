@@ -11,8 +11,15 @@ const UploadImage = memo(({ imageValue }) => {
 
   const handleImageInput = (e) => {
     let files = e.target.files;
+    let singleFile = e.target.files[0]
 
     setImageFiles([...imageFiles, ...files]);
+
+    if (singleFile && singleFile.type.substr(0, 5) === "image" ) {
+      setImage(singleFile);
+    } else {
+      setImage(null);
+    }
 
   };
 
@@ -22,9 +29,16 @@ const UploadImage = memo(({ imageValue }) => {
     }
   }, [imageFiles]);
 
+  useEffect(() => {
+    if (image) {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setImageList(() => [...imageList, reader.result.toString()]);
+      };
+      reader.readAsDataURL(image);
+    }
+  }, [image])
 
-  //console.log(testImage)
-  console.log(imageFiles)
 
   useEffect(() => {
     imageValue(imageFiles.slice(0 , 4))
