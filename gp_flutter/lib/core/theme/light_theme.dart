@@ -6,7 +6,7 @@ ThemeData kLightThemeData() => ThemeData.light().copyWith(
           iconSize: 25,
         ),
       ),
-      iconTheme: IconThemeData(
+      iconTheme: const IconThemeData(
         size: 25,
       ),
     );
