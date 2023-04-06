@@ -19,6 +19,8 @@ dependencies:
   dartz: ^0.10.1
   dio: ^5.1.1
   get_it: ^7.2.0
+  lottie: ^2.3.1
+  google_fonts: ^4.0.3
 
 dev_dependencies:
   flutter_test:
@@ -28,4 +30,4 @@ dev_dependencies:
 flutter:
   uses-material-design: true
   assets:
-    - assets/images.jpg
+    - assets/lottie_animations/

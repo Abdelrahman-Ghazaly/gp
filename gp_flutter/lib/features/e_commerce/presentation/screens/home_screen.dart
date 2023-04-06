@@ -1,6 +1,7 @@
-import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:gp_flutter/features/e_commerce/presentation/bloc/e_commerce_bloc.dart';
+import 'package:flutter/material.dart' hide AppBar;
+import 'package:gp_flutter/core/app_constants/app_constants.dart';
+import 'package:gp_flutter/core/common_widgets/common_widgets.dart';
+import 'package:lottie/lottie.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -8,23 +9,7 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Center(
-        child: BlocBuilder<ECommerceBloc, ECommerceState>(
-          builder: (context, state) {
-            if (state is Empty) {
-              return Text('Empty');
-            } else if (state is Loading) {
-              return Text('Loading');
-            } else if (state is Loaded) {
-              return Text(state.furnitureList.length.toString());
-            } else if (state is Error) {
-              return Text(state.message);
-            } else {
-              return Text('Another State');
-            }
-          },
-        ),
-      ),
+      appBar: AppBar(),
     );
   }
 }

@@ -21,7 +21,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'GP E-Commerce',
       debugShowCheckedModeBanner: false,
-      theme: kLightThemeData,
+      theme: kLightThemeData(),
       home: BlocProvider(
         create: (_) => serviceLocator<ECommerceBloc>()
           ..add(
