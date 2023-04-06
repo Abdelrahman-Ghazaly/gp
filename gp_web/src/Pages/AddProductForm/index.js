@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react'
+import React, { useCallback , useState } from 'react'
 import { useForm } from "react-hook-form";
 import {Box , Container , TextField , MenuItem , InputAdornment , Button} from '@mui/material';
 import { UploadFormContainer , UploadFormTitle} from '../../Styles/forms';
@@ -39,13 +39,14 @@ const CategoriesList = [
   ]
 const AddProductForm = () => {
     const formData = new FormData();
+    const [loading , setIsLoading] = useState(false)
     const dispatch = useDispatch()
     const navigate = useNavigate()
     const pricePattern = `(\d+\.\d{1,2})`
     const defaultValues = {title : '' , description : '' , imgURL : null , category : '' , price : ''}
     const {register, handleSubmit, formState: { errors } , setValue} = useForm({ defaultValues: defaultValues });
 
-    const handleSubmitForm =  (data, e) => {
+    const handleSubmitForm = async (data, e) => {
         e.preventDefault();
 
         if(data.imgURL.length != 0){
@@ -57,8 +58,11 @@ const AddProductForm = () => {
               formData.append("category" , data.category)
               formData.append("price" , data.price)
 
-              dispatch(uploadProduct(formData))
-              navigate("/")
+             setIsLoading(true)
+             await dispatch(uploadProduct(formData))
+             setIsLoading(false)
+             navigate("/")
+
         }
     }
  
@@ -75,7 +79,7 @@ const AddProductForm = () => {
               textAlign: "center",
               fontSize: "50px",
               padding: "0px 0px",
-              cursor : 'pointer'
+              cursor: "pointer",
             }}
           >
             Furniture
@@ -156,13 +160,19 @@ const AddProductForm = () => {
               helperText={errors.category?.message}
             >
               {CategoriesList.map((option) => (
-                <MenuItem key={option.id} value={option.categoryName} style={{textTransform : 'capitalize'}}>
+                <MenuItem
+                  key={option.id}
+                  value={option.categoryName}
+                  style={{ textTransform: "capitalize" }}
+                >
                   {option.categoryName}
                 </MenuItem>
               ))}
             </TextField>
 
-            <h3 style={{textAlign : "center" , color : 'red'}}>*Only 4 Images Are Allowed*</h3>
+            <h3 style={{ textAlign: "center", color: "red" }}>
+              *Only 4 Images Are Allowed*
+            </h3>
 
             {/* Upload Product Component */}
             <UploadImage imageValue={imageValue} />
@@ -179,7 +189,7 @@ const AddProductForm = () => {
                     <CurrencyPoundIcon />
                   </InputAdornment>
                 ),
-                inputProps: { min: 0 }
+                inputProps: { min: 0 },
               }}
               {...register("price", {
                 required: "Please Enter the Product's Price",
@@ -189,21 +199,33 @@ const AddProductForm = () => {
               helperText={errors.price?.message}
             />
 
-            <Button
-              hidden
-              type="submit"
-              fullWidth
-              variant="contained"
-              style={{
-                backgroundColor: "black",
-                borderRadius: "15px",
-                letterSpacing: "10px",
-                margin: "20px 0",
-                fontWeight: "700",
-              }}
-            >
-              Sell
-            </Button>
+            {loading ? (
+              <UploadFormTitle
+                style={{
+                  backgroundColor: "black",
+                  color: "white",
+                  marginTop: "15px",
+                }}
+              >
+                Loading ....
+              </UploadFormTitle>
+            ) : (
+              <Button
+                hidden
+                type="submit"
+                fullWidth
+                variant="contained"
+                style={{
+                  backgroundColor: "black",
+                  borderRadius: "15px",
+                  letterSpacing: "10px",
+                  margin: "20px 0",
+                  fontWeight: "700",
+                }}
+              >
+                Sell
+              </Button>
+            )}
           </UploadFormContainer>
         </Box>
       </Container>

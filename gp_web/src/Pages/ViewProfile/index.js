@@ -20,7 +20,7 @@ const ViewProfile = () => {
     const theme = useTheme();
     const match = useMediaQuery(theme.breakpoints.down("sm"));
     const dispatch = useDispatch()
-    const {uploadedList} = useSelector(state => state.product)
+    //const {uploadedList} = useSelector(state => state.product)
     const userData = useSelector(state => state.auth)
     let userId = userData.userData?._id
     let tokenId = userData.userData?.accessToken
@@ -49,7 +49,7 @@ const ViewProfile = () => {
 
     useEffect(() => {
         fetchData(`http://localhost:5000/user/view/profile/${userId}` , tokenId)
-    },[fetchData , userId , tokenId , products?.length])
+    },[fetchData , userId , tokenId])
 
 
     const removeProduct = (itemId) => {

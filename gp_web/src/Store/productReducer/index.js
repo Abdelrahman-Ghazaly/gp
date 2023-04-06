@@ -66,16 +66,12 @@ const productSlice = createSlice({
     extraReducers : builder => {
         builder
             .addCase(uploadProduct.fulfilled , (state , action) => {
-              console.log("Fulfilled ")
+                console.log("Fulfilled")
                 const existingIndex = state.uploadedList.findIndex((favItem) => favItem.id === action.payload.id);
                 if (existingIndex === -1) {
                   state.uploadedList.push(action.payload);
                 }
                 state.loading = false
-            })
-            .addCase(uploadProduct.pending , (state , action) => {
-              console.log(action.payload.message)
-              state.loading = true
             })
             .addCase(deleteProduct.fulfilled, (state, action) => {
                 const itemId = action.payload;
