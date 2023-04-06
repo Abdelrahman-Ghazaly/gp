@@ -17,9 +17,9 @@ const userSchema = joi.object({
 
 
 const ProductSchema = joi.object({
-    title: joi.string().min(3).max(15).required(),
-    description: joi.string().min(5).max(50).required(),
-    category: joi.string().min(3).max(15).required(),
+    title: joi.string().min(3).required(),
+    description: joi.string().min(3).required(),
+    category: joi.string().min(3).required(),
     price: joi.number().required(),
 });
 
