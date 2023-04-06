@@ -71,7 +71,6 @@ exports.createProduct = async (req, res, next) => {
         );
         if (result) {
             res.status(201).json({ message: "product created Successfully" });
-            
         } else {
             throw new Error();
         }
@@ -150,6 +149,21 @@ exports.search = async (req, res, next) => {
         const maxPrice = req.query.maxPrice;
         const category = req.query.category;
         const result = await db.search(query, category, minPrice, maxPrice);
+        if (result) {
+            res.status(200).json(result);
+        } else {
+            throw new Error();
+        }
+    } catch (err) {
+        console.log(err);
+        next(err);
+    }
+};
+
+exports.getUserProducts = async (req, res, next) => {
+    try {
+        const userId = req.user.id;
+        const result = await db.getUserProducts(userId);
         if (result) {
             res.status(200).json(result);
         } else {
