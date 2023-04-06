@@ -21,6 +21,12 @@ const ProductSchema = joi.object({
     description: joi.string().min(3).required(),
     category: joi.string().min(3).required(),
     price: joi.number().required(),
+<<<<<<< HEAD
+    
+    // images: joi.required()
+    
+=======
+>>>>>>> 546a0dfab0cfa74cacfc3fbd76d0502d8f7402ee
 });
 
 exports.validateUserData = validatior(userSchema);

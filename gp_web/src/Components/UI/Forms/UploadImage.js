@@ -12,21 +12,15 @@ const UploadImage = memo(({ imageValue }) => {
   const handleImageInput = (e) => {
     let files = e.target.files;
 
-    // formData.append("IMAGE" , e.target.files[0])
+    setImageFiles([...imageFiles, ...files]);
 
-
-    // if (file && file.type.substr(0, 5) === "image" ) {
-      setImageFiles([...imageFiles, ...files]);
-    // } else {
-    //   setImage(null);
-    // }
   };
 
   useEffect(() => {
     for (let i = 0; i < imageFiles.length; i++) {
       formData.append(`image_${i}`, imageFiles[i]);
     }
-  }, [imageFiles ]);
+  }, [imageFiles]);
 
 
   //console.log(testImage)

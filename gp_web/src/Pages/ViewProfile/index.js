@@ -50,9 +50,9 @@ const ViewProfile = () => {
     },[fetchData , userId , tokenId])
 
 
-    useEffect(() => {
-        dispatch(fetchUploadedProduct())
-    } , [dispatch])
+    // useEffect(() => {
+    //     dispatch(fetchUploadedProduct())
+    // } , [dispatch])
 
     const removeProduct = (itemId) => {
         dispatch(deleteProduct(itemId))
@@ -88,7 +88,7 @@ const ViewProfile = () => {
                     <div>
                         {uploadedList.map((item) => {
                             return (
-                                <div key={item.id} style={{display : 'flex' , justifyContent: 'space-around' , alignItems : 'center' , marginBottom : '20px'}}>
+                                <div key={item._id} style={{display : 'flex' , justifyContent: 'space-around' , alignItems : 'center' , marginBottom : '20px'}}>
                                     <div style={{width : '30%'}}>
                                             <img style={{aspectRatio : '3/2' , objectFit : 'contain' ,  width: `${match ? "100% " : "50%"}`}} src={typeof item.image == "string" ?  item.image : item.image[0]} alt={item.title}/>
                                     </div>
