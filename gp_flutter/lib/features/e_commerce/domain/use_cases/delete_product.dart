@@ -5,14 +5,14 @@ import '../../../../core/error/failure.dart';
 import '../../../../core/use_case/use_case.dart';
 import '../repositories/e_commerce_repository.dart';
 
-class DeleteProduct implements BaseUseCase<String, Params> {
+class DeleteFurniture implements BaseUseCase<String, Params> {
   final ECommerceRepository repository;
 
-  DeleteProduct({required this.repository});
+  DeleteFurniture({required this.repository});
 
   @override
   Future<Either<Failure, String>> call(Params params) {
-    return repository.deleteProduct(productId: params.productId);
+    return repository.deleteFurniture(productId: params.productId);
   }
 }
 
