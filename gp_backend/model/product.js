@@ -159,3 +159,14 @@ exports.search = async (query, category, minPrice, maxPrice) => {
         throw new Error();
     }
 };
+
+
+exports.getUserProducts = async (userId) => {
+    try {
+        const result = await Product.find({ user_id: userId });
+        return result;
+    } catch (err) {
+        console.log(err);
+        throw new Error();
+    }
+};
