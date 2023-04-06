@@ -1,55 +1,15 @@
 const db = require("../model/product");
-const errors = require("../util/error_handling");
 const { validateProductData } = require("../util/validation");
-const { initializeApp } = require("firebase/app");
-const {
-    getStorage,
-    ref,
-    getDownloadURL,
-    uploadBytesResumable,
-    deleteObject,
-} = require("firebase/storage");
-const firebaseConfig = require("../config/firebase.config");
-const multerConfig = require("../config/multer.config");
-const multer = require("multer");
+const errors = require("../util/error_handling");
 
-//Initialize a firebase application
-initializeApp(firebaseConfig.firebaseConfig);
-
-// Initialize Cloud Storage and get a reference to the service
-const storage = getStorage();
-
-exports.uploadImage = multer({
-    storage: multer.memoryStorage(),
-    fileFilter: multerConfig.fileFilter,
-}).array((fieldName = "imgURL"), (maxCount = 4));
-
-exports.uploadToFirebase = async (req, res, next) => {
+exports.productValidation = async (req, res, next) => {
     try {
-        const images = req.files;
-        const imageURLs = [];
-        if (!images[0]) {
-            errors.validationError("no images sent");
+        const productData = req.body;
+        const { error } = validateProductData(productData);
+        if (error) {
+            errors.validationError(error.details);
         }
-        for (const image of images) {
-            const dateTime = new Date();
-            const storageRef = ref(
-                storage,
-                `products/${image.originalname + "       " + dateTime}`
-            );
-            const metadata = {
-                contentType: image.mimetype,
-            };
-            const snapshot = await uploadBytesResumable(
-                storageRef,
-                image.buffer,
-                metadata
-            );
-            const URL = await getDownloadURL(snapshot.ref);
-            imageURLs.push(URL);
-        }
-        req.imageURLs = imageURLs;
-        next();
+        next()
     } catch (err) {
         console.log(err);
         next(err);
@@ -59,11 +19,6 @@ exports.uploadToFirebase = async (req, res, next) => {
 exports.createProduct = async (req, res, next) => {
     try {
         const productData = req.body;
-        const { error } = validateProductData(productData);
-        if (error) {
-            console.log(error.details);
-            errors.validationError(error.details);
-        }
         const result = await db.createProduct(
             productData,
             req.user.id,
@@ -74,24 +29,6 @@ exports.createProduct = async (req, res, next) => {
         } else {
             throw new Error();
         }
-    } catch (err) {
-        console.log(err);
-        next(err);
-    }
-};
-
-exports.deleteProductImages = async (req, res, next) => {
-    try {
-        const productId = req.params.productId;
-        const { imgURL } = await db.getProductImagesForDeletation(
-            productId,
-            req.user.id
-        );
-        for (const img of imgURL) {
-            const desertRef = ref(storage, img);
-            await deleteObject(desertRef);
-        }
-        next();
     } catch (err) {
         console.log(err);
         next(err);
