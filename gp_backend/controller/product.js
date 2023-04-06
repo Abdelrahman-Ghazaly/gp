@@ -70,7 +70,7 @@ exports.createProduct = async (req, res, next) => {
             req.imageURLs
         );
         if (result) {
-            res.status(201).json({ message: "product created Successfully" });
+            res.status(201).json(result);
         } else {
             throw new Error();
         }
