@@ -26,9 +26,8 @@ exports.uploadImage = multer({
 
 exports.uploadToFirebase = async (req, res, next) => {
     try {
-        const images = req.files;
-        backen;
-        console.log(images);
+        const images = req.files;backen
+        console.log(images)
         const imageURLs = [];
         if (!images[0]) {
             errors.validationError("no images sent");
@@ -73,6 +72,7 @@ exports.createProduct = async (req, res, next) => {
         );
         if (result) {
             res.status(201).json({ message: "product created Successfully" });
+            
         } else {
             throw new Error();
         }

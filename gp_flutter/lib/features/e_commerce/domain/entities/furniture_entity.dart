@@ -1,12 +1,11 @@
-import 'dart:convert';
-
 import 'package:equatable/equatable.dart';
 
 class FurnitureEntity extends Equatable {
   final String id;
   final String title;
   final String description;
-  final List<String>? imageUrls;
+  //! will change from dynamic to String
+  final List<dynamic>? imageUrls;
   final String? rawImage;
   final String category;
   final int price;

@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import React , { useEffect } from 'react';
 import { Suspense } from 'react';
 import Home from './Pages/Home'
 import LoginPage from './Pages/Login';
@@ -8,17 +8,20 @@ import ProductView from './Pages/ProductView';
 import { Route , Routes  } from "react-router-dom";
 import SearchResult from './Pages/Search/SearchResult';
 import FavoritePage from './Pages/FavoritePage';
-import ViewProfile from './Pages/ViewProfile';
+//import ViewProfile from './Pages/ViewProfile';
 import CategoryPage from './Pages/CategoryPage';
 import LoadingSpinner from './Components/UI/Common/LoadingSpinner';
 import { useDispatch } from 'react-redux';
 import { authSliceAction  } from './Store/authReducer';
+
+const ViewProfile = React.lazy(() => import('./Pages/ViewProfile'))
 
 function App() {
   const dispatch = useDispatch()
 
   useEffect(() => {
     const userData = JSON.parse(localStorage.getItem('userData'));
+    //console.log(userData)
     if (userData) {
       dispatch(authSliceAction.login(userData));
     }

@@ -1,6 +1,7 @@
+
 import 'package:dartz/dartz.dart';
 import 'package:equatable/equatable.dart';
-import 'package:gp_flutter/features/e_commerce/data/models/furniture_model.dart';
+import '../../data/models/furniture_model.dart';
 
 import '../../../../core/error/failure.dart';
 import '../../../../core/use_case/use_case.dart';

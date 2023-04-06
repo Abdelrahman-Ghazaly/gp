@@ -11,6 +11,7 @@ exports.viewProfile = async (req, res, next) => {
             res.status(200).json({"user-data":result[0]});
         } else {
             errors.notFoundError();
+            
         }
     } catch (err) {
         console.log(err);

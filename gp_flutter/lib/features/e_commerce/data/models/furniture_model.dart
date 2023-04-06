@@ -32,7 +32,6 @@ class FurnitureModel extends FurnitureEntity {
       'imgURL': rawImage,
       'category': category,
       'price': price,
-//      'user_id': sellerId,
     };
   }
 }

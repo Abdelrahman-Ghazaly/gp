@@ -32,12 +32,13 @@ const arrayOfCategories = [
   }
 ];
 
+
+
 const HomeProductsSlider = ({ match }) => {
   const { data , loading , error} = useFetch("http://localhost:5000/product/view");
   const scrollRef = useRef(null);
   const getAllObjestInOneArray = Object.values(data)
   const mixedData = [].concat(...getAllObjestInOneArray)
-
 
   const CategoryTitleStyle = {
     color: "#20284f",
