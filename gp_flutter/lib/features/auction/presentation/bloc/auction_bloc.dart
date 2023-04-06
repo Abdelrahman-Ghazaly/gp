@@ -7,7 +7,7 @@ part 'auction_state.dart';
 class AuctionBloc extends Bloc<AuctionEvent, AuctionState> {
   AuctionBloc() : super(AuctionInitial()) {
     on<AuctionEvent>((event, emit) {
-      // TODO: implement event handler
+
     });
   }
 }
