@@ -51,6 +51,7 @@ const authSlice = createSlice({
         builder
             .addCase(userLogin.fulfilled , (state , action) => {
                 state.status = 'success'
+                console.log(action.payload)
                 if(action.payload?.message){
                     state.error = action.payload?.message
                 }

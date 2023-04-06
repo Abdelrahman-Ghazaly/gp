@@ -28,11 +28,9 @@ const LoginForm = () => {
   const defaultValues = {email : '' , password : '' }
   const {register , handleSubmit , formState : {errors}} = useForm({defaultValues : defaultValues})
 
-  const handleSubmitForm = (data) => {
-    console.log(userData);
-    console.log(error);
+  const handleSubmitForm = async (data) => {
 
-        dispatch(userLogin(data))
+        await dispatch(userLogin(data))
           .then((res) => {
             if (res.meta.requestStatus === "fulfilled")
               setIsLoggedIn(true);
@@ -44,6 +42,7 @@ const LoginForm = () => {
         if (isLoggedIn) {
           navigate("/");
         }
+
   }
 
   return (

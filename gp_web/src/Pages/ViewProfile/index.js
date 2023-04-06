@@ -16,11 +16,12 @@ const ViewProfile = () => {
     const [data, setData] = useState([])
     const [loading, setLoading] = useState(true)
     const [error, setError] = useState(null)
+    const [test , setTest] = useState(false)
 
     const theme = useTheme();
     const match = useMediaQuery(theme.breakpoints.down("sm"));
     const dispatch = useDispatch()
-    const {uploadedList} = useSelector(state => state.product)
+    //const {uploadedList} = useSelector(state => state.product)
     const userData = useSelector(state => state.auth)
     let userId = userData.userData?._id
     let tokenId = userData.userData?.accessToken
@@ -49,12 +50,16 @@ const ViewProfile = () => {
 
     useEffect(() => {
         fetchData(`http://localhost:5000/user/view/profile/${userId}` , tokenId)
-    },[fetchData , userId , tokenId , products?.length])
+    },[fetchData , userId , tokenId])
 
 
     const removeProduct = (itemId) => {
         dispatch(deleteProduct(itemId))
     }
+
+    // useEffect(() => {
+    //     console.log(products)
+    // } , [ , products?.length])
 
     console.log(data)
 

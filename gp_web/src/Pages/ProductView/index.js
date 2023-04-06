@@ -83,7 +83,7 @@ const ProductView = () => {
                       {data.price}$
                     </span>
                   </h3>
-                  <h3 style={{ marginBottom: "15px" }}>Seller Name : Rashad</h3>
+                  <h3 style={{ marginBottom: "15px" , textTransform : 'capitalize'}}>Seller Name : {data.user_id?.name}</h3>
                   <h3 style={{ marginBottom: "15px" }}>Description :</h3>
                   <p style={{ marginBottom: "15px" }}>{data.description}</p>
                   <Button

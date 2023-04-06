@@ -11,7 +11,6 @@ router.post(
     productController.createProduct
 );
 
-// router.put("/:id", auth.verifyAdmin, productController.updateProduct);
 
 router.delete(
     "/delete/:productId",
@@ -23,6 +22,8 @@ router.delete(
 router.get("/view", productController.view);
 
 router.get("/view/item/:productId", productController.viewOneProduct);
+
+router.get("/user/products", auth.verifyLogedin, productController.getUserProducts);
 
 router.get("/search/product", productController.search);
 

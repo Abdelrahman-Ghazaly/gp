@@ -11,10 +11,9 @@ const UploadImage = memo(({ imageValue }) => {
 
   const handleImageInput = (e) => {
     let files = e.target.files;
-    let singleFile = e.target.files[0]
-
     setImageFiles([...imageFiles, ...files]);
 
+    let singleFile = e.target.files[0]
     if (singleFile && singleFile.type.substr(0, 5) === "image" ) {
       setImage(singleFile);
     } else {
