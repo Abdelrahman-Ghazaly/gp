@@ -41,21 +41,27 @@ export const deleteProduct = createAsyncThunk(
   }
 );
 
-// export const fetchUploadedProduct = createAsyncThunk(
-//   "fetchUploadedProduct/productSlice",
-//   async (thunkAPI) => {
-//     try {
-//         const response = await fetch("http://localhost:8000/UploadProducts");
-//         if (!response.ok) {
-//           throw new Error("Fetching Error");
-//         }
-//         const data = await response.json();
-//         return data;
-//       } catch (error) {
-//         return thunkAPI.rejectWithValue(error.response.data);
-//       }
-//   }
-// );
+export const fetchUploadedProduct = createAsyncThunk(
+  "fetchUploadedProduct/productSlice",
+  async (userToken , thunkAPI) => {
+    try {
+        const response = await fetch("http://localhost:5000/product/user/products" , {
+          method: "GET",
+          headers: {
+              token : "Bearer " + userToken,
+              'Content-Type' : 'application/json'
+            },
+        });
+        if (!response.ok) {
+          throw new Error("Fetching Error");
+        }
+        const data = await response.json();
+        return data;
+      } catch (error) {
+        return thunkAPI.rejectWithValue(error.response.data);
+      }
+  }
+);
 
 const initialState = {uploadedList : [] , loading : true , error : null}
 
@@ -66,8 +72,8 @@ const productSlice = createSlice({
     extraReducers : builder => {
         builder
             .addCase(uploadProduct.fulfilled , (state , action) => {
-                console.log("Fulfilled")
-                const existingIndex = state.uploadedList.findIndex((favItem) => favItem.id === action.payload.id);
+                console.log(action.payload)
+                const existingIndex = state.uploadedList.findIndex((Item) => Item._id === action.payload._id);
                 if (existingIndex === -1) {
                   state.uploadedList.push(action.payload);
                 }
@@ -75,13 +81,13 @@ const productSlice = createSlice({
             })
             .addCase(deleteProduct.fulfilled, (state, action) => {
                 const itemId = action.payload;
-                state.uploadedList = state.uploadedList.filter((item) => item.id !== itemId);
+                state.uploadedList = state.uploadedList.filter((item) => item._id !== itemId);
                 state.loading = false
             })
-            // .addCase(fetchUploadedProduct.fulfilled , (state , action) => {
-            //     state.uploadedList = action.payload
-            //     state.loading = false
-            // })
+            .addCase(fetchUploadedProduct.fulfilled , (state , action) => {
+                state.uploadedList = action.payload
+                state.loading = false
+            })
     }
 })
 
