@@ -87,7 +87,7 @@ const ViewProfile = () => {
                                     <div style={{display : 'flex' , justifyContent : 'center' , alignItems : 'center'}}>
                                         <img src={ProductImage} alt="img"/>
                                     </div>
-                                ) : 
+                                ) :
                                 <div>
                                     {productList?.map((item) => {
                                         return (
