@@ -12,7 +12,6 @@ const {
 const firebaseConfig = require("../config/firebase.config");
 const multerConfig = require("../config/multer.config");
 const multer = require("multer");
-const { sanitizeFilter } = require("mongoose");
 
 //Initialize a firebase application
 initializeApp(firebaseConfig.firebaseConfig);
@@ -27,8 +26,9 @@ exports.uploadImage = multer({
 
 exports.uploadToFirebase = async (req, res, next) => {
     try {
-        const images = req.files;backen
-        console.log(images)
+        const images = req.files;
+        backen;
+        console.log(images);
         const imageURLs = [];
         if (!images[0]) {
             errors.validationError("no images sent");
@@ -49,7 +49,7 @@ exports.uploadToFirebase = async (req, res, next) => {
             );
             const URL = await getDownloadURL(snapshot.ref);
             imageURLs.push(URL);
-        };
+        }
         req.imageURLs = imageURLs;
         next();
     } catch (err) {
@@ -63,7 +63,7 @@ exports.createProduct = async (req, res, next) => {
         const productData = req.body;
         const { error } = validateProductData(productData);
         if (error) {
-            console.log(error.details)
+            console.log(error.details);
             errors.validationError(error.details);
         }
         const result = await db.createProduct(
@@ -85,7 +85,10 @@ exports.createProduct = async (req, res, next) => {
 exports.deleteProductImages = async (req, res, next) => {
     try {
         const productId = req.params.productId;
-        const { imgURL } = await db.getProductImagesForDeletation(productId,req.user.id);
+        const { imgURL } = await db.getProductImagesForDeletation(
+            productId,
+            req.user.id
+        );
         for (const img of imgURL) {
             const desertRef = ref(storage, img);
             await deleteObject(desertRef);

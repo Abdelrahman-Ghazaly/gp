@@ -10,10 +10,12 @@ const productSchema = new Schema({
         type: String,
         required: true,
     },
-    imgURL: [{
-        type: String,
-        required: true,
-    }],
+    imgURL: [
+        {
+            type: String,
+            required: true,
+        },
+    ],
     category: {
         type: String,
         required: true,
@@ -116,7 +118,10 @@ exports.view = async () => {
 
 exports.viewOneProduct = async (productId) => {
     try {
-        const result = await Product.findById(productId);
+        const result = await Product.findById(productId).populate(
+            "user_id",
+            "_id name"
+        );
         return result;
     } catch (err) {
         console.log(err);
@@ -138,14 +143,14 @@ exports.search = async (query, category, minPrice, maxPrice) => {
         }
         if (minPrice && maxPrice) {
             filters.price = {};
-            filters.price.$gt = parseInt(minPrice)-1;
-            filters.price.$lt = parseInt(maxPrice)+1;
+            filters.price.$gt = parseInt(minPrice) - 1;
+            filters.price.$lt = parseInt(maxPrice) + 1;
         } else if (minPrice) {
             filters.price = {};
-            filters.price.$gt = parseInt(minPrice)-1;
+            filters.price.$gt = parseInt(minPrice) - 1;
         } else if (maxPrice) {
             filters.price = {};
-            filters.price.$lt = parseInt(maxPrice)+1;
+            filters.price.$lt = parseInt(maxPrice) + 1;
         }
         const result = await Product.find(filters);
         return result;
