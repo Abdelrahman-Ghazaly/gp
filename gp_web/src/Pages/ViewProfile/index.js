@@ -1,33 +1,34 @@
 import React , {useEffect , useState , useCallback} from 'react'
 import ProductImage from '../../assets/productImage.png'
 import { useSelector , useDispatch} from 'react-redux'
-// import { fetchUploadedProduct } from '../../Store/productReducer'
+import { fetchUploadedProduct } from '../../Store/productReducer'
 import AppBar from '../../Components/Layout/AppBar';
 import Footer from '../../Components/Layout/Footer'
 import { Container , Box , Divider , Button} from '@mui/material';
 import { deleteProduct } from '../../Store/productReducer'
 import { useTheme } from "@mui/material/styles";
 import { useMediaQuery } from "@mui/material";
-import useFetch from '../../CustomHooks/api/useFetch';
+import LoadingSpinner from '../../Components/UI/Common/LoadingSpinner'
 import { BoxUserInfoContainer , Span} from '../../Styles/viewprofile';
 
 
 const ViewProfile = () => {
     const [data, setData] = useState([])
-    const [loading, setLoading] = useState(true)
     const [error, setError] = useState(null)
-    const [test , setTest] = useState(false)
 
     const theme = useTheme();
     const match = useMediaQuery(theme.breakpoints.down("sm"));
     const dispatch = useDispatch()
-    //const {uploadedList} = useSelector(state => state.product)
+
+    const uploadedList = useSelector(state => state.product)
+    let productList = uploadedList?.uploadedList
+    let loading = uploadedList?.loading
+
     const userData = useSelector(state => state.auth)
     let userId = userData.userData?._id
     let tokenId = userData.userData?.accessToken
 
-    const products = data?.product_logs
-    console.log(products)
+    console.log(productList)
 
 
     const fetchData = useCallback(async (url , tokenId) => {
@@ -41,9 +42,7 @@ const ViewProfile = () => {
             })
             const urlData = await response.json()
             setData(urlData["user-data"])
-            setLoading(false)
         }catch(error){
-            setLoading(false)
             setError(error)
         }
     } , [])
@@ -57,9 +56,9 @@ const ViewProfile = () => {
         dispatch(deleteProduct(itemId))
     }
 
-    // useEffect(() => {
-    //     console.log(products)
-    // } , [ , products?.length])
+    useEffect(() => {
+        dispatch(fetchUploadedProduct(tokenId))
+    } , [dispatch , tokenId])
 
     console.log(data)
 
@@ -80,35 +79,37 @@ const ViewProfile = () => {
                 </BoxUserInfoContainer>
             </Box>
             <Divider />
-            <Box style={{marginTop : '20px'}}>
-                <h1>{products?.length === 0 ? 'No Products Uploaded' : 'My Products'}</h1>
-                <div style={{marginTop : '45px'}}>
-                    {products?.length === 0 ? (
-                        <div style={{display : 'flex' , justifyContent : 'center' , alignItems : 'center'}}>
-                            <img src={ProductImage} alt="img"/>
-                        </div>
-                    ) : 
-                    <div>
-                        {products?.map((item) => {
-                            return (
-                                <div key={item._id} style={{display : 'flex' , justifyContent: 'space-around' , alignItems : 'center' , marginBottom : '20px'}}>
-                                    <div style={{width : '30%'}}>
-                                            <img style={{aspectRatio : '3/2' , objectFit : 'contain' ,  width: `${match ? "100% " : "50%"}`}} src={typeof item.imgURL == "string" ?  item.imgURL : item.imgURL[0]} alt={item.title}/>
+            {loading ? <LoadingSpinner /> : (
+                            <Box style={{marginTop : '20px'}}>
+                            <h1>{productList?.length === 0 ? 'No Products Uploaded' : 'My Products'}</h1>
+                            <div style={{marginTop : '45px'}}>
+                                {productList?.length === 0 ? (
+                                    <div style={{display : 'flex' , justifyContent : 'center' , alignItems : 'center'}}>
+                                        <img src={ProductImage} alt="img"/>
                                     </div>
-                                        <div style={{width : '100%' , fontSize : `${match ? "13px" : "20px"}`}}>
-                                                <h2>{item.title}</h2>
-                                                <h3>Price:  {item.price}$</h3>
-                                        </div>
-                                    <div>
-                                        <Button variant='contained' color="error" onClick={() => removeProduct(item._id)}>Remove</Button>
-                                    </div>
+                                ) :
+                                <div>
+                                    {productList?.map((item) => {
+                                        return (
+                                            <div key={item._id} style={{display : 'flex' , justifyContent: 'space-around' , alignItems : 'center' , marginBottom : '20px'}}>
+                                                <div style={{width : '30%'}}>
+                                                        <img style={{aspectRatio : '3/2' , objectFit : 'contain' ,  width: `${match ? "100% " : "50%"}`}} src={typeof item.imgURL == "string" ?  item.imgURL : item.imgURL[0]} alt={item.title}/>
+                                                </div>
+                                                    <div style={{width : '100%' , fontSize : `${match ? "13px" : "20px"}`}}>
+                                                            <h2>{item.title}</h2>
+                                                            <h3>Price:  {item.price}$</h3>
+                                                    </div>
+                                                <div>
+                                                    <Button variant='contained' color="error" onClick={() => removeProduct(item._id)}>Remove</Button>
+                                                </div>
+                                            </div>
+                                        )
+                                    })}
                                 </div>
-                            )
-                        })}
-                    </div>
-                }
-                </div>
-            </Box>
+                            }
+                            </div>
+                        </Box>
+            )}
         </Container>
         <Footer />
     </>
