@@ -1,17 +1,15 @@
-import 'dart:convert';
-import 'dart:typed_data';
-
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:gp_flutter/core/app_constants/app_values.dart';
+import 'package:gp_flutter/injection_container.dart';
 
 import 'core/theme/theme.dart';
+import 'features/e_commerce/presentation/bloc/e_commerce_bloc.dart';
 import 'features/e_commerce/presentation/screens/home_screen.dart';
 
 late String base64String;
-void main() async {
-  WidgetsFlutterBinding.ensureInitialized();
-
-  base64String = await _getImage();
+void main() {
+  init();
   runApp(const MyApp());
 }
 
@@ -23,15 +21,16 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'GP E-Commerce',
       debugShowCheckedModeBanner: false,
-      theme: kLightThemeData,
-      home: const HomeScreen(),
+      theme: kLightThemeData(),
+      home: BlocProvider(
+        create: (_) => serviceLocator<ECommerceBloc>()
+          ..add(
+            const GetPopularFurniturebyCategoryEvent(
+              category: Category.lamp,
+            ),
+          ),
+        child: const HomeScreen(),
+      ),
     );
   }
-}
-
-Future<String> _getImage() async {
-  final ByteData byteData = await rootBundle.load('assets/images.jpg');
-  Uint8List unit8list = byteData.buffer.asUint8List();
-  String base64String = base64.encode(unit8list);
-  return base64String;
 }

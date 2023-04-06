@@ -1,5 +1,4 @@
 import 'package:dartz/dartz.dart';
-import 'package:gp_flutter/features/e_commerce/data/models/furniture_model.dart';
 
 import '../../../../core/app_constants/app_values.dart';
 import '../../../../core/error/exceptions.dart';
@@ -8,6 +7,7 @@ import '../../domain/entities/furniture_entity.dart';
 import '../../domain/entities/search_query_entity.dart';
 import '../../domain/repositories/e_commerce_repository.dart';
 import '../data_sources/furniture_remote_data_source.dart';
+import '../models/furniture_model.dart';
 
 typedef _RepositoryFurnitureListFunction = Future<List<FurnitureEntity>>
     Function();
@@ -21,10 +21,10 @@ class ECommerceRepositoryImpl implements ECommerceRepository {
   });
 
   @override
-  Future<Either<Failure, List<FurnitureEntity>>>
-      getPopularFurnitureByCategory() async {
+  Future<Either<Failure, List<FurnitureEntity>>> getPopularFurnitureByCategory(
+      {required Category category}) async {
     return _getFurnitureList(
-      () => remoteDataSource.getPopularFurnitureByCategory(),
+      () => remoteDataSource.getPopularFurnitureByCategory(category: category),
     );
   }
 
@@ -94,7 +94,7 @@ class ECommerceRepositoryImpl implements ECommerceRepository {
           () => remoteDataSource.uploadFurniture(furniture: furniture));
 
   @override
-  Future<Either<Failure, String>> deleteProduct({required int productId}) {
+  Future<Either<Failure, String>> deleteFurniture({required int productId}) {
     // TODO: implement getFurnitureFromSearchByCategory
     throw UnimplementedError();
   }
