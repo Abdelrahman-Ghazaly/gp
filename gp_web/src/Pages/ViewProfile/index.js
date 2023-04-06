@@ -16,6 +16,7 @@ const ViewProfile = () => {
     const [data, setData] = useState([])
     const [loading, setLoading] = useState(true)
     const [error, setError] = useState(null)
+    const [test , setTest] = useState(false)
 
     const theme = useTheme();
     const match = useMediaQuery(theme.breakpoints.down("sm"));
@@ -55,6 +56,10 @@ const ViewProfile = () => {
     const removeProduct = (itemId) => {
         dispatch(deleteProduct(itemId))
     }
+
+    // useEffect(() => {
+    //     console.log(products)
+    // } , [ , products?.length])
 
     console.log(data)
 
