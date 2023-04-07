@@ -5,7 +5,6 @@ const errors = require("../util/error_handling");
 exports.productValidation = async (req, res, next) => {
     try {
         const productData =  req.body;
-        console.log(req.body);
         const { error } = validateProductData(productData);
         if (error) {
             errors.validationError(error);
@@ -17,11 +16,9 @@ exports.productValidation = async (req, res, next) => {
     }
 };
 
-
 exports.createProduct = async (req, res, next) => {
     try {
         const productData = req.body;
-        console.log(req.body);
         const result = await db.createProduct(
             productData,
             req.user.id,

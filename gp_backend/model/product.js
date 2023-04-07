@@ -134,8 +134,8 @@ exports.search = async (query, category, minPrice, maxPrice) => {
         const filters = {};
         if (query) {
             filters.$or = [
-                { title: { $regex: query } },
-                { description: { $regex: query } },
+                { title: { $regex: query, $options: "i" } },
+                { description: { $regex: query, $options: "i" } },
             ];
         }
         if (category) {
