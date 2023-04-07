@@ -1,17 +1,13 @@
 import { Grid, Container } from "@mui/material";
-import React, { useEffect } from "react";
-import ProductCard from "../../Components/UI/ProductCard";
-import { useSelector , useDispatch } from "react-redux";
-import AppBar from "../../Components/Layout/AppBar";
-import Footer from "../../Components/Layout/Footer";
-import SearchImage from '../../assets/searchImage.jpg'
+import React from "react";
+import ProductCard from "../../../Components/UI/ProductCard";
+import { useSelector } from "react-redux";
+import AppBar from "../../../Components/Layout/AppBar";
+import Footer from "../../../Components/Layout/Footer";
+import SearchImage from '../../../assets/searchImage.jpg'
 
 const SearchResult = () => {
   const items = useSelector((state) => state.search.data);
-
-  // useEffect(() => {
-  //     dispatch(fetchDataByTitle(items))
-  // } , [dispatch])
 
   return (
     <>

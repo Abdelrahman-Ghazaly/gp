@@ -1,20 +1,19 @@
 import React , { useEffect } from 'react';
-import { Suspense } from 'react';
-import Home from './Pages/Home'
-import LoginPage from './Pages/Login';
-import SignupPage from './Pages/Signup';
-import AddProductForm from './Pages/AddProductForm';
-import ProductView from './Pages/ProductView';
+import { Suspense } from 'react'
 import { Route , Routes  } from "react-router-dom";
-import SearchResult from './Pages/Search/SearchResult';
-import FavoritePage from './Pages/FavoritePage';
-//import ViewProfile from './Pages/ViewProfile';
-import CategoryPage from './Pages/CategoryPage';
 import LoadingSpinner from './Components/UI/Common/LoadingSpinner';
 import { useDispatch } from 'react-redux';
 import { authSliceAction  } from './Store/authReducer';
 
-const ViewProfile = React.lazy(() => import('./Pages/ViewProfile'))
+const ViewProfile = React.lazy(() => import('./Pages/Ecommerce/ViewProfile'))
+const CategoryPage = React.lazy(() => import('./Pages/Ecommerce/CategoryPage'))
+const FavoritePage = React.lazy(() => import('./Pages/Ecommerce/FavoritePage'))
+const SearchResult = React.lazy(() => import('./Pages/Ecommerce/Search/SearchResult'))
+const ProductView = React.lazy(() => import('./Pages/Ecommerce/ProductView'))
+const AddProductForm = React.lazy(() => import('./Pages/Ecommerce/AddProductForm'))
+const SignupPage = React.lazy(() => import('./Pages/Ecommerce/Signup'))
+const LoginPage = React.lazy(() => import('./Pages/Ecommerce/Login'))
+const Home = React.lazy(() => import('./Pages/Ecommerce/Home'))
 
 function App() {
   const dispatch = useDispatch()
@@ -26,6 +25,7 @@ function App() {
       dispatch(authSliceAction.login(userData));
     }
   }, [dispatch]);
+  
   return (
     <>
       <Routes>

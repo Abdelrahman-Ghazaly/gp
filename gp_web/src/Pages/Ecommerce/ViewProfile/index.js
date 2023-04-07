@@ -1,15 +1,15 @@
 import React , {useEffect , useState , useCallback} from 'react'
-import ProductImage from '../../assets/productImage.png'
+import ProductImage from '../../../assets/productImage.png'
 import { useSelector , useDispatch} from 'react-redux'
-import { fetchUploadedProduct } from '../../Store/productReducer'
-import AppBar from '../../Components/Layout/AppBar';
-import Footer from '../../Components/Layout/Footer'
+import { fetchUploadedProduct } from '../../../Store/Ecommerce/productReducer'
+import AppBar from '../../../Components/Layout/AppBar';
+import Footer from '../../../Components/Layout/Footer'
 import { Container , Box , Divider , Button} from '@mui/material';
-import { deleteProduct } from '../../Store/productReducer'
+import { deleteProduct } from '../../../Store/Ecommerce/productReducer'
 import { useTheme } from "@mui/material/styles";
 import { useMediaQuery } from "@mui/material";
-import LoadingSpinner from '../../Components/UI/Common/LoadingSpinner'
-import { BoxUserInfoContainer , Span} from '../../Styles/viewprofile';
+import LoadingSpinner from '../../../Components/UI/Common/LoadingSpinner'
+import { BoxUserInfoContainer , Span} from '../../../Styles/viewprofile';
 
 
 const ViewProfile = () => {

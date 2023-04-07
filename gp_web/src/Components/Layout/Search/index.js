@@ -3,7 +3,7 @@ import {SearchContainer , SearchIconWrapper , StyledInputBase} from '../../../St
 import SearchIcon from '@mui/icons-material/Search';
 import { useNavigate } from 'react-router-dom';
 import {useDispatch } from 'react-redux'
-import { fetchDataByTitle } from '../../../Store/searchReducer';
+import { fetchDataByTitle } from '../../../Store/Ecommerce/searchReducer';
 
 const Search = () => {
   const inputRef = useRef('')

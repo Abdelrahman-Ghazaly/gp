@@ -6,7 +6,7 @@ import {
   TextContainer,
   LoginContainer,
   TextStyle,
-} from "../../Styles/login";
+} from "../../../Styles/login";
 
 const SignupPage = () => {
 

@@ -1,13 +1,13 @@
-import React, { useEffect  , useState , useCallback} from 'react'
+import React, { useEffect } from 'react'
 import {useDispatch , useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
-import AppBar from '../../Components/Layout/AppBar';
-import LoadingSpinner from '../../Components/UI/Common/LoadingSpinner';
-import FavoriteImage from '../../assets/favoriteImage.png'
+import AppBar from '../../../Components/Layout/AppBar';
+import LoadingSpinner from '../../../Components/UI/Common/LoadingSpinner';
+import FavoriteImage from '../../../assets/favoriteImage.png'
 import { Box, Container , Button} from '@mui/material';
 import { useTheme } from "@mui/material/styles";
 import { useMediaQuery } from "@mui/material";
-import { removeFromFavorites  , fetchFavList} from '../../Store/favoriteReducer';
+import { removeFromFavorites  , fetchFavList} from '../../../Store/Ecommerce/favoriteReducer';
 
 const FavoritePage = () => {
     const theme = useTheme();

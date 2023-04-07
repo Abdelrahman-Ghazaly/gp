@@ -1,7 +1,7 @@
 import React, { useRef } from "react";
-import ProductSlider from "../../Components/UI/ProductSlider";
-import useFetch from "../../CustomHooks/api/useFetch";
-import { dataFilter } from "../../Utilities/HelperFun";
+import ProductSlider from "../../../Components/UI/ProductSlider";
+import useFetch from "../../../CustomHooks/api/useFetch";
+import { dataFilter } from "../../../Utilities/HelperFun";
 import { Box } from "@mui/material";
 import { motion } from "framer-motion";
 

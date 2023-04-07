@@ -1,15 +1,15 @@
 import React , {useEffect} from 'react'
 import { useParams } from 'react-router-dom'
-import SearchImage from '../../assets/searchImage.jpg'
-import ProductCard from '../../Components/UI/ProductCard'
-import AppBar from '../../Components/Layout/AppBar'
-import Footer from '../../Components/Layout/Footer'
-import { Container, Grid , Box} from '@mui/material'
-import LoadingSpinner from '../../Components/UI/Common/LoadingSpinner'
+import SearchImage from '../../../assets/searchImage.jpg'
+import ProductCard from '../../../Components/UI/ProductCard'
+import AppBar from '../../../Components/Layout/AppBar'
+import Footer from '../../../Components/Layout/Footer'
+import { Container, Grid } from '@mui/material'
+import LoadingSpinner from '../../../Components/UI/Common/LoadingSpinner'
 import FilterPage from './FilterPage'
 import { useSelector , useDispatch } from 'react-redux';
-import { filterProducts } from '../../Store/filterReducer'
-import useFetch from '../../CustomHooks/api/useFetch'
+import { filterProducts } from '../../../Store/Ecommerce/filterReducer'
+
 
 const CategoryPage = () => {
     const {name} = useParams();

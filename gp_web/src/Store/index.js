@@ -1,10 +1,11 @@
 import { configureStore } from '@reduxjs/toolkit';
-import searchReducer from './searchReducer';
-import favoriteReducer from './favoriteReducer';
-import productReducer from './productReducer';
-import filterReducer from './filterReducer';
 import authReducer from './authReducer';
-import reportReducer from './reportReducer';
+
+import searchReducer from './Ecommerce/searchReducer';
+import favoriteReducer from './Ecommerce/favoriteReducer';
+import productReducer from './Ecommerce/productReducer';
+import filterReducer from './Ecommerce/filterReducer';
+import reportReducer from './Ecommerce//reportReducer';
 
 export const store = configureStore({
   reducer: {
