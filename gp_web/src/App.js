@@ -25,7 +25,7 @@ function App() {
       dispatch(authSliceAction.login(userData));
     }
   }, [dispatch]);
-  
+
   return (
     <>
       <Routes>
