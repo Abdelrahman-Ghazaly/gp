@@ -1,9 +1,9 @@
 import React, { useCallback , useState } from 'react'
 import { useForm } from "react-hook-form";
 import {Box , Container , TextField , MenuItem , InputAdornment , Button} from '@mui/material';
-import { UploadFormContainer , UploadFormTitle} from '../../Styles/forms';
-import UploadImage from '../../Components/UI/Forms/UploadImage'
-import { uploadProduct } from '../../Store/productReducer';
+import { UploadFormContainer , UploadFormTitle} from '../../../Styles/forms';
+import UploadImage from '../../../Components/UI/Forms/UploadImage'
+import { uploadProduct } from '../../../Store/Ecommerce/productReducer';
 import { useNavigate , Link } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 // Import Icon From MUI

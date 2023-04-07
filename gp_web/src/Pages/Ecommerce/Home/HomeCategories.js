@@ -1,6 +1,6 @@
 import React, { useRef } from "react";
 import { Box, Grid } from "@mui/material";
-import { Item, Thumbnail } from "../../Styles/home";
+import { Item, Thumbnail } from "../../../Styles/home";
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
 const imgStyle = {

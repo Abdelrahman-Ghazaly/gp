@@ -8,18 +8,17 @@ import {
 
 import React, { useState , useRef } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { LoginBox } from "../../Styles/login";
+import { LoginBox } from "../../../Styles/login";
 
 import { useForm } from "react-hook-form";
 // Import Icons From MUI Icons
 import EmailIcon from "@mui/icons-material/Email";
-import PasswordIcon from "@mui/icons-material/Password";
 import PersonIcon from '@mui/icons-material/Person';
 import LocationOnIcon from "@mui/icons-material/LocationOn";
 import DialpadIcon from "@mui/icons-material/Dialpad";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
 import { useDispatch } from "react-redux";
-import { userRegister } from "../../Store/authReducer";
+import { userRegister } from "../../../Store/authReducer";
 
 const SignupForm = () => {
   const dispatch = useDispatch()

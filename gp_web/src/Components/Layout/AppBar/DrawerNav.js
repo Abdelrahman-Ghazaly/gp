@@ -92,10 +92,12 @@ const DrawerNav = ({open , handleDrawerClose , Categories}) => {
       <List>
         {ListItems.slice(0, 2).map((data) => (
           <ListItem key={data.name} disablePadding>
-            <ListItemButton>
-              <ListItemIcon>{data.icon}</ListItemIcon>
-              <ListItemText primary={data.name} />
-            </ListItemButton>
+            <Link to={data.link} style={{ width: "100%" }}>
+              <ListItemButton>
+                <ListItemIcon>{data.icon}</ListItemIcon>
+                <ListItemText primary={data.name} />
+              </ListItemButton>
+            </Link>
           </ListItem>
         ))}
       </List>
@@ -129,18 +131,18 @@ const DrawerNav = ({open , handleDrawerClose , Categories}) => {
 
       {/* View Profile */}
       {userData && (
-              <List>
-              {ListItems.slice(-1).map((data) => (
-                <ListItem key={data.name} disablePadding>
-                  <Link to={data.link} style={{ width: "100%" }}>
-                    <ListItemButton>
-                      <ListItemIcon>{data.icon}</ListItemIcon>
-                      <ListItemText primary={data.name} />
-                    </ListItemButton>
-                  </Link>
-                </ListItem>
-              ))}
-            </List>
+        <List>
+          {ListItems.slice(-1).map((data) => (
+            <ListItem key={data.name} disablePadding>
+              <Link to={data.link} style={{ width: "100%" }}>
+                <ListItemButton>
+                  <ListItemIcon>{data.icon}</ListItemIcon>
+                  <ListItemText primary={data.name} />
+                </ListItemButton>
+              </Link>
+            </ListItem>
+          ))}
+        </List>
       )}
     </Drawer>
   );

@@ -1,11 +1,11 @@
 import { Box, Button, InputAdornment, MenuItem, TextField } from '@mui/material'
 import React , { useRef } from 'react'
 import AttachMoneyIcon from '@mui/icons-material/AttachMoney';
-import { Categories } from '../../Utilities/CommonVariables/categoriesVariableList';
+import { Categories } from '../../../Utilities/CommonVariables/categoriesVariableList';
 import { useTheme } from "@mui/material/styles";
 import { useMediaQuery } from "@mui/material";
 import {  useDispatch } from 'react-redux';
-import { filterAction , filterProducts} from '../../Store/filterReducer';
+import { filterAction , filterProducts} from '../../../Store/Ecommerce/filterReducer';
 
 const FilterPage = () => {
     // const [minValue , setMinValue] = useState(0)

@@ -8,7 +8,7 @@ import {
 } from "@mui/material";
 import { useDispatch } from "react-redux";
 import { useForm } from "react-hook-form";
-import { sendReport } from "../../Store/reportReducer";
+import { sendReport } from "../../../Store/Ecommerce/reportReducer";
 
 const ReportList = [
   {

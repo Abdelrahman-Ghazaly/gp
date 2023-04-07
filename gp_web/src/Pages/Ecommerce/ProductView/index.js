@@ -4,12 +4,12 @@ import FavoriteIcon from "@mui/icons-material/Favorite";
 import { useParams } from 'react-router-dom'
 import { useTheme } from "@mui/material/styles";
 import { useMediaQuery } from "@mui/material";
-import useFetch from '../../CustomHooks/api/useFetch'
-import AppBar from '../../Components/Layout/AppBar'
-import Footer from '../../Components/Layout/Footer';
-import LoadingSpinner from '../../Components/UI/Common/LoadingSpinner';
+import useFetch from '../../../CustomHooks/api/useFetch'
+import AppBar from '../../../Components/Layout/AppBar'
+import Footer from '../../../Components/Layout/Footer';
+import LoadingSpinner from '../../../Components/UI/Common/LoadingSpinner';
 import { useDispatch  , useSelector} from 'react-redux';
-import { addToFavorites } from '../../Store/favoriteReducer';
+import { addToFavorites } from '../../../Store/Ecommerce/favoriteReducer';
 import ReportForm from './ReportForm';
 import RenderImages from './RenderImages';
 

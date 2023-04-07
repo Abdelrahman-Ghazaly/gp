@@ -15,9 +15,7 @@ export const filterProducts = createAsyncThunk('filterSlice/filterByCategory' , 
         const data = await response.json()
         return data
     }
-
-
-    }
+  }
 )
 
 

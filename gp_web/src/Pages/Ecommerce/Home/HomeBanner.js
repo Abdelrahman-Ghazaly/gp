@@ -1,5 +1,5 @@
 import React from "react";
-import { CategoriesList , CategoriesListItem } from "../../Styles/home";
+import { CategoriesList , CategoriesListItem } from "../../../Styles/home";
 import { Link } from "react-router-dom";
 
 import { Navigation, Pagination, Scrollbar, A11y, Autoplay } from "swiper";
@@ -9,10 +9,10 @@ import "swiper/css/navigation";
 import "swiper/css/pagination";
 import "swiper/css/scrollbar";
 
-import banner1 from "../../assets/Banners/Banner1.png";
-import banner2 from "../../assets/Banners/Banner2.png";
-import banner3 from "../../assets/Banners/Banner3.jpg";
-import banner4 from "../../assets/Banners/Banner4.png";
+import banner1 from "../../../assets/Banners/Banner1.png";
+import banner2 from "../../../assets/Banners/Banner2.png";
+import banner3 from "../../../assets/Banners/Banner3.jpg";
+import banner4 from "../../../assets/Banners/Banner4.png";
 
 const images = [banner1, banner2, banner3, banner4];
 
