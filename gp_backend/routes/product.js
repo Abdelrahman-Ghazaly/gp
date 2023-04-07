@@ -7,8 +7,8 @@ const router = express.Router();
 router.post(
     "/upload",
     auth.verifyLogedin,
-    productController.productValidation,
     images.uploadImage,
+    productController.productValidation,
     images.uploadToFirebase,
     productController.createProduct
 );

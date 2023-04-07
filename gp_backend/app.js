@@ -1,5 +1,4 @@
 const express = require("express");
-const bodyParser = require("body-parser");
 const app = express();
 require("dotenv").config();
 
@@ -11,7 +10,7 @@ const productRoutes = require("./routes/product");
 const reportRoutes = require("./routes/report");
 const cartRoutes = require("./routes/fav");
 
-app.use(bodyParser.json());
+app.use(express.json());
 app.use((req, res, next) => {
     res.setHeader("Access-Control-Allow-Origin", "*");
     res.setHeader(
@@ -21,7 +20,6 @@ app.use((req, res, next) => {
     res.setHeader(
         "Access-Control-Allow-Headers",
         "Content-Type, Authorization, token"
-        
     );
     next();
 });
@@ -44,6 +42,5 @@ app.use((error, req, res, next) => {
         message: message,
     });
 });
-
 
 app.listen(5000, databaseConnection.init);
