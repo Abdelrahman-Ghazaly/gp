@@ -1,13 +1,15 @@
 const express = require("express");
 const auth = require("../middleware/is_auth");
 const productController = require("../controller/product");
+const images = require("../util/images_processes")
 const router = express.Router();
 
 router.post(
     "/upload",
     auth.verifyLogedin,
-    productController.uploadImage,
-    productController.uploadToFirebase,
+    images.uploadImage,
+    productController.productValidation,
+    images.uploadToFirebase,
     productController.createProduct
 );
 
@@ -15,7 +17,7 @@ router.post(
 router.delete(
     "/delete/:productId",
     auth.verifyLogedin,
-    productController.deleteProductImages,
+    images.deleteProductImages,
     productController.deleteProduct
 );
 

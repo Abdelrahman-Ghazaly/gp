@@ -6,7 +6,6 @@ import {
   Typography,
   IconButton,
   Alert,
-  Stack,
   Fade,
   AlertTitle,
 } from "@mui/material";
@@ -15,7 +14,7 @@ import { styled } from "@mui/material/styles";
 import React , {useState } from "react";
 import {Link} from 'react-router-dom'
 import { useDispatch , useSelector} from "react-redux";
-import { addToFavorites } from "../../Store/favoriteReducer";
+import { addToFavorites } from "../../Store/Ecommerce/favoriteReducer";
 
 const ActionContainer = styled(CardActions)(() => ({
   display: "flex",
