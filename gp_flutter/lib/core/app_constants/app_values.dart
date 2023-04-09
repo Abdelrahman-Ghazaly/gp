@@ -12,8 +12,15 @@ enum Category {
 
 const double kAppBarHeight = 75;
 
-const String kLottieHeartAnimation =
-    'assets/lottie_animations/heart_animation.json';
+const String _baseAnimationUrl = 'assets/lottie_animations/';
+const String _baseIconUrl = 'assets/icons/';
+
+class AppIcons {
+  static const String lottieHeartAnimation =
+      '${_baseAnimationUrl}heart_animation.json';
+
+  static const String auctionIcon = '${_baseIconUrl}auction.svg';
+}
 
 //* TextStyles
 final TextStyle kAppBarTextStyle = GoogleFonts.montserrat(

@@ -1,4 +1,3 @@
-import 'dart:convert';
 import 'dart:io';
 
 import 'package:dio/dio.dart';
@@ -112,6 +111,7 @@ class FurnitureRemoteDataSourceImpl extends FurnitureRemoteDataSource {
 
   @override
   Future<String> uploadFurniture({required FurnitureModel furniture}) async {
+    throw UnimplementedError();
     Response response = await dio.post(
       ApiConstants.uploadFurniturePath,
       options: Options(
