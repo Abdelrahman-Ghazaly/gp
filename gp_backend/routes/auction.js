@@ -13,6 +13,12 @@ router.post(
     auctionController.createAuction
 );
 
+router.delete(
+    "/delete/:auctionId",
+    auth.verifyLogedin,
+    auctionController.deleteAuction
+);
+
 
 
 module.exports = router;

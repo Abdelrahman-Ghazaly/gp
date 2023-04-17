@@ -92,3 +92,18 @@ exports.createAuction = async (auctionData, user_id, imgURL) => {
         throw new Error();
     }
 };
+
+
+exports.deleteAuction = async (auctionId, user_id) => {
+    try {
+        const result = await Auction.findOneAndRemove({
+            _id: auctionId,
+            owner_id: user_id,
+        });
+        console.log(result);
+        return result;
+    } catch (err) {
+        console.log(err);
+        throw new Error();
+    }
+};
