@@ -105,6 +105,10 @@ exports.view = async () => {
                 $project: {
                     chair: { $slice: ["$chair", 6] },
                     bed: { $slice: ["$bed", 6] },
+                    lamp: { $slice: ["$lamp", 6] },
+                    dresser: { $slice: ["$dresser", 6] },
+                    table: { $slice: ["$table", 6] },
+                    sofa: { $slice: ["$sofa", 6] },
                     //the rest of the cats
                 },
             },
