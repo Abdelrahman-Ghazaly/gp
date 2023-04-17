@@ -1,10 +1,10 @@
 import 'package:flutter/cupertino.dart';
 
 class Utilities {
-  static double screenHeight =
+  static final double screenHeight =
       MediaQueryData.fromWindow(WidgetsBinding.instance.window).size.height;
 
-  static double screenWidth =
+  static final double screenWidth =
       MediaQueryData.fromWindow(WidgetsBinding.instance.window).size.width;
 
   pushAndReplace({required BuildContext context, required Widget screen}) {

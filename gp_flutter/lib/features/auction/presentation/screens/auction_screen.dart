@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_swiper_view/flutter_swiper_view.dart';
 import 'package:gp_flutter/features/auction/presentation/widgets/auction_card_design.dart';
 
 import '../../../../core/app_constants/app_colors.dart';
 import '../../../../core/utils/utilities.dart';
-import '../widgets/show_more_button.dart';
 
 class AuctionScreen extends StatelessWidget {
   const AuctionScreen({super.key});
@@ -64,10 +62,7 @@ class AuctionScreen extends StatelessWidget {
         ),
       ),
       SizedBox(
-        height: height * 0.5,
-        width: width,
-        child: const AuctionCardDesign()
-      ),
+          height: height * 0.5, width: width, child: const AuctionCardDesign()),
     ]));
   }
 }

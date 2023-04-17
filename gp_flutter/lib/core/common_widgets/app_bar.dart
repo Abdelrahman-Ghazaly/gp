@@ -1,7 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:gp_flutter/core/app_constants/app_constants.dart';
-import 'package:lottie/lottie.dart';
 
 class AppBar extends StatelessWidget with PreferredSizeWidget {
   const AppBar({Key? key})
@@ -15,14 +14,12 @@ class AppBar extends StatelessWidget with PreferredSizeWidget {
   Widget build(BuildContext context) {
     return Container(
       height: kAppBarHeight,
-      //TODO: change when Osama's code is pushed
-      width: MediaQuery.of(context).size.width,
-      decoration: BoxDecoration(
+      decoration: const BoxDecoration(
         color: Colors.white,
         boxShadow: [
           BoxShadow(
             color: Colors.grey,
-            offset: Offset(0.0, 1.0), //(x,y)
+            offset: Offset(0.0, 1.0),
             blurRadius: 6.0,
           ),
         ],

@@ -2,15 +2,14 @@ import 'package:equatable/equatable.dart';
 
 class AuctionProduct extends Equatable {
   final String userId;
-
   final String title;
   final String description;
   final String image;
   final String category;
-  final double startPrice;
-
   final String duration;
+  final double startPrice;
   final double currentPrice;
+
   const AuctionProduct(
       {required this.userId,
       required this.title,

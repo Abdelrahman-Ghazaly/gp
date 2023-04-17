@@ -4,7 +4,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../core/app_constants/app_constants.dart';
 import '../../../../core/error/failure.dart';
-import '../../../../core/use_case/use_case.dart';
 import '../../data/models/furniture_model.dart';
 import '../../domain/entities/furniture_entity.dart';
 import '../../domain/entities/search_query_entity.dart';
