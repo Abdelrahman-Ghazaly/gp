@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:gp_flutter/core/theme/theme.dart';
-import 'package:gp_flutter/features/e_commerce/presentation/bloc/e_commerce_bloc.dart';
-import 'package:gp_flutter/injection_container.dart';
+import 'core/theme/theme.dart';
+import 'features/e_commerce/presentation/bloc/e_commerce_bloc.dart';
+import 'injection_container.dart';
 
 import 'core/utils/app_router.dart';
 

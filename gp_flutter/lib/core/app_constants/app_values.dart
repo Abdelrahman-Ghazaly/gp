@@ -12,18 +12,43 @@ enum Category {
 
 const double kAppBarHeight = 75;
 
-const String _baseAnimationUrl = 'assets/lottie_animations/';
 const String _baseIconUrl = 'assets/icons/';
 
 class AppIcons {
-  static const String lottieHeartAnimation =
-      '${_baseAnimationUrl}heart_animation.json';
-
   static const String auctionIcon = '${_baseIconUrl}auction.svg';
 }
 
-//* TextStyles
-final TextStyle kAppBarTextStyle = GoogleFonts.montserrat(
-  fontSize: 25,
-  fontWeight: FontWeight.w500,
+const String _baseAnimationUrl = 'assets/lottie_animations/';
+
+class AppAnimations {
+  static const String lottieHeartAnimation =
+      '${_baseAnimationUrl}heart_animation.json';
+}
+
+const String _baseImageUrl = 'assets/images/';
+const String _baseBannerUrl = '${_baseImageUrl}banners/';
+
+class AppImages {
+  static const List<String> bannerImages = [
+    '${_baseBannerUrl}banner_3.jpg',
+    '${_baseBannerUrl}banner_4.png',
+    '${_baseBannerUrl}banner_3.jpg',
+    '${_baseBannerUrl}banner_4.png',
+  ];
+}
+
+class AppTextStyles {
+  static final TextStyle appBarTextStyle = GoogleFonts.montserrat(
+    fontSize: 25,
+    fontWeight: FontWeight.w700,
+  );
+  static final TextStyle headerTextStyle = GoogleFonts.montserrat(
+    fontSize: 20,
+    fontWeight: FontWeight.w600,
+  );
+}
+
+const SizedBox kSpacing20p = const SizedBox(
+  height: 20,
+  width: 20,
 );

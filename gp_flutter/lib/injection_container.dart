@@ -1,9 +1,9 @@
 import 'package:dio/dio.dart';
 import 'package:get_it/get_it.dart';
-import 'package:gp_flutter/features/e_commerce/data/repositories/e_commerce_repository_impl.dart';
-import 'package:gp_flutter/features/e_commerce/domain/use_cases/delete_product.dart';
-import 'package:gp_flutter/features/e_commerce/domain/use_cases/upload_furniture.dart';
-import 'package:gp_flutter/features/e_commerce/presentation/bloc/e_commerce_bloc.dart';
+import 'features/e_commerce/data/repositories/e_commerce_repository_impl.dart';
+import 'features/e_commerce/domain/use_cases/delete_product.dart';
+import 'features/e_commerce/domain/use_cases/upload_furniture.dart';
+import 'features/e_commerce/presentation/bloc/e_commerce_bloc.dart';
 
 import 'features/e_commerce/data/data_sources/furniture_remote_data_source.dart';
 import 'features/e_commerce/domain/repositories/e_commerce_repository.dart';

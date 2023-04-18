@@ -11,7 +11,9 @@ import '../../domain/entities/search_query_entity.dart';
 import '../models/furniture_model.dart';
 
 abstract class FurnitureRemoteDataSource {
-  Future<Map<String, List<FurnitureEntity>>> getPopularFurnitureByCategory();
+  Future<List<FurnitureEntity>> getPopularFurnitureByCategory({
+    required Category category,
+  });
 
   Future<List<FurnitureEntity>> getFurnitureFromSearchByQuery({
     required String searchQuery,
@@ -55,7 +57,7 @@ class FurnitureRemoteDataSourceImpl extends FurnitureRemoteDataSource {
   });
 
   @override
-  Future<Map<String, List<FurnitureEntity>>> getPopularFurnitureByCategory(
+  Future<List<FurnitureEntity>> getPopularFurnitureByCategory(
           {required Category category}) =>
       _getPopularFurnitureList(
         url: ApiConstants.popularFurnitureByCategoryPath,

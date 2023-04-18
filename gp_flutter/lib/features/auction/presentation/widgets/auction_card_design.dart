@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_swiper_view/flutter_swiper_view.dart';
 import 'package:go_router/go_router.dart';
-import 'package:gp_flutter/features/auction/presentation/widgets/show_more_button.dart';
 
 import '../../../../core/utils/utilities.dart';
+import 'show_more_button.dart';
 
 class AuctionCardDesign extends StatelessWidget {
   const AuctionCardDesign({Key? key}) : super(key: key);
@@ -72,7 +72,9 @@ class AuctionCardDesign extends StatelessWidget {
                       height: height * 0.02,
                     ),
                     ShowMoreButton(
-                      onTap: () {return context.go('/auction_details_screen');},
+                      onTap: () {
+                        return context.go('/auction_details_screen');
+                      },
                     ),
                   ],
                 )

@@ -1,4 +1,4 @@
-import 'package:gp_flutter/core/app_constants/app_values.dart';
+import 'app_values.dart';
 
 import '../../features/e_commerce/domain/entities/search_query_entity.dart';
 

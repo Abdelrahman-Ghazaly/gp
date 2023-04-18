@@ -26,6 +26,8 @@ dependencies:
   http: ^0.13.5
   persistent_bottom_nav_bar: ^5.0.2
   flutter_svg: ^2.0.4
+  carousel_slider: ^4.2.1
+  flutter_spinkit: ^5.1.0
 
 dev_dependencies:
   flutter_test:
@@ -37,4 +39,5 @@ flutter:
   assets:
     - assets/lottie_animations/
     - assets/images/
+    - assets/images/banners/
     - assets/icons/

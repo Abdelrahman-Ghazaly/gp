@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:gp_flutter/core/app_constants/app_constants.dart';
+
+import '../app_constants/app_constants.dart';
 
 class AppBar extends StatelessWidget with PreferredSizeWidget {
   const AppBar({Key? key})
@@ -32,7 +33,7 @@ class AppBar extends StatelessWidget with PreferredSizeWidget {
             children: [
               Text(
                 'Furniture',
-                style: kAppBarTextStyle,
+                style: AppTextStyles.appBarTextStyle,
               ),
               Row(
                 children: [

@@ -1,12 +1,12 @@
 import 'dart:convert';
 
-import 'package:gp_flutter/core/app_constants/api_constants.dart';
-import 'package:gp_flutter/features/auction/data/models/auction_product_model.dart';
+import 'package:http/http.dart' as http;
 
+import '../../../../core/app_constants/api_constants.dart';
 import '../../../../core/error/exceptions.dart';
 import '../../../../core/network/error_message_model.dart';
 import '../../domain/entities/auction_product.dart';
-import 'package:http/http.dart' as http;
+import '../models/auction_product_model.dart';
 
 abstract class BaseAuctionRemoteDataSource {
   Future<List<AuctionProduct>> getAuctionProducts();
@@ -27,8 +27,8 @@ class AuctionRemoteDataSource extends BaseAuctionRemoteDataSource {
 
   @override
   Future<List<AuctionProduct>> getAuctionProducts() async {
-    final response = await http
-        .get(Uri.parse(ApiConstants.auctionViewProductPath));
+    final response =
+        await http.get(Uri.parse(ApiConstants.auctionViewProductPath));
     if (response.statusCode == 200) {
       return List<AuctionProductModel>.from(
           (jsonDecode(response.body))["Products"]
@@ -42,10 +42,10 @@ class AuctionRemoteDataSource extends BaseAuctionRemoteDataSource {
   }
 
   @override
-  Future<List<AuctionProduct>> getAuctionProductsSearchResult()async {
+  Future<List<AuctionProduct>> getAuctionProductsSearchResult() async {
     // TODO: refactor
-    final response = await http
-        .get(Uri.parse(ApiConstants.auctionViewProductPath));
+    final response =
+        await http.get(Uri.parse(ApiConstants.auctionViewProductPath));
     if (response.statusCode == 200) {
       return List<AuctionProductModel>.from(
           (jsonDecode(response.body))["Products"]
@@ -54,7 +54,7 @@ class AuctionRemoteDataSource extends BaseAuctionRemoteDataSource {
     } else {
       throw ServerException(
           errorMessageModel:
-          ErrorMessageModel.fromJson(jsonDecode(response.body)));
+              ErrorMessageModel.fromJson(jsonDecode(response.body)));
     }
   }
 

@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:gp_flutter/core/common_widgets/common_widgets.dart';
-import 'package:gp_flutter/features/auction/presentation/screens/auction_details_screen.dart';
+
+import '../../features/auction/presentation/screens/auction_details_screen.dart';
+import '../common_widgets/common_widgets.dart';
 
 final GoRouter router = GoRouter(routes: <GoRoute>[
   GoRoute(
