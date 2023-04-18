@@ -10,6 +10,7 @@ class AuctionRepository extends BaseAuctionRepository {
   final BaseAuctionRemoteDataSource baseAuctionRemoteDataSource;
 
   AuctionRepository(this.baseAuctionRemoteDataSource);
+
   @override
   Future<Either<Failure, int>> deleteAuction(String userToken) async {
     final result = await baseAuctionRemoteDataSource.deleteAuction(userToken);

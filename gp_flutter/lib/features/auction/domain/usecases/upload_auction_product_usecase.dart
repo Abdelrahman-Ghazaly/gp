@@ -5,10 +5,10 @@ import '../entities/auction_product.dart';
 
 import '../repositories/base_auction_repository.dart';
 
-class UploadAuctionProduct extends BaseUseCase<int, AuctionProduct> {
+class UploadAuctionProductUseCase extends BaseUseCase<int, AuctionProduct> {
   final BaseAuctionRepository baseAuctionRepository;
 
-  UploadAuctionProduct(this.baseAuctionRepository);
+  UploadAuctionProductUseCase(this.baseAuctionRepository);
 
   @override
   Future<Either<Failure, int>> call(AuctionProduct params) {

@@ -7,6 +7,7 @@ const databaseConnection = require("./util/Database_Connection");
 const authRoutes = require("./routes/auth");
 const userRoutes = require("./routes/user");
 const productRoutes = require("./routes/product");
+const auctionRoutes = require("./routes/auction");
 const reportRoutes = require("./routes/report");
 const cartRoutes = require("./routes/fav");
 
@@ -27,6 +28,7 @@ app.use((req, res, next) => {
 app.use("/auth", authRoutes);
 app.use("/user", userRoutes);
 app.use("/product", productRoutes);
+app.use("/auction", auctionRoutes);
 app.use("/report", reportRoutes);
 app.use("/fav", cartRoutes);
 
