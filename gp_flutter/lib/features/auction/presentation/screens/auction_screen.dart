@@ -48,7 +48,8 @@ class AuctionScreen extends StatelessWidget {
                       color: Colors.white,
                     ),
                   ),
-                )  ],
+                )
+              ],
             ),
             const Text("Best Auction Market",
                 style: TextStyle(

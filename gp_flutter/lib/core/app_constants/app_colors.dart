@@ -13,3 +13,7 @@ const auctionLinearGradient = <Color>[
   Color(0xff00cec9),
   Color(0xff33d9b2),
 ];
+
+class AppColors {
+  static const Color appGreemColor = Color(0xff00b894);
+}

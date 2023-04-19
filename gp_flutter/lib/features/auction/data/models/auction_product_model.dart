@@ -1,4 +1,4 @@
-import 'package:gp_flutter/features/auction/domain/entities/auction_entities.dart';
+import '../../domain/entities/auction_entities.dart';
 
 class AuctionProductModel extends AuctionEntities {
   const AuctionProductModel(
@@ -24,7 +24,9 @@ class AuctionProductModel extends AuctionEntities {
         category: json['category'],
         duration: json['duration'],
         startPrice: json['startPrice'].toDouble(),
-        auctionId: json['duration'], seller: '', isAccepted: json['duration'],
+        auctionId: json['duration'],
+        seller: '',
+        isAccepted: json['duration'],
       );
 
   Map<String, dynamic> toJson(AuctionEntities product) => {

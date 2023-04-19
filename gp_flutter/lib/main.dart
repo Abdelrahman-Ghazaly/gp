@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'core/theme/theme.dart';
+import 'features/e_commerce/presentation/bloc/e_commerce_bloc.dart';
 import 'package:gp_flutter/core/theme/theme.dart';
 import 'package:gp_flutter/features/e_commerce/presentation/bloc/e_commerce_bloc.dart';
 import 'package:gp_flutter/core/services/injection_container.dart';

@@ -1,3 +1,6 @@
+import 'dart:convert';
+
+import 'package:http/http.dart' as http;
 import 'package:dio/dio.dart';
 import 'package:gp_flutter/core/app_constants/api_constants.dart';
 import 'package:gp_flutter/features/auction/data/models/auction_product_model.dart';
@@ -29,6 +32,9 @@ class AuctionRemoteDataSource extends BaseAuctionRemoteDataSource {
 
   @override
   Future<List<AuctionEntities>> getAuctionProducts() async {
+    // TODO: Check which one @Osama
+    // final response =
+    //     await http.get(Uri.parse(ApiConstants.auctionViewProductPath));
     Response response = await dio.get(
       ApiConstants.auctionViewProductPath,
     );

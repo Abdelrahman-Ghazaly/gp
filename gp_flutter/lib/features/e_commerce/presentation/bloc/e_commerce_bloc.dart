@@ -8,16 +8,16 @@ import '../../data/models/furniture_model.dart';
 import '../../domain/entities/furniture_entity.dart';
 import '../../domain/entities/search_query_entity.dart';
 import '../../domain/use_cases/delete_product.dart' as delete;
-import '../../domain/use_cases/get_furniture_from_search_by_category_and_price.dart'
-    as category_price;
-import '../../domain/use_cases/get_furniture_from_search_by_price_range.dart'
-    as price_range;
 import '../../domain/use_cases/get_furniture_from_search_by_category.dart'
     as category;
+import '../../domain/use_cases/get_furniture_from_search_by_category_and_price.dart'
+    as category_price;
 import '../../domain/use_cases/get_furniture_from_search_by_max_price.dart'
     as max_price;
 import '../../domain/use_cases/get_furniture_from_search_by_min_price.dart'
     as min_price;
+import '../../domain/use_cases/get_furniture_from_search_by_price_range.dart'
+    as price_range;
 import '../../domain/use_cases/get_furniture_from_search_by_query.dart'
     as query;
 import '../../domain/use_cases/get_popular_furniture_by_category.dart'
