@@ -1,4 +1,4 @@
-import 'package:gp_flutter/features/auction/domain/entities/auction_product.dart';
+import '../../domain/entities/auction_product.dart';
 
 class AuctionProductModel extends AuctionProduct {
   const AuctionProductModel(
