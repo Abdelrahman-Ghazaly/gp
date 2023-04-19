@@ -2,9 +2,6 @@ import 'package:dartz/dartz.dart';
 import 'package:gp_flutter/core/error/failure.dart';
 import 'package:gp_flutter/features/auction/data/data_source/auction_reomte_data_source.dart';
 import 'package:gp_flutter/features/auction/domain/entities/auction_entities.dart';
-import '../../../../core/error/failure.dart';
-import '../data_source/auction_reomte_data_source.dart';
-import '../../domain/entities/auction_product.dart';
 
 import '../../../../core/error/exceptions.dart';
 import '../../domain/repositories/base_auction_repository.dart';
