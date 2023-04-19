@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:gp_flutter/features/auction/presentation/widgets/auction_card_design.dart';
 
 import '../../../../core/app_constants/app_colors.dart';
@@ -26,11 +27,29 @@ class AuctionScreen extends StatelessWidget {
             SizedBox(
               height: height * 0.02,
             ),
-            const Text("Discover",
-                style: TextStyle(
-                  fontSize: 20,
-                  fontWeight: FontWeight.bold,
-                )),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                const Text("Discover",
+                    style: TextStyle(
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold,
+                    )),
+                CircleAvatar(
+                  backgroundColor: Colors.black26,
+                  radius: width * 0.03,
+                  child: GestureDetector(
+                    onTap: () {
+                      return context.go('/add_auction_screen');
+                    },
+                    child: Icon(
+                      Icons.add,
+                      size: width * 0.05,
+                      color: Colors.white,
+                    ),
+                  ),
+                )  ],
+            ),
             const Text("Best Auction Market",
                 style: TextStyle(
                   fontSize: 30,

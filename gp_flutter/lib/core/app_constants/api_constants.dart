@@ -3,13 +3,18 @@ import 'package:gp_flutter/core/app_constants/app_values.dart';
 import '../../features/e_commerce/domain/entities/search_query_entity.dart';
 
 class ApiConstants {
+  // Auction End Points
+
   static const String auctionBaseUrl = 'http://localhost:5000/auction';
 
   static const String auctionViewProductPath = '$auctionBaseUrl/view';
   static const String auctionUploadProductPath = '$auctionBaseUrl/upload';
 
-  static String auctionDeleteProductPath(productId) =>
-      '$auctionBaseUrl/delete/$productId';
+  static String auctionDeleteProductPath(auctionId) =>
+      '$auctionBaseUrl/delete/$auctionId';
+
+  static String viewAuctionDataPath(auctionId) =>
+      '$auctionBaseUrl/view/item/$auctionId';
 
   static String auctionPidProductPath(productId, userId) =>
       '$auctionBaseUrl/pid/$productId/$userId';

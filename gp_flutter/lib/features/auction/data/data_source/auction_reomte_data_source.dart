@@ -4,14 +4,14 @@ import 'package:gp_flutter/features/auction/data/models/auction_product_model.da
 
 import '../../../../core/error/exceptions.dart';
 import '../../../../core/network/error_message_model.dart';
-import '../../domain/entities/auction_product.dart';
+import '../../domain/entities/auction_entities.dart';
 
 abstract class BaseAuctionRemoteDataSource {
-  Future<List<AuctionProduct>> getAuctionProducts();
+  Future<List<AuctionEntities>> getAuctionProducts();
 
-  Future<List<AuctionProduct>> getAuctionProductsSearchResult();
+  Future<List<AuctionEntities>> getAuctionProductsSearchResult();
 
-  Future<int> uploadAuctionProduct(AuctionProduct auctionProduct);
+  Future<int> uploadAuctionProduct(AuctionEntities auctionProduct);
 
   Future<int> deleteAuction(String userToken);
 }
@@ -28,7 +28,7 @@ class AuctionRemoteDataSource extends BaseAuctionRemoteDataSource {
   }
 
   @override
-  Future<List<AuctionProduct>> getAuctionProducts() async {
+  Future<List<AuctionEntities>> getAuctionProducts() async {
     Response response = await dio.get(
       ApiConstants.auctionViewProductPath,
     );
@@ -44,13 +44,13 @@ class AuctionRemoteDataSource extends BaseAuctionRemoteDataSource {
   }
 
   @override
-  Future<List<AuctionProduct>> getAuctionProductsSearchResult() async {
+  Future<List<AuctionEntities>> getAuctionProductsSearchResult() async {
     // TODO: implement getAuctionProductsSearchResult
     throw UnimplementedError();
   }
 
   @override
-  Future<int> uploadAuctionProduct(AuctionProduct auctionProduct) {
+  Future<int> uploadAuctionProduct(AuctionEntities auctionProduct) {
     // TODO: implement uploadAuctionProduct
     throw UnimplementedError();
   }

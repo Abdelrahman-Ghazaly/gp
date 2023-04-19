@@ -3,14 +3,14 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 
-class AddAuction extends StatefulWidget {
-  const AddAuction({Key? key}) : super(key: key);
+class AddAuctionScreen extends StatefulWidget {
+  const AddAuctionScreen({Key? key}) : super(key: key);
 
   @override
-  State<AddAuction> createState() => _AddAuctionState();
+  State<AddAuctionScreen> createState() => _AddAuctionScreenState();
 }
 
-class _AddAuctionState extends State<AddAuction> {
+class _AddAuctionScreenState extends State<AddAuctionScreen> {
   final TextEditingController auctionNameController = TextEditingController();
   final TextEditingController descriptionController = TextEditingController();
   final TextEditingController priceController = TextEditingController();
@@ -37,11 +37,10 @@ class _AddAuctionState extends State<AddAuction> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(title: const Text("Add auction"),centerTitle: true,),
       body: SingleChildScrollView(
-        child: Form(
-          child: Column(
-            children: [],
-          ),
+        child: Column(
+          children: [],
         ),
       ),
     );

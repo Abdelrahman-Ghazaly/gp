@@ -6,6 +6,7 @@ import 'package:gp_flutter/features/auction/domain/usecases/delete_auction_useca
 import 'package:gp_flutter/features/auction/domain/usecases/get_auction_products_search_result_usecase.dart';
 import 'package:gp_flutter/features/auction/domain/usecases/get_auction_products_usecase.dart';
 import 'package:gp_flutter/features/auction/domain/usecases/upload_auction_product_usecase.dart';
+import 'package:gp_flutter/features/auction/presentation/bloc/auction_bloc.dart';
 import 'package:gp_flutter/features/e_commerce/data/repositories/e_commerce_repository_impl.dart';
 import 'package:gp_flutter/features/e_commerce/domain/use_cases/delete_product.dart';
 import 'package:gp_flutter/features/e_commerce/domain/use_cases/upload_furniture.dart';
@@ -44,6 +45,9 @@ void initBloc() {
       deleteFurniture: sl(),
       uploadFurniture: sl(),
     ),
+  );
+  sl.registerFactory(
+    () => AuctionBloc(sl()),
   );
 }
 

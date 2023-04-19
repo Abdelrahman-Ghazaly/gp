@@ -21,30 +21,7 @@ class Utilities {
     );
   }
 
-  pushTo({required BuildContext context, required Widget screen}) {
-    Future.delayed(
-      Duration.zero,
-      () {
-        Navigator.push(
-          context,
-          _MyRoute(
-            builder: (context) => screen,
-          ),
-        );
-      },
-    );
-  }
 
-  pop({required BuildContext context}) {
-    Future.delayed(
-      Duration.zero,
-      () {
-        Navigator.pop(
-          context,
-        );
-      },
-    );
-  }
 }
 
 class _MyRoute extends CupertinoPageRoute {
