@@ -5,7 +5,7 @@ import '../entities/auction_entities.dart';
 
 abstract class BaseAuctionRepository {
   Future<Either<Failure, List<AuctionEntities>>> getAuctionProducts();
-  Future<Either<Failure, AuctionEntities>> viewAuctionData();
+  Future<Either<Failure, AuctionEntities>> viewAuctionData(String auctionId);
   Future<Either<Failure, List<AuctionEntities>>>
       getAuctionProductsSearchResult();
 

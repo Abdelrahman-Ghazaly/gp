@@ -14,7 +14,8 @@ final GoRouter router = GoRouter(routes: <GoRoute>[
         GoRoute(
             path: "auction_details_screen",
             builder: (BuildContext context, GoRouterState state) {
-              return const AuctionDetailsScreen();
+              final auctionId = state.queryParams['auction_id'];
+              return  AuctionDetailsScreen(auctionId: auctionId!,);
             }),
         GoRoute(
             path: "add_auction_screen",

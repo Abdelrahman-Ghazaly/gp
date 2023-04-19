@@ -56,8 +56,14 @@ class AuctionRepository extends BaseAuctionRepository {
   }
 
   @override
-  Future<Either<Failure, AuctionEntities>> viewAuctionData() {
-    // TODO: implement viewAuctionData
-    throw UnimplementedError();
+  Future<Either<Failure, AuctionEntities>> viewAuctionData(
+      String auctionId) async {
+    final result =
+        await baseAuctionRemoteDataSource.viewAuctionDataById(auctionId);
+    try {
+      return Right(result);
+    } on ServerException catch (failure) {
+      return Left(ServerFailure(failure.errorMessageModel.statusMessage));
+    }
   }
 }

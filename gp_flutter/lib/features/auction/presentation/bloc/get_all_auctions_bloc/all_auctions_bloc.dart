@@ -7,14 +7,14 @@ import 'package:gp_flutter/features/auction/domain/usecases/get_auction_products
 import '../../../../../core/error/failure.dart';
 import '../../../domain/entities/auction_entities.dart';
 
-part 'auction_event.dart';
+part 'all_auctions_event.dart';
 
-part 'auction_state.dart';
+part 'all_auctions_state.dart';
 
-class AuctionBloc extends Bloc<AuctionEvent, AuctionState> {
+class AllAuctionsBloc extends Bloc<AllAuctionsEvent, AllAuctionsState> {
   final GetAuctionProductsUseCase getAuctionProductsUseCase;
 
-  AuctionBloc(this.getAuctionProductsUseCase) : super(Loading()) {
+  AllAuctionsBloc(this.getAuctionProductsUseCase) : super(Loading()) {
     on<GetAuctionProductsEvent>((event, emit) async {
       emit(Loading());
       final failureOrAuctionList = await getAuctionProductsUseCase(NoParams());
@@ -24,12 +24,13 @@ class AuctionBloc extends Bloc<AuctionEvent, AuctionState> {
   }
 }
 
-Future<AuctionState> _eitherLoadedOrErrorState(
+Future<AllAuctionsState> _eitherLoadedOrErrorState(
   Either<Failure, List<AuctionEntities>> failureOrAuctionList,
 ) async {
   return failureOrAuctionList.fold(
     (failure) => Error(message: failure.message),
     (auctionList) {
-      return Loaded(auctionList: auctionList);},
+      return Loaded(auctionList: auctionList);
+    },
   );
 }

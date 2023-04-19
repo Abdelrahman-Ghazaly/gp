@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import 'package:gp_flutter/features/auction/presentation/bloc/get_all_auctions_bloc/all_auctions_bloc.dart';
 import 'package:gp_flutter/features/auction/presentation/widgets/auction_card_design.dart';
 
 import '../../../../core/app_constants/app_colors.dart';
@@ -39,8 +41,9 @@ class AuctionScreen extends StatelessWidget {
                   backgroundColor: Colors.black26,
                   radius: width * 0.03,
                   child: GestureDetector(
-                    onTap: () {
+                    onTap: () async{
                       return context.go('/add_auction_screen');
+
                     },
                     child: Icon(
                       Icons.add,

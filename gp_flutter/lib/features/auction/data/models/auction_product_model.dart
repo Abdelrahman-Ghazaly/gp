@@ -16,17 +16,17 @@ class AuctionProductModel extends AuctionEntities {
 
   factory AuctionProductModel.fromJson(Map<String, dynamic> json) =>
       AuctionProductModel(
-        userId: json['userId'],
-        title: json['title'],
-        currentPrice: json['currentPrice'].toDouble(),
-        description: json['description'],
-        image: json['image'],
-        category: json['category'],
-        duration: json['duration'],
-        startPrice: json['startPrice'].toDouble(),
-        auctionId: json['duration'],
-        seller: '',
-        isAccepted: json['duration'],
+        userId: json['userId'] ?? "",
+        title: json['title'] ?? "",
+        currentPrice: json['current_pid'].toDouble() ?? 0,
+        description: json['description'] ?? "",
+        image: json['imgURL'].cast<String>() ?? [],
+        category: json['category'] ?? "",
+        duration: json['end_date'] ?? "",
+        startPrice: json['start_price'].toDouble() ?? 0,
+        auctionId: json['_id'] ?? "",
+        seller: "json['owner_id']" ?? "",
+        isAccepted: json['is_accepted'] ?? false,
       );
 
   Map<String, dynamic> toJson(AuctionEntities product) => {

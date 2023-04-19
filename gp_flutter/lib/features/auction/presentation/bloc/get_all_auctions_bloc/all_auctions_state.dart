@@ -1,17 +1,17 @@
-part of 'auction_bloc.dart';
+part of 'all_auctions_bloc.dart';
 
-abstract class AuctionState extends Equatable {
-  const AuctionState();
+abstract class AllAuctionsState extends Equatable {
+  const AllAuctionsState();
 
   @override
   List<Object> get props => [];
 }
 
-class Loading extends AuctionState {}
+class Loading extends AllAuctionsState {}
 
-class Empty extends AuctionState {}
+class Empty extends AllAuctionsState {}
 
-class Loaded extends AuctionState {
+class Loaded extends AllAuctionsState {
   final List<AuctionEntities> auctionList;
 
   const Loaded({
@@ -21,7 +21,7 @@ class Loaded extends AuctionState {
   @override
   List<Object> get props => [auctionList];
 }
-class Error extends AuctionState {
+class Error extends AllAuctionsState {
   final String message;
 
   const Error({

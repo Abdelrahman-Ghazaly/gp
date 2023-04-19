@@ -1,10 +1,10 @@
-part of 'auction_bloc.dart';
+part of 'all_auctions_bloc.dart';
 
-abstract class AuctionEvent extends Equatable {
-  const AuctionEvent();
+abstract class AllAuctionsEvent extends Equatable {
+  const AllAuctionsEvent();
 
   @override
   List<Object> get props => [];
 }
 
-class GetAuctionProductsEvent extends AuctionEvent {}
+class GetAuctionProductsEvent extends AllAuctionsEvent {}
