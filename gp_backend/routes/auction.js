@@ -19,6 +19,12 @@ router.delete(
     auctionController.deleteAuction
 );
 
+router.get("/view", auctionController.view);
+
+router.get(
+    "/view/item/:auctionId",
+    auctionController.viewOneAuction
+);
 
 
 module.exports = router;

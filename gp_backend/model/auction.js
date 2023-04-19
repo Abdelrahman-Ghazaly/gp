@@ -30,19 +30,11 @@ const auctionSchema = new Schema({
         type: Number,
         required: true,
     },
-    final_price: {
-        type: Number,
-        required: true,
-    },
     start_date: {
         type: Date,
     },
     end_date: {
         type: Date,
-    },
-    final_price: {
-        type: Number,
-        required: true,
     },
     is_accepted: {
         type: Boolean,
@@ -69,7 +61,6 @@ exports.createAuction = async (auctionData, user_id, imgURL) => {
             title,
             description,
             category,
-            finalPrice,
             startPrice,
             duration,
         } = auctionData;
@@ -81,7 +72,6 @@ exports.createAuction = async (auctionData, user_id, imgURL) => {
             category,
             owner_id: user_id,
             start_price: startPrice,
-            final_price: finalPrice,
             start_date: currentDate.toISOString(),
             end_date: currentDate.add(duration, "milliseconds").toISOString(),
         });
@@ -100,8 +90,34 @@ exports.deleteAuction = async (auctionId, user_id) => {
             _id: auctionId,
             owner_id: user_id,
         });
-        console.log(result);
         return result;
+    } catch (err) {
+        console.log(err);
+        throw new Error();
+    }
+};
+
+exports.view = async () => {
+    try {
+        const result = await Auction.find({
+            end_date: { $gt: new Date() },
+            is_accepted: true,
+        });
+        return result;
+    } catch (err) {
+        console.log(err);
+        throw new Error();
+    }
+};
+
+exports.viewOneAuction = async (auctionId) => {
+    try {
+        const currentDate = moment().toISOString()
+        const result = await Auction.find({
+            _id: auctionId,
+            end_date: { $gt: currentDate },
+        }).populate("owner_id", "_id name");
+        return result[0];
     } catch (err) {
         console.log(err);
         throw new Error();
