@@ -102,7 +102,7 @@ exports.view = async () => {
         const result = await Auction.find({
             end_date: { $gt: new Date() },
             is_accepted: true,
-        });
+        }).limit(25);
         return result;
     } catch (err) {
         console.log(err);
