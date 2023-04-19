@@ -20,10 +20,11 @@ function App() {
 
   useEffect(() => {
     const userData = JSON.parse(localStorage.getItem('userData'));
-    //console.log(userData)
+
     if (userData) {
       dispatch(authSliceAction.login(userData));
     }
+
   }, [dispatch]);
 
   return (
