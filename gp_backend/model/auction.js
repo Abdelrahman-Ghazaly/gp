@@ -49,7 +49,7 @@ const auctionSchema = new Schema({
     winner_id: {
         type: Schema.Types.ObjectId,
         ref: "User",
-        default: null
+        default: null,
     },
 });
 
@@ -57,13 +57,8 @@ const Auction = mongoose.model("Auction", auctionSchema);
 
 exports.createAuction = async (auctionData, user_id, imgURL) => {
     try {
-        const {
-            title,
-            description,
-            category,
-            startPrice,
-            duration,
-        } = auctionData;
+        const { title, description, category, startPrice, duration } =
+            auctionData;
         const currentDate = moment();
         const auction = new Auction({
             title,
@@ -82,7 +77,6 @@ exports.createAuction = async (auctionData, user_id, imgURL) => {
         throw new Error();
     }
 };
-
 
 exports.deleteAuction = async (auctionId, user_id) => {
     try {
@@ -112,12 +106,45 @@ exports.view = async () => {
 
 exports.viewOneAuction = async (auctionId) => {
     try {
-        const currentDate = moment().toISOString()
+        const currentDate = moment().toISOString();
         const result = await Auction.find({
             _id: auctionId,
             end_date: { $gt: currentDate },
         }).populate("owner_id", "_id name");
         return result[0];
+    } catch (err) {
+        console.log(err);
+        throw new Error();
+    }
+};
+
+exports.search = async (query, category, minPrice, maxPrice) => {
+    try {
+        const filters = {
+            end_date: { $gt: new Date() },
+        };
+        if (query) {
+            filters.$or = [
+                { title: { $regex: query, $options: "i" } },
+                { description: { $regex: query, $options: "i" } },
+            ];
+        }
+        if (category) {
+            filters.category = category;
+        }
+        if (minPrice && maxPrice) {
+            filters.current_pid = {};
+            filters.current_pid.$gt = parseInt(minPrice) - 1;
+            filters.current_pid.$lt = parseInt(maxPrice) + 1;
+        } else if (minPrice) {
+            filters.current_pid = {};
+            filters.current_pid.$gt = parseInt(minPrice) - 1;
+        } else if (maxPrice) {
+            filters.current_pid = {};
+            filters.current_pid.$lt = parseInt(maxPrice) + 1;
+        }
+        const result = await Auction.find(filters);
+        return result;
     } catch (err) {
         console.log(err);
         throw new Error();

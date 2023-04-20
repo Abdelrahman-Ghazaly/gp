@@ -26,5 +26,6 @@ router.get(
     auctionController.viewOneAuction
 );
 
+router.get("/search/auction", auctionController.search);
 
 module.exports = router;
