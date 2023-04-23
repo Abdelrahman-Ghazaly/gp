@@ -1,7 +1,6 @@
 const mongoose = require("mongoose");
 const moment = require("moment");
 const Schema = mongoose.Schema;
-
 const auctionSchema = new Schema({
     title: {
         type: String,
@@ -144,6 +143,31 @@ exports.search = async (query, category, minPrice, maxPrice) => {
             filters.current_pid.$lt = parseInt(maxPrice) + 1;
         }
         const result = await Auction.find(filters);
+        return result;
+    } catch (err) {
+        console.log(err);
+        throw new Error();
+    }
+};
+
+exports.bidAuction = async (auctionId, bidAmount, winner_id) => {
+    try {
+        const currentDate = moment().toISOString();
+        const result = await Auction.findOneAndUpdate(
+            {
+                $and: [
+                    { _id: auctionId },
+                    { end_date: { $gt: currentDate } },
+                    { current_pid: { $lt: parseInt(bidAmount) } },
+                    { start_price: { $lt: parseInt(bidAmount) } },
+                ],
+            },
+            {
+                current_pid: Number(bidAmount),
+                winner_id: winner_id,
+            },
+            { new: true }
+        );
         return result;
     } catch (err) {
         console.log(err);

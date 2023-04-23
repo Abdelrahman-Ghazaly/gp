@@ -28,4 +28,10 @@ router.get(
 
 router.get("/search/auction", auctionController.search);
 
+router.post(
+    "/bid/:auctionId",
+    auth.verifyLogedin,
+    auctionController.bidAuction
+);
+
 module.exports = router;

@@ -86,3 +86,19 @@ exports.search = async (req, res, next) => {
         next(err);
     }
 };
+
+exports.bidAuction = async (req, res, next) => {
+    try {
+        const auctionId = req.params.auctionId;
+        const bidAmount = parseInt(req.body.bidAmount);
+        const result = await db.bidAuction(auctionId, bidAmount, req.user.id);
+        if (result) {
+            res.status(200).json(result);
+        } else {
+            throw new Error();
+        }
+    } catch (err) {
+        console.log(err);
+        next(err);
+    }
+};
