@@ -92,10 +92,13 @@ exports.deleteAuction = async (auctionId, user_id) => {
 
 exports.view = async () => {
     try {
-        const result = await Auction.find({
-            end_date: { $gt: new Date() },
-            is_accepted: true,
-        }).limit(25);
+        const result = await Auction.find(
+            {
+                end_date: { $gt: new Date() },
+                is_accepted: true,
+            },
+            { owner_id: 0 }
+        ).limit(25);
         return result;
     } catch (err) {
         console.log(err);
