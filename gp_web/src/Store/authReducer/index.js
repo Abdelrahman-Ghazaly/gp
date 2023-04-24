@@ -30,7 +30,7 @@ export const userLogin = createAsyncThunk('userLogin/authSlice' , async (data , 
     }
 })
 
-const initialState = {userData : null , userToken : '' , userId : '' , loading : true , error : null , status : 'idle'}
+const initialState = {userData : null  , userToken : '' , userId : '' , loading : true , error : null , status : 'idle'}
 
 const authSlice = createSlice({
     name : 'authSlice',
@@ -51,10 +51,12 @@ const authSlice = createSlice({
         builder
             .addCase(userLogin.fulfilled , (state , action) => {
                 state.status = 'success'
-                console.log(action.payload)
+
+                console.log(state.adminRole)
                 if(action.payload?.message){
                     state.error = action.payload?.message
                 }
+
                 state.userData = action.payload.userData
                 state.userToken = action.payload.userData?.accessToken
                 state.userId = action.payload.userData?._id
