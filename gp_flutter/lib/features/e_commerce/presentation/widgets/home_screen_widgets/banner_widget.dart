@@ -1,8 +1,8 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
-import '../../../../core/utils/utilities.dart';
+import '../../../../../core/utils/utilities.dart';
 
-import '../../../../core/app_constants/app_constants.dart';
+import '../../../../../core/app_constants/app_constants.dart';
 
 class BannerWidget extends StatelessWidget {
   const BannerWidget({Key? key}) : super(key: key);

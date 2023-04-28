@@ -7,9 +7,8 @@ import '../entities/furniture_entity.dart';
 import '../entities/search_query_entity.dart';
 
 abstract class ECommerceRepository {
-  Future<Either<Failure, List<FurnitureEntity>>> getPopularFurnitureByCategory({
-    required Category category,
-  });
+  Future<Either<Failure, Map<String, List<FurnitureEntity>>>>
+      getPopularFurnitureByCategory();
 
   Future<Either<Failure, List<FurnitureEntity>>> getFurnitureFromSearchByQuery({
     required String searchQuery,

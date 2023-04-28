@@ -48,7 +48,7 @@ class AppTextStyles {
   );
 }
 
-const SizedBox kSpacing20p = const SizedBox(
+const SizedBox kSpacing20p = SizedBox(
   height: 20,
   width: 20,
 );

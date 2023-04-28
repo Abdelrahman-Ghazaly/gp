@@ -26,7 +26,7 @@ class ApiConstants {
   static String deleteFurniturePath(productId) =>
       '${_productBaseUrl}delete/$productId';
 
-  //*Search End Points
+  //* Search End Points
 
   static const String _productSearchBaseUrl =
       '${_productBaseUrl}search/product/?';

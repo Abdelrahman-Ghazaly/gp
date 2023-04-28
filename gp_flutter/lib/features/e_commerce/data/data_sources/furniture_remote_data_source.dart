@@ -11,9 +11,7 @@ import '../../domain/entities/search_query_entity.dart';
 import '../models/furniture_model.dart';
 
 abstract class FurnitureRemoteDataSource {
-  Future<List<FurnitureEntity>> getPopularFurnitureByCategory({
-    required Category category,
-  });
+  Future<Map<String, List<FurnitureEntity>>> getPopularFurnitureByCategory();
 
   Future<List<FurnitureEntity>> getFurnitureFromSearchByQuery({
     required String searchQuery,
@@ -57,11 +55,9 @@ class FurnitureRemoteDataSourceImpl extends FurnitureRemoteDataSource {
   });
 
   @override
-  Future<List<FurnitureEntity>> getPopularFurnitureByCategory(
-          {required Category category}) =>
-      _getPopularFurnitureList(
+  Future<Map<String, List<FurnitureEntity>>> getPopularFurnitureByCategory() =>
+      _getPopularFurnitureMap(
         url: ApiConstants.popularFurnitureByCategoryPath,
-        category: category,
       );
 
   @override
@@ -157,27 +153,27 @@ class FurnitureRemoteDataSourceImpl extends FurnitureRemoteDataSource {
     }
   }
 
-  Future<List<FurnitureEntity>> _getPopularFurnitureList(
-      {required String url, required Category category}) async {
+  Future<Map<String, List<FurnitureEntity>>> _getPopularFurnitureMap(
+      {required String url}) async {
     Response response = await dio.get(
       url,
       data: {
         'Content-Type': 'application / json',
       },
     );
-    String categoryString = mapCategoryToString(category);
-    if (response.data[categoryString] == null) {
-      response.statusCode = -1;
-      response.data = {
-        'status_code': response.statusCode,
-        'status_message': 'Data not found',
-      };
-    }
+
     if (response.statusCode == 200) {
-      return List.from(
-        (response.data[categoryString])
-            .map((element) => FurnitureModel.fromMap(element)),
-      );
+      Map<String, List<FurnitureEntity>> popularFurniture = {};
+      for (var key in response.data.keys) {
+        popularFurniture.addAll({
+          key: List.from(
+            (response.data[key])
+                .map((element) => FurnitureModel.fromMap(element)),
+          )
+        });
+      }
+
+      return popularFurniture;
     } else {
       throw ServerException(
         errorMessageModel: ErrorMessageModel.fromJson(response.data),
