@@ -1,6 +1,5 @@
-import 'app_values.dart';
-
 import '../../features/e_commerce/domain/entities/search_query_entity.dart';
+import 'app_values.dart';
 
 class ApiConstants {
   static const String auctionBaseUrl = 'http://localhost:5000/auction';

@@ -46,6 +46,14 @@ class AppTextStyles {
     fontSize: 20,
     fontWeight: FontWeight.w600,
   );
+  static final TextStyle titileTextStyle = GoogleFonts.montserrat(
+    fontSize: 18,
+    fontWeight: FontWeight.w600,
+  );
+  static final TextStyle descriptionTextStyle = GoogleFonts.montserrat(
+    fontSize: 15,
+    fontWeight: FontWeight.w400,
+  );
 }
 
 const SizedBox kSpacing20p = SizedBox(

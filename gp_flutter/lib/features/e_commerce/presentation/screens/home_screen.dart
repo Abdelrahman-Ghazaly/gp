@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart' hide AppBar;
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:gp_flutter/core/app_constants/api_constants.dart';
+import '../../../../core/app_constants/api_constants.dart';
 
 import '../../../../core/app_constants/app_constants.dart';
 import '../../../../core/common_widgets/common_widgets.dart';
@@ -37,35 +37,24 @@ class HomeScreen extends StatelessWidget {
                     child: const Placeholder(),
                   ),
                   kSpacing20p,
-                  const HeaderText(title: 'Chair'),
-                  kSpacing20p,
-                  const ItemListView(
-                    category: Category.chair,
-                  ),
-                  const HeaderText(title: 'Bed'),
-                  kSpacing20p,
-                  const ItemListView(
-                    category: Category.bed,
-                  ),
-                  const HeaderText(title: 'Lamp'),
-                  kSpacing20p,
-                  const ItemListView(
-                    category: Category.lamp,
-                  ),
-                  const HeaderText(title: 'Dresser'),
-                  kSpacing20p,
-                  const ItemListView(
-                    category: Category.dresser,
-                  ),
-                  const HeaderText(title: 'Table'),
-                  kSpacing20p,
-                  const ItemListView(
-                    category: Category.table,
-                  ),
-                  const HeaderText(title: 'Sofa'),
-                  kSpacing20p,
-                  const ItemListView(
-                    category: Category.sofa,
+                  ...List.generate(
+                    Category.values.length,
+                    (index) {
+                      final String categoryName =
+                          mapCategoryToString(Category.values[index]);
+                      return Column(
+                        children: [
+                          HeaderText(
+                            title: categoryName[0].toUpperCase() +
+                                categoryName.substring(1).toLowerCase(),
+                          ),
+                          kSpacing20p,
+                          ItemListView(
+                            category: Category.values[index],
+                          ),
+                        ],
+                      );
+                    },
                   ),
                 ],
               ),
