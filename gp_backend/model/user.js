@@ -54,6 +54,14 @@ exports.viewProfile = async (id) => {
                     as: "product_logs",
                 },
             },
+            {
+                $lookup: {
+                    from: "auctions",
+                    localField: "_id",
+                    foreignField: "owner_id",
+                    as: "auction_logs",
+                },
+            },
         ]);
         return result;
     } catch (err) {

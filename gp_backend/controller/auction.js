@@ -25,16 +25,75 @@ exports.createAuction = async (req, res, next) => {
     }
 };
 
-
 exports.deleteAuction = async (req, res, next) => {
     try {
-        const auctionId = req.params.auctionId
-        const result = await db.deleteAuction(
-            auctionId,
-            req.user.id,
-        );
+        const auctionId = req.params.auctionId;
+        const result = await db.deleteAuction(auctionId, req.user.id);
         if (result) {
-            res.status(200).json({"message":"auction deleted successfully"});
+            res.status(200).json({ message: "auction deleted successfully" });
+        } else {
+            throw new Error();
+        }
+    } catch (err) {
+        console.log(err);
+        next(err);
+    }
+};
+
+exports.view = async (req, res, next) => {
+    try {
+        const result = await db.view();
+        if (result) {
+            res.status(200).json(result);
+        } else {
+            throw new Error();
+        }
+    } catch (err) {
+        console.log(err);
+        next(err);
+    }
+};
+
+exports.viewOneAuction = async (req, res, next) => {
+    try {
+        const auctionId = req.params.auctionId;
+        const result = await db.viewOneAuction(auctionId);
+        if (result) {
+            res.status(200).json(result);
+        } else {
+            throw new Error();
+        }
+    } catch (err) {
+        console.log(err);
+        next(err);
+    }
+};
+
+exports.search = async (req, res, next) => {
+    try {
+        const query = req.query.query;
+        const minPrice = req.query.minPrice;
+        const maxPrice = req.query.maxPrice;
+        const category = req.query.category;
+        const result = await db.search(query, category, minPrice, maxPrice);
+        if (result) {
+            res.status(200).json(result);
+        } else {
+            throw new Error();
+        }
+    } catch (err) {
+        console.log(err);
+        next(err);
+    }
+};
+
+exports.bidAuction = async (req, res, next) => {
+    try {
+        const auctionId = req.params.auctionId;
+        const bidAmount = parseInt(req.body.bidAmount);
+        const result = await db.bidAuction(auctionId, bidAmount, req.user.id);
+        if (result) {
+            res.status(200).json(result);
         } else {
             throw new Error();
         }

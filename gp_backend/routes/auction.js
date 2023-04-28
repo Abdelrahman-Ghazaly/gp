@@ -19,6 +19,19 @@ router.delete(
     auctionController.deleteAuction
 );
 
+router.get("/view", auctionController.view);
 
+router.get(
+    "/view/item/:auctionId",
+    auctionController.viewOneAuction
+);
+
+router.get("/search/auction", auctionController.search);
+
+router.post(
+    "/bid/:auctionId",
+    auth.verifyLogedin,
+    auctionController.bidAuction
+);
 
 module.exports = router;

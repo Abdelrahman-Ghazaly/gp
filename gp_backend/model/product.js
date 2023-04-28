@@ -109,7 +109,6 @@ exports.view = async () => {
                     dresser: { $slice: ["$dresser", 6] },
                     table: { $slice: ["$table", 6] },
                     sofa: { $slice: ["$sofa", 6] },
-                    //the rest of the cats
                 },
             },
         ]);
