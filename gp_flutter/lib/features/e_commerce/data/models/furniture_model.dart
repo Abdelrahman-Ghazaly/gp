@@ -1,4 +1,4 @@
-import '../../domain/entities/furniture_entity.dart';
+ import '../../domain/entities/furniture_entity.dart';
 
 class FurnitureModel extends FurnitureEntity {
   const FurnitureModel({

@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'core/theme/theme.dart';
+import 'features/auction/presentation/bloc/get_all_auctions_bloc/all_auctions_bloc.dart';
+import 'features/auction/presentation/bloc/get_auction_by_id/get_auction_by_id_bloc.dart';
 import 'features/e_commerce/presentation/bloc/e_commerce_bloc.dart';
 import 'core/services/injection_container.dart';
 
@@ -16,8 +18,18 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => sl<ECommerceBloc>(),
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(
+          create: (context) => sl<ECommerceBloc>(),
+        ),
+        BlocProvider(
+          create: (context) => sl<GetAuctionByIdBloc>(),
+        ),
+        BlocProvider(
+            create: (context) =>
+                sl<AllAuctionsBloc>()..add(GetAuctionProductsEvent())),
+      ],
       child: MaterialApp.router(
         title: 'GP E-Commerce',
         debugShowCheckedModeBanner: false,

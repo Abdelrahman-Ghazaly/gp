@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:gp_flutter/core/common_widgets/common_widgets.dart';
+import 'package:gp_flutter/features/auction/presentation/screens/add_auction_screen.dart';
+import 'package:gp_flutter/features/auction/presentation/screens/auction_details_screen.dart';
+import 'package:gp_flutter/features/auction/presentation/screens/auction_screen.dart';
 
-import '../../features/auction/presentation/screens/auction_details_screen.dart';
-import '../common_widgets/common_widgets.dart';
+import '../../features/auction/presentation/screens/auction_search_screen.dart';
 
 final GoRouter router = GoRouter(routes: <GoRoute>[
   GoRoute(
@@ -14,7 +17,23 @@ final GoRouter router = GoRouter(routes: <GoRoute>[
         GoRoute(
             path: "auction_details_screen",
             builder: (BuildContext context, GoRouterState state) {
-              return const AuctionDetailsScreen();
+              final auctionId = state.queryParams['auction_id'];
+              return AuctionDetailsScreen(
+                auctionId: auctionId!,
+              );
+            }),
+        GoRoute(
+            path: "auction_search_screen",
+            builder: (BuildContext context, GoRouterState state) {
+              final auctionId = state.queryParams['auction_search'];
+              return AuctionSearchScreen(
+                auctionSearch: auctionId!,
+              );
+            }),
+        GoRoute(
+            path: "add_auction_screen",
+            builder: (BuildContext context, GoRouterState state) {
+              return const AddAuctionScreen();
             }),
       ])
 ]);

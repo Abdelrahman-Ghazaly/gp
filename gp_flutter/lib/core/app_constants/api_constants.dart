@@ -2,13 +2,18 @@ import '../../features/e_commerce/domain/entities/search_query_entity.dart';
 import 'app_values.dart';
 
 class ApiConstants {
-  static const String auctionBaseUrl = 'http://localhost:5000/auction';
+  // Auction End Points
+
+  static const String auctionBaseUrl = 'http://192.168.1.2:5000/auction';
 
   static const String auctionViewProductPath = '$auctionBaseUrl/view';
   static const String auctionUploadProductPath = '$auctionBaseUrl/upload';
 
-  static String auctionDeleteProductPath(productId) =>
-      '$auctionBaseUrl/delete/$productId';
+  static String auctionDeleteProductPath(auctionId) =>
+      '$auctionBaseUrl/delete/$auctionId';
+
+  static String viewAuctionDataPath(auctionId) =>
+      '$auctionBaseUrl/view/item/$auctionId';
 
   static String auctionPidProductPath(productId, userId) =>
       '$auctionBaseUrl/pid/$productId/$userId';

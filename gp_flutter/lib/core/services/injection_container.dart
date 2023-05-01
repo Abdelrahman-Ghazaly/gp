@@ -6,11 +6,15 @@ import '../../features/auction/domain/usecases/delete_auction_usecase.dart';
 import '../../features/auction/domain/usecases/get_auction_products_search_result_usecase.dart';
 import '../../features/auction/domain/usecases/get_auction_products_usecase.dart';
 import '../../features/auction/domain/usecases/upload_auction_product_usecase.dart';
+import '../../features/auction/domain/usecases/view_auction_data.dart';
+import '../../features/auction/presentation/bloc/get_all_auctions_bloc/all_auctions_bloc.dart';
+import '../../features/auction/presentation/bloc/get_auction_by_id/get_auction_by_id_bloc.dart';
 import '../../features/e_commerce/data/repositories/e_commerce_repository_impl.dart';
 import '../../features/e_commerce/domain/use_cases/delete_product.dart';
 import '../../features/e_commerce/domain/use_cases/upload_furniture.dart';
 import '../../features/e_commerce/presentation/bloc/e_commerce_bloc.dart';
 
+import '../../features/auction/domain/repositories/base_auction_repository.dart';
 import '../../features/e_commerce/data/data_sources/furniture_remote_data_source.dart';
 import '../../features/e_commerce/domain/repositories/e_commerce_repository.dart';
 import '../../features/e_commerce/domain/use_cases/get_furniture_from_search_by_category.dart';
@@ -44,6 +48,12 @@ void initBloc() {
       deleteFurniture: sl(),
       uploadFurniture: sl(),
     ),
+  );
+  sl.registerFactory(
+    () => AllAuctionsBloc(sl()),
+  );
+  sl.registerFactory(
+    () => GetAuctionByIdBloc(sl()),
   );
 }
 
@@ -97,6 +107,7 @@ void initFeatures() {
   sl.registerLazySingleton(() => DeleteAuctionUseCase(sl()));
   sl.registerLazySingleton(() => GetAuctionProductsUseCase(sl()));
   sl.registerLazySingleton(() => GetAuctionProductsSearchResultUseCase(sl()));
+  sl.registerLazySingleton(() => ViewAuctionDataUseCase(sl()));
 }
 
 void initRepository() {
@@ -105,7 +116,8 @@ void initRepository() {
       remoteDataSource: sl(),
     ),
   );
-  sl.registerLazySingleton<AuctionRepository>(() => AuctionRepository(sl()));
+  sl.registerLazySingleton<BaseAuctionRepository>(
+      () => AuctionRepository(sl()));
 }
 
 void initDataSources() {
@@ -116,7 +128,7 @@ void initDataSources() {
   );
   sl.registerLazySingleton<BaseAuctionRemoteDataSource>(
       () => AuctionRemoteDataSource(
-            dio: sl(),
+            dio: sl<Dio>(),
           ));
 }
 
