@@ -28,7 +28,7 @@ class AuctionCardDesign extends StatelessWidget {
                     image: DecorationImage(
                         image:
                             NetworkImage(state.auctionList[index].image[0]),
-                        fit: BoxFit.cover)),
+                        fit: BoxFit.fill)),
                 child: Padding(
                   padding: EdgeInsets.all(height * 0.03),
                   child: Column(

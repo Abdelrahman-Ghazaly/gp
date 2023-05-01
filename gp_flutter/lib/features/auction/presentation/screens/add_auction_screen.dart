@@ -1,9 +1,6 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:gp_flutter/features/auction/presentation/bloc/get_auction_by_id/get_auction_by_id_bloc.dart';
-import 'package:gp_flutter/features/auction/presentation/bloc/get_auction_by_id/get_auction_by_id_bloc.dart';
 import 'package:image_picker/image_picker.dart';
 
 class AddAuctionScreen extends StatefulWidget {

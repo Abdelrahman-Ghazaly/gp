@@ -8,14 +8,14 @@ class AuctionEntities extends Equatable {
   final String category;
   final String duration;
   final String auctionId;
-  final String seller;
+  final OwnerEntities owner;
   final double startPrice;
   final double currentPrice;
   final bool isAccepted;
 
   const AuctionEntities(
       {required this.auctionId,
-      required this.seller,
+      required this.owner,
       required this.isAccepted,
       required this.userId,
       required this.title,
@@ -38,6 +38,13 @@ class AuctionEntities extends Equatable {
         currentPrice,
         auctionId,
         isAccepted,
-        seller
+        owner
       ];
+}
+
+class OwnerEntities {
+ final String id;
+  final String name;
+
+  OwnerEntities({required this.id, required this.name});
 }

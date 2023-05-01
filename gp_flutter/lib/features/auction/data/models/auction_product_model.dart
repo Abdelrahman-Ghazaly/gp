@@ -11,7 +11,7 @@ class AuctionProductModel extends AuctionEntities {
       required super.duration,
       required super.startPrice,
       required super.auctionId,
-      required super.seller,
+      required super.owner,
       required super.isAccepted});
 
   factory AuctionProductModel.fromJson(Map<String, dynamic> json) =>
@@ -25,7 +25,7 @@ class AuctionProductModel extends AuctionEntities {
         duration: json['end_date'] ?? "",
         startPrice: json['start_price'].toDouble() ?? 0,
         auctionId: json['_id'] ?? "",
-        seller: "json['owner_id']" ?? "",
+        owner: OwnerModel.fromJson(json['owner_id']),
         isAccepted: json['is_accepted'] ?? false,
       );
 
@@ -37,6 +37,23 @@ class AuctionProductModel extends AuctionEntities {
         "image": product.image,
         "category": product.category,
         "duration": product.duration,
-        "startPrice": product.startPrice,
+        "startPrice": product.startPrice
+      };
+}
+
+class OwnerModel extends OwnerEntities {
+  OwnerModel({required super.id, required super.name});
+
+  factory OwnerModel.fromJson(Map<String, dynamic>? json) {
+    json ??= {"_id":"","name":""};
+    return OwnerModel(
+      id: json['_id'] ?? "",
+      name: json['name'] ?? "",
+    );
+  }
+
+  Map<String, dynamic> toJson(OwnerEntities owner) => {
+        "_id": owner.id ?? "",
+        "name": owner.name ?? "",
       };
 }

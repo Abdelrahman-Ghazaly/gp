@@ -9,7 +9,6 @@ abstract class GetAuctionByIdState extends Equatable {
 
 class Loading extends GetAuctionByIdState {}
 
-
 class Loaded extends GetAuctionByIdState {
   final AuctionEntities auctionData;
 
@@ -20,6 +19,7 @@ class Loaded extends GetAuctionByIdState {
   @override
   List<Object> get props => [auctionData];
 }
+
 class Error extends GetAuctionByIdState {
   final String message;
 

@@ -42,7 +42,7 @@ class AuctionScreen extends StatelessWidget {
                   radius: width * 0.03,
                   child: GestureDetector(
                     onTap: () async{
-                      return context.go('/add_auction_screen');
+                      return context.go('/auction_details_screen?auction_id=5as4d646d');
 
                     },
                     child: Icon(

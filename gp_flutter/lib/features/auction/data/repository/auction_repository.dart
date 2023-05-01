@@ -60,7 +60,9 @@ class AuctionRepository extends BaseAuctionRepository {
       String auctionId) async {
     final result =
         await baseAuctionRemoteDataSource.viewAuctionDataById(auctionId);
-    try {
+
+
+  try {
       return Right(result);
     } on ServerException catch (failure) {
       return Left(ServerFailure(failure.errorMessageModel.statusMessage));

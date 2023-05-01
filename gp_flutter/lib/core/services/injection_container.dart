@@ -6,6 +6,7 @@ import 'package:gp_flutter/features/auction/domain/usecases/delete_auction_useca
 import 'package:gp_flutter/features/auction/domain/usecases/get_auction_products_search_result_usecase.dart';
 import 'package:gp_flutter/features/auction/domain/usecases/get_auction_products_usecase.dart';
 import 'package:gp_flutter/features/auction/domain/usecases/upload_auction_product_usecase.dart';
+import 'package:gp_flutter/features/auction/domain/usecases/view_auction_data.dart';
 import 'package:gp_flutter/features/auction/presentation/bloc/get_all_auctions_bloc/all_auctions_bloc.dart';
 import 'package:gp_flutter/features/auction/presentation/bloc/get_auction_by_id/get_auction_by_id_bloc.dart';
 import 'package:gp_flutter/features/e_commerce/data/repositories/e_commerce_repository_impl.dart';
@@ -106,6 +107,7 @@ void initFeatures() {
   sl.registerLazySingleton(() => DeleteAuctionUseCase(sl()));
   sl.registerLazySingleton(() => GetAuctionProductsUseCase(sl()));
   sl.registerLazySingleton(() => GetAuctionProductsSearchResultUseCase(sl()));
+  sl.registerLazySingleton(() => ViewAuctionDataUseCase(sl()));
 }
 
 void initRepository() {
