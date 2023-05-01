@@ -36,7 +36,7 @@ class ItemListView extends StatelessWidget {
                     ItemCard(
                       furnitureEntity: furnitureList[index],
                     ),
-                    kSpacing20p,
+                    kSpacing(20),
                   ],
                 ),
               );

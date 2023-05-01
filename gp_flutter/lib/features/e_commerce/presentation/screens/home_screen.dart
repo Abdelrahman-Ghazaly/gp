@@ -5,7 +5,6 @@ import '../../../../core/app_constants/api_constants.dart';
 import '../../../../core/app_constants/app_constants.dart';
 import '../../../../core/common_widgets/common_widgets.dart';
 import '../../../../core/utils/utilities.dart';
-import '../../domain/entities/furniture_entity.dart';
 import '../bloc/e_commerce_bloc.dart';
 import '../widgets/widgets.dart';
 
@@ -31,12 +30,12 @@ class HomeScreen extends StatelessWidget {
               child: Column(
                 children: [
                   const HeaderText(title: 'Our Categories'),
-                  kSpacing20p,
+                  kSpacing(20),
                   SizedBox(
                     height: Utilities.screenHeight * 0.1,
                     child: const Placeholder(),
                   ),
-                  kSpacing20p,
+                  kSpacing(20),
                   ...List.generate(
                     Category.values.length,
                     (index) {
@@ -48,7 +47,7 @@ class HomeScreen extends StatelessWidget {
                             title: categoryName[0].toUpperCase() +
                                 categoryName.substring(1).toLowerCase(),
                           ),
-                          kSpacing20p,
+                          kSpacing(20),
                           ItemListView(
                             category: Category.values[index],
                           ),

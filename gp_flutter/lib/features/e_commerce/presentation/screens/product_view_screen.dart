@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart' hide AppBar;
-import 'package:gp_flutter/core/app_constants/app_constants.dart';
-import 'package:gp_flutter/core/utils/utilities.dart';
+import '../../../../core/app_constants/app_constants.dart';
+import '../../../../core/utils/utilities.dart';
 
 import '../../../../core/common_widgets/common_widgets.dart';
 import '../../domain/entities/furniture_entity.dart';
+import '../widgets/product_screen_widget/product_screen_widgets.dart';
 
 class ProductViewScreen extends StatelessWidget {
   const ProductViewScreen({
@@ -18,34 +19,70 @@ class ProductViewScreen extends StatelessWidget {
       appBar: const AppBar(),
       body: SingleChildScrollView(
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            SizedBox(
-              height: Utilities.screenHeight * 0.4,
+            Container(
               width: Utilities.screenWidth,
-              child: PageView.builder(
-                itemCount: furnitureEntity.imageUrls?.length,
-                itemBuilder: (context, index) {
-                  return Container(
-                    height: Utilities.screenHeight * 0.4,
-                    width: Utilities.screenWidth,
-                    decoration: BoxDecoration(
-                      image: DecorationImage(
-                        image: NetworkImage(
-                          furnitureEntity.imageUrls?[index],
+              height: Utilities.screenHeight * 0.5,
+              decoration: const BoxDecoration(
+                gradient: LinearGradient(
+                  begin: Alignment.center,
+                  end: Alignment(0.8, 1),
+                  colors: auctionDetailsLinearGradient,
+                  tileMode: TileMode.mirror,
+                ),
+              ),
+              child: Padding(
+                padding: const EdgeInsets.all(20),
+                child: PageView.builder(
+                  itemCount: furnitureEntity.imageUrls?.length,
+                  itemBuilder: (context, index) {
+                    return Container(
+                      height: Utilities.screenHeight * 0.4,
+                      width: Utilities.screenWidth,
+                      decoration: BoxDecoration(
+                        image: DecorationImage(
+                          image: NetworkImage(
+                            furnitureEntity.imageUrls?[index],
+                          ),
                         ),
                       ),
-                    ),
-                  );
-                },
+                    );
+                  },
+                ),
               ),
             ),
-            kSpacing20p,
-            Text(
-              furnitureEntity.title,
-            )
+            Padding(
+              padding: const EdgeInsets.all(10),
+              child: ProductDetailsForm(
+                furnitureEntity: furnitureEntity,
+              ),
+            ),
           ],
         ),
       ),
+      bottomNavigationBar: const ProductViewBottomNavBar(),
     );
   }
 }
+
+//  SizedBox(
+//               height: Utilities.screenHeight * 0.4,
+//               width: Utilities.screenWidth,
+//               child: PageView.builder(
+//                 itemCount: furnitureEntity.imageUrls?.length,
+//                 itemBuilder: (context, index) {
+//                   return Container(
+//                     height: Utilities.screenHeight * 0.4,
+//                     width: Utilities.screenWidth,
+//                     decoration: BoxDecoration(
+//                       image: DecorationImage(
+//                         image: NetworkImage(
+//                           furnitureEntity.imageUrls?[index],
+//                         ),
+//                       ),
+//                     ),
+//                   );
+//                 },
+//               ),
+//             ),

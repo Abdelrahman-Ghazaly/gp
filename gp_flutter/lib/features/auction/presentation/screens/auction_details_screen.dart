@@ -70,10 +70,12 @@ class AuctionDetailsScreen extends StatelessWidget {
                           width: width * 0.8,
                           height: height * 0.35,
                           decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(20),
-                              image: const DecorationImage(
-                                  image: AssetImage("assets/images/bed.jpg"),
-                                  fit: BoxFit.cover)),
+                            borderRadius: BorderRadius.circular(20),
+                            image: const DecorationImage(
+                              image: AssetImage("assets/images/bed.jpg"),
+                              fit: BoxFit.cover,
+                            ),
+                          ),
                         ),
                       ],
                     ),
@@ -221,9 +223,13 @@ class AuctionDetailsScreen extends StatelessWidget {
                     borderRadius: BorderRadius.circular(5),
                   ),
                   child: const Center(
-                    child: Text("Place a bid",
-                        style: TextStyle(
-                            fontSize: 22, fontWeight: FontWeight.bold)),
+                    child: Text(
+                      "Place a bid",
+                      style: TextStyle(
+                        fontSize: 22,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
                   ),
                 )
               ],

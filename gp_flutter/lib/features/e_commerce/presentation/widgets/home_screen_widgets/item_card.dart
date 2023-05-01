@@ -76,7 +76,7 @@ class ItemCard extends StatelessWidget {
                     onPressed: () {
                       print('Clicked on Icon');
                     },
-                    icon: Icon(
+                    icon: const Icon(
                       CupertinoIcons.heart_fill,
                     ),
                   )

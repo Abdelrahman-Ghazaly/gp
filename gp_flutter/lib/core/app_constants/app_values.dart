@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:gp_flutter/core/app_constants/app_constants.dart';
 
 enum Category {
   bed,
@@ -56,7 +57,7 @@ class AppTextStyles {
   );
 }
 
-const SizedBox kSpacing20p = SizedBox(
-  height: 20,
-  width: 20,
-);
+SizedBox kSpacing(double space) => SizedBox(
+      height: space,
+      width: space,
+    );
