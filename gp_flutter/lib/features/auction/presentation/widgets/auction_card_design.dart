@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_swiper_view/flutter_swiper_view.dart';
 import 'package:go_router/go_router.dart';
+import 'package:gp_flutter/core/app_constants/app_colors.dart';
 
-import '../../../../core/services/injection_container.dart';
 import '../../../../core/utils/utilities.dart';
 import '../bloc/get_all_auctions_bloc/all_auctions_bloc.dart';
 import 'show_more_button.dart';
@@ -24,11 +24,11 @@ class AuctionCardDesign extends StatelessWidget {
             itemBuilder: (context, index) {
               return Container(
                 decoration: BoxDecoration(
+                    color: AppColors.appGreyColor.withOpacity(0.5),
                     borderRadius: BorderRadius.circular(25),
                     image: DecorationImage(
-                        image:
-                            NetworkImage(state.auctionList[index].image[0]),
-                        fit: BoxFit.fill)),
+                        image: NetworkImage(state.auctionList[index].image[0]),
+                        fit: BoxFit.contain)),
                 child: Padding(
                   padding: EdgeInsets.all(height * 0.03),
                   child: Column(

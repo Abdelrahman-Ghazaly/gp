@@ -45,7 +45,7 @@ class OwnerModel extends OwnerEntities {
   OwnerModel({required super.id, required super.name});
 
   factory OwnerModel.fromJson(Map<String, dynamic>? json) {
-    json ??= {"_id":"","name":""};
+    json ??= {"_id": "", "name": ""};
     return OwnerModel(
       id: json['_id'] ?? "",
       name: json['name'] ?? "",
@@ -53,7 +53,7 @@ class OwnerModel extends OwnerEntities {
   }
 
   Map<String, dynamic> toJson(OwnerEntities owner) => {
-        "_id": owner.id ?? "",
-        "name": owner.name ?? "",
+        "_id": owner.id,
+        "name": owner.name,
       };
 }
