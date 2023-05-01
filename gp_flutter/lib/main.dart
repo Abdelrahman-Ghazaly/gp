@@ -4,8 +4,9 @@ import 'core/theme/theme.dart';
 import 'features/auction/presentation/bloc/get_all_auctions_bloc/all_auctions_bloc.dart';
 import 'features/auction/presentation/bloc/get_auction_by_id/get_auction_by_id_bloc.dart';
 import 'features/e_commerce/presentation/bloc/e_commerce_bloc.dart';
-
-import 'package:gp_flutter/core/services/injection_container.dart';
+import 'core/theme/theme.dart';
+import 'features/e_commerce/presentation/bloc/e_commerce_bloc.dart';
+import 'core/services/injection_container.dart';
 
 import 'core/utils/app_router.dart';
 

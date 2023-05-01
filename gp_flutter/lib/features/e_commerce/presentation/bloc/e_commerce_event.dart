@@ -70,12 +70,7 @@ class GetFurnitureFromSearchByQueryEvent extends ECommerceEvent {
 }
 
 class GetPopularFurniturebyCategoryEvent extends ECommerceEvent {
-  final Category category;
-
-  const GetPopularFurniturebyCategoryEvent({required this.category});
-
-  @override
-  List<Object> get props => [category];
+  const GetPopularFurniturebyCategoryEvent();
 }
 
 class UploadFurnitureEvent extends ECommerceEvent {

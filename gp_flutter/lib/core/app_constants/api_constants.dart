@@ -1,6 +1,5 @@
-import 'app_values.dart';
-
 import '../../features/e_commerce/domain/entities/search_query_entity.dart';
+import 'app_values.dart';
 
 class ApiConstants {
   // Auction End Points
@@ -31,7 +30,7 @@ class ApiConstants {
   static String deleteFurniturePath(productId) =>
       '${_productBaseUrl}delete/$productId';
 
-  //*Search End Points
+  //* Search End Points
 
   static const String _productSearchBaseUrl =
       '${_productBaseUrl}search/product/?';

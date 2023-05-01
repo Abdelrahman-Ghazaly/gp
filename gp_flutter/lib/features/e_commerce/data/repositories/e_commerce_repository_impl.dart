@@ -11,6 +11,8 @@ import '../models/furniture_model.dart';
 
 typedef _RepositoryFurnitureListFunction = Future<List<FurnitureEntity>>
     Function();
+typedef _RepositoryFurnitureMapFunction
+    = Future<Map<String, List<FurnitureEntity>>> Function();
 typedef _RepositoryStringFunction = Future<String> Function();
 
 class ECommerceRepositoryImpl implements ECommerceRepository {
@@ -21,10 +23,10 @@ class ECommerceRepositoryImpl implements ECommerceRepository {
   });
 
   @override
-  Future<Either<Failure, List<FurnitureEntity>>> getPopularFurnitureByCategory(
-      {required Category category}) async {
-    return _getFurnitureList(
-      () => remoteDataSource.getPopularFurnitureByCategory(category: category),
+  Future<Either<Failure, Map<String, List<FurnitureEntity>>>>
+      getPopularFurnitureByCategory() async {
+    return _getPopularFurnitureMap(
+      () => remoteDataSource.getPopularFurnitureByCategory(),
     );
   }
 
@@ -103,6 +105,18 @@ class ECommerceRepositoryImpl implements ECommerceRepository {
       _RepositoryFurnitureListFunction repositoryFunction) async {
     try {
       final List<FurnitureEntity> result = await repositoryFunction();
+      return Right(result);
+    } on ServerException catch (failure) {
+      return Left(ServerFailure(failure.errorMessageModel.statusMessage));
+    }
+  }
+
+  Future<Either<Failure, Map<String, List<FurnitureEntity>>>>
+      _getPopularFurnitureMap(
+          _RepositoryFurnitureMapFunction repositoryFunction) async {
+    try {
+      final Map<String, List<FurnitureEntity>> result =
+          await repositoryFunction();
       return Right(result);
     } on ServerException catch (failure) {
       return Left(ServerFailure(failure.errorMessageModel.statusMessage));

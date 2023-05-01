@@ -1,4 +1,5 @@
 import 'package:flutter/cupertino.dart';
+import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
 
 class Utilities {
   static final double screenHeight =
@@ -21,7 +22,29 @@ class Utilities {
     );
   }
 
+  pushTo(
+    BuildContext context, {
+    required Widget screen,
+    bool withNavBar = false,
+  }) {
+    PersistentNavBarNavigator.pushNewScreen(
+      context,
+      screen: screen,
+      withNavBar: withNavBar,
+      pageTransitionAnimation: PageTransitionAnimation.cupertino,
+    );
+  }
 
+  pop({required BuildContext context}) {
+    Future.delayed(
+      Duration.zero,
+      () {
+        Navigator.pop(
+          context,
+        );
+      },
+    );
+  }
 }
 
 class _MyRoute extends CupertinoPageRoute {

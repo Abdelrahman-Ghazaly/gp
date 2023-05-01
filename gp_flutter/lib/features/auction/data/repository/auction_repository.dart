@@ -1,7 +1,7 @@
 import 'package:dartz/dartz.dart';
-import 'package:gp_flutter/core/error/failure.dart';
-import 'package:gp_flutter/features/auction/data/data_source/auction_reomte_data_source.dart';
-import 'package:gp_flutter/features/auction/domain/entities/auction_entities.dart';
+import '../../../../core/error/failure.dart';
+import '../../domain/entities/auction_entities.dart';
+import '../data_source/auction_reomte_data_source.dart';
 
 import '../../../../core/error/exceptions.dart';
 import '../../domain/repositories/base_auction_repository.dart';
@@ -61,8 +61,7 @@ class AuctionRepository extends BaseAuctionRepository {
     final result =
         await baseAuctionRemoteDataSource.viewAuctionDataById(auctionId);
 
-
-  try {
+    try {
       return Right(result);
     } on ServerException catch (failure) {
       return Left(ServerFailure(failure.errorMessageModel.statusMessage));

@@ -1,6 +1,6 @@
 import 'package:dio/dio.dart';
-import 'package:gp_flutter/core/app_constants/api_constants.dart';
-import 'package:gp_flutter/features/auction/data/models/auction_product_model.dart';
+import '../../../../core/app_constants/api_constants.dart';
+import '../models/auction_product_model.dart';
 
 import '../../../../core/error/exceptions.dart';
 import '../../../../core/network/error_message_model.dart';

@@ -2,6 +2,7 @@ import 'package:dartz/dartz.dart';
 import 'package:gp_flutter/core/error/failure.dart';
 import 'package:gp_flutter/core/use_case/use_case.dart';
 import 'package:gp_flutter/features/auction/domain/entities/auction_entities.dart';
+
 import '../repositories/base_auction_repository.dart';
 
 class UploadAuctionProductUseCase extends BaseUseCase<int, AuctionEntities> {

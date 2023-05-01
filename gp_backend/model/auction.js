@@ -145,7 +145,7 @@ exports.search = async (query, category, minPrice, maxPrice) => {
             filters.current_pid = {};
             filters.current_pid.$lt = parseInt(maxPrice) + 1;
         }
-        const result = await Auction.find(filters);
+        const result = await Auction.find(filters,{owner_id:0});
         return result;
     } catch (err) {
         console.log(err);

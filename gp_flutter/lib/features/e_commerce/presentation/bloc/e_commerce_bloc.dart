@@ -1,6 +1,7 @@
 import 'package:dartz/dartz.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import '../../../../core/use_case/use_case.dart';
 
 import '../../../../core/app_constants/app_constants.dart';
 import '../../../../core/error/failure.dart';
@@ -123,12 +124,9 @@ class ECommerceBloc extends Bloc<ECommerceEvent, ECommerceState> {
     on<GetPopularFurniturebyCategoryEvent>(
       (event, emit) async {
         emit(Loading());
-        final failureOrFurnitureList = await getPopularFurniturebyCategory(
-          popular.Params(
-            category: event.category,
-          ),
-        );
-        emit(await _eitherLoadedOrErrorState(failureOrFurnitureList));
+        final failureOrfurnitureList =
+            await getPopularFurniturebyCategory(NoParams());
+        emit(await _eitherLoadedOrErrorStateForMap(failureOrfurnitureList));
       },
     );
     on<DeleteProductEvent>(
@@ -161,6 +159,15 @@ class ECommerceBloc extends Bloc<ECommerceEvent, ECommerceState> {
     return failureOrFurnitureList.fold(
       (failure) => Error(message: failure.message),
       (furnitureList) => Loaded(furnitureList: furnitureList),
+    );
+  }
+
+  Future<ECommerceState> _eitherLoadedOrErrorStateForMap(
+    Either<Failure, Map<String, List<FurnitureEntity>>> failureOrFurnitureMap,
+  ) async {
+    return failureOrFurnitureMap.fold(
+      (failure) => Error(message: failure.message),
+      (furnitureMap) => Loaded(furnitureMap: furnitureMap),
     );
   }
 
