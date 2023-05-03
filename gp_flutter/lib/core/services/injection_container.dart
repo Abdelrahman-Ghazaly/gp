@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:get_it/get_it.dart';
+import 'package:gp_flutter/features/auction/presentation/bloc/search_auctions_bloc/search_auctions_bloc.dart';
 import '../../features/auction/data/data_source/auction_reomte_data_source.dart';
 import '../../features/auction/data/repository/auction_repository.dart';
 import '../../features/auction/domain/usecases/delete_auction_usecase.dart';
@@ -54,6 +55,9 @@ void initBloc() {
   );
   sl.registerFactory(
     () => GetAuctionByIdBloc(sl()),
+  );
+  sl.registerFactory(
+    () => SearchAuctionsBloc(sl()),
   );
 }
 

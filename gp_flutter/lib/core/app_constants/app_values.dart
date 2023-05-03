@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:gp_flutter/core/app_constants/app_constants.dart';
 
 enum Category {
   bed,

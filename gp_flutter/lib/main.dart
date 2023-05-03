@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:gp_flutter/features/auction/domain/entities/search_query_entity.dart';
+import 'package:gp_flutter/features/auction/presentation/bloc/search_auctions_bloc/search_auctions_bloc.dart';
 import 'core/theme/theme.dart';
 import 'features/auction/presentation/bloc/get_all_auctions_bloc/all_auctions_bloc.dart';
 import 'features/auction/presentation/bloc/get_auction_by_id/get_auction_by_id_bloc.dart';
@@ -29,6 +31,7 @@ class MyApp extends StatelessWidget {
         BlocProvider(
             create: (context) =>
                 sl<AllAuctionsBloc>()..add(GetAuctionProductsEvent())),
+        BlocProvider(create: (context) => sl<SearchAuctionsBloc>()),
       ],
       child: MaterialApp.router(
         title: 'GP E-Commerce',

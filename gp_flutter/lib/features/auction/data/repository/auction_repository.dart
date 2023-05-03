@@ -32,10 +32,10 @@ class AuctionRepository extends BaseAuctionRepository {
   }
 
   @override
-  Future<Either<Failure, List<AuctionEntities>>>
-      getAuctionProductsSearchResult() async {
-    final result =
-        await baseAuctionRemoteDataSource.getAuctionProductsSearchResult();
+  Future<Either<Failure, List<AuctionEntities>>> getAuctionProductsSearchResult(
+      searchQueryEntity) async {
+    final result = await baseAuctionRemoteDataSource
+        .getAuctionProductsSearchResult(searchQueryEntity);
     try {
       return Right(result);
     } on ServerException catch (failure) {

@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:gp_flutter/features/auction/domain/entities/search_query_entity.dart';
 import '../../../../core/app_constants/api_constants.dart';
 import '../models/auction_product_model.dart';
 
@@ -11,7 +12,8 @@ abstract class BaseAuctionRemoteDataSource {
 
   Future<AuctionEntities> viewAuctionDataById(String auctionId);
 
-  Future<List<AuctionEntities>> getAuctionProductsSearchResult();
+  Future<List<AuctionEntities>> getAuctionProductsSearchResult(
+      SearchQueryEntity searchQueryEntity);
 
   Future<int> uploadAuctionProduct(AuctionEntities auctionProduct);
 
@@ -62,9 +64,25 @@ class AuctionRemoteDataSource extends BaseAuctionRemoteDataSource {
   }
 
   @override
-  Future<List<AuctionEntities>> getAuctionProductsSearchResult() async {
-    // TODO: implement getAuctionProductsSearchResult
-    throw UnimplementedError();
+  Future<List<AuctionEntities>> getAuctionProductsSearchResult(
+      searchQueryEntity) async {
+    Response response = await dio.get(
+      ApiConstants.viewAuctionSearchDataPath(
+          searchQueryEntity.category,
+          searchQueryEntity.maxPrice,
+          searchQueryEntity.name,
+          searchQueryEntity.minPrice),
+    );
+
+    if (response.statusCode == 200) {
+      return List.from(
+        (response.data).map((element) => AuctionProductModel.fromJson(element)),
+      );
+    } else {
+      throw ServerException(
+        errorMessageModel: ErrorMessageModel.fromJson(response.data),
+      );
+    }
   }
 
   @override
