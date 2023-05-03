@@ -4,7 +4,6 @@ class FurnitureEntity extends Equatable {
   final String id;
   final String title;
   final String description;
-  //! will change from dynamic to String
   final List<dynamic>? imageUrls;
   final String? rawImage;
   final String category;

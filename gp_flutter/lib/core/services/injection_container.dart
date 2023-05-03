@@ -1,6 +1,11 @@
 import 'package:dio/dio.dart';
 import 'package:get_it/get_it.dart';
 import 'package:gp_flutter/features/auction/presentation/bloc/search_auctions_bloc/search_auctions_bloc.dart';
+import 'package:gp_flutter/features/authentication/data/datasources/authentication_remote_data_source.dart';
+import 'package:gp_flutter/features/authentication/data/repositories/authenitcation_repository_impl.dart';
+import 'package:gp_flutter/features/authentication/domain/usecases/log_in.dart';
+import 'package:gp_flutter/features/authentication/domain/usecases/sign_up.dart';
+import 'package:gp_flutter/features/authentication/presentation/bloc/authentication_bloc.dart';
 import '../../features/auction/data/data_source/auction_reomte_data_source.dart';
 import '../../features/auction/data/repository/auction_repository.dart';
 import '../../features/auction/domain/usecases/delete_auction_usecase.dart';
@@ -51,10 +56,20 @@ void initBloc() {
     ),
   );
   sl.registerFactory(
-    () => AllAuctionsBloc(sl()),
+    () => AuthenticationBloc(
+      logIn: sl(),
+      signUp: sl(),
+    ),
   );
   sl.registerFactory(
-    () => GetAuctionByIdBloc(sl()),
+    () => AllAuctionsBloc(
+      sl(),
+    ),
+  );
+  sl.registerFactory(
+    () => GetAuctionByIdBloc(
+      sl(),
+    ),
   );
   sl.registerFactory(
     () => SearchAuctionsBloc(sl()),
@@ -62,51 +77,26 @@ void initBloc() {
 }
 
 void initFeatures() {
+  sl.registerLazySingleton(() => LogIn(repository: sl()));
+  sl.registerLazySingleton(() => SignUp(repository: sl()));
+
   sl.registerLazySingleton(
-    () => GetFurnitureFromSearchByCategoryAndPrice(
-      repository: sl(),
-    ),
-  );
+      () => GetFurnitureFromSearchByCategoryAndPrice(repository: sl()));
   sl.registerLazySingleton(
-    () => GetFurnitureFromSearchByPriceRange(
-      repository: sl(),
-    ),
-  );
+      () => GetFurnitureFromSearchByPriceRange(repository: sl()));
   sl.registerLazySingleton(
-    () => GetFurnitureFromSearchByCategory(
-      repository: sl(),
-    ),
-  );
+      () => GetFurnitureFromSearchByCategory(repository: sl()));
   sl.registerLazySingleton(
-    () => GetFurnitureFromSearchByMaxPrice(
-      repository: sl(),
-    ),
-  );
+      () => GetFurnitureFromSearchByMaxPrice(repository: sl()));
   sl.registerLazySingleton(
-    () => GetFurnitureFromSearchByMinPrice(
-      repository: sl(),
-    ),
-  );
+      () => GetFurnitureFromSearchByMinPrice(repository: sl()));
   sl.registerLazySingleton(
-    () => GetFurnitureFromSearchByQuery(
-      repository: sl(),
-    ),
-  );
+      () => GetFurnitureFromSearchByQuery(repository: sl()));
   sl.registerLazySingleton(
-    () => GetPopularFurniturebyCategory(
-      repository: sl(),
-    ),
-  );
-  sl.registerLazySingleton(
-    () => DeleteFurniture(
-      repository: sl(),
-    ),
-  );
-  sl.registerLazySingleton(
-    () => UploadFurniture(
-      repository: sl(),
-    ),
-  );
+      () => GetPopularFurniturebyCategory(repository: sl()));
+  sl.registerLazySingleton(() => DeleteFurniture(repository: sl()));
+  sl.registerLazySingleton(() => UploadFurniture(repository: sl()));
+
   sl.registerLazySingleton(() => UploadAuctionProductUseCase(sl()));
   sl.registerLazySingleton(() => DeleteAuctionUseCase(sl()));
   sl.registerLazySingleton(() => GetAuctionProductsUseCase(sl()));
@@ -120,6 +110,11 @@ void initRepository() {
       remoteDataSource: sl(),
     ),
   );
+  sl.registerLazySingleton(
+    () => AuthenitcationRepositoryImpl(
+      remoteDataSource: sl(),
+    ),
+  );
   sl.registerLazySingleton<BaseAuctionRepository>(
       () => AuctionRepository(sl()));
 }
@@ -127,13 +122,19 @@ void initRepository() {
 void initDataSources() {
   sl.registerLazySingleton<FurnitureRemoteDataSource>(
     () => FurnitureRemoteDataSourceImpl(
-      dio: sl(),
+      dio: sl<Dio>(),
+    ),
+  );
+  sl.registerLazySingleton<AuthenticationRemoteDataSource>(
+    () => AuthenticationRemoteDataSourceImpl(
+      dio: sl<Dio>(),
     ),
   );
   sl.registerLazySingleton<BaseAuctionRemoteDataSource>(
-      () => AuctionRemoteDataSource(
-            dio: sl<Dio>(),
-          ));
+    () => AuctionRemoteDataSource(
+      dio: sl<Dio>(),
+    ),
+  );
 }
 
 void initExternalPackages() {

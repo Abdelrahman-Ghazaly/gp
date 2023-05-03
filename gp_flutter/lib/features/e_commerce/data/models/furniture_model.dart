@@ -1,4 +1,4 @@
- import '../../domain/entities/furniture_entity.dart';
+import '../../domain/entities/furniture_entity.dart';
 
 class FurnitureModel extends FurnitureEntity {
   const FurnitureModel({
@@ -33,5 +33,18 @@ class FurnitureModel extends FurnitureEntity {
       'category': category,
       'price': price,
     };
+  }
+
+  @override
+  List<Object?> get props {
+    return [
+      id,
+      title,
+      description,
+      imageUrls,
+      category,
+      price,
+      sellerId,
+    ];
   }
 }

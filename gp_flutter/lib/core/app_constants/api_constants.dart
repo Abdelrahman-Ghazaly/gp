@@ -65,6 +65,14 @@ class ApiConstants {
   static const String _userBaseUrl = '${_baseUrl}user/';
 
   static const String viewProfilePath = '${_userBaseUrl}view/profile/';
+
+  //* Auth End Points
+
+  static const String _authBaseUrl = '${_baseUrl}auth/';
+
+  static const String logInPath = '${_authBaseUrl}login';
+
+  static const String signUpPath = '${_authBaseUrl}signup';
 }
 
 String mapCategoryToString(Category category) {
