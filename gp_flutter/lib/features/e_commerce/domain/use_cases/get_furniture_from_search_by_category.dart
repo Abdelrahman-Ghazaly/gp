@@ -1,4 +1,3 @@
-
 import 'package:dartz/dartz.dart';
 import 'package:equatable/equatable.dart';
 
@@ -17,7 +16,8 @@ class GetFurnitureFromSearchByCategory
   @override
   Future<Either<Failure, List<FurnitureEntity>>> call(Params params) {
     return repository.getFurnitureFromSearchByCategory(
-        category: params.category);
+      category: params.category,
+    );
   }
 }
 
