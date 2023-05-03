@@ -24,10 +24,10 @@ class AuthenticationBloc
     on<LogInEvent>(
       (event, emit) async {
         emit(Loading());
-        final failureOrUserCredentials = await logIn(
+        final failureOrUser = await logIn(
           log_in.Params(email: event.email, password: event.password),
         );
-        emit(await _eitherFailureOrUserCredentials(failureOrUserCredentials));
+        emit(await _eitherFailureOrUser(failureOrUser));
       },
     );
     on<SignUpEvent>(
@@ -41,12 +41,11 @@ class AuthenticationBloc
     );
   }
 
-  Future<AuthenticationState> _eitherFailureOrUserCredentials(
-      Either<Failure, UserCredentialsEntity> failureOrUserCredentials) async {
-    return failureOrUserCredentials.fold(
+  Future<AuthenticationState> _eitherFailureOrUser(
+      Either<Failure, UserEntity> failureOrUser) async {
+    return failureOrUser.fold(
       (failure) => Error(message: failure.message),
-      (userCredentialsEntity) =>
-          LoggedInSuccessfully(userCredentialsEntity: userCredentialsEntity),
+      (userEntity) => LoggedInSuccessfully(userEntity: userEntity),
     );
   }
 
