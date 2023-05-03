@@ -15,6 +15,7 @@ class AuctionCardDesign extends StatelessWidget {
   Widget build(BuildContext context) {
     final width = Utilities.screenWidth;
     final height = Utilities.screenHeight;
+    context.read<AllAuctionsBloc>().add(GetAuctionProductsEvent());
     return BlocBuilder<AllAuctionsBloc, AllAuctionsState>(
       builder: (context, state) {
         if (state is Loading) {
