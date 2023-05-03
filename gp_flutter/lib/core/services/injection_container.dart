@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:get_it/get_it.dart';
+import 'package:gp_flutter/features/auction/presentation/bloc/search_auctions_bloc/search_auctions_bloc.dart';
 import 'package:gp_flutter/features/authentication/data/datasources/authentication_remote_data_source.dart';
 import 'package:gp_flutter/features/authentication/data/repositories/authenitcation_repository_impl.dart';
 import 'package:gp_flutter/features/authentication/domain/usecases/log_in.dart';
@@ -70,6 +71,9 @@ void initBloc() {
     () => GetAuctionByIdBloc(
       sl(),
     ),
+  );
+  sl.registerFactory(
+    () => SearchAuctionsBloc(sl()),
   );
 }
 

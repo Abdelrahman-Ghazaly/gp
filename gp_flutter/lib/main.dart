@@ -5,6 +5,7 @@ import 'package:gp_flutter/features/authentication/presentation/bloc/authenticat
 import 'core/theme/theme.dart';
 import 'features/auction/presentation/bloc/get_all_auctions_bloc/all_auctions_bloc.dart';
 import 'features/auction/presentation/bloc/get_auction_by_id/get_auction_by_id_bloc.dart';
+import 'features/auction/presentation/bloc/search_auctions_bloc/search_auctions_bloc.dart';
 import 'features/e_commerce/presentation/bloc/e_commerce_bloc.dart';
 import 'core/services/injection_container.dart';
 
@@ -34,11 +35,9 @@ class MyApp extends StatelessWidget {
           create: (context) => sl<GetAuctionByIdBloc>(),
         ),
         BlocProvider(
-          create: (context) => sl<AllAuctionsBloc>()
-            ..add(
-              GetAuctionProductsEvent(),
-            ),
-        ),
+            create: (context) =>
+                sl<AllAuctionsBloc>()..add(GetAuctionProductsEvent())),
+        BlocProvider(create: (context) => sl<SearchAuctionsBloc>()),
       ],
       child: MaterialApp.router(
         title: 'GP E-Commerce',
