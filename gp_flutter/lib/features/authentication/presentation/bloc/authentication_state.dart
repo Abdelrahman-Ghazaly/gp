@@ -14,14 +14,14 @@ class Loading extends AuthenticationState {}
 class SignedUpSuccessfully extends AuthenticationState {}
 
 class LoggedInSuccessfully extends AuthenticationState {
-  final UserCredentialsEntity userCredentialsEntity;
+  final UserEntity userEntity;
 
   const LoggedInSuccessfully({
-    required this.userCredentialsEntity,
+    required this.userEntity,
   });
 
   @override
-  List<Object> get props => [userCredentialsEntity];
+  List<Object> get props => [userEntity];
 }
 
 class Error extends AuthenticationState {

@@ -11,7 +11,7 @@ import 'package:dartz/dartz.dart';
 
 import '../../domain/repositories/authentication_repository.dart';
 
-class AuthenitcationRepositoryImpl extends AuthenticationRepository {
+class AuthenitcationRepositoryImpl implements AuthenticationRepository {
   final AuthenticationRemoteDataSource remoteDataSource;
 
   AuthenitcationRepositoryImpl({

@@ -17,7 +17,7 @@ class UserModel extends UserEntity {
       'password': password,
       'confirmPassword': password,
       'address': address,
-      'phoneNumber': phoneNumber,
+      'phone': phoneNumber,
     };
   }
 
