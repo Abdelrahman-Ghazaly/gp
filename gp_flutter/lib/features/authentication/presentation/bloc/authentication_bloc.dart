@@ -45,7 +45,7 @@ class AuthenticationBloc
       Either<Failure, UserEntity> failureOrUser) async {
     return failureOrUser.fold(
       (failure) => Error(message: failure.message),
-      (userEntity) => LoggedInSuccessfully(userEntity: userEntity),
+      (userEntity) => LoggedIn(userEntity: userEntity),
     );
   }
 
@@ -53,7 +53,7 @@ class AuthenticationBloc
       Either<Failure, void> failureOrSuccess) async {
     return failureOrSuccess.fold(
       (failure) => Error(message: failure.message),
-      (_) => SignedUpSuccessfully(),
+      (_) => SignedUp(),
     );
   }
 }

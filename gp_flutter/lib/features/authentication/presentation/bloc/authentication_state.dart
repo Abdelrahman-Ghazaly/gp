@@ -11,12 +11,12 @@ class Empty extends AuthenticationState {}
 
 class Loading extends AuthenticationState {}
 
-class SignedUpSuccessfully extends AuthenticationState {}
+class SignedUp extends AuthenticationState {}
 
-class LoggedInSuccessfully extends AuthenticationState {
+class LoggedIn extends AuthenticationState {
   final UserEntity userEntity;
 
-  const LoggedInSuccessfully({
+  const LoggedIn({
     required this.userEntity,
   });
 
