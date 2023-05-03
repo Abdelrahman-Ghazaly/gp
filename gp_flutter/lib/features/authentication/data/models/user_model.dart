@@ -2,10 +2,10 @@ import 'package:gp_flutter/features/authentication/domain/entities/user_entity.d
 
 class UserModel extends UserEntity {
   const UserModel({
-    super.userCredentialsEntity,
+    super.id,
+    super.accessToken,
     required super.name,
     required super.email,
-    super.password,
     required super.address,
     required super.phoneNumber,
   });
@@ -23,17 +23,19 @@ class UserModel extends UserEntity {
 
   factory UserModel.fromMap(Map<String, dynamic> map) {
     return UserModel(
+      id: map['_id'] ?? '',
+      accessToken: map['accessToken'] ?? '',
       name: map['name'] ?? '',
       email: map['email'] ?? '',
-      password: map['password'] ?? '',
       address: map['address'] ?? '',
-      phoneNumber: map['phoneNumber'] ?? '',
+      phoneNumber: map['phone'] ?? '',
     );
   }
 
   @override
   List<Object?> get props => [
-        userCredentialsEntity,
+        id,
+        accessToken,
         name,
         email,
         password,

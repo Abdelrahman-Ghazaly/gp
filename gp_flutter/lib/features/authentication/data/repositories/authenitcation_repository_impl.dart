@@ -3,8 +3,6 @@ import 'package:gp_flutter/features/authentication/data/datasources/authenticati
 import 'package:gp_flutter/features/authentication/data/models/user_model.dart';
 import 'package:gp_flutter/features/authentication/domain/entities/user_entity.dart';
 
-import 'package:gp_flutter/features/authentication/domain/entities/user_credentials_entity.dart';
-
 import 'package:gp_flutter/core/error/failure.dart';
 
 import 'package:dartz/dartz.dart';
@@ -19,12 +17,12 @@ class AuthenitcationRepositoryImpl implements AuthenticationRepository {
   });
 
   @override
-  Future<Either<Failure, UserCredentialsEntity>> logIn(
+  Future<Either<Failure, UserEntity>> logIn(
       {required String email, required String password}) async {
     try {
-      UserCredentialsEntity userCredentialsEntity =
+      UserEntity userEntity =
           await remoteDataSource.logIn(email: email, password: password);
-      return Right(userCredentialsEntity);
+      return Right(userEntity);
     } on ServerException catch (failure) {
       return Left(ServerFailure(failure.errorMessageModel.statusMessage));
     }

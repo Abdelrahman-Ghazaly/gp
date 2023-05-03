@@ -2,16 +2,14 @@ import 'dart:convert';
 
 import 'package:dio/dio.dart';
 import 'package:gp_flutter/core/app_constants/api_constants.dart';
-import 'package:gp_flutter/features/authentication/data/models/user_credentials_model.dart';
 import 'package:gp_flutter/features/authentication/data/models/user_model.dart';
 import 'package:gp_flutter/features/authentication/domain/entities/user_entity.dart';
 
 import '../../../../core/error/exceptions.dart';
 import '../../../../core/network/error_message_model.dart';
-import '../../domain/entities/user_credentials_entity.dart';
 
 abstract class AuthenticationRemoteDataSource {
-  Future<UserCredentialsEntity> logIn({
+  Future<UserEntity> logIn({
     required String email,
     required String password,
   });
@@ -30,7 +28,7 @@ class AuthenticationRemoteDataSourceImpl
   });
 
   @override
-  Future<UserCredentialsEntity> logIn(
+  Future<UserEntity> logIn(
       {required String email, required String password}) async {
     Map<String, String> data = {
       'email': email,
@@ -42,11 +40,9 @@ class AuthenticationRemoteDataSourceImpl
     );
 
     if (response.statusCode == 200) {
-      UserCredentialsEntity userCredentialsEntity =
-          UserCredentialsModel.fromMap(response.data);
-      UserEntity userEntity = UserModel.fromMap(response.data);
+      UserEntity userEntity = UserModel.fromMap(response.data['userData']);
 
-      return userCredentialsEntity;
+      return userEntity;
     } else {
       throw ServerException(
         errorMessageModel: ErrorMessageModel.fromJson(response.data),
