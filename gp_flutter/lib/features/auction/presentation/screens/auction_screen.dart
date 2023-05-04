@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:gp_flutter/features/auction/presentation/widgets/auction_card_design.dart';
 
 import '../../../../core/app_constants/app_colors.dart';
 import '../../../../core/utils/utilities.dart';
+import '../../domain/entities/search_query_entity.dart';
+import '../bloc/search_auctions_bloc/search_auctions_bloc.dart';
 
 class AuctionScreen extends StatelessWidget {
   const AuctionScreen({super.key});
@@ -75,6 +78,13 @@ class AuctionScreen extends StatelessWidget {
                     children: [
                       IconButton(
                           onPressed: () {
+                            context.read<SearchAuctionsBloc>().add(
+                                GetAuctionProductSearchEvent(
+                                    searchQueryEntity: SearchQueryEntity(
+                                        name: searchController.text,
+                                        category: "",
+                                        maxPrice: "",
+                                        minPrice: "")));
                             return context.go(
                                 '/auction_search_screen?auction_search=${searchController.text}');
                           },
@@ -89,6 +99,7 @@ class AuctionScreen extends StatelessWidget {
                               height: height * 0.06,
                               width: width * 0.65,
                               child: TextField(
+                                controller: searchController,
                                 textAlign: TextAlign.start,
                                 style: Theme.of(context)
                                     .textTheme

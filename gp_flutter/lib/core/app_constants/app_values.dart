@@ -12,7 +12,7 @@ enum Category {
 }
 
 const List<String> searchCategory = [
-  "",
+  "All",
   "bed",
   "chair",
   "sofa",

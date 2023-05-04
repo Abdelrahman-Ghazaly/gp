@@ -12,9 +12,3 @@ class GetAuctionProductSearchEvent extends SearchAuctionsEvent {
 
   const GetAuctionProductSearchEvent({required this.searchQueryEntity});
 }
-
-class SearchByNameEvent extends SearchAuctionsEvent {
-  final SearchQueryEntity searchQueryEntity;
-
-  const SearchByNameEvent({required this.searchQueryEntity});
-}
