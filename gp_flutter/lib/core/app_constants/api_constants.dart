@@ -90,7 +90,5 @@ String mapCategoryToString(Category category) {
       return 'table';
     case Category.dresser:
       return 'dresser';
-    case Category.empty:
-      return '';
   }
 }
