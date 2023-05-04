@@ -21,11 +21,10 @@ class SearchAuctionsBloc
   SearchAuctionsBloc(this.getAuctionProductsSearchResultUseCase)
       : super(Loading()) {
     on<GetAuctionProductSearchEvent>((event, emit) async {
-      print("auctionList[0].description");
       emit(Loading());
       final failureOrAuctionList = await getAuctionProductsSearchResultUseCase(
           search_usecase.Params(searchQueryEntity: event.searchQueryEntity));
-      print("Startiiiiiiiiiiiiiiiiiiiiiiiing");
+
       emit(await _eitherLoadedOrErrorState(failureOrAuctionList));
     });
   }
@@ -37,7 +36,6 @@ Future<SearchAuctionsState> _eitherLoadedOrErrorState(
   return failureOrAuctionList.fold(
     (failure) => Error(message: failure.message),
     (auctionList) {
-      print(auctionList[0].description);
       return Loaded(auctionList: auctionList);
     },
   );
