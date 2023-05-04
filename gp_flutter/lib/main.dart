@@ -24,18 +24,9 @@ class MyApp extends StatelessWidget {
     return MultiBlocProvider(
       providers: [
         BlocProvider(
-          create: (context) => sl<AuthenticationBloc>()
-            ..add(
-              const SignUpEvent(
-                userModel: UserModel(
-                  name: 'name',
-                  email: 'email@email.com',
-                  password: 'password',
-                  address: 'address',
-                  phoneNumber: 'phoneNumber',
-                ),
-              ),
-            ),
+          create: (context) {
+            return sl<AuthenticationBloc>();
+          },
         ),
         BlocProvider(
           create: (context) => sl<ECommerceBloc>(),

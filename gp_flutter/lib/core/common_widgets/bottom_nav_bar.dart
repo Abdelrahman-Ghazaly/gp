@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:gp_flutter/features/authentication/presentation/screens/scree,.dart';
 import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
 
 import '../../features/auction/presentation/screens/auction_screen.dart';
@@ -31,7 +32,7 @@ class _BottomNavBarState extends State<BottomNavBar> {
     return [
       const HomeScreen(),
       const AuctionScreen(),
-      Container(),
+      Scree(),
       Container(),
       Container(),
     ];

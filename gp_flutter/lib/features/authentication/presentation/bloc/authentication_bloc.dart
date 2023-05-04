@@ -1,10 +1,8 @@
 import 'package:dartz/dartz.dart';
 import 'package:equatable/equatable.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gp_flutter/core/error/failure.dart';
 import 'package:gp_flutter/features/authentication/data/models/user_model.dart';
-import 'package:gp_flutter/features/authentication/domain/entities/user_credentials_entity.dart';
 import 'package:gp_flutter/features/authentication/domain/entities/user_entity.dart';
 
 import '../../domain/usecases/log_in.dart' as log_in;
@@ -24,10 +22,12 @@ class AuthenticationBloc
     on<LogInEvent>(
       (event, emit) async {
         emit(Loading());
-        final failureOrUserCredentials = await logIn(
+        final Either<Failure, UserEntity> failureOrUser = await logIn(
           log_in.Params(email: event.email, password: event.password),
         );
-        emit(await _eitherFailureOrUserCredentials(failureOrUserCredentials));
+        emit(
+          await _eitherFailureOrUser(failureOrUser),
+        );
       },
     );
     on<SignUpEvent>(
@@ -41,12 +41,11 @@ class AuthenticationBloc
     );
   }
 
-  Future<AuthenticationState> _eitherFailureOrUserCredentials(
-      Either<Failure, UserCredentialsEntity> failureOrUserCredentials) async {
-    return failureOrUserCredentials.fold(
+  Future<AuthenticationState> _eitherFailureOrUser(
+      Either<Failure, UserEntity> failureOrUser) async {
+    return failureOrUser.fold(
       (failure) => Error(message: failure.message),
-      (userCredentialsEntity) =>
-          LoggedInSuccessfully(userCredentialsEntity: userCredentialsEntity),
+      (userEntity) => LoggedIn(userEntity: userEntity),
     );
   }
 
@@ -54,7 +53,7 @@ class AuthenticationBloc
       Either<Failure, void> failureOrSuccess) async {
     return failureOrSuccess.fold(
       (failure) => Error(message: failure.message),
-      (_) => SignedUpSuccessfully(),
+      (_) => SignedUp(),
     );
   }
 }

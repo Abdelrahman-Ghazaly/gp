@@ -11,17 +11,17 @@ class Empty extends AuthenticationState {}
 
 class Loading extends AuthenticationState {}
 
-class SignedUpSuccessfully extends AuthenticationState {}
+class SignedUp extends AuthenticationState {}
 
-class LoggedInSuccessfully extends AuthenticationState {
-  final UserCredentialsEntity userCredentialsEntity;
+class LoggedIn extends AuthenticationState {
+  final UserEntity userEntity;
 
-  const LoggedInSuccessfully({
-    required this.userCredentialsEntity,
+  const LoggedIn({
+    required this.userEntity,
   });
 
   @override
-  List<Object> get props => [userCredentialsEntity];
+  List<Object> get props => [userEntity];
 }
 
 class Error extends AuthenticationState {
