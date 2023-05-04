@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:gp_flutter/core/app_constants/app_constants.dart';
 import 'package:gp_flutter/features/auction/presentation/bloc/search_auctions_bloc/search_auctions_bloc.dart';
 
 import '../../../../core/app_constants/app_colors.dart';
@@ -14,6 +15,7 @@ class AuctionSearchScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final width = Utilities.screenWidth;
     final height = Utilities.screenHeight;
+    String category = '';
     TextEditingController minPrice = TextEditingController();
     TextEditingController maxPrice = TextEditingController();
     TextEditingController searchController = TextEditingController();
@@ -106,7 +108,42 @@ class AuctionSearchScreen extends StatelessWidget {
                                             height: height,
                                             controller: maxPrice,
                                             label: 'Maximum',
-                                          )
+                                          ),
+                                          StatefulBuilder(
+                                            builder: (BuildContext context,
+                                                StateSetter setState) {
+                                              return DropdownButton<String>(
+                                                alignment:
+                                                    AlignmentDirectional.center,
+                                                value: category,
+                                                icon: const Icon(
+                                                    Icons.arrow_drop_down),
+                                                elevation: 16,
+                                                underline: Container(),
+                                                borderRadius:
+                                                    BorderRadius.circular(25),
+                                                style: Theme.of(context)
+                                                    .textTheme
+                                                    .displaySmall
+                                                    ?.copyWith(fontSize: 15),
+                                                onChanged: (String? value) {
+                                                  setState(() {
+                                                    category = value!;
+                                                  });
+                                                },
+                                                items: searchCategory.map<
+                                                        DropdownMenuItem<
+                                                            String>>(
+                                                    (String value) {
+                                                  return DropdownMenuItem<
+                                                      String>(
+                                                    value: value,
+                                                    child: Text(value),
+                                                  );
+                                                }).toList(),
+                                              );
+                                            },
+                                          ),
                                         ],
                                       ),
                                       const SizedBox(height: 15),

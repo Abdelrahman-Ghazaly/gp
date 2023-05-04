@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 enum Category {
+  empty,
   bed,
   chair,
   sofa,
@@ -9,6 +10,16 @@ enum Category {
   table,
   dresser,
 }
+
+const List<String> searchCategory = [
+  "",
+  "bed",
+  "chair",
+  "sofa",
+  'lamp',
+  "table",
+  "dresser",
+];
 
 const double kAppBarHeight = 75;
 
