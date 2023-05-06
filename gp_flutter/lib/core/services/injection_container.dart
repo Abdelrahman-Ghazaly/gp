@@ -1,13 +1,9 @@
 import 'package:dio/dio.dart';
 import 'package:get_it/get_it.dart';
-import 'package:gp_flutter/features/auction/presentation/bloc/search_auctions_bloc/search_auctions_bloc.dart';
-import 'package:gp_flutter/features/authentication/data/datasources/authentication_remote_data_source.dart';
-import 'package:gp_flutter/features/authentication/data/repositories/authenitcation_repository_impl.dart';
-import 'package:gp_flutter/features/authentication/domain/usecases/log_in.dart';
-import 'package:gp_flutter/features/authentication/domain/usecases/sign_up.dart';
-import 'package:gp_flutter/features/authentication/presentation/bloc/authentication_bloc.dart';
+
 import '../../features/auction/data/data_source/auction_reomte_data_source.dart';
 import '../../features/auction/data/repository/auction_repository.dart';
+import '../../features/auction/domain/repositories/base_auction_repository.dart';
 import '../../features/auction/domain/usecases/delete_auction_usecase.dart';
 import '../../features/auction/domain/usecases/get_auction_products_search_result_usecase.dart';
 import '../../features/auction/domain/usecases/get_auction_products_usecase.dart';
@@ -15,15 +11,17 @@ import '../../features/auction/domain/usecases/upload_auction_product_usecase.da
 import '../../features/auction/domain/usecases/view_auction_data.dart';
 import '../../features/auction/presentation/bloc/get_all_auctions_bloc/all_auctions_bloc.dart';
 import '../../features/auction/presentation/bloc/get_auction_by_id/get_auction_by_id_bloc.dart';
+import '../../features/auction/presentation/bloc/search_auctions_bloc/search_auctions_bloc.dart';
+import '../../features/authentication/data/datasources/authentication_remote_data_source.dart';
+import '../../features/authentication/data/repositories/authenitcation_repository_impl.dart';
 import '../../features/authentication/domain/repositories/authentication_repository.dart';
-import '../../features/e_commerce/data/repositories/e_commerce_repository_impl.dart';
-import '../../features/e_commerce/domain/use_cases/delete_product.dart';
-import '../../features/e_commerce/domain/use_cases/upload_furniture.dart';
-import '../../features/e_commerce/presentation/bloc/e_commerce_bloc.dart';
-
-import '../../features/auction/domain/repositories/base_auction_repository.dart';
+import '../../features/authentication/domain/usecases/log_in.dart';
+import '../../features/authentication/domain/usecases/sign_up.dart';
+import '../../features/authentication/presentation/bloc/authentication_bloc.dart';
 import '../../features/e_commerce/data/data_sources/furniture_remote_data_source.dart';
+import '../../features/e_commerce/data/repositories/e_commerce_repository_impl.dart';
 import '../../features/e_commerce/domain/repositories/e_commerce_repository.dart';
+import '../../features/e_commerce/domain/use_cases/delete_product.dart';
 import '../../features/e_commerce/domain/use_cases/get_furniture_from_search_by_category.dart';
 import '../../features/e_commerce/domain/use_cases/get_furniture_from_search_by_category_and_price.dart';
 import '../../features/e_commerce/domain/use_cases/get_furniture_from_search_by_max_price.dart';
@@ -31,6 +29,8 @@ import '../../features/e_commerce/domain/use_cases/get_furniture_from_search_by_
 import '../../features/e_commerce/domain/use_cases/get_furniture_from_search_by_price_range.dart';
 import '../../features/e_commerce/domain/use_cases/get_furniture_from_search_by_query.dart';
 import '../../features/e_commerce/domain/use_cases/get_popular_furniture_by_category.dart';
+import '../../features/e_commerce/domain/use_cases/upload_furniture.dart';
+import '../../features/e_commerce/presentation/bloc/e_commerce_bloc.dart';
 
 final sl = GetIt.instance;
 

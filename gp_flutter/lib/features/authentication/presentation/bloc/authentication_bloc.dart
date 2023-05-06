@@ -1,10 +1,10 @@
 import 'package:dartz/dartz.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:gp_flutter/core/error/failure.dart';
-import 'package:gp_flutter/features/authentication/data/models/user_model.dart';
-import 'package:gp_flutter/features/authentication/domain/entities/user_entity.dart';
 
+import '../../../../core/error/failure.dart';
+import '../../data/models/user_model.dart';
+import '../../domain/entities/user_entity.dart';
 import '../../domain/usecases/log_in.dart' as log_in;
 import '../../domain/usecases/sign_up.dart' as sign_up;
 

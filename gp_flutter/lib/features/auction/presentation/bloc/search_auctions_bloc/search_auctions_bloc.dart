@@ -1,7 +1,6 @@
 import 'package:dartz/dartz.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
 import 'package:gp_flutter/features/auction/domain/usecases/get_auction_products_search_result_usecase.dart'
     as search_usecase;
 
@@ -10,7 +9,6 @@ import '../../../domain/entities/auction_entities.dart';
 import '../../../domain/entities/search_query_entity.dart';
 
 part 'search_auctions_event.dart';
-
 part 'search_auctions_state.dart';
 
 class SearchAuctionsBloc

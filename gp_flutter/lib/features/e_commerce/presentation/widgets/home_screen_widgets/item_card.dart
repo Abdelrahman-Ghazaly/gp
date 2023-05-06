@@ -1,10 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+
 import '../../../../../core/app_constants/app_constants.dart';
+import '../../../../../core/utils/utilities.dart';
 import '../../../domain/entities/furniture_entity.dart';
 import '../../screens/product_view_screen.dart';
-
-import '../../../../../core/utils/utilities.dart';
 
 class ItemCard extends StatelessWidget {
   const ItemCard({

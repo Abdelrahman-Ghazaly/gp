@@ -1,11 +1,11 @@
 import 'package:dio/dio.dart';
-import 'package:gp_flutter/features/auction/domain/entities/search_query_entity.dart';
-import '../../../../core/app_constants/api_constants.dart';
-import '../models/auction_product_model.dart';
 
+import '../../../../core/app_constants/api_constants.dart';
 import '../../../../core/error/exceptions.dart';
 import '../../../../core/network/error_message_model.dart';
 import '../../domain/entities/auction_entities.dart';
+import '../../domain/entities/search_query_entity.dart';
+import '../models/auction_product_model.dart';
 
 abstract class BaseAuctionRemoteDataSource {
   Future<List<AuctionEntities>> getAuctionProducts();

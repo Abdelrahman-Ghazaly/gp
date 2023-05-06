@@ -1,8 +1,8 @@
 import 'package:equatable/equatable.dart';
-import 'package:gp_flutter/core/error/failure.dart';
+import '../../../../core/error/failure.dart';
 import 'package:dartz/dartz.dart';
-import 'package:gp_flutter/core/use_case/use_case.dart';
-import 'package:gp_flutter/features/authentication/domain/repositories/authentication_repository.dart';
+import '../../../../core/use_case/use_case.dart';
+import '../repositories/authentication_repository.dart';
 
 import '../entities/user_entity.dart';
 

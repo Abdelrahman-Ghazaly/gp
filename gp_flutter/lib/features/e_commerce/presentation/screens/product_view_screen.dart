@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart' hide AppBar;
-import '../../../../core/app_constants/app_constants.dart';
-import '../../../../core/utils/utilities.dart';
 
+import '../../../../core/app_constants/app_constants.dart';
 import '../../../../core/common_widgets/common_widgets.dart';
+import '../../../../core/utils/utilities.dart';
 import '../../domain/entities/furniture_entity.dart';
 import '../widgets/product_screen_widget/product_screen_widgets.dart';
 
