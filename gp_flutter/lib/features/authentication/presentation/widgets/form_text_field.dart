@@ -96,13 +96,3 @@ class _FormTextFieldState extends State<FormTextField> {
     );
   }
 }
-
-
-//         if (widget.isPassword && value.length < 8) {
-//           return 'Password must be 8 characters or more';
-//         }
-//         if (widget.isPassword && widget.previousPassword != null) {
-//           if (value != widget.previousPassword) {
-//             return 'The Passwords do not';
-//           }
-//         }
