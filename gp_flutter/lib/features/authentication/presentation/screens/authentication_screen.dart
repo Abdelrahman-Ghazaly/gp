@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart' hide AppBar;
-import 'package:gp_flutter/core/app_constants/app_constants.dart';
-import 'package:gp_flutter/core/common_widgets/common_widgets.dart';
-import 'package:gp_flutter/core/utils/utilities.dart';
-import 'package:gp_flutter/features/authentication/presentation/screens/sig_up_screen/email_screen.dart';
+import '../../../../core/app_constants/app_constants.dart';
+import '../../../../core/common_widgets/common_widgets.dart';
+import '../../../../core/utils/utilities.dart';
+import 'sig_up_screen/email_screen.dart';
 
 class AuthenticationScreen extends StatelessWidget {
   const AuthenticationScreen({Key? key}) : super(key: key);

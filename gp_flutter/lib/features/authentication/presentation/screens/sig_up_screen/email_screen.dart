@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:lottie/lottie.dart';
+
 import '../../../../../core/app_constants/app_values.dart';
 import '../../../../../core/utils/utilities.dart';
-import 'password_screen.dart';
 import '../../widgets/form_text_field.dart';
-import 'package:lottie/lottie.dart';
+import 'password_screen.dart';
 
 class EmailScreen extends StatelessWidget {
   const EmailScreen({Key? key}) : super(key: key);

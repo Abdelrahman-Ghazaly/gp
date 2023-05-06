@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:gp_flutter/features/authentication/presentation/screens/sig_up_screen/personal_info_screen.dart';
 import 'package:lottie/lottie.dart';
 
 import '../../../../../core/app_constants/app_constants.dart';
 import '../../../../../core/utils/utilities.dart';
 import '../../widgets/form_text_field.dart';
+import 'personal_info_screen.dart';
 
 class PasswordScreen extends StatelessWidget {
   const PasswordScreen({Key? key, required this.email}) : super(key: key);

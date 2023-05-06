@@ -1,13 +1,11 @@
-import '../../../../core/error/exceptions.dart';
-import '../datasources/authentication_remote_data_source.dart';
-import '../models/user_model.dart';
-import '../../domain/entities/user_entity.dart';
-
-import '../../../../core/error/failure.dart';
-
 import 'package:dartz/dartz.dart';
 
+import '../../../../core/error/exceptions.dart';
+import '../../../../core/error/failure.dart';
+import '../../domain/entities/user_entity.dart';
 import '../../domain/repositories/authentication_repository.dart';
+import '../datasources/authentication_remote_data_source.dart';
+import '../models/user_model.dart';
 
 class AuthenitcationRepositoryImpl implements AuthenticationRepository {
   final AuthenticationRemoteDataSource remoteDataSource;
