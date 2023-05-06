@@ -3,10 +3,10 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_countdown_timer/flutter_countdown_timer.dart';
 import 'package:flutter_swiper_view/flutter_swiper_view.dart';
 import 'package:go_router/go_router.dart';
-import 'package:gp_flutter/features/auction/presentation/bloc/get_auction_by_id/get_auction_by_id_bloc.dart';
-import '../../../../core/utils/utilities.dart';
 
 import '../../../../core/app_constants/app_colors.dart';
+import '../../../../core/utils/utilities.dart';
+import '../bloc/get_auction_by_id/get_auction_by_id_bloc.dart';
 
 class AuctionDetailsScreen extends StatelessWidget {
   final String auctionId;

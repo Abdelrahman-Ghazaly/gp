@@ -1,12 +1,10 @@
-import 'dart:convert';
-
 import 'package:dio/dio.dart';
-import 'package:gp_flutter/core/app_constants/api_constants.dart';
-import 'package:gp_flutter/features/authentication/data/models/user_model.dart';
-import 'package:gp_flutter/features/authentication/domain/entities/user_entity.dart';
 
+import '../../../../core/app_constants/api_constants.dart';
 import '../../../../core/error/exceptions.dart';
 import '../../../../core/network/error_message_model.dart';
+import '../../domain/entities/user_entity.dart';
+import '../models/user_model.dart';
 
 abstract class AuthenticationRemoteDataSource {
   Future<UserEntity> logIn({

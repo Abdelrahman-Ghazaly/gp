@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:gp_flutter/features/authentication/data/models/user_model.dart';
-import 'package:gp_flutter/features/authentication/presentation/bloc/authentication_bloc.dart';
+
+import '../../../../core/utils/utilities.dart';
+import '../bloc/authentication_bloc.dart';
+import 'sig_up_screen/email_screen.dart';
 
 class Scree extends StatelessWidget {
   const Scree({Key? key}) : super(key: key);
@@ -14,6 +16,14 @@ class Scree extends StatelessWidget {
             password: 'password',
           ),
         );
-    return Container();
+    return ElevatedButton(
+      onPressed: () {
+        Utilities().pushTo(
+          context,
+          screen: const EmailScreen(),
+        );
+      },
+      child: const Text('Email Screen'),
+    );
   }
 }

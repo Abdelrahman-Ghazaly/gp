@@ -33,6 +33,14 @@ const String _baseAnimationUrl = 'assets/lottie_animations/';
 class AppAnimations {
   static const String lottieHeartAnimation =
       '${_baseAnimationUrl}heart_animation.json';
+  static const String lottieManProfileAnimation =
+      '${_baseAnimationUrl}man_profile.json';
+  static const String lottieFemaleProfileAnimation =
+      '${_baseAnimationUrl}female_profile.json';
+  static const String lottiePasswordAnimation =
+      '${_baseAnimationUrl}password.json';
+  static const String lottiePersonalIdAnimation =
+      '${_baseAnimationUrl}personal_id.json';
 }
 
 const String _baseImageUrl = 'assets/images/';

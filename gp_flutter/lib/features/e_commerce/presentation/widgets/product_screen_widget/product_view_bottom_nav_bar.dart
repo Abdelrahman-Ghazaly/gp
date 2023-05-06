@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 
-import '../../../../../core/app_constants/app_constants.dart';
 import '../../../../../core/utils/utilities.dart';
 import 'product_screen_widgets.dart';
 

@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
-import 'package:gp_flutter/features/auction/presentation/widgets/auction_card_design.dart';
 
 import '../../../../core/app_constants/app_colors.dart';
 import '../../../../core/utils/utilities.dart';
 import '../../domain/entities/search_query_entity.dart';
 import '../bloc/search_auctions_bloc/search_auctions_bloc.dart';
+import '../widgets/auction_card_design.dart';
 
 class AuctionScreen extends StatelessWidget {
   const AuctionScreen({super.key});

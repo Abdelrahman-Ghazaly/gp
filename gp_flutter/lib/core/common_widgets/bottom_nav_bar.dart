@@ -1,6 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:gp_flutter/features/authentication/presentation/screens/scree,.dart';
+import '../../features/authentication/presentation/screens/authentication_screen.dart';
+import '../../features/authentication/presentation/screens/scree,.dart';
+import '../../features/authentication/presentation/screens/sig_up_screen/email_screen.dart';
 import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
 
 import '../../features/auction/presentation/screens/auction_screen.dart';
@@ -33,7 +35,7 @@ class _BottomNavBarState extends State<BottomNavBar> {
       const HomeScreen(),
       const AuctionScreen(),
       Scree(),
-      Container(),
+      AuthenticationScreen(),
       Container(),
     ];
   }
@@ -78,27 +80,29 @@ class _BottomNavBarState extends State<BottomNavBar> {
 
   @override
   Widget build(BuildContext context) {
-    return PersistentTabView(
-      context,
-      controller: _controller,
-      screens: _buildScreens(),
-      items: _navBarsItems(),
-      confineInSafeArea: true,
-      decoration: NavBarDecoration(
-        borderRadius: BorderRadius.circular(10.0),
-        colorBehindNavBar: Colors.white,
+    return SafeArea(
+      child: PersistentTabView(
+        context,
+        controller: _controller,
+        screens: _buildScreens(),
+        items: _navBarsItems(),
+        confineInSafeArea: true,
+        decoration: NavBarDecoration(
+          borderRadius: BorderRadius.circular(10.0),
+          colorBehindNavBar: Colors.white,
+        ),
+        popActionScreens: PopActionScreensType.all,
+        itemAnimationProperties: const ItemAnimationProperties(
+          duration: Duration(milliseconds: 200),
+          curve: Curves.ease,
+        ),
+        screenTransitionAnimation: const ScreenTransitionAnimation(
+          animateTabTransition: true,
+          curve: Curves.ease,
+          duration: Duration(milliseconds: 200),
+        ),
+        navBarStyle: NavBarStyle.style15,
       ),
-      popActionScreens: PopActionScreensType.all,
-      itemAnimationProperties: const ItemAnimationProperties(
-        duration: Duration(milliseconds: 200),
-        curve: Curves.ease,
-      ),
-      screenTransitionAnimation: const ScreenTransitionAnimation(
-        animateTabTransition: true,
-        curve: Curves.ease,
-        duration: Duration(milliseconds: 200),
-      ),
-      navBarStyle: NavBarStyle.style15,
     );
   }
 }
