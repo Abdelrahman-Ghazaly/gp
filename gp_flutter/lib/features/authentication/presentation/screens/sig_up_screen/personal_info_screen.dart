@@ -30,7 +30,7 @@ class _PersonalInfoScreenState extends State<PersonalInfoScreen>
   void initState() {
     _controller = AnimationController(
       vsync: this,
-      duration: Duration(
+      duration: const Duration(
         seconds: 2,
       ),
     )..animateTo(0.5);

@@ -13,15 +13,33 @@ class Loading extends ECommerceState {}
 
 class Loaded extends ECommerceState {
   final List<FurnitureEntity>? furnitureList;
+  final FurnitureEntity? furnitureEntity;
   final Map<String, List<FurnitureEntity>>? furnitureMap;
 
   const Loaded({
     this.furnitureList,
+    this.furnitureEntity,
     this.furnitureMap,
   });
 
   @override
-  List<Object?> get props => [furnitureList, furnitureMap];
+  List<Object?> get props => [
+        furnitureList,
+        furnitureEntity,
+        furnitureMap,
+      ];
+
+  Loaded copyWith({
+    List<FurnitureEntity>? furnitureList,
+    FurnitureEntity? furnitureEntity,
+    Map<String, List<FurnitureEntity>>? furnitureMap,
+  }) {
+    return Loaded(
+      furnitureList: furnitureList ?? this.furnitureList,
+      furnitureEntity: furnitureEntity ?? this.furnitureEntity,
+      furnitureMap: furnitureMap ?? this.furnitureMap,
+    );
+  }
 }
 
 class Success extends ECommerceState {

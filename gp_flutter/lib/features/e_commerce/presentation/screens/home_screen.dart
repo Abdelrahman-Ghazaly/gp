@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart' hide AppBar;
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../../../core/app_constants/api_constants.dart';
 import '../../../../core/app_constants/app_constants.dart';
 import '../../../../core/common_widgets/common_widgets.dart';
 import '../../../../core/utils/utilities.dart';
@@ -40,7 +39,7 @@ class HomeScreen extends StatelessWidget {
                     Category.values.length,
                     (index) {
                       final String categoryName =
-                          mapCategoryToString(Category.values[index]);
+                          Category.values[index].mapToString();
                       return Column(
                         children: [
                           HeaderText(

@@ -7,66 +7,22 @@ abstract class ECommerceEvent extends Equatable {
   List<Object> get props => [];
 }
 
-class GetFurnitireFromSearchByCategoryAndPriceEvent extends ECommerceEvent {
-  final CategoryQueryEntity categoryQueryEntity;
+class GetFurnitureFromIdEvent extends ECommerceEvent {
+  final String id;
 
-  const GetFurnitireFromSearchByCategoryAndPriceEvent(
-      {required this.categoryQueryEntity});
+  const GetFurnitureFromIdEvent({required this.id});
 
   @override
-  List<Object> get props => [categoryQueryEntity];
+  List<Object> get props => [id];
 }
 
-class GetFurnitireFromSearchByPriceRangeEvent extends ECommerceEvent {
-  final int maxPrice;
-  final int minPrice;
+class GetFurnitireFromSearchEvent extends ECommerceEvent {
+  final QueryEntity queryEntity;
 
-  const GetFurnitireFromSearchByPriceRangeEvent({
-    required this.maxPrice,
-    required this.minPrice,
-  });
+  const GetFurnitireFromSearchEvent({required this.queryEntity});
 
   @override
-  List<Object> get props => [
-        maxPrice,
-        minPrice,
-      ];
-}
-
-class GetFurnitureFromSearchByCategoryEvent extends ECommerceEvent {
-  final Category category;
-
-  const GetFurnitureFromSearchByCategoryEvent({required this.category});
-
-  @override
-  List<Object> get props => [category];
-}
-
-class GetFurnitureFromSearchByMaxPriceEvent extends ECommerceEvent {
-  final int maxPrice;
-
-  const GetFurnitureFromSearchByMaxPriceEvent({required this.maxPrice});
-
-  @override
-  List<Object> get props => [maxPrice];
-}
-
-class GetFurnitureFromSearchByMinPriceEvent extends ECommerceEvent {
-  final int minPrice;
-
-  const GetFurnitureFromSearchByMinPriceEvent({required this.minPrice});
-
-  @override
-  List<Object> get props => [minPrice];
-}
-
-class GetFurnitureFromSearchByQueryEvent extends ECommerceEvent {
-  final String searchQuery;
-
-  const GetFurnitureFromSearchByQueryEvent({required this.searchQuery});
-
-  @override
-  List<Object> get props => [searchQuery];
+  List<Object> get props => [queryEntity];
 }
 
 class GetPopularFurniturebyCategoryEvent extends ECommerceEvent {

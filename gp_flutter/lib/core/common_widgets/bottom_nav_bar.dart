@@ -2,7 +2,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import '../../features/authentication/presentation/screens/authentication_screen.dart';
 import '../../features/authentication/presentation/screens/scree,.dart';
-import '../../features/authentication/presentation/screens/sig_up_screen/email_screen.dart';
 import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
 
 import '../../features/auction/presentation/screens/auction_screen.dart';
@@ -34,8 +33,8 @@ class _BottomNavBarState extends State<BottomNavBar> {
     return [
       const HomeScreen(),
       const AuctionScreen(),
-      Scree(),
-      AuthenticationScreen(),
+      const Scree(),
+      const AuthenticationScreen(),
       Container(),
     ];
   }

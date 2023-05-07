@@ -22,14 +22,11 @@ import '../../features/e_commerce/data/data_sources/furniture_remote_data_source
 import '../../features/e_commerce/data/repositories/e_commerce_repository_impl.dart';
 import '../../features/e_commerce/domain/repositories/e_commerce_repository.dart';
 import '../../features/e_commerce/domain/use_cases/delete_product.dart';
-import '../../features/e_commerce/domain/use_cases/get_furniture_from_search_by_category.dart';
-import '../../features/e_commerce/domain/use_cases/get_furniture_from_search_by_category_and_price.dart';
-import '../../features/e_commerce/domain/use_cases/get_furniture_from_search_by_max_price.dart';
-import '../../features/e_commerce/domain/use_cases/get_furniture_from_search_by_min_price.dart';
-import '../../features/e_commerce/domain/use_cases/get_furniture_from_search_by_price_range.dart';
-import '../../features/e_commerce/domain/use_cases/get_furniture_from_search_by_query.dart';
+
 import '../../features/e_commerce/domain/use_cases/get_popular_furniture_by_category.dart';
 import '../../features/e_commerce/domain/use_cases/upload_furniture.dart';
+import '../../features/e_commerce/domain/use_cases/get_furniture_from_id.dart';
+import '../../features/e_commerce/domain/use_cases/get_furniture_from_search.dart';
 import '../../features/e_commerce/presentation/bloc/e_commerce_bloc.dart';
 
 final sl = GetIt.instance;
@@ -45,12 +42,8 @@ void init() {
 void initBloc() {
   sl.registerFactory(
     () => ECommerceBloc(
-      getFurnitireFromSearchByCategoryAndPrice: sl(),
-      getFurnitireFromSearchByPriceRange: sl(),
-      getFurnitureFromSearchByCategory: sl(),
-      getFurnitureFromSearchByMaxPrice: sl(),
-      getFurnitureFromSearchByMinPrice: sl(),
-      getFurnitureFromSearchByQuery: sl(),
+      getFurnitureFromId: sl(),
+      getFurnitureFromSearch: sl(),
       getPopularFurniturebyCategory: sl(),
       deleteFurniture: sl(),
       uploadFurniture: sl(),
@@ -81,18 +74,9 @@ void initFeatures() {
   sl.registerLazySingleton(() => LogIn(repository: sl()));
   sl.registerLazySingleton(() => SignUp(repository: sl()));
 
-  sl.registerLazySingleton(
-      () => GetFurnitureFromSearchByCategoryAndPrice(repository: sl()));
-  sl.registerLazySingleton(
-      () => GetFurnitureFromSearchByPriceRange(repository: sl()));
-  sl.registerLazySingleton(
-      () => GetFurnitureFromSearchByCategory(repository: sl()));
-  sl.registerLazySingleton(
-      () => GetFurnitureFromSearchByMaxPrice(repository: sl()));
-  sl.registerLazySingleton(
-      () => GetFurnitureFromSearchByMinPrice(repository: sl()));
-  sl.registerLazySingleton(
-      () => GetFurnitureFromSearchByQuery(repository: sl()));
+  sl.registerLazySingleton(() => GetFurnitureFromId(repository: sl()));
+  sl.registerLazySingleton(() => GetFurnitureFromSearch(repository: sl()));
+
   sl.registerLazySingleton(
       () => GetPopularFurniturebyCategory(repository: sl()));
   sl.registerLazySingleton(() => DeleteFurniture(repository: sl()));

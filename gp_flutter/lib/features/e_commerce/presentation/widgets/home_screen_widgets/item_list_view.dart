@@ -1,7 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../../../../core/app_constants/api_constants.dart';
 import '../../../../../core/app_constants/app_values.dart';
 import '../../../../../core/common_widgets/loading_widget.dart';
 import '../../../../../core/utils/utilities.dart';
@@ -26,7 +25,7 @@ class ItemListView extends StatelessWidget {
         child: BlocBuilder<ECommerceBloc, ECommerceState>(
           builder: (context, state) {
             if (state is Loaded) {
-              final String key = mapCategoryToString(category);
+              final String key = category.mapToString();
               List<FurnitureEntity> furnitureList = state.furnitureMap![key]!;
               return ListView.builder(
                 itemCount: furnitureList.length,

@@ -1,4 +1,5 @@
 import 'package:equatable/equatable.dart';
+import 'package:gp_flutter/features/e_commerce/domain/entities/seller_entity.dart';
 
 class FurnitureEntity extends Equatable {
   final String id;
@@ -8,7 +9,8 @@ class FurnitureEntity extends Equatable {
   final String? rawImage;
   final String category;
   final int price;
-  final String sellerId;
+  final SellerEntity? sellerEntity;
+  final String? sellerName;
 
   const FurnitureEntity({
     required this.id,
@@ -17,8 +19,9 @@ class FurnitureEntity extends Equatable {
     required this.imageUrls,
     required this.category,
     required this.price,
-    required this.sellerId,
+    this.sellerEntity,
     this.rawImage,
+    this.sellerName,
   });
 
   @override
@@ -30,7 +33,7 @@ class FurnitureEntity extends Equatable {
       imageUrls,
       category,
       price,
-      sellerId,
+      sellerEntity,
     ];
   }
 }
