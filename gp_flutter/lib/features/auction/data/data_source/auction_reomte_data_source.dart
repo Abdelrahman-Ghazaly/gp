@@ -15,9 +15,10 @@ abstract class BaseAuctionRemoteDataSource {
   Future<List<AuctionEntities>> getAuctionProductsSearchResult(
       SearchQueryEntity searchQueryEntity);
 
-  Future<int> uploadAuctionProduct(AuctionEntities auctionProduct);
+  Future<int> uploadAuctionProduct(
+      AuctionEntities auctionProduct, String userToken);
 
-  Future<int> deleteAuction(String userToken);
+  Future<int> deleteAuction(String userToken, String productId);
 }
 
 class AuctionRemoteDataSource extends BaseAuctionRemoteDataSource {
@@ -26,8 +27,7 @@ class AuctionRemoteDataSource extends BaseAuctionRemoteDataSource {
   AuctionRemoteDataSource({required this.dio});
 
   @override
-  Future<int> deleteAuction(String userToken) {
-    // TODO: implement deleteAuction
+  Future<int> deleteAuction(String userToken, String productId) async {
     throw UnimplementedError();
   }
 
@@ -86,7 +86,8 @@ class AuctionRemoteDataSource extends BaseAuctionRemoteDataSource {
   }
 
   @override
-  Future<int> uploadAuctionProduct(AuctionEntities auctionProduct) {
+  Future<int> uploadAuctionProduct(
+      AuctionEntities auctionProduct, String userToken) {
     // TODO: implement uploadAuctionProduct
     throw UnimplementedError();
   }

@@ -1,17 +1,29 @@
 import 'package:dartz/dartz.dart';
+import 'package:equatable/equatable.dart';
 
 import '../../../../core/error/failure.dart';
 import '../../../../core/use_case/use_case.dart';
 import '../entities/auction_entities.dart';
 import '../repositories/base_auction_repository.dart';
 
-class UploadAuctionProductUseCase extends BaseUseCase<int, AuctionEntities> {
+class UploadAuctionProductUseCase extends BaseUseCase<int, Params> {
   final BaseAuctionRepository baseAuctionRepository;
 
   UploadAuctionProductUseCase(this.baseAuctionRepository);
 
   @override
-  Future<Either<Failure, int>> call(AuctionEntities params) {
-    return baseAuctionRepository.uploadAuctionProduct(params);
+  Future<Either<Failure, int>> call(Params params) {
+    return baseAuctionRepository.uploadAuctionProduct(
+        params.auctionEntities, params.userToken);
   }
+}
+
+class Params extends Equatable {
+  final String userToken;
+  final AuctionEntities auctionEntities;
+
+  const Params({required this.userToken, required this.auctionEntities});
+
+  @override
+  List<Object?> get props => [userToken, auctionEntities];
 }
