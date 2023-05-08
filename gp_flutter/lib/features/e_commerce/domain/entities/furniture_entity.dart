@@ -1,5 +1,5 @@
 import 'package:equatable/equatable.dart';
-import 'package:gp_flutter/features/e_commerce/domain/entities/seller_entity.dart';
+import 'seller_entity.dart';
 
 class FurnitureEntity extends Equatable {
   final String id;

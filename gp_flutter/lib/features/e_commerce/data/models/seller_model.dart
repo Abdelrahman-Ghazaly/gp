@@ -1,4 +1,4 @@
-import 'package:gp_flutter/features/e_commerce/domain/entities/seller_entity.dart';
+import '../../domain/entities/seller_entity.dart';
 
 class SellerModel extends SellerEntity {
   const SellerModel({

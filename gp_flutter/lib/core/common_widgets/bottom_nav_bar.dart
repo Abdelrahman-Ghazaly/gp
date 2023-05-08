@@ -1,10 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import '../../features/authentication/presentation/screens/authentication_screen.dart';
-import '../../features/authentication/presentation/screens/scree,.dart';
 import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
 
 import '../../features/auction/presentation/screens/auction_screen.dart';
+import '../../features/authentication/presentation/screens/authentication_screen.dart';
+import '../../features/authentication/presentation/screens/scree,.dart';
 import '../../features/e_commerce/presentation/screens/home_screen.dart';
 
 class BottomNavBar extends StatefulWidget {

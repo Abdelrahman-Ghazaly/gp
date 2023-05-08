@@ -5,7 +5,7 @@ import '../../../../../core/app_constants/app_values.dart';
 import '../../../../../core/common_widgets/loading_widget.dart';
 import '../../../../../core/utils/utilities.dart';
 import '../../../domain/entities/furniture_entity.dart';
-import '../../bloc/e_commerce_bloc.dart';
+import '../../bloc/home_bloc/home_bloc.dart';
 import 'item_card.dart';
 
 class ItemListView extends StatelessWidget {
@@ -22,11 +22,11 @@ class ItemListView extends StatelessWidget {
       height: Utilities.screenHeight * 0.35,
       width: Utilities.screenWidth,
       child: Center(
-        child: BlocBuilder<ECommerceBloc, ECommerceState>(
+        child: BlocBuilder<HomeBloc, HomeState>(
           builder: (context, state) {
             if (state is Loaded) {
               final String key = category.mapToString();
-              List<FurnitureEntity> furnitureList = state.furnitureMap![key]!;
+              List<FurnitureEntity> furnitureList = state.furnitureMap[key]!;
               return ListView.builder(
                 itemCount: furnitureList.length,
                 scrollDirection: Axis.horizontal,

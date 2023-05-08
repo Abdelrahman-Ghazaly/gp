@@ -1,4 +1,4 @@
-import 'package:gp_flutter/features/e_commerce/data/models/seller_model.dart';
+import 'seller_model.dart';
 
 import '../../domain/entities/furniture_entity.dart';
 

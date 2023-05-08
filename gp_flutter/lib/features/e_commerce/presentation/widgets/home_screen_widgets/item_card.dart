@@ -1,11 +1,12 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import '../../bloc/home_bloc/home_bloc.dart';
+import '../../bloc/product_view_bloc/product_view_bloc.dart';
 
 import '../../../../../core/app_constants/app_constants.dart';
 import '../../../../../core/utils/utilities.dart';
 import '../../../domain/entities/furniture_entity.dart';
-import '../../bloc/e_commerce_bloc.dart';
 import '../../screens/product_view_screen.dart';
 
 class ItemCard extends StatelessWidget {
@@ -19,7 +20,7 @@ class ItemCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        context.read<ECommerceBloc>().add(
+        context.read<ProductViewBloc>().add(
               GetFurnitureFromIdEvent(
                 id: furnitureEntity.id,
               ),

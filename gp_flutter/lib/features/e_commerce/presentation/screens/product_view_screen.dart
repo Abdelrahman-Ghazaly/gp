@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart' hide AppBar;
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:gp_flutter/features/e_commerce/presentation/bloc/e_commerce_bloc.dart';
 
 import '../../../../core/app_constants/app_constants.dart';
 import '../../../../core/common_widgets/common_widgets.dart';
 import '../../../../core/utils/utilities.dart';
+import '../bloc/product_view_bloc/product_view_bloc.dart';
 import '../widgets/product_screen_widget/product_screen_widgets.dart';
 
 class ProductViewScreen extends StatelessWidget {
@@ -18,7 +18,7 @@ class ProductViewScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: const AppBar(),
-      body: BlocBuilder<ECommerceBloc, ECommerceState>(
+      body: BlocBuilder<ProductViewBloc, ProductViewState>(
         builder: (context, state) {
           if (state is Loaded) {
             return SingleChildScrollView(
@@ -39,7 +39,7 @@ class ProductViewScreen extends StatelessWidget {
                     child: Padding(
                       padding: const EdgeInsets.all(20),
                       child: PageView.builder(
-                        itemCount: state.furnitureEntity?.imageUrls?.length,
+                        itemCount: state.furnitureEntity.imageUrls?.length,
                         itemBuilder: (context, index) {
                           return Container(
                             height: Utilities.screenHeight * 0.4,
@@ -47,7 +47,7 @@ class ProductViewScreen extends StatelessWidget {
                             decoration: BoxDecoration(
                               image: DecorationImage(
                                 image: NetworkImage(
-                                  state.furnitureEntity?.imageUrls?[index],
+                                  state.furnitureEntity.imageUrls?[index],
                                 ),
                               ),
                             ),
@@ -59,7 +59,7 @@ class ProductViewScreen extends StatelessWidget {
                   Padding(
                     padding: const EdgeInsets.all(10),
                     child: ProductDetailsForm(
-                      furnitureEntity: state.furnitureEntity!,
+                      furnitureEntity: state.furnitureEntity,
                     ),
                   ),
                 ],
@@ -76,24 +76,3 @@ class ProductViewScreen extends StatelessWidget {
     );
   }
 }
-
-//  SizedBox(
-//               height: Utilities.screenHeight * 0.4,
-//               width: Utilities.screenWidth,
-//               child: PageView.builder(
-//                 itemCount: furnitureEntity.imageUrls?.length,
-//                 itemBuilder: (context, index) {
-//                   return Container(
-//                     height: Utilities.screenHeight * 0.4,
-//                     width: Utilities.screenWidth,
-//                     decoration: BoxDecoration(
-//                       image: DecorationImage(
-//                         image: NetworkImage(
-//                           furnitureEntity.imageUrls?[index],
-//                         ),
-//                       ),
-//                     ),
-//                   );
-//                 },
-//               ),
-//             ),

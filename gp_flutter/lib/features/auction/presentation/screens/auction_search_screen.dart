@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
-import '../../../../core/app_constants/app_constants.dart';
-import '../bloc/search_auctions_bloc/search_auctions_bloc.dart';
 
+import '../../../../core/app_constants/app_constants.dart';
 import '../../../../core/utils/utilities.dart';
 import '../../domain/entities/search_query_entity.dart';
+import '../bloc/search_auctions_bloc/search_auctions_bloc.dart';
 
 class AuctionSearchScreen extends StatelessWidget {
   const AuctionSearchScreen({super.key, required this.auctionSearch});

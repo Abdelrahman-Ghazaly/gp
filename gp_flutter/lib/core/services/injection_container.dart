@@ -22,12 +22,15 @@ import '../../features/e_commerce/data/data_sources/furniture_remote_data_source
 import '../../features/e_commerce/data/repositories/e_commerce_repository_impl.dart';
 import '../../features/e_commerce/domain/repositories/e_commerce_repository.dart';
 import '../../features/e_commerce/domain/use_cases/delete_product.dart';
-
-import '../../features/e_commerce/domain/use_cases/get_popular_furniture_by_category.dart';
-import '../../features/e_commerce/domain/use_cases/upload_furniture.dart';
 import '../../features/e_commerce/domain/use_cases/get_furniture_from_id.dart';
 import '../../features/e_commerce/domain/use_cases/get_furniture_from_search.dart';
-import '../../features/e_commerce/presentation/bloc/e_commerce_bloc.dart';
+import '../../features/e_commerce/domain/use_cases/get_popular_furniture_by_category.dart';
+import '../../features/e_commerce/domain/use_cases/upload_furniture.dart';
+import '../../features/e_commerce/presentation/bloc/delete_product_bloc/delete_product_bloc.dart';
+import '../../features/e_commerce/presentation/bloc/home_bloc/home_bloc.dart';
+import '../../features/e_commerce/presentation/bloc/product_view_bloc/product_view_bloc.dart';
+import '../../features/e_commerce/presentation/bloc/search_bloc/search_furniture_bloc.dart';
+import '../../features/e_commerce/presentation/bloc/upload_product_bloc/upload_product_bloc.dart';
 
 final sl = GetIt.instance;
 
@@ -40,34 +43,17 @@ void init() {
 }
 
 void initBloc() {
-  sl.registerFactory(
-    () => ECommerceBloc(
-      getFurnitureFromId: sl(),
-      getFurnitureFromSearch: sl(),
-      getPopularFurniturebyCategory: sl(),
-      deleteFurniture: sl(),
-      uploadFurniture: sl(),
-    ),
-  );
-  sl.registerFactory(
-    () => AuthenticationBloc(
-      logIn: sl(),
-      signUp: sl(),
-    ),
-  );
-  sl.registerFactory(
-    () => AllAuctionsBloc(
-      sl(),
-    ),
-  );
-  sl.registerFactory(
-    () => GetAuctionByIdBloc(
-      sl(),
-    ),
-  );
-  sl.registerFactory(
-    () => SearchAuctionsBloc(sl()),
-  );
+  sl.registerFactory(() => DeleteProductBloc(deleteFurniture: sl()));
+  sl.registerFactory(() => HomeBloc(getPopularFurniturebyCategory: sl()));
+  sl.registerFactory(() => ProductViewBloc(getFurnitureFromId: sl()));
+  sl.registerFactory(() => SearchFurnitureBloc(getFurnitureFromSearch: sl()));
+  sl.registerFactory(() => UploadProductBloc(uploadFurniture: sl()));
+
+  sl.registerFactory(() => AuthenticationBloc(logIn: sl(), signUp: sl()));
+
+  sl.registerFactory(() => AllAuctionsBloc(sl()));
+  sl.registerFactory(() => GetAuctionByIdBloc(sl()));
+  sl.registerFactory(() => SearchAuctionsBloc(sl()));
 }
 
 void initFeatures() {

@@ -1,10 +1,10 @@
-import 'package:equatable/equatable.dart';
-import '../../../../core/error/failure.dart';
 import 'package:dartz/dartz.dart';
-import '../../../../core/use_case/use_case.dart';
-import '../repositories/authentication_repository.dart';
+import 'package:equatable/equatable.dart';
 
+import '../../../../core/error/failure.dart';
+import '../../../../core/use_case/use_case.dart';
 import '../entities/user_entity.dart';
+import '../repositories/authentication_repository.dart';
 
 class LogIn implements BaseUseCase<UserEntity, Params> {
   final AuthenticationRepository repository;
