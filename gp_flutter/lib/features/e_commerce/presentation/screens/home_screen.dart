@@ -12,9 +12,7 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    context.read<HomeBloc>().add(
-          const GetPopularFurniturebyCategoryEvent(),
-        );
+    context.read<HomeBloc>().add(const GetPopularFurniturebyCategoryEvent());
 
     return Scaffold(
       appBar: const AppBar(),

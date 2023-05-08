@@ -1,5 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:get_it/get_it.dart';
+import 'package:gp_flutter/features/authentication/presentation/bloc/log_in_bloc/log_in_bloc.dart';
+import 'package:gp_flutter/features/authentication/presentation/bloc/sign_up_bloc/sign_up_bloc.dart';
 
 import '../../features/auction/data/data_source/auction_reomte_data_source.dart';
 import '../../features/auction/data/repository/auction_repository.dart';
@@ -17,7 +19,6 @@ import '../../features/authentication/data/repositories/authenitcation_repositor
 import '../../features/authentication/domain/repositories/authentication_repository.dart';
 import '../../features/authentication/domain/usecases/log_in.dart';
 import '../../features/authentication/domain/usecases/sign_up.dart';
-import '../../features/authentication/presentation/bloc/authentication_bloc.dart';
 import '../../features/e_commerce/data/data_sources/furniture_remote_data_source.dart';
 import '../../features/e_commerce/data/repositories/e_commerce_repository_impl.dart';
 import '../../features/e_commerce/domain/repositories/e_commerce_repository.dart';
@@ -49,7 +50,8 @@ void initBloc() {
   sl.registerFactory(() => SearchFurnitureBloc(getFurnitureFromSearch: sl()));
   sl.registerFactory(() => UploadProductBloc(uploadFurniture: sl()));
 
-  sl.registerFactory(() => AuthenticationBloc(logIn: sl(), signUp: sl()));
+  sl.registerFactory(() => SignUpBloc(signUp: sl()));
+  sl.registerFactory(() => LogInBloc(logIn: sl()));
 
   sl.registerFactory(() => AllAuctionsBloc(sl()));
   sl.registerFactory(() => GetAuctionByIdBloc(sl()));

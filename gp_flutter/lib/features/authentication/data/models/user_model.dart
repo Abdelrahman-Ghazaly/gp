@@ -8,6 +8,7 @@ class UserModel extends UserEntity {
     required super.email,
     required super.address,
     required super.phoneNumber,
+    super.password,
   });
 
   Map<String, dynamic> toMap() {

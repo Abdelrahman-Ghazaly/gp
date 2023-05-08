@@ -64,6 +64,8 @@ class AppAnimations {
       '${_baseAnimationUrl}password.json';
   static const String lottiePersonalIdAnimation =
       '${_baseAnimationUrl}personal_id.json';
+  static const String lottieAccountCreatedAnimation =
+      '${_baseAnimationUrl}account_created.json';
 }
 
 const String _baseImageUrl = 'assets/images/';
