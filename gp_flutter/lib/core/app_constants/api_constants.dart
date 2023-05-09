@@ -1,4 +1,4 @@
-import '../../features/e_commerce/domain/entities/search_query_entity.dart';
+import '../../features/e_commerce/domain/entities/query_entity.dart';
 import 'app_values.dart';
 
 class ApiConstants {
@@ -21,13 +21,16 @@ class ApiConstants {
   static String auctionPidProductPath(productId, userId) =>
       '$auctionBaseUrl/pid/$productId/$userId';
   //'http://10.0.2.2:5000/'
-  static const String _baseUrl = 'http://192.168.1.2:5000/';
+  static const String _baseUrl = 'http://10.0.2.2:5000/';
 
   //* Product End Points
 
   static const String _productBaseUrl = '${_baseUrl}product/';
 
   static const String popularFurnitureByCategoryPath = '${_productBaseUrl}view';
+
+  static String viewProductPathById(String id) =>
+      '$popularFurnitureByCategoryPath/item/$id';
 
   static const String uploadFurniturePath = '${_productBaseUrl}upload';
 
@@ -39,27 +42,15 @@ class ApiConstants {
   static const String _productSearchBaseUrl =
       '${_productBaseUrl}search/product/?';
 
-  static String furnitureFromSearcByQueryhPath(String query) =>
-      '${_productSearchBaseUrl}query=$query';
-
-  static String furnitureFromSearcByCategory(Category category) =>
-      '${_productSearchBaseUrl}category=${mapCategoryToString(category)}';
-
-  static String furnitureFromSearcByMinPricePath(int minPrice) =>
-      '${_productSearchBaseUrl}minPrice=$minPrice';
-
-  static String furnitureFromSearcByMaxPricePath(int maxPrice) =>
-      '${_productSearchBaseUrl}maxPrice=$maxPrice';
-
-  static String furnitureFromSearcByPriceRangePath(
-    int minPrice,
-    int maxPrice,
-  ) =>
-      '${_productSearchBaseUrl}minPrice=$minPrice&maxPrice=$maxPrice';
-
-  static String furnitureFromSearcByCategoryAndPricePath(
-          CategoryQueryEntity categoryQueryEntity) =>
-      '${_productSearchBaseUrl}category=${mapCategoryToString(categoryQueryEntity.category)}&minPrice=${categoryQueryEntity.minPrice}&maxPrice=${categoryQueryEntity.maxPrice}';
+  static String getFurnitureFromSearch(QueryEntity queryEntity) {
+    String maxPrice = queryEntity.maxPrice.toInt() == 0
+        ? ''
+        : queryEntity.maxPrice.toInt().toString();
+    String minPrice = queryEntity.minPrice.toInt() == 0
+        ? ''
+        : queryEntity.minPrice.toInt().toString();
+    return '${_productSearchBaseUrl}category=${queryEntity.category.mapToString()}&query=${queryEntity.name}&minPrice=$minPrice&maxPrice=$maxPrice';
+  }
 
   //* User End Points
 
@@ -74,21 +65,4 @@ class ApiConstants {
   static const String logInPath = '${_authBaseUrl}login';
 
   static const String signUpPath = '${_authBaseUrl}signup';
-}
-
-String mapCategoryToString(Category category) {
-  switch (category) {
-    case Category.bed:
-      return 'bed';
-    case Category.chair:
-      return 'chair';
-    case Category.sofa:
-      return 'sofa';
-    case Category.lamp:
-      return 'lamp';
-    case Category.table:
-      return 'table';
-    case Category.dresser:
-      return 'dresser';
-  }
 }

@@ -1,18 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import '../../features/authentication/presentation/screens/sig_up_screen/password_screen.dart';
-import '../../features/authentication/presentation/screens/sig_up_screen/personal_info_screen.dart';
-import '../../features/authentication/presentation/screens/authentication_screen.dart';
-import '../common_widgets/common_widgets.dart';
+
 import '../../features/auction/presentation/screens/add_auction_screen.dart';
 import '../../features/auction/presentation/screens/auction_details_screen.dart';
 import '../../features/auction/presentation/screens/auction_search_screen.dart';
+import '../common_widgets/common_widgets.dart';
 
 final GoRouter router = GoRouter(routes: <GoRoute>[
   GoRoute(
       path: "/",
       builder: (BuildContext context, GoRouterState state) {
-        return BottomNavBar();
+        return const BottomNavBar();
       },
       routes: [
         GoRoute(

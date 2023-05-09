@@ -10,6 +10,29 @@ enum Category {
   dresser,
 }
 
+extension MapToString on Category? {
+  String mapToString() {
+    switch (this) {
+      case Category.bed:
+        return 'bed';
+      case Category.chair:
+        return 'chair';
+      case Category.sofa:
+        return 'sofa';
+      case Category.lamp:
+        return 'lamp';
+      case Category.table:
+        return 'table';
+      case Category.dresser:
+        return 'dresser';
+      case null:
+        return '';
+      default:
+        return '';
+    }
+  }
+}
+
 const List<String> searchCategory = [
   "All",
   "bed",
@@ -41,6 +64,8 @@ class AppAnimations {
       '${_baseAnimationUrl}password.json';
   static const String lottiePersonalIdAnimation =
       '${_baseAnimationUrl}personal_id.json';
+  static const String lottieAccountCreatedAnimation =
+      '${_baseAnimationUrl}account_created.json';
 }
 
 const String _baseImageUrl = 'assets/images/';

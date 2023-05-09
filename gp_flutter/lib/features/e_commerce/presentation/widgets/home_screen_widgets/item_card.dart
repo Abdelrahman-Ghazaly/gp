@@ -1,5 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import '../../bloc/home_bloc/home_bloc.dart';
+import '../../bloc/product_view_bloc/product_view_bloc.dart';
 
 import '../../../../../core/app_constants/app_constants.dart';
 import '../../../../../core/utils/utilities.dart';
@@ -17,9 +20,16 @@ class ItemCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
+        context.read<ProductViewBloc>().add(
+              GetFurnitureFromIdEvent(
+                id: furnitureEntity.id,
+              ),
+            );
         Utilities().pushTo(
           context,
-          screen: ProductViewScreen(furnitureEntity: furnitureEntity),
+          screen: ProductViewScreen(
+            furnitureId: furnitureEntity.id,
+          ),
         );
       },
       child: Container(
@@ -73,9 +83,7 @@ class ItemCard extends StatelessWidget {
                     ),
                   ),
                   IconButton(
-                    onPressed: () {
-                      print('Clicked on Icon');
-                    },
+                    onPressed: () {},
                     icon: const Icon(
                       CupertinoIcons.heart_fill,
                     ),

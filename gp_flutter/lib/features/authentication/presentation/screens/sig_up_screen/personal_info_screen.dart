@@ -1,9 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lottie/lottie.dart';
 
 import '../../../../../core/app_constants/app_constants.dart';
 import '../../../../../core/utils/utilities.dart';
+import '../../../data/models/user_model.dart';
+import '../../bloc/sign_up_bloc/sign_up_bloc.dart';
 import '../../widgets/form_text_field.dart';
+import '../log_in_screen.dart';
 
 class PersonalInfoScreen extends StatefulWidget {
   const PersonalInfoScreen({
@@ -25,12 +29,13 @@ class _PersonalInfoScreenState extends State<PersonalInfoScreen>
   late TextEditingController _lastName;
   late TextEditingController _phoneNumber;
   late TextEditingController _address;
+  late UserModel userModel;
 
   @override
   void initState() {
     _controller = AnimationController(
       vsync: this,
-      duration: Duration(
+      duration: const Duration(
         seconds: 2,
       ),
     )..animateTo(0.5);
@@ -142,12 +147,50 @@ class _PersonalInfoScreenState extends State<PersonalInfoScreen>
         padding: const EdgeInsets.all(8.0),
         child: ElevatedButton(
           onPressed: () {
-            if (formKey.currentState!.validate()) {}
+            if (formKey.currentState!.validate()) {
+              userModel = UserModel(
+                name: '${_firstName.text} ${_lastName.text}',
+                password: widget.password,
+                email: widget.email,
+                address: _address.text,
+                phoneNumber: _phoneNumber.text,
+              );
+              context.read<SignUpBloc>().add(
+                    PostDataEvent(userModel: userModel),
+                  );
+              BlocListener<SignUpBloc, SignUpState>(
+                listener: (context, state) async {
+                  if (state is Success) {
+                    showDialog(
+                      context: context,
+                      builder: (_) => SizedBox(
+                        height: Utilities.screenHeight * 0.5,
+                        width: Utilities.screenWidth * 0.8,
+                        child: Center(
+                          child: Lottie.asset(
+                            AppAnimations.lottieAccountCreatedAnimation,
+                          ),
+                        ),
+                      ),
+                    );
+                    await Future.delayed(
+                      const Duration(seconds: 1),
+                      () {
+                        Utilities().pushTo(
+                          context,
+                          screen: const LogInScreen(),
+                        );
+                      },
+                    );
+                  } else {}
+                },
+              );
+            }
           },
           style: ElevatedButton.styleFrom(
             minimumSize: Size(Utilities.screenWidth, 50),
           ),
-          child: const Text('Next'),
+          child: const Text('Sign Up'),
         ),
       ),
     );
