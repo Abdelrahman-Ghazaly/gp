@@ -35,6 +35,12 @@ class AuthenticationRemoteDataSourceImpl
     Response response = await dio.post(
       ApiConstants.logInPath,
       data: data,
+      options: Options(
+        followRedirects: false,
+        validateStatus: (status) {
+          return status! < 600;
+        },
+      ),
     );
 
     if (response.statusCode == 200) {
@@ -53,11 +59,20 @@ class AuthenticationRemoteDataSourceImpl
     Response response = await dio.post(
       ApiConstants.signUpPath,
       data: user.toMap(),
+      options: Options(
+        followRedirects: false,
+        validateStatus: (status) {
+          return status! < 600;
+        },
+      ),
     );
-    if (response.statusCode == 201) {
-    } else {
+
+    if (response.statusCode != 201) {
       throw ServerException(
-        errorMessageModel: ErrorMessageModel.fromJson(response.data),
+        errorMessageModel: ErrorMessageModel(
+          statusCode: response.statusCode ?? 0,
+          statusMessage: response.data['message'],
+        ),
       );
     }
   }

@@ -57,6 +57,12 @@ class FurnitureRemoteDataSourceImpl extends FurnitureRemoteDataSource {
       data: {
         'Content-Type': 'application / json',
       },
+      options: Options(
+        followRedirects: false,
+        validateStatus: (status) {
+          return status! < 600;
+        },
+      ),
     );
     if (response.statusCode == 200) {
       return FurnitureModel.fromMap(response.data);
@@ -74,6 +80,10 @@ class FurnitureRemoteDataSourceImpl extends FurnitureRemoteDataSource {
       ApiConstants.uploadFurniturePath,
       options: Options(
         method: 'POST',
+        followRedirects: false,
+        validateStatus: (status) {
+          return status! < 600;
+        },
         headers: {
           HttpHeaders.contentTypeHeader: 'multipart/form-data',
           // TODO: After implementing the athentication
@@ -103,6 +113,12 @@ class FurnitureRemoteDataSourceImpl extends FurnitureRemoteDataSource {
       data: {
         'Content-Type': 'application / json',
       },
+      options: Options(
+        followRedirects: false,
+        validateStatus: (status) {
+          return status! < 600;
+        },
+      ),
     );
     if (response.statusCode == 200) {
       return List.from(
@@ -122,6 +138,12 @@ class FurnitureRemoteDataSourceImpl extends FurnitureRemoteDataSource {
       data: {
         'Content-Type': 'application / json',
       },
+      options: Options(
+        followRedirects: false,
+        validateStatus: (status) {
+          return status! < 600;
+        },
+      ),
     );
 
     if (response.statusCode == 200) {

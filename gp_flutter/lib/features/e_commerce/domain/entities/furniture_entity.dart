@@ -1,4 +1,5 @@
 import 'package:equatable/equatable.dart';
+
 import 'seller_entity.dart';
 
 class FurnitureEntity extends Equatable {

@@ -68,7 +68,7 @@ class ProductViewScreen extends StatelessWidget {
           } else if (state is Error) {
             return Text(state.message);
           } else {
-            return LoadingWidget();
+            return const LoadingWidget();
           }
         },
       ),

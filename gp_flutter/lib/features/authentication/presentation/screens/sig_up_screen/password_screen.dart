@@ -42,7 +42,7 @@ class PasswordScreen extends StatelessWidget {
                   child: Column(
                     children: [
                       FormTextField(
-                        icon: Icons.lock_outline,
+                        icon: Icons.password_outlined,
                         labelText: 'Password',
                         controller: passwordController,
                         isPassword: true,
@@ -59,7 +59,7 @@ class PasswordScreen extends StatelessWidget {
                       ),
                       kSpacing(15),
                       FormTextField(
-                        icon: Icons.lock_outline,
+                        icon: Icons.password_outlined,
                         labelText: 'Confirm Password',
                         controller: confirmPasswordController,
                         isPassword: true,
