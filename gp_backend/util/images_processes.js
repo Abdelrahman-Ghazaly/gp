@@ -56,18 +56,12 @@ exports.uploadToFirebase = async (req, res, next) => {
 };
 
 
-exports.deleteProductImages = async (req, res, next) => {
+exports.deleteProductImages = async (imgURL) => {
     try {
-        const productId = req.params.productId;
-        const { imgURL } = await productDb.getProductImagesForDeletation(
-            productId,
-            req.user.id
-        );
         for (const img of imgURL) {
             const desertRef = ref(storage, img);
             await deleteObject(desertRef);
         }
-        next();
     } catch (err) {
         console.log(err);
         next(err);

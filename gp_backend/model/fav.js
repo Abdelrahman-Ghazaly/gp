@@ -41,3 +41,17 @@ exports.getFav = async (userId) => {
         throw new Error();
     }
 };
+
+exports.removeDeletedProduct = async (product_id) => {
+    try {
+        const result = await User.updateMany(
+            { favourite: { _id: product_id } },
+            { $pull: { favourite: { _id: product_id } } }
+        );
+        return result.favourite;
+    } catch (err) {
+        console.log(err);
+        throw new Error();
+    }
+};
+;

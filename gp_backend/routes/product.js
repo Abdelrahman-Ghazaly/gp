@@ -17,7 +17,6 @@ router.post(
 router.delete(
     "/delete/:productId",
     auth.verifyLogedin,
-    images.deleteProductImages,
     productController.deleteProduct
 );
 
