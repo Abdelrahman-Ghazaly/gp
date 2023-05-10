@@ -12,7 +12,7 @@ class AuthenticationScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const AppBar(),
+      appBar: const CustomAppBar(),
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [

@@ -3,7 +3,7 @@ import 'package:equatable/equatable.dart';
 import 'seller_entity.dart';
 
 class FurnitureEntity extends Equatable {
-  final String id;
+  final String? id;
   final String title;
   final String description;
   final List<dynamic>? imageUrls;
@@ -14,7 +14,7 @@ class FurnitureEntity extends Equatable {
   final String? sellerName;
 
   const FurnitureEntity({
-    required this.id,
+    this.id,
     required this.title,
     required this.description,
     required this.imageUrls,

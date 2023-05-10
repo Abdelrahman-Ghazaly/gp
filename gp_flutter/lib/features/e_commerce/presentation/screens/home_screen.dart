@@ -15,7 +15,7 @@ class HomeScreen extends StatelessWidget {
     context.read<HomeBloc>().add(const GetPopularFurniturebyCategoryEvent());
 
     return Scaffold(
-      appBar: const AppBar(),
+      appBar: const CustomAppBar(),
       body: SingleChildScrollView(
         child: Column(
           children: [

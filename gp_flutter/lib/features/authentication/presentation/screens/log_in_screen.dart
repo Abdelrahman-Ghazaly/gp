@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:gp_flutter/core/common_widgets/bottom_nav_bar.dart';
 import '../bloc/log_in_bloc/log_in_bloc.dart';
 import 'sig_up_screen/email_screen.dart';
 import '../widgets/form_text_field.dart';
@@ -84,7 +85,7 @@ class LogInScreen extends StatelessWidget {
           if (state is Success) {
             Utilities().pushAndReplace(
               context: context,
-              screen: const HomeScreen(),
+              screen: const BottomNavBar(),
             );
           } else {
             showDialog(

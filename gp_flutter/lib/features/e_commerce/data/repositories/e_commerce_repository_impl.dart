@@ -2,8 +2,10 @@ import 'package:dartz/dartz.dart';
 
 import '../../../../core/error/exceptions.dart';
 import '../../../../core/error/failure.dart';
+import '../../../authentication/domain/entities/user_entity.dart';
 import '../../domain/entities/furniture_entity.dart';
 import '../../domain/entities/query_entity.dart';
+import '../../domain/entities/seller_entity.dart';
 import '../../domain/repositories/e_commerce_repository.dart';
 import '../data_sources/furniture_remote_data_source.dart';
 import '../models/furniture_model.dart';
@@ -52,13 +54,20 @@ class ECommerceRepositoryImpl implements ECommerceRepository {
   }
 
   @override
-  Future<Either<Failure, String>> uploadFurniture(
-          {required FurnitureModel furniture}) async =>
-      await _getString(
-          () => remoteDataSource.uploadFurniture(furniture: furniture));
+  Future<Either<Failure, String>> uploadFurniture({
+    required FurnitureModel furniture,
+    required UserEntity userEntity,
+  }) async =>
+      await _getString(() => remoteDataSource.uploadFurniture(
+            furniture: furniture,
+            userEntity: userEntity,
+          ));
 
   @override
-  Future<Either<Failure, String>> deleteFurniture({required int productId}) {
+  Future<Either<Failure, String>> deleteFurniture({
+    required int productId,
+    required UserEntity userEntity,
+  }) {
     // TODO: implement getFurnitureFromSearchByCategory
     throw UnimplementedError();
   }

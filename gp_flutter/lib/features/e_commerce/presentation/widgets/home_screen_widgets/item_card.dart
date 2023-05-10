@@ -1,6 +1,6 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:lottie/lottie.dart';
 import '../../bloc/product_view_bloc/product_view_bloc.dart';
 
 import '../../../../../core/app_constants/app_constants.dart';
@@ -8,7 +8,9 @@ import '../../../../../core/utils/utilities.dart';
 import '../../../domain/entities/furniture_entity.dart';
 import '../../screens/product_view_screen.dart';
 
-class ItemCard extends StatelessWidget {
+bool _isFavorite = false;
+
+class ItemCard extends StatefulWidget {
   const ItemCard({
     super.key,
     required this.furnitureEntity,
@@ -16,18 +18,37 @@ class ItemCard extends StatelessWidget {
   final FurnitureEntity furnitureEntity;
 
   @override
+  State<ItemCard> createState() => _ItemCardState();
+}
+
+class _ItemCardState extends State<ItemCard>
+    with SingleTickerProviderStateMixin {
+  late AnimationController _isFavoriteController;
+
+  @override
+  void initState() {
+    super.initState();
+    _isFavoriteController = AnimationController(
+      vsync: this,
+      duration: const Duration(
+        milliseconds: 750,
+      ),
+    );
+  }
+
+  @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
         context.read<ProductViewBloc>().add(
               GetFurnitureFromIdEvent(
-                id: furnitureEntity.id,
+                id: widget.furnitureEntity.id!,
               ),
             );
         Utilities().pushTo(
           context,
           screen: ProductViewScreen(
-            furnitureId: furnitureEntity.id,
+            furnitureId: widget.furnitureEntity.id!,
           ),
         );
       },
@@ -56,18 +77,18 @@ class ItemCard extends StatelessWidget {
                 decoration: BoxDecoration(
                   image: DecorationImage(
                     image: NetworkImage(
-                      furnitureEntity.imageUrls!.first,
+                      widget.furnitureEntity.imageUrls!.first,
                     ),
                     fit: BoxFit.contain,
                   ),
                 ),
               ),
               Text(
-                furnitureEntity.title,
+                widget.furnitureEntity.title,
                 style: AppTextStyles.titileTextStyle,
               ),
               Text(
-                furnitureEntity.description,
+                widget.furnitureEntity.description,
                 overflow: TextOverflow.ellipsis,
                 maxLines: 2,
                 style: AppTextStyles.descriptionTextStyle,
@@ -76,15 +97,26 @@ class ItemCard extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    '${furnitureEntity.price} EGP',
+                    '${widget.furnitureEntity.price} EGP',
                     style: AppTextStyles.titileTextStyle.copyWith(
                       color: AppColors.appGreemColor,
                     ),
                   ),
-                  IconButton(
-                    onPressed: () {},
-                    icon: const Icon(
-                      CupertinoIcons.heart_fill,
+                  FloatingActionButton.small(
+                    onPressed: () {
+                      if (_isFavorite) {
+                        _isFavoriteController.reverse();
+                      } else {
+                        _isFavoriteController.forward();
+                      }
+                      _isFavorite = !_isFavorite;
+                    },
+                    shape: const CircleBorder(),
+                    backgroundColor: Colors.white,
+                    elevation: 5,
+                    child: Lottie.asset(
+                      AppAnimations.lottieHeartAnimation,
+                      controller: _isFavoriteController,
                     ),
                   )
                 ],
