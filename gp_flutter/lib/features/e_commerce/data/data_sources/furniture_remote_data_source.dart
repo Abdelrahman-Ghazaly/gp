@@ -3,41 +3,21 @@ import 'dart:io';
 import 'package:dio/dio.dart';
 
 import '../../../../core/app_constants/api_constants.dart';
-import '../../../../core/app_constants/app_values.dart';
 import '../../../../core/error/exceptions.dart';
 import '../../../../core/network/error_message_model.dart';
 import '../../domain/entities/furniture_entity.dart';
-import '../../domain/entities/search_query_entity.dart';
+import '../../domain/entities/query_entity.dart';
 import '../models/furniture_model.dart';
 
 abstract class FurnitureRemoteDataSource {
-  Future<List<FurnitureEntity>> getPopularFurnitureByCategory({
-    required Category category,
+  Future<Map<String, List<FurnitureEntity>>> getPopularFurnitureByCategory();
+
+  Future<FurnitureEntity> getFurnitureFromId({
+    required String id,
   });
 
-  Future<List<FurnitureEntity>> getFurnitureFromSearchByQuery({
-    required String searchQuery,
-  });
-
-  Future<List<FurnitureEntity>> getFurnitureFromSearchByCategory({
-    required Category category,
-  });
-
-  Future<List<FurnitureEntity>> getFurnitureFromSearchByCategoryAndPrice({
-    required CategoryQueryEntity categoryQueryEntity,
-  });
-
-  Future<List<FurnitureEntity>> getFurnitureFromSearchByPriceRange({
-    required int minPrice,
-    required int maxPrice,
-  });
-
-  Future<List<FurnitureEntity>> getFurnitureFromSearchByMinPrice({
-    required int minPrice,
-  });
-
-  Future<List<FurnitureEntity>> getFurnitureFromSearchByMaxPrice({
-    required int maxPrice,
+  Future<List<FurnitureEntity>> getFurnitureFromSearch({
+    required QueryEntity queryEntity,
   });
 
   Future<String> uploadFurniture({
@@ -57,57 +37,35 @@ class FurnitureRemoteDataSourceImpl extends FurnitureRemoteDataSource {
   });
 
   @override
-  Future<List<FurnitureEntity>> getPopularFurnitureByCategory(
-          {required Category category}) =>
-      _getPopularFurnitureList(
+  Future<Map<String, List<FurnitureEntity>>> getPopularFurnitureByCategory() =>
+      _getPopularFurnitureMap(
         url: ApiConstants.popularFurnitureByCategoryPath,
-        category: category,
       );
 
   @override
-  Future<List<FurnitureEntity>> getFurnitureFromSearchByQuery(
-          {required String searchQuery}) =>
+  Future<List<FurnitureEntity>> getFurnitureFromSearch(
+          {required QueryEntity queryEntity}) =>
       _getFurnitureList(
-        url: ApiConstants.furnitureFromSearcByQueryhPath(searchQuery),
+        url: ApiConstants.getFurnitureFromSearch(queryEntity),
       );
 
   @override
-  Future<List<FurnitureEntity>> getFurnitureFromSearchByCategory(
-          {required Category category}) =>
-      _getFurnitureList(
-        url: ApiConstants.furnitureFromSearcByCategory(category),
+  Future<FurnitureEntity> getFurnitureFromId({required String id}) async {
+    String url = ApiConstants.viewProductPathById(id);
+    Response response = await dio.get(
+      url,
+      data: {
+        'Content-Type': 'application / json',
+      },
+    );
+    if (response.statusCode == 200) {
+      return FurnitureModel.fromMap(response.data);
+    } else {
+      throw ServerException(
+        errorMessageModel: ErrorMessageModel.fromJson(response.data),
       );
-
-  @override
-  Future<List<FurnitureEntity>> getFurnitureFromSearchByCategoryAndPrice(
-          {required CategoryQueryEntity categoryQueryEntity}) =>
-      _getFurnitureList(
-        url: ApiConstants.furnitureFromSearcByCategoryAndPricePath(
-          categoryQueryEntity,
-        ),
-      );
-
-  @override
-  Future<List<FurnitureEntity>> getFurnitureFromSearchByMaxPrice(
-          {required int maxPrice}) =>
-      _getFurnitureList(
-        url: ApiConstants.furnitureFromSearcByMaxPricePath(maxPrice),
-      );
-
-  @override
-  Future<List<FurnitureEntity>> getFurnitureFromSearchByMinPrice(
-          {required int minPrice}) =>
-      _getFurnitureList(
-        url: ApiConstants.furnitureFromSearcByMinPricePath(minPrice),
-      );
-
-  @override
-  Future<List<FurnitureEntity>> getFurnitureFromSearchByPriceRange(
-          {required int minPrice, required int maxPrice}) =>
-      _getFurnitureList(
-        url:
-            ApiConstants.furnitureFromSearcByPriceRangePath(minPrice, maxPrice),
-      );
+    }
+  }
 
   @override
   Future<String> uploadFurniture({required FurnitureModel furniture}) async {
@@ -157,27 +115,27 @@ class FurnitureRemoteDataSourceImpl extends FurnitureRemoteDataSource {
     }
   }
 
-  Future<List<FurnitureEntity>> _getPopularFurnitureList(
-      {required String url, required Category category}) async {
+  Future<Map<String, List<FurnitureEntity>>> _getPopularFurnitureMap(
+      {required String url}) async {
     Response response = await dio.get(
       url,
       data: {
         'Content-Type': 'application / json',
       },
     );
-    String categoryString = mapCategoryToString(category);
-    if (response.data[categoryString] == null) {
-      response.statusCode = -1;
-      response.data = {
-        'status_code': response.statusCode,
-        'status_message': 'Data not found',
-      };
-    }
+
     if (response.statusCode == 200) {
-      return List.from(
-        (response.data[categoryString])
-            .map((element) => FurnitureModel.fromMap(element)),
-      );
+      Map<String, List<FurnitureEntity>> popularFurniture = {};
+      for (var key in response.data.keys) {
+        popularFurniture.addAll({
+          key: List.from(
+            (response.data[key])
+                .map((element) => FurnitureModel.fromMap(element)),
+          )
+        });
+      }
+
+      return popularFurniture;
     } else {
       throw ServerException(
         errorMessageModel: ErrorMessageModel.fromJson(response.data),

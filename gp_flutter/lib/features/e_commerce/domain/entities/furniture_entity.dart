@@ -1,15 +1,16 @@
 import 'package:equatable/equatable.dart';
+import 'seller_entity.dart';
 
 class FurnitureEntity extends Equatable {
   final String id;
   final String title;
   final String description;
-  //! will change from dynamic to String
   final List<dynamic>? imageUrls;
   final String? rawImage;
   final String category;
   final int price;
-  final String sellerId;
+  final SellerEntity? sellerEntity;
+  final String? sellerName;
 
   const FurnitureEntity({
     required this.id,
@@ -18,8 +19,9 @@ class FurnitureEntity extends Equatable {
     required this.imageUrls,
     required this.category,
     required this.price,
-    required this.sellerId,
+    this.sellerEntity,
     this.rawImage,
+    this.sellerName,
   });
 
   @override
@@ -31,7 +33,7 @@ class FurnitureEntity extends Equatable {
       imageUrls,
       category,
       price,
-      sellerId,
+      sellerEntity,
     ];
   }
 }

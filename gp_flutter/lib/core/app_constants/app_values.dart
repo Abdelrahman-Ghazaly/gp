@@ -10,6 +10,39 @@ enum Category {
   dresser,
 }
 
+extension MapToString on Category? {
+  String mapToString() {
+    switch (this) {
+      case Category.bed:
+        return 'bed';
+      case Category.chair:
+        return 'chair';
+      case Category.sofa:
+        return 'sofa';
+      case Category.lamp:
+        return 'lamp';
+      case Category.table:
+        return 'table';
+      case Category.dresser:
+        return 'dresser';
+      case null:
+        return '';
+      default:
+        return '';
+    }
+  }
+}
+
+const List<String> searchCategory = [
+  "All",
+  "bed",
+  "chair",
+  "sofa",
+  'lamp',
+  "table",
+  "dresser",
+];
+
 const double kAppBarHeight = 75;
 
 const String _baseIconUrl = 'assets/icons/';
@@ -23,6 +56,16 @@ const String _baseAnimationUrl = 'assets/lottie_animations/';
 class AppAnimations {
   static const String lottieHeartAnimation =
       '${_baseAnimationUrl}heart_animation.json';
+  static const String lottieManProfileAnimation =
+      '${_baseAnimationUrl}man_profile.json';
+  static const String lottieFemaleProfileAnimation =
+      '${_baseAnimationUrl}female_profile.json';
+  static const String lottiePasswordAnimation =
+      '${_baseAnimationUrl}password.json';
+  static const String lottiePersonalIdAnimation =
+      '${_baseAnimationUrl}personal_id.json';
+  static const String lottieAccountCreatedAnimation =
+      '${_baseAnimationUrl}account_created.json';
 }
 
 const String _baseImageUrl = 'assets/images/';
@@ -46,9 +89,17 @@ class AppTextStyles {
     fontSize: 20,
     fontWeight: FontWeight.w600,
   );
+  static final TextStyle titileTextStyle = GoogleFonts.montserrat(
+    fontSize: 18,
+    fontWeight: FontWeight.w600,
+  );
+  static final TextStyle descriptionTextStyle = GoogleFonts.montserrat(
+    fontSize: 15,
+    fontWeight: FontWeight.w400,
+  );
 }
 
-const SizedBox kSpacing20p = const SizedBox(
-  height: 20,
-  width: 20,
-);
+SizedBox kSpacing(double space) => SizedBox(
+      height: space,
+      width: space,
+    );
