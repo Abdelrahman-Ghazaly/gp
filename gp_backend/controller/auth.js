@@ -35,7 +35,6 @@ exports.signup = async (req, res, next) => {
 
 exports.login = async (req, res, next) => {
     try {
-        console.log("object");
         const { email, password: inputPassword } = req.body;
         const user = await db.login(email);
         if (!user) {

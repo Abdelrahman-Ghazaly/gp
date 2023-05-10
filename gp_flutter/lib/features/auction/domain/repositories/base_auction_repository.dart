@@ -11,7 +11,8 @@ abstract class BaseAuctionRepository {
       SearchQueryEntity searchQueryEntity);
 
   Future<Either<Failure, int>> uploadAuctionProduct(
-      AuctionEntities auctionProduct);
+      AuctionEntities auctionProduct, String userToken);
 
-  Future<Either<Failure, int>> deleteAuction(String userToken);
+  Future<Either<Failure, int>> deleteAuction(
+      String userToken, String productId);
 }
