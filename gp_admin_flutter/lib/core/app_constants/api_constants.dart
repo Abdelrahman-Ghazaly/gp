@@ -11,9 +11,7 @@ class ApiConstants {
 
   //* Auth End Points
 
-  static const String _authBaseUrl = '${_baseUrl}auth/';
+  static const String _authBaseUrl = '${_baseUrl}admin/';
 
   static const String logInPath = '${_authBaseUrl}login';
-
-  static const String signUpPath = '${_authBaseUrl}signup';
 }
