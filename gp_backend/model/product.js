@@ -65,6 +65,18 @@ exports.deleteProduct = async (productId, user_id) => {
     }
 };
 
+exports.deleteProductByAdmin = async (productId) => {
+    try {
+        const result = await Product.findOneAndDelete({
+            _id: productId,
+        });
+        return result;
+    } catch (err) {
+        console.log(err);
+        throw new Error();
+    }
+};
+
 exports.getProductImagesForDeletation = async (productId, user_id) => {
     try {
         const result = await Product.find({

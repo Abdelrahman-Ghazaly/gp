@@ -5,6 +5,7 @@ require("dotenv").config();
 const databaseConnection = require("./util/Database_Connection");
 
 const authRoutes = require("./routes/auth");
+const adminRoutes = require("./routes/admin");
 const userRoutes = require("./routes/user");
 const productRoutes = require("./routes/product");
 const auctionRoutes = require("./routes/auction");
@@ -26,6 +27,7 @@ app.use((req, res, next) => {
 });
 
 app.use("/auth", authRoutes);
+app.use("/admin", adminRoutes);
 app.use("/user", userRoutes);
 app.use("/product", productRoutes);
 app.use("/auction", auctionRoutes);
