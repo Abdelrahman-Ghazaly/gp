@@ -8,6 +8,8 @@ class ApiConstants {
   static const String _auctionBaseUrl = '${_baseUrl}auction/';
   static const String auctionViewRequestsPath =
       '${_auctionBaseUrl}view/requests';
+  static String viewAuctionDataPath(auctionId) =>
+      '${_auctionBaseUrl}accept/$auctionId';
   static String auctionAcceptRequestsPath(auctionId) =>
       '${_auctionBaseUrl}accept/$auctionId';
   static String auctionRefuseRequestsPath(auctionId) =>

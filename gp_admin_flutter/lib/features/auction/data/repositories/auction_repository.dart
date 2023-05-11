@@ -23,19 +23,6 @@ class AuctionRepository extends BaseAuctionRepository {
   }
 
   @override
-  Future<Either<Failure, AuctionEntities>> viewAuctionData(
-      String auctionId) async {
-    final result =
-        await baseAuctionRemoteDataSource.viewAuctionDataById(auctionId);
-
-    try {
-      return Right(result);
-    } on ServerException catch (failure) {
-      return Left(ServerFailure(failure.errorMessageModel.statusMessage));
-    }
-  }
-
-  @override
   Future<Either<Failure, int>> acceptAuction(
       String productId, String adminToken) async {
     final result = await baseAuctionRemoteDataSource.acceptAuctionProduct(

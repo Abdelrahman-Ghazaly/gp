@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:gp_admin_flutter/features/auction/presentation/bloc/get_all_auctions_bloc/all_auctions_bloc.dart';
 
 import 'core/services/injection_container.dart';
 import 'core/theme/light_theme.dart';
@@ -20,6 +21,7 @@ class MyApp extends StatelessWidget {
     return MultiBlocProvider(
       providers: [
         BlocProvider(create: (context) => sl<LogInBloc>()),
+        BlocProvider(create: (context) => sl<AllAuctionsBloc>()),
       ],
       child: MaterialApp.router(
         title: 'GP E-Commerce',

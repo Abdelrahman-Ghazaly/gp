@@ -35,9 +35,7 @@ class MyApp extends StatelessWidget {
         BlocProvider(create: (context) => sl<SearchFurnitureBloc>()),
         BlocProvider(create: (context) => sl<UploadProductBloc>()),
         BlocProvider(create: (context) => sl<GetAuctionByIdBloc>()),
-        BlocProvider(
-            create: (context) =>
-                sl<AllAuctionsBloc>()..add(GetAuctionProductsEvent())),
+        BlocProvider(create: (context) => sl<AllAuctionsBloc>()),
         BlocProvider(create: (context) => sl<SearchAuctionsBloc>()),
       ],
       child: MaterialApp.router(
