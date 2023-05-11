@@ -1,8 +1,17 @@
 class ApiConstants {
-  // Auction End Points
+  // Base Url
 
   static const String _baseUrl = 'http://192.168.1.2:5000/';
 
+  // Auction End Points
+
+  static const String _auctionBaseUrl = '${_baseUrl}auction/';
+  static const String auctionViewRequestsPath =
+      '${_auctionBaseUrl}view/requests';
+  static String auctionAcceptRequestsPath(auctionId) =>
+      '${_auctionBaseUrl}accept/$auctionId';
+  static String auctionRefuseRequestsPath(auctionId) =>
+      '${_auctionBaseUrl}refuse/$auctionId';
   //* User End Points
 
   static const String _userBaseUrl = '${_baseUrl}user/';

@@ -34,7 +34,7 @@ class AuthenticationRemoteDataSourceImpl
     );
 
     if (response.statusCode == 200) {
-      UserEntity userEntity = UserModel.fromMap(response.data['userData']);
+      UserEntity userEntity = UserModel.fromMap(response.data);
 
       return userEntity;
     } else {

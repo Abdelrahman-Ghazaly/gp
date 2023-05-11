@@ -29,7 +29,7 @@ class AuctionCardDesign extends StatelessWidget {
                     borderRadius: BorderRadius.circular(25),
                     image: DecorationImage(
                         image: NetworkImage(state.auctionList[index].image[0]),
-                        fit: BoxFit.contain)),
+                        fit: BoxFit.cover)),
                 child: Padding(
                   padding: EdgeInsets.all(height * 0.03),
                   child: Column(
