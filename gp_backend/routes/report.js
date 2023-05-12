@@ -13,4 +13,9 @@ router.delete(
     reportController.acceptReport
 );
 
+router.delete(
+    "/refuse/:reportId",
+    auth.verifyAdmin,
+    reportController.refuseReport
+);
 module.exports = router;

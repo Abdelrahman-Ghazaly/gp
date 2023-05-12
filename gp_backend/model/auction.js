@@ -37,7 +37,7 @@ const auctionSchema = new Schema({
     },
     is_accepted: {
         type: Boolean,
-        default: true,
+        default: false,
         required: true,
     },
     owner_id: {
@@ -50,6 +50,10 @@ const auctionSchema = new Schema({
         ref: "User",
         default: null,
     },
+    duration: {
+        type: Number,
+        required: true,
+    },
 });
 
 const Auction = mongoose.model("Auction", auctionSchema);
@@ -58,7 +62,7 @@ exports.createAuction = async (auctionData, user_id, imgURL) => {
     try {
         const { title, description, category, startPrice, duration } =
             auctionData;
-        const currentDate = moment();
+        // const currentDate = moment();
         const auction = new Auction({
             title,
             description,
@@ -66,8 +70,10 @@ exports.createAuction = async (auctionData, user_id, imgURL) => {
             category,
             owner_id: user_id,
             start_price: startPrice,
-            start_date: currentDate.toISOString(),
-            end_date: currentDate.add(duration, "milliseconds").toISOString(),
+            current_pid: startPrice,
+            duration,
+            // start_date: currentDate.toISOString(),
+            // end_date: currentDate.add(duration, "milliseconds").toISOString(),
         });
         const result = await auction.save();
         return result;
@@ -111,6 +117,7 @@ exports.viewOneAuction = async (auctionId) => {
         const currentDate = moment().toISOString();
         const result = await Auction.find({
             _id: auctionId,
+            is_accepted: true,
             end_date: { $gt: currentDate },
         }).populate("owner_id", "_id name");
         return result[0];
@@ -123,6 +130,7 @@ exports.viewOneAuction = async (auctionId) => {
 exports.search = async (query, category, minPrice, maxPrice) => {
     try {
         const filters = {
+            is_accepted: true,
             end_date: { $gt: new Date() },
         };
         if (query) {
@@ -145,7 +153,7 @@ exports.search = async (query, category, minPrice, maxPrice) => {
             filters.current_pid = {};
             filters.current_pid.$lt = parseInt(maxPrice) + 1;
         }
-        const result = await Auction.find(filters,{owner_id:0});
+        const result = await Auction.find(filters, { owner_id: 0 });
         return result;
     } catch (err) {
         console.log(err);
@@ -171,6 +179,46 @@ exports.bidAuction = async (auctionId, bidAmount, winner_id) => {
             },
             { new: true }
         );
+        return result;
+    } catch (err) {
+        console.log(err);
+        throw new Error();
+    }
+};
+
+exports.viewAuctionRequests = async () => {
+    try {
+        const result = await Auction.find({
+            is_accepted: false,
+        });
+        return result;
+    } catch (err) {
+        console.log(err);
+        throw new Error();
+    }
+};
+
+exports.acceptAuctionRequest = async (auctionId) => {
+    try {
+        const auction = await Auction.findById(auctionId);
+        const currentDate = moment();
+        auction.is_accepted = true;
+        auction.start_date = currentDate.toISOString();
+        auction.end_date = currentDate
+            .add(auction.duration, "milliseconds")
+            .toISOString();
+        const result = await auction.save();
+        return result;
+    } catch (err) {
+        console.log(err);
+        throw new Error();
+    }
+};
+
+
+exports.refuseAuctionRequest = async (auctionId) => {
+    try {
+        const result = await Auction.findByIdAndDelete(auctionId);
         return result;
     } catch (err) {
         console.log(err);

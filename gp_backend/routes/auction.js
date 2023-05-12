@@ -34,4 +34,18 @@ router.post(
     auctionController.bidAuction
 );
 
+router.get("/view/requests", auth.verifyAdmin, auctionController.viewAuctionRequests);
+
+router.put(
+    "/accept/:auctionId",
+    auth.verifyAdmin,
+    auctionController.acceptAuctionRequest
+);
+
+router.delete(
+    "/refuse/:auctionId",
+    auth.verifyAdmin,
+    auctionController.refuseAuctionRequest
+);
+
 module.exports = router;
