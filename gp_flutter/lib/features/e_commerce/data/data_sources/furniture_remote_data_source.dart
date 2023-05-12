@@ -1,12 +1,16 @@
 import 'dart:io';
+import 'dart:typed_data';
 
 import 'package:dio/dio.dart';
+import 'package:flutter/services.dart';
+import 'package:gp_flutter/features/authentication/domain/entities/user_entity.dart';
 
 import '../../../../core/app_constants/api_constants.dart';
 import '../../../../core/error/exceptions.dart';
 import '../../../../core/network/error_message_model.dart';
 import '../../domain/entities/furniture_entity.dart';
 import '../../domain/entities/query_entity.dart';
+import '../../domain/entities/seller_entity.dart';
 import '../models/furniture_model.dart';
 
 abstract class FurnitureRemoteDataSource {
@@ -22,10 +26,12 @@ abstract class FurnitureRemoteDataSource {
 
   Future<String> uploadFurniture({
     required FurnitureModel furniture,
+    required UserEntity userEntity,
   });
 
   Future<String> deleteFurniture({
     required int productId,
+    required UserEntity userEntity,
   });
 }
 
@@ -57,6 +63,12 @@ class FurnitureRemoteDataSourceImpl extends FurnitureRemoteDataSource {
       data: {
         'Content-Type': 'application / json',
       },
+      options: Options(
+        followRedirects: false,
+        validateStatus: (status) {
+          return status! < 600;
+        },
+      ),
     );
     if (response.statusCode == 200) {
       return FurnitureModel.fromMap(response.data);
@@ -68,19 +80,35 @@ class FurnitureRemoteDataSourceImpl extends FurnitureRemoteDataSource {
   }
 
   @override
-  Future<String> uploadFurniture({required FurnitureModel furniture}) async {
-    throw UnimplementedError();
+  Future<String> uploadFurniture({
+    required FurnitureModel furniture,
+    required UserEntity userEntity,
+  }) async {
+    ByteData byteData = await rootBundle.load('assets/images/productImage.png');
+    Uint8List rawImage = byteData.buffer.asUint8List();
+    Map<String, dynamic> map = {
+      "title": furniture.title,
+      'description': furniture.description,
+      'imgURL': rawImage,
+      'category': furniture.category,
+      'price': furniture.price,
+    };
+    FormData data = FormData.fromMap(map);
+
     Response response = await dio.post(
       ApiConstants.uploadFurniturePath,
       options: Options(
         method: 'POST',
+        followRedirects: false,
+        validateStatus: (status) {
+          return status! < 600;
+        },
         headers: {
           HttpHeaders.contentTypeHeader: 'multipart/form-data',
-          // TODO: After implementing the athentication
-          // 'token': "Bearer $authenticationToken",
+          'token': "Bearer ${userEntity.accessToken}",
         },
       ),
-      data: furniture.toMap(),
+      data: data,
     );
     if (response.statusCode == 200) {
       return 'Uploaded Succesfully';
@@ -92,7 +120,10 @@ class FurnitureRemoteDataSourceImpl extends FurnitureRemoteDataSource {
   }
 
   @override
-  Future<String> deleteFurniture({required int productId}) {
+  Future<String> deleteFurniture({
+    required int productId,
+    required UserEntity userEntity,
+  }) {
     // TODO: implement deleteFurniture
     throw UnimplementedError();
   }
@@ -103,6 +134,12 @@ class FurnitureRemoteDataSourceImpl extends FurnitureRemoteDataSource {
       data: {
         'Content-Type': 'application / json',
       },
+      options: Options(
+        followRedirects: false,
+        validateStatus: (status) {
+          return status! < 600;
+        },
+      ),
     );
     if (response.statusCode == 200) {
       return List.from(
@@ -122,6 +159,12 @@ class FurnitureRemoteDataSourceImpl extends FurnitureRemoteDataSource {
       data: {
         'Content-Type': 'application / json',
       },
+      options: Options(
+        followRedirects: false,
+        validateStatus: (status) {
+          return status! < 600;
+        },
+      ),
     );
 
     if (response.statusCode == 200) {

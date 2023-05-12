@@ -9,9 +9,13 @@ abstract class DeleteProductEvent extends Equatable {
 
 class DeleteFurnitureEvent extends DeleteProductEvent {
   final int productId;
+  final UserEntity userEntity;
 
-  const DeleteFurnitureEvent({required this.productId});
+  const DeleteFurnitureEvent({
+    required this.productId,
+    required this.userEntity,
+  });
 
   @override
-  List<Object> get props => [productId];
+  List<Object> get props => [productId, userEntity];
 }

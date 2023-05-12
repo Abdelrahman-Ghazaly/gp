@@ -46,7 +46,7 @@ class EmailScreen extends StatelessWidget {
                       if (value == null || value.isEmpty) {
                         return 'Please enter some text';
                       }
-                      return _validateEmail(value);
+                      return validateEmail(value);
                     },
                   ),
                 ),
@@ -76,7 +76,7 @@ class EmailScreen extends StatelessWidget {
   }
 }
 
-String? _validateEmail(String value) {
+String? validateEmail(String value) {
   if (!value.isValidEmail()) {
     return 'Please enter a valid email';
   }

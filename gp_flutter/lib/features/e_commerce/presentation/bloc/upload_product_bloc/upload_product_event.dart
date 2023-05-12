@@ -9,9 +9,13 @@ abstract class UploadProductEvent extends Equatable {
 
 class UploadFurnitureEvent extends UploadProductEvent {
   final FurnitureModel furniture;
+  final UserEntity userEntity;
 
-  const UploadFurnitureEvent({required this.furniture});
+  const UploadFurnitureEvent({
+    required this.furniture,
+    required this.userEntity,
+  });
 
   @override
-  List<Object> get props => [furniture];
+  List<Object> get props => [furniture, userEntity];
 }

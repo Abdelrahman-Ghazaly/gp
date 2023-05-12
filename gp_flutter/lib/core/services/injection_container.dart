@@ -1,7 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:get_it/get_it.dart';
-import 'package:gp_flutter/features/authentication/presentation/bloc/log_in_bloc/log_in_bloc.dart';
-import 'package:gp_flutter/features/authentication/presentation/bloc/sign_up_bloc/sign_up_bloc.dart';
+import '../../features/authentication/presentation/bloc/log_in_bloc/log_in_bloc.dart';
+import '../../features/authentication/presentation/bloc/sign_up_bloc/sign_up_bloc.dart';
 
 import '../../features/auction/data/data_source/auction_reomte_data_source.dart';
 import '../../features/auction/data/repository/auction_repository.dart';

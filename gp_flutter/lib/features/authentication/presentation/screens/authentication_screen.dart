@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart' hide AppBar;
+import 'log_in_screen.dart';
 
 import '../../../../core/app_constants/app_constants.dart';
 import '../../../../core/common_widgets/common_widgets.dart';
@@ -11,7 +12,7 @@ class AuthenticationScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const AppBar(),
+      appBar: const CustomAppBar(),
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
@@ -52,7 +53,12 @@ class AuthenticationScreen extends StatelessWidget {
           ),
           kSpacing(20),
           ElevatedButton(
-            onPressed: () {},
+            onPressed: () {
+              Utilities().pushTo(
+                context,
+                screen: const LogInScreen(),
+              );
+            },
             style: ElevatedButton.styleFrom(
               backgroundColor: Colors.white,
               minimumSize: Size(Utilities.screenWidth * 0.5, 50),

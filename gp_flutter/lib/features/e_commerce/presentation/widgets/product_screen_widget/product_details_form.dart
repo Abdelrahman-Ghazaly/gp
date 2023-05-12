@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:gp_flutter/features/e_commerce/presentation/widgets/product_screen_widget/report_button.dart';
 
 import '../../../../../core/app_constants/app_constants.dart';
 import '../../../../../core/utils/utilities.dart';
@@ -45,19 +46,23 @@ class ProductDetailsForm extends StatelessWidget {
           ),
         ),
         Text(
-          furnitureEntity.title,
+          furnitureEntity.sellerEntity!.name,
           style: AppTextStyles.appBarTextStyle,
         ),
         kSpacing(10),
         Text(
           'Description',
-          style: AppTextStyles.headerTextStyle,
+          style: AppTextStyles.headerTextStyle.copyWith(
+            color: Colors.grey,
+          ),
         ),
         kSpacing(5),
         Text(
           furnitureEntity.description,
           style: AppTextStyles.titileTextStyle,
-        )
+        ),
+        kSpacing(Utilities.screenHeight * 0.10),
+        const ReportButton()
       ],
     );
   }

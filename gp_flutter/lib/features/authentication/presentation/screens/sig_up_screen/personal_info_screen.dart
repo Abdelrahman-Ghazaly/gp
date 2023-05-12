@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import '../../../../../core/common_widgets/common_widgets.dart'
+    hide CustomAppBar;
 import 'package:lottie/lottie.dart';
 
 import '../../../../../core/app_constants/app_constants.dart';
@@ -23,8 +25,9 @@ class PersonalInfoScreen extends StatefulWidget {
 }
 
 class _PersonalInfoScreenState extends State<PersonalInfoScreen>
-    with SingleTickerProviderStateMixin {
-  late AnimationController _controller;
+    with TickerProviderStateMixin {
+  late AnimationController _idController;
+  late AnimationController _doneController;
   late TextEditingController _firstName;
   late TextEditingController _lastName;
   late TextEditingController _phoneNumber;
@@ -33,12 +36,18 @@ class _PersonalInfoScreenState extends State<PersonalInfoScreen>
 
   @override
   void initState() {
-    _controller = AnimationController(
+    _idController = AnimationController(
       vsync: this,
       duration: const Duration(
         seconds: 2,
       ),
     )..animateTo(0.5);
+    _doneController = AnimationController(
+      vsync: this,
+      duration: const Duration(
+        seconds: 2,
+      ),
+    );
     _firstName = TextEditingController();
     _lastName = TextEditingController();
     _phoneNumber = TextEditingController();
@@ -48,7 +57,13 @@ class _PersonalInfoScreenState extends State<PersonalInfoScreen>
 
   @override
   void dispose() {
-    _controller.dispose();
+    _idController.dispose();
+    _doneController.dispose();
+    _firstName.dispose();
+    _lastName.dispose();
+    _phoneNumber.dispose();
+    _address.dispose();
+
     super.dispose();
   }
 
@@ -71,7 +86,7 @@ class _PersonalInfoScreenState extends State<PersonalInfoScreen>
                   LottieBuilder.asset(
                     AppAnimations.lottiePersonalIdAnimation,
                     height: Utilities.screenHeight * 0.25,
-                    controller: _controller,
+                    controller: _idController,
                   ),
                   Text(
                     'Finishing Touches',
@@ -143,56 +158,99 @@ class _PersonalInfoScreenState extends State<PersonalInfoScreen>
           ),
         ),
       ),
-      bottomNavigationBar: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: ElevatedButton(
-          onPressed: () {
-            if (formKey.currentState!.validate()) {
-              userModel = UserModel(
-                name: '${_firstName.text} ${_lastName.text}',
-                password: widget.password,
-                email: widget.email,
-                address: _address.text,
-                phoneNumber: _phoneNumber.text,
+      bottomNavigationBar: BlocListener<SignUpBloc, SignUpState>(
+        listener: (context, state) {
+          showDialog(
+            context: context,
+            builder: (context) {
+              return Dialog(
+                child: Container(
+                  height: Utilities.screenHeight * 0.4,
+                  width: Utilities.screenWidth * 0.9,
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(12),
+                    boxShadow: [
+                      BoxShadow(
+                          blurRadius: 15,
+                          color: Colors.black.withOpacity(0.2),
+                          offset: const Offset(0.5, 0.5))
+                    ],
+                  ),
+                  child: _buildDialog(
+                    context,
+                    state: state,
+                    doneController: _doneController,
+                  ),
+                ),
               );
-              context.read<SignUpBloc>().add(
-                    PostDataEvent(userModel: userModel),
-                  );
-              BlocListener<SignUpBloc, SignUpState>(
-                listener: (context, state) async {
-                  if (state is Success) {
-                    showDialog(
-                      context: context,
-                      builder: (_) => SizedBox(
-                        height: Utilities.screenHeight * 0.5,
-                        width: Utilities.screenWidth * 0.8,
-                        child: Center(
-                          child: Lottie.asset(
-                            AppAnimations.lottieAccountCreatedAnimation,
-                          ),
-                        ),
-                      ),
+            },
+          );
+        },
+        child: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: ElevatedButton(
+            onPressed: () {
+              if (formKey.currentState!.validate()) {
+                userModel = UserModel(
+                  name: '${_firstName.text} ${_lastName.text}',
+                  password: widget.password,
+                  email: widget.email,
+                  address: _address.text,
+                  phoneNumber: _phoneNumber.text,
+                );
+                context.read<SignUpBloc>().add(
+                      PostDataEvent(userModel: userModel),
                     );
-                    await Future.delayed(
-                      const Duration(seconds: 1),
-                      () {
-                        Utilities().pushTo(
-                          context,
-                          screen: const LogInScreen(),
-                        );
-                      },
-                    );
-                  } else {}
-                },
-              );
-            }
-          },
-          style: ElevatedButton.styleFrom(
-            minimumSize: Size(Utilities.screenWidth, 50),
+              }
+            },
+            style: ElevatedButton.styleFrom(
+              minimumSize: Size(Utilities.screenWidth, 50),
+            ),
+            child: const Text('Sign Up'),
           ),
-          child: const Text('Sign Up'),
         ),
       ),
+    );
+  }
+}
+
+Widget _buildDialog(
+  BuildContext context, {
+  required SignUpState state,
+  required AnimationController doneController,
+}) {
+  if (state is Success) {
+    doneController.forward();
+    return Center(
+      child: Column(
+        children: [
+          Lottie.asset(
+            AppAnimations.lottieAccountCreatedAnimation,
+            controller: doneController,
+          ),
+          ElevatedButton(
+            onPressed: () {
+              Utilities().pushTo(
+                context,
+                screen: const LogInScreen(),
+              );
+            },
+            child: const Text('Log in'),
+          ),
+        ],
+      ),
+    );
+  } else if (state is Error) {
+    return Center(
+      child: Text(
+        state.message,
+        style: AppTextStyles.appBarTextStyle,
+      ),
+    );
+  } else {
+    return const Center(
+      child: LoadingWidget(),
     );
   }
 }

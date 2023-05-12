@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:gp_flutter/features/authentication/presentation/bloc/log_in_bloc/log_in_bloc.dart';
-import 'package:gp_flutter/features/authentication/presentation/bloc/sign_up_bloc/sign_up_bloc.dart';
+import 'features/authentication/presentation/bloc/log_in_bloc/log_in_bloc.dart';
+import 'features/authentication/presentation/bloc/sign_up_bloc/sign_up_bloc.dart';
 import 'features/e_commerce/presentation/bloc/delete_product_bloc/delete_product_bloc.dart';
 import 'features/e_commerce/presentation/bloc/home_bloc/home_bloc.dart';
 import 'features/e_commerce/presentation/bloc/product_view_bloc/product_view_bloc.dart';
@@ -35,9 +35,7 @@ class MyApp extends StatelessWidget {
         BlocProvider(create: (context) => sl<SearchFurnitureBloc>()),
         BlocProvider(create: (context) => sl<UploadProductBloc>()),
         BlocProvider(create: (context) => sl<GetAuctionByIdBloc>()),
-        BlocProvider(
-            create: (context) =>
-                sl<AllAuctionsBloc>()..add(GetAuctionProductsEvent())),
+        BlocProvider(create: (context) => sl<AllAuctionsBloc>()),
         BlocProvider(create: (context) => sl<SearchAuctionsBloc>()),
       ],
       child: MaterialApp.router(
