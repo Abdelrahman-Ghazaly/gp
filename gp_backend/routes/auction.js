@@ -28,10 +28,24 @@ router.get(
 
 router.get("/search/auction", auctionController.search);
 
-router.post(
+router.put(
     "/bid/:auctionId",
     auth.verifyLogedin,
     auctionController.bidAuction
+);
+
+router.get("/view/requests", auth.verifyAdmin, auctionController.viewAuctionRequests);
+
+router.put(
+    "/accept/:auctionId",
+    auth.verifyAdmin,
+    auctionController.acceptAuctionRequest
+);
+
+router.delete(
+    "/refuse/:auctionId",
+    auth.verifyAdmin,
+    auctionController.refuseAuctionRequest
 );
 
 module.exports = router;

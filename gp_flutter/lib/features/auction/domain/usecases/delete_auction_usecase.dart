@@ -5,12 +5,12 @@ import '../../../../core/error/failure.dart';
 import '../../../../core/use_case/use_case.dart';
 import '../repositories/base_auction_repository.dart';
 
-class DeleteAuctionUseCase extends BaseUseCase<int, Params> {
+class DeleteAuctionUseCase extends BaseUseCase<String, Params> {
   final BaseAuctionRepository baseAuctionRepository;
 
   DeleteAuctionUseCase(this.baseAuctionRepository);
   @override
-  Future<Either<Failure, int>> call(Params params) {
+  Future<Either<Failure, String>> call(Params params) {
     return baseAuctionRepository.deleteAuction(
         params.userToken, params.productId);
   }

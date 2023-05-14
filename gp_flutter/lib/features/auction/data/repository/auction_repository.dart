@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:dartz/dartz.dart';
 
 import '../../../../core/error/exceptions.dart';
@@ -12,7 +14,7 @@ class AuctionRepository extends BaseAuctionRepository {
   AuctionRepository(this.baseAuctionRemoteDataSource);
 
   @override
-  Future<Either<Failure, int>> deleteAuction(
+  Future<Either<Failure, String>> deleteAuction(
       String userToken, String productId) async {
     final result =
         await baseAuctionRemoteDataSource.deleteAuction(userToken, productId);
@@ -62,6 +64,22 @@ class AuctionRepository extends BaseAuctionRepository {
       String auctionId) async {
     final result =
         await baseAuctionRemoteDataSource.viewAuctionDataById(auctionId);
+
+    try {
+      return Right(result);
+    } on ServerException catch (failure) {
+      return Left(ServerFailure(failure.errorMessageModel.statusMessage));
+    }
+  }
+
+  @override
+  Future<Either<Failure, String>> bidAuction({
+    required String userToken,
+    required String auctionId,
+    required int pidAmount,
+  }) async {
+    final result = await baseAuctionRemoteDataSource.bidAuction(
+        auctionId: auctionId, bidAmount: pidAmount, userToken: userToken);
 
     try {
       return Right(result);

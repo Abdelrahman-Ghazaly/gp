@@ -17,8 +17,8 @@ class ApiConstants {
           category, maxPrice, query, minPrice) =>
       '$auctionBaseUrl/search/auction/?maxPrice=$maxPrice&category=$category&query=$query&minPrice=$minPrice';
 
-  static String auctionPidProductPath(productId, userId) =>
-      '$auctionBaseUrl/pid/$productId/$userId';
+  static String auctionBidProductPath(auctionId) =>
+      '$auctionBaseUrl/bid/$auctionId';
   //'http://10.0.2.2:5000/'
   static const String _baseUrl = 'http://10.0.2.2:5000/';
 

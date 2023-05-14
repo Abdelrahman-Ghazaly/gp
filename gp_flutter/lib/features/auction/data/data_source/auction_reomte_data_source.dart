@@ -18,18 +18,17 @@ abstract class BaseAuctionRemoteDataSource {
   Future<int> uploadAuctionProduct(
       AuctionEntities auctionProduct, String userToken);
 
-  Future<int> deleteAuction(String userToken, String productId);
+  Future<String> deleteAuction(String userToken, String auctionId);
+  Future<String> bidAuction(
+      {required String userToken,
+      required String auctionId,
+      required int bidAmount});
 }
 
 class AuctionRemoteDataSource extends BaseAuctionRemoteDataSource {
   final Dio dio;
 
   AuctionRemoteDataSource({required this.dio});
-
-  @override
-  Future<int> deleteAuction(String userToken, String productId) async {
-    throw UnimplementedError();
-  }
 
   @override
   Future<List<AuctionEntities>> getAuctionProducts() async {
@@ -86,9 +85,44 @@ class AuctionRemoteDataSource extends BaseAuctionRemoteDataSource {
   }
 
   @override
+  Future<String> bidAuction(
+      {required String userToken,
+      required String auctionId,
+      required int bidAmount}) async {
+    Response response = await dio.put(
+      ApiConstants.auctionBidProductPath(
+        auctionId,
+      ),
+      data: {"bidAmount": bidAmount},
+      options: Options(
+        followRedirects: false,
+        validateStatus: (status) {
+          return status! < 600;
+        },
+        headers: {
+          'token': "bearer $userToken",
+        },
+      ),
+    );
+    if (response.statusCode == 200) {
+      return 'Bid Succesfully';
+    } else {
+      throw ServerException(
+        errorMessageModel: ErrorMessageModel.fromJson(response.data),
+      );
+    }
+  }
+
+  @override
   Future<int> uploadAuctionProduct(
       AuctionEntities auctionProduct, String userToken) {
     // TODO: implement uploadAuctionProduct
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<String> deleteAuction(String userToken, String auctionId) async {
+    // TODO: implement deleteAuction
     throw UnimplementedError();
   }
 }

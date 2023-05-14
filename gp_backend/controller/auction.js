@@ -1,5 +1,6 @@
 const db = require("../model/auction");
 const { validateProductData } = require("../util/validation");
+const { deleteProductImages } = require("../util/images_processes");
 const errors = require("../util/error_handling");
 
 exports.createAuction = async (req, res, next) => {
@@ -29,6 +30,7 @@ exports.deleteAuction = async (req, res, next) => {
     try {
         const auctionId = req.params.auctionId;
         const result = await db.deleteAuction(auctionId, req.user.id);
+        result && (await deleteProductImages(result.imgURL));
         if (result) {
             res.status(200).json({ message: "auction deleted successfully" });
         } else {
@@ -92,6 +94,50 @@ exports.bidAuction = async (req, res, next) => {
         const auctionId = req.params.auctionId;
         const bidAmount = parseInt(req.body.bidAmount);
         const result = await db.bidAuction(auctionId, bidAmount, req.user.id);
+        if (result) {
+            res.status(200).json(result);
+        } else {
+            throw new Error();
+        }
+    } catch (err) {
+        console.log(err);
+        next(err);
+    }
+};
+
+
+exports.viewAuctionRequests = async(req,res,next)=>{
+    try {
+        const result = await db.viewAuctionRequests();
+        if (result) {
+            res.status(200).json(result);
+        } else {
+            throw new Error();
+        }
+    } catch (err) {
+        console.log(err);
+        next(err);
+    }
+}
+
+
+exports.acceptAuctionRequest = async (req, res, next) => {
+    try {
+        const result = await db.acceptAuctionRequest(req.params.auctionId);
+        if (result) {
+            res.status(200).json(result);
+        } else {
+            throw new Error();
+        }
+    } catch (err) {
+        console.log(err);
+        next(err);
+    }
+};
+
+exports.refuseAuctionRequest = async (req, res, next) => {
+    try {
+        const result = await db.refuseAuctionRequest(req.params.auctionId);
         if (result) {
             res.status(200).json(result);
         } else {

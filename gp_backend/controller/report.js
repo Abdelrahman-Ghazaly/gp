@@ -44,11 +44,28 @@ exports.acceptReport = async (req, res, next) => {
         const productResult = reportResult
             ? await productDb.deleteProductByAdmin(reportResult.product_id)
             : false;
-        productResult && (await db.deleteProductReports(productId));
-        productResult && (await favDb.removeDeletedProduct(productId));
+        productResult &&
+            (await db.deleteProductReports(reportResult.product_id));
+        productResult &&
+            (await favDb.removeDeletedProduct(reportResult.product_id));
         productResult && (await deleteProductImages(productResult.imgURL));
         if (reportResult) {
             res.status(200).json({ message: "Report Accepted" });
+        } else {
+            throw new Error();
+        }
+    } catch (err) {
+        console.log(err);
+        next(err);
+    }
+};
+
+
+exports.refuseReport = async (req, res, next) => {
+    try {
+        const reportResult = await db.refuseReport(req.params.reportId);
+        if (reportResult) {
+            res.status(200).json({ message: "Report Refused" });
         } else {
             throw new Error();
         }

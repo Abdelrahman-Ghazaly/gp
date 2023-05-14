@@ -7,4 +7,14 @@ abstract class AllAuctionsEvent extends Equatable {
   List<Object> get props => [];
 }
 
-class GetAuctionProductsEvent extends AllAuctionsEvent {}
+class GetAuctionProductsEvent extends AllAuctionsEvent {
+  final String adminToken;
+
+  const GetAuctionProductsEvent({required this.adminToken});
+}
+
+class UpdateAuctionList extends AllAuctionsEvent {
+  final List<AuctionEntities> auctionList;
+
+  const UpdateAuctionList({required this.auctionList});
+}

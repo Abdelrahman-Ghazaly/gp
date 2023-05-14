@@ -88,3 +88,15 @@ exports.acceptReport = async (reportId) => {
         throw new Error();
     }
 };
+
+exports.refuseReport = async (reportId) => {
+    try {
+        const result = await Report.findOneAndDelete({
+            _id: reportId,
+        });
+        return result;
+    } catch (err) {
+        console.log(err);
+        throw new Error();
+    }
+};
