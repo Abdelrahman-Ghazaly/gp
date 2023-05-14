@@ -1,8 +1,7 @@
 import '../../features/e_commerce/domain/entities/query_entity.dart';
-import 'app_values.dart';
 
 class ApiConstants {
-  // Auction End Points
+  //* Auction End Points
 
   static const String auctionBaseUrl = 'http://192.168.1.2:5000/auction';
 
@@ -29,6 +28,8 @@ class ApiConstants {
 
   static const String popularFurnitureByCategoryPath = '${_productBaseUrl}view';
 
+  static const String furnitureFromUserId = '${_productBaseUrl}user/products';
+
   static String viewProductPathById(String id) =>
       '$popularFurnitureByCategoryPath/item/$id';
 
@@ -43,13 +44,7 @@ class ApiConstants {
       '${_productBaseUrl}search/product/?';
 
   static String getFurnitureFromSearch(QueryEntity queryEntity) {
-    String maxPrice = queryEntity.maxPrice.toInt() == 0
-        ? ''
-        : queryEntity.maxPrice.toInt().toString();
-    String minPrice = queryEntity.minPrice.toInt() == 0
-        ? ''
-        : queryEntity.minPrice.toInt().toString();
-    return '${_productSearchBaseUrl}category=${queryEntity.category.mapToString()}&query=${queryEntity.name}&minPrice=$minPrice&maxPrice=$maxPrice';
+    return '${_productSearchBaseUrl}category=${queryEntity.category}&query=${queryEntity.name}&minPrice=${queryEntity.minPrice}&maxPrice=${queryEntity.maxPrice}';
   }
 
   //* User End Points

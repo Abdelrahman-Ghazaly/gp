@@ -1,9 +1,12 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:gp_flutter/core/utils/utilities.dart';
+import 'package:gp_flutter/features/e_commerce/presentation/screens/search_screen.dart';
 
+import '../../features/e_commerce/presentation/screens/favorite_screen.dart';
 import '../app_constants/app_constants.dart';
 
-class CustomAppBar extends StatelessWidget with PreferredSizeWidget {
+class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   const CustomAppBar({Key? key})
       : preferredSize = const Size.fromHeight(kAppBarHeight),
         super(key: key);
@@ -13,28 +16,38 @@ class CustomAppBar extends StatelessWidget with PreferredSizeWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: AppBar(
-        backgroundColor: Colors.white,
-        shadowColor: Colors.black.withOpacity(0.4),
-        elevation: 5,
-        title: Text(
-          'Furniture',
-          style: AppTextStyles.appBarTextStyle,
-        ),
-        actions: [
-          IconButton(
-            onPressed: () {},
-            icon: const Icon(
-              CupertinoIcons.heart_fill,
-            ),
-          ),
-          IconButton(
-            onPressed: () {},
-            icon: const Icon(CupertinoIcons.search),
-          ),
-        ],
+    return AppBar(
+      backgroundColor: Colors.white,
+      shadowColor: Colors.black.withOpacity(0.4),
+      elevation: 5,
+      title: Text(
+        'Furniture',
+        style: AppTextStyles.appBarTextStyle,
       ),
+      actions: [
+        IconButton(
+          onPressed: () {
+            Utilities().pushTo(
+              context,
+              screen: const FavoriteScreen(),
+              withNavBar: false,
+            );
+          },
+          icon: const Icon(
+            CupertinoIcons.heart_fill,
+          ),
+        ),
+        IconButton(
+          onPressed: () {
+            Utilities().pushTo(
+              context,
+              screen: const SearchScreen(),
+              withNavBar: false,
+            );
+          },
+          icon: const Icon(CupertinoIcons.search),
+        ),
+      ],
     );
   }
 }
