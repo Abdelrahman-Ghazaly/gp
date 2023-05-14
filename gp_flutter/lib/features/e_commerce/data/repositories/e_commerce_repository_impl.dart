@@ -5,7 +5,6 @@ import '../../../../core/error/failure.dart';
 import '../../../authentication/domain/entities/user_entity.dart';
 import '../../domain/entities/furniture_entity.dart';
 import '../../domain/entities/query_entity.dart';
-import '../../domain/entities/seller_entity.dart';
 import '../../domain/repositories/e_commerce_repository.dart';
 import '../data_sources/furniture_remote_data_source.dart';
 import '../models/furniture_model.dart';
@@ -68,7 +67,7 @@ class ECommerceRepositoryImpl implements ECommerceRepository {
     required int productId,
     required UserEntity userEntity,
   }) {
-    // TODO: implement getFurnitureFromSearchByCategory
+    // TODO: implement deleteFurniture
     throw UnimplementedError();
   }
 
