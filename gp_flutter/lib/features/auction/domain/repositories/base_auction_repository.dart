@@ -13,6 +13,11 @@ abstract class BaseAuctionRepository {
   Future<Either<Failure, int>> uploadAuctionProduct(
       AuctionEntities auctionProduct, String userToken);
 
-  Future<Either<Failure, int>> deleteAuction(
+  Future<Either<Failure, String>> deleteAuction(
       String userToken, String productId);
+  Future<Either<Failure, String>> bidAuction({
+    required String userToken,
+    required String auctionId,
+    required int pidAmount,
+  });
 }

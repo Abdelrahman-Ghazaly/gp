@@ -4,11 +4,12 @@ import '../../../../core/error/failure.dart';
 import '../entities/auction_entities.dart';
 
 abstract class BaseAuctionRepository {
-  Future<Either<Failure, List<AuctionEntities>>> getAuctionProducts();
+  Future<Either<Failure, List<AuctionEntities>>> getAuctionProducts(
+      String adminToken);
 
-  Future<Either<Failure, int>> acceptAuction(
+  Future<Either<Failure, String>> acceptAuction(
       String productId, String adminToken);
 
-  Future<Either<Failure, int>> refuseAuction(
+  Future<Either<Failure, String>> refuseAuction(
       String adminToken, String productId);
 }

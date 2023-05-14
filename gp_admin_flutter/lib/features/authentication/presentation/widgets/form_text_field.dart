@@ -62,7 +62,7 @@ class _FormTextFieldState extends State<FormTextField> {
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(12),
           borderSide: const BorderSide(
-            color: AppColors.appGreemColor,
+            color: AppColors.appGreenColor,
             width: 4,
           ),
           gapPadding: 5,

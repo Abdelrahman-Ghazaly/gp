@@ -6,13 +6,13 @@ import '../entities/auction_entities.dart';
 import '../repositories/base_auction_repository.dart';
 
 class GetAuctionProductsUseCase
-    extends BaseUseCase<List<AuctionEntities>, NoParams> {
+    extends BaseUseCase<List<AuctionEntities>, String> {
   final BaseAuctionRepository baseAuctionRepository;
 
   GetAuctionProductsUseCase(this.baseAuctionRepository);
 
   @override
-  Future<Either<Failure, List<AuctionEntities>>> call(NoParams params) {
-    return baseAuctionRepository.getAuctionProducts();
+  Future<Either<Failure, List<AuctionEntities>>> call(String params) {
+    return baseAuctionRepository.getAuctionProducts(params);
   }
 }

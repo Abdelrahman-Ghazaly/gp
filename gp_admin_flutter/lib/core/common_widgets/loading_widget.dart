@@ -10,7 +10,7 @@ class LoadingWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return const Center(
       child: SpinKitWave(
-        color: AppColors.appGreemColor,
+        color: AppColors.appGreenColor,
       ),
     );
   }

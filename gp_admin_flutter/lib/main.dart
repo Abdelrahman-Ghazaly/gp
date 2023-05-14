@@ -5,6 +5,7 @@ import 'package:gp_admin_flutter/features/auction/presentation/bloc/get_all_auct
 import 'core/services/injection_container.dart';
 import 'core/theme/light_theme.dart';
 import 'core/utils/app_router.dart';
+import 'features/auction/presentation/bloc/request_austion_bloc/request_auction_bloc.dart';
 import 'features/authentication/presentation/bloc/log_in_bloc/log_in_bloc.dart';
 
 void main() {
@@ -22,6 +23,7 @@ class MyApp extends StatelessWidget {
       providers: [
         BlocProvider(create: (context) => sl<LogInBloc>()),
         BlocProvider(create: (context) => sl<AllAuctionsBloc>()),
+        BlocProvider(create: (context) => sl<RequestAuctionBloc>())
       ],
       child: MaterialApp.router(
         title: 'GP E-Commerce',

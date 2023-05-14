@@ -13,8 +13,10 @@ class AuctionRepository extends BaseAuctionRepository {
   AuctionRepository(this.baseAuctionRemoteDataSource);
 
   @override
-  Future<Either<Failure, List<AuctionEntities>>> getAuctionProducts() async {
-    final result = await baseAuctionRemoteDataSource.getAuctionProducts();
+  Future<Either<Failure, List<AuctionEntities>>> getAuctionProducts(
+      String adminToken) async {
+    final result =
+        await baseAuctionRemoteDataSource.getAuctionProducts(adminToken);
     try {
       return Right(result);
     } on ServerException catch (failure) {
@@ -23,7 +25,7 @@ class AuctionRepository extends BaseAuctionRepository {
   }
 
   @override
-  Future<Either<Failure, int>> acceptAuction(
+  Future<Either<Failure, String>> acceptAuction(
       String productId, String adminToken) async {
     final result = await baseAuctionRemoteDataSource.acceptAuctionProduct(
         productId, adminToken);
@@ -35,10 +37,12 @@ class AuctionRepository extends BaseAuctionRepository {
   }
 
   @override
-  Future<Either<Failure, int>> refuseAuction(
+  Future<Either<Failure, String>> refuseAuction(
       String adminToken, String productId) async {
     final result = await baseAuctionRemoteDataSource.refuseAuctionProduct(
-        productId, adminToken);
+      productId,
+      adminToken,
+    );
     try {
       return Right(result);
     } on ServerException catch (failure) {

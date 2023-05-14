@@ -7,7 +7,7 @@ class AuctionEntities extends Equatable {
   final List<String> image;
   final String category;
   final String auctionId;
-  final OwnerEntities owner;
+  final String owner;
   final double startPrice;
   final bool isAccepted;
 
