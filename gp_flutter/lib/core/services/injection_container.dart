@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:get_it/get_it.dart';
+import 'package:gp_flutter/features/e_commerce/domain/use_cases/get_furniture_from_user_id.dart';
 import '../../features/authentication/presentation/bloc/log_in_bloc/log_in_bloc.dart';
 import '../../features/authentication/presentation/bloc/sign_up_bloc/sign_up_bloc.dart';
 
@@ -32,6 +33,7 @@ import '../../features/e_commerce/presentation/bloc/home_bloc/home_bloc.dart';
 import '../../features/e_commerce/presentation/bloc/product_view_bloc/product_view_bloc.dart';
 import '../../features/e_commerce/presentation/bloc/search_bloc/search_furniture_bloc.dart';
 import '../../features/e_commerce/presentation/bloc/upload_product_bloc/upload_product_bloc.dart';
+import '../../features/e_commerce/presentation/bloc/user_product_bloc/user_product_bloc.dart';
 
 final sl = GetIt.instance;
 
@@ -47,8 +49,9 @@ void initBloc() {
   sl.registerFactory(() => DeleteProductBloc(deleteFurniture: sl()));
   sl.registerFactory(() => HomeBloc(getPopularFurniturebyCategory: sl()));
   sl.registerFactory(() => ProductViewBloc(getFurnitureFromId: sl()));
-  sl.registerFactory(() => SearchFurnitureBloc(getFurnitureFromSearch: sl()));
+  sl.registerFactory(() => SearchBloc(getFurnitureFromSearch: sl()));
   sl.registerFactory(() => UploadProductBloc(uploadFurniture: sl()));
+  sl.registerFactory(() => UserProductBloc(getFurnitureFromUserId: sl()));
 
   sl.registerFactory(() => SignUpBloc(signUp: sl()));
   sl.registerFactory(() => LogInBloc(logIn: sl()));
@@ -64,7 +67,7 @@ void initFeatures() {
 
   sl.registerLazySingleton(() => GetFurnitureFromId(repository: sl()));
   sl.registerLazySingleton(() => GetFurnitureFromSearch(repository: sl()));
-
+  sl.registerLazySingleton(() => GetFurnitureFromUserId(repository: sl()));
   sl.registerLazySingleton(
       () => GetPopularFurniturebyCategory(repository: sl()));
   sl.registerLazySingleton(() => DeleteFurniture(repository: sl()));

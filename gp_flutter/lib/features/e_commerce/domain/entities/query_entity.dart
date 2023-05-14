@@ -1,18 +1,16 @@
 import 'package:equatable/equatable.dart';
 
-import '../../../../core/app_constants/app_values.dart';
-
 class QueryEntity extends Equatable {
-  final Category? category;
+  final String category;
   final String name;
-  final double minPrice;
-  final double maxPrice;
+  final String minPrice;
+  final String maxPrice;
 
   const QueryEntity({
-    this.category,
+    this.category = '',
     this.name = '',
-    this.minPrice = 0,
-    this.maxPrice = 0,
+    this.minPrice = '',
+    this.maxPrice = '',
   });
 
   @override

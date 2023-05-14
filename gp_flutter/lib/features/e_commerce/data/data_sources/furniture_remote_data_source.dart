@@ -1,16 +1,14 @@
 import 'dart:io';
-import 'dart:typed_data';
 
 import 'package:dio/dio.dart';
-import 'package:flutter/services.dart';
 import 'package:gp_flutter/features/authentication/domain/entities/user_entity.dart';
+import 'package:image_picker/image_picker.dart';
 
 import '../../../../core/app_constants/api_constants.dart';
 import '../../../../core/error/exceptions.dart';
 import '../../../../core/network/error_message_model.dart';
 import '../../domain/entities/furniture_entity.dart';
 import '../../domain/entities/query_entity.dart';
-import '../../domain/entities/seller_entity.dart';
 import '../models/furniture_model.dart';
 
 abstract class FurnitureRemoteDataSource {
@@ -22,6 +20,10 @@ abstract class FurnitureRemoteDataSource {
 
   Future<List<FurnitureEntity>> getFurnitureFromSearch({
     required QueryEntity queryEntity,
+  });
+
+  Future<List<FurnitureEntity>> getFurnitureFromUserId({
+    required String accessToken,
   });
 
   Future<String> uploadFurniture({
@@ -80,16 +82,45 @@ class FurnitureRemoteDataSourceImpl extends FurnitureRemoteDataSource {
   }
 
   @override
+  Future<List<FurnitureEntity>> getFurnitureFromUserId(
+      {required String accessToken}) async {
+    Response response = await dio.post(
+      ApiConstants.furnitureFromUserId,
+      options: Options(
+        method: 'POST',
+        followRedirects: false,
+        validateStatus: (status) {
+          return status! < 600;
+        },
+        headers: {
+          'token': "Bearer $accessToken",
+        },
+      ),
+    );
+    if (response.statusCode == 200) {
+      return List.from(
+        (response.data).map((element) => FurnitureModel.fromMap(element)),
+      );
+    } else {
+      throw ServerException(
+        errorMessageModel: ErrorMessageModel.fromJson(response.data),
+      );
+    }
+  }
+
+  @override
   Future<String> uploadFurniture({
     required FurnitureModel furniture,
     required UserEntity userEntity,
   }) async {
-    ByteData byteData = await rootBundle.load('assets/images/productImage.png');
-    Uint8List rawImage = byteData.buffer.asUint8List();
+    XFile rawImage = furniture.rawImage!;
+    File file = File(rawImage.path);
+    var finalFile =
+        await MultipartFile.fromFile(file.path, filename: 'image.jpg');
     Map<String, dynamic> map = {
       "title": furniture.title,
       'description': furniture.description,
-      'imgURL': rawImage,
+      'imgURL': [finalFile],
       'category': furniture.category,
       'price': furniture.price,
     };

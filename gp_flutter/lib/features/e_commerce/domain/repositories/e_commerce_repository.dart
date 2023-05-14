@@ -19,6 +19,10 @@ abstract class ECommerceRepository {
     required QueryEntity queryEntity,
   });
 
+  Future<Either<Failure, List<FurnitureEntity>>> getFurnitureFromUserId({
+    required String accessToken,
+  });
+
   Future<Either<Failure, String>> uploadFurniture({
     required FurnitureModel furniture,
     required UserEntity userEntity,

@@ -103,4 +103,14 @@ class ECommerceRepositoryImpl implements ECommerceRepository {
       return Left(ServerFailure(failure.errorMessageModel.statusMessage));
     }
   }
+
+  @override
+  Future<Either<Failure, List<FurnitureEntity>>> getFurnitureFromUserId(
+      {required String accessToken}) {
+    return _getFurnitureList(
+      () => remoteDataSource.getFurnitureFromUserId(
+        accessToken: accessToken,
+      ),
+    );
+  }
 }

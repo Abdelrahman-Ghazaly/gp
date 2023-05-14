@@ -7,7 +7,7 @@ class FurnitureEntity extends Equatable {
   final String title;
   final String description;
   final List<dynamic>? imageUrls;
-  final String? rawImage;
+  final dynamic rawImage;
   final String category;
   final int price;
   final SellerEntity? sellerEntity;

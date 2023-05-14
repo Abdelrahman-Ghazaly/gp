@@ -10,9 +10,9 @@ import '../../../domain/use_cases/get_furniture_from_search.dart';
 part 'search_furniture_event.dart';
 part 'search_furniture_state.dart';
 
-class SearchFurnitureBloc extends Bloc<SearchEvent, SearchState> {
+class SearchBloc extends Bloc<SearchEvent, SearchState> {
   final GetFurnitureFromSearch getFurnitureFromSearch;
-  SearchFurnitureBloc({required this.getFurnitureFromSearch}) : super(Empty()) {
+  SearchBloc({required this.getFurnitureFromSearch}) : super(Empty()) {
     on<GetFurnitireFromSearchEvent>(
       (event, emit) async {
         emit(Loading());
