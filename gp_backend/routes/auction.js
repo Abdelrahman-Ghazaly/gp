@@ -28,7 +28,7 @@ router.get(
 
 router.get("/search/auction", auctionController.search);
 
-router.post(
+router.put(
     "/bid/:auctionId",
     auth.verifyLogedin,
     auctionController.bidAuction
