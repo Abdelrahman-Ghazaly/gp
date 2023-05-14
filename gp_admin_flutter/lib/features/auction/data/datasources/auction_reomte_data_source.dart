@@ -8,10 +8,10 @@ import '../../domain/entities/auction_entities.dart';
 import '../models/auction_product_model.dart';
 
 abstract class BaseAuctionRemoteDataSource {
-  Future<List<AuctionEntities>> getAuctionProducts();
+  Future<List<AuctionEntities>> getAuctionProducts(String adminToken);
 
-  Future<int> acceptAuctionProduct(String auctionId, String adminToken);
-  Future<int> refuseAuctionProduct(String auctionId, String adminToken);
+  Future<String> acceptAuctionProduct(String auctionId, String adminToken);
+  Future<String> refuseAuctionProduct(String auctionId, String adminToken);
 }
 
 class AuctionRemoteDataSource extends BaseAuctionRemoteDataSource {
@@ -19,10 +19,14 @@ class AuctionRemoteDataSource extends BaseAuctionRemoteDataSource {
 
   AuctionRemoteDataSource({required this.dio});
   @override
-  Future<List<AuctionEntities>> getAuctionProducts() async {
-    Response response = await dio.get(
-      ApiConstants.auctionViewRequestsPath,
-    );
+  Future<List<AuctionEntities>> getAuctionProducts(String adminToken) async {
+    Response response = await dio.get(ApiConstants.auctionViewRequestsPath,
+        options: Options(
+          followRedirects: false,
+          headers: {
+            'token': "bearer $adminToken",
+          },
+        ));
 
     if (response.statusCode == 200) {
       return List.from(
@@ -36,14 +40,51 @@ class AuctionRemoteDataSource extends BaseAuctionRemoteDataSource {
   }
 
   @override
-  Future<int> acceptAuctionProduct(String auctionId, String adminToken) {
-    // TODO: implement uploadAuctionProduct
-    throw UnimplementedError();
+  Future<String> acceptAuctionProduct(
+      String auctionId, String adminToken) async {
+    Response response = await dio.put(
+      ApiConstants.auctionAcceptRequestsPath(
+        auctionId,
+      ),
+      options: Options(
+        followRedirects: false,
+        validateStatus: (status) {
+          return status! < 600;
+        },
+        headers: {
+          'token': "bearer $adminToken",
+        },
+      ),
+    );
+    if (response.statusCode == 200) {
+      return 'Accepted Succesfully';
+    } else {
+      throw ServerException(
+        errorMessageModel: ErrorMessageModel.fromJson(response.data),
+      );
+    }
   }
 
   @override
-  Future<int> refuseAuctionProduct(String auctionId, String adminToken) {
-    // TODO: implement refuseAuctionProduct
-    throw UnimplementedError();
+  Future<String> refuseAuctionProduct(
+      String auctionId, String adminToken) async {
+    Response response = await dio.delete(
+      ApiConstants.auctionRefuseRequestsPath(
+        auctionId,
+      ),
+      options: Options(
+        followRedirects: false,
+        headers: {
+          'token': "bearer $adminToken",
+        },
+      ),
+    );
+    if (response.statusCode == 200) {
+      return 'Deleted Succesfully';
+    } else {
+      throw ServerException(
+        errorMessageModel: ErrorMessageModel.fromJson(response.data),
+      );
+    }
   }
 }

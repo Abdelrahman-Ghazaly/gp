@@ -1,9 +1,12 @@
 import 'package:dartz/dartz.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:gp_admin_flutter/features/auction/domain/usecases/accept_auction_usecase.dart'
+    as accept_auction;
+import 'package:gp_admin_flutter/features/auction/domain/usecases/refuse_auction_usecase.dart';
 
 import '../../../../../core/error/failure.dart';
-import '../../../../../core/use_case/use_case.dart';
+
 import '../../../domain/entities/auction_entities.dart';
 import '../../../domain/usecases/get_auction_products_usecase.dart';
 
@@ -17,9 +20,13 @@ class AllAuctionsBloc extends Bloc<AllAuctionsEvent, AllAuctionsState> {
       : super(Loading()) {
     on<GetAuctionProductsEvent>((event, emit) async {
       emit(Loading());
-      final failureOrAuctionList = await getAuctionProductsUseCase(NoParams());
+      final failureOrAuctionList =
+          await getAuctionProductsUseCase(event.adminToken);
 
       emit(await _eitherLoadedOrErrorState(failureOrAuctionList));
+    });
+    on<UpdateAuctionList>((event, emit) async {
+      emit(Loaded(auctionList: event.auctionList));
     });
   }
 }

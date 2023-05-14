@@ -1,3 +1,4 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 part of 'all_auctions_bloc.dart';
 
 abstract class AllAuctionsState extends Equatable {
@@ -21,6 +22,7 @@ class Loaded extends AllAuctionsState {
   @override
   List<Object> get props => [auctionList];
 }
+
 class Error extends AllAuctionsState {
   final String message;
 

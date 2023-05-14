@@ -1,28 +1,44 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+
+import 'package:gp_admin_flutter/features/auction/presentation/bloc/get_all_auctions_bloc/all_auctions_bloc.dart';
 
 import '../../../../core/app_constants/app_colors.dart';
 import '../../../../core/app_constants/app_values.dart';
-import '../../../../core/utils/utilities.dart';
 
-class AuctionRequestCard extends StatelessWidget {
+import '../../../../core/utils/utilities.dart';
+import '../bloc/request_austion_bloc/request_auction_bloc.dart';
+
+class AuctionRequestCard extends StatefulWidget {
   const AuctionRequestCard({
     super.key,
     required this.price,
     required this.title,
     required this.img,
     required this.description,
+    required this.adminToken,
+    required this.productId,
+    required this.auctionIndex,
   });
   final String price;
   final String title;
   final String img;
   final String description;
+  final String adminToken;
+  final String productId;
+  final int auctionIndex;
+
+  @override
+  State<AuctionRequestCard> createState() => _AuctionRequestCardState();
+}
+
+class _AuctionRequestCardState extends State<AuctionRequestCard> {
   @override
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: Container(
-        height: Utilities.screenHeight * 0.4,
+        height: Utilities.screenHeight * 0.45,
         width: Utilities.screenWidth * 0.9,
         decoration: BoxDecoration(
           boxShadow: [
@@ -53,9 +69,9 @@ class AuctionRequestCard extends StatelessWidget {
                   ),
                   image: DecorationImage(
                     image: NetworkImage(
-                      img,
+                      widget.img,
                     ),
-                    fit: BoxFit.contain,
+                    fit: BoxFit.cover,
                   ),
                 ),
               ),
@@ -64,11 +80,11 @@ class AuctionRequestCard extends StatelessWidget {
                   Text(
                     "Title: ",
                     style: AppTextStyles.titileTextStyle.copyWith(
-                      color: AppColors.appGreemColor,
+                      color: AppColors.appGreenColor,
                     ),
                   ),
                   Text(
-                    title,
+                    widget.title,
                     style: AppTextStyles.titileTextStyle
                         .copyWith(fontWeight: FontWeight.normal),
                   ),
@@ -82,13 +98,13 @@ class AuctionRequestCard extends StatelessWidget {
                     maxLines: 2,
                     style: AppTextStyles.titileTextStyle.copyWith(
                       fontWeight: FontWeight.bold,
-                      color: AppColors.appGreemColor,
+                      color: AppColors.appGreenColor,
                     ),
                   ),
                   SizedBox(
                     width: Utilities.screenWidth * 0.6,
                     child: Text(
-                      description,
+                      widget.description,
                       overflow: TextOverflow.ellipsis,
                       maxLines: 1,
                       style: AppTextStyles.titileTextStyle
@@ -102,15 +118,85 @@ class AuctionRequestCard extends StatelessWidget {
                   Text(
                     'Price: ',
                     style: AppTextStyles.titileTextStyle.copyWith(
-                      color: AppColors.appGreemColor,
+                      color: AppColors.appGreenColor,
                     ),
                   ),
-                  Text("$price EGP", style: AppTextStyles.titileTextStyle),
+                  Text("${widget.price} EGP",
+                      style: AppTextStyles.titileTextStyle),
                 ],
               ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  Container(
+                      height: Utilities.screenHeight * 0.05,
+                      width: Utilities.screenWidth * 0.4,
+                      decoration: BoxDecoration(
+                          color: AppColors.appGreenColor,
+                          borderRadius: BorderRadius.circular(12)),
+                      child: RequestButton(
+                        text: "Accept",
+                        color: AppColors.appGreenColor,
+                        function: () {
+                          context.read<RequestAuctionBloc>().add(
+                              AcceptAuctionEvent(
+                                  adminToken: widget.adminToken,
+                                  auctionId: widget.productId));
+                          Future.delayed(
+                            const Duration(milliseconds: 500),
+                            () => context.read<AllAuctionsBloc>().add(
+                                GetAuctionProductsEvent(
+                                    adminToken: widget.adminToken)),
+                          );
+                        },
+                      )),
+                  RequestButton(
+                    text: "Refuse",
+                    color: AppColors.appGreyColor,
+                    function: () {
+                      context.read<RequestAuctionBloc>().add(RefuseAuctionEvent(
+                          adminToken: widget.adminToken,
+                          auctionId: widget.productId));
+                      Future.delayed(
+                        const Duration(milliseconds: 500),
+                        () => context.read<AllAuctionsBloc>().add(
+                            GetAuctionProductsEvent(
+                                adminToken: widget.adminToken)),
+                      );
+                    },
+                  )
+                ],
+              )
             ],
           ),
         ),
+      ),
+    );
+  }
+}
+
+class RequestButton extends StatelessWidget {
+  const RequestButton({
+    super.key,
+    required this.text,
+    required this.color,
+    required this.function,
+  });
+  final String text;
+  final Color color;
+  final VoidCallback function;
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: function,
+      child: Container(
+        height: Utilities.screenHeight * 0.05,
+        width: Utilities.screenWidth * 0.4,
+        decoration: BoxDecoration(
+          color: color,
+          borderRadius: BorderRadius.circular(15),
+        ),
+        child: Center(child: Text(text, style: AppTextStyles.titileTextStyle)),
       ),
     );
   }

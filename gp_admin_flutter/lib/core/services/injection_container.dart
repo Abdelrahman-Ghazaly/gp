@@ -8,6 +8,7 @@ import '../../features/auction/data/datasources/auction_reomte_data_source.dart'
 import '../../features/auction/data/repositories/auction_repository.dart';
 import '../../features/auction/domain/repositories/base_auction_repository.dart';
 import '../../features/auction/domain/usecases/get_auction_products_usecase.dart';
+import '../../features/auction/presentation/bloc/request_austion_bloc/request_auction_bloc.dart';
 import '../../features/authentication/data/datasources/authentication_remote_data_source.dart';
 import '../../features/authentication/data/repositories/authenitcation_repository_impl.dart';
 import '../../features/authentication/domain/repositories/authentication_repository.dart';
@@ -29,6 +30,8 @@ void initBloc() {
   sl.registerFactory(() => AllAuctionsBloc(
         getAuctionProductsUseCase: sl(),
       ));
+  sl.registerFactory(() => RequestAuctionBloc(
+      acceptAuctionUseCase: sl(), refuseAuctionUseCase: sl()));
 }
 
 void initFeatures() {
