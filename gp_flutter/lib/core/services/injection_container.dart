@@ -1,6 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:get_it/get_it.dart';
-import 'package:gp_flutter/features/e_commerce/domain/use_cases/get_furniture_from_user_id.dart';
+import '../../features/e_commerce/domain/use_cases/get_furniture_from_user_id.dart';
 import '../../features/authentication/presentation/bloc/log_in_bloc/log_in_bloc.dart';
 import '../../features/authentication/presentation/bloc/sign_up_bloc/sign_up_bloc.dart';
 

@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:gp_flutter/core/app_constants/app_constants.dart';
-import 'package:gp_flutter/core/common_widgets/app_bar.dart';
-import 'package:gp_flutter/core/common_widgets/common_widgets.dart';
-import 'package:gp_flutter/core/utils/utilities.dart';
-import 'package:gp_flutter/features/authentication/presentation/screens/authentication_screen.dart';
-import 'package:gp_flutter/features/e_commerce/presentation/widgets/widgets.dart';
+import '../../../../core/app_constants/app_constants.dart';
+import '../../../../core/common_widgets/common_widgets.dart';
+import '../../../../core/utils/utilities.dart';
+import '../../../authentication/presentation/screens/authentication_screen.dart';
+import '../widgets/widgets.dart';
 
 import '../../../authentication/presentation/bloc/log_in_bloc/log_in_bloc.dart'
     as log_in;

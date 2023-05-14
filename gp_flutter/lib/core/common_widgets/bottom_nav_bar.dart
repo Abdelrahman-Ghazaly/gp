@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:gp_flutter/features/e_commerce/presentation/screens/profile_screen.dart';
-import 'package:gp_flutter/features/e_commerce/presentation/screens/upload_screen.dart';
+import '../../features/e_commerce/presentation/screens/profile_screen.dart';
+import '../../features/e_commerce/presentation/screens/upload_screen.dart';
 import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
 
 import '../../features/auction/presentation/screens/auction_screen.dart';

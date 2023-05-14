@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:gp_flutter/features/e_commerce/presentation/widgets/product_screen_widget/report_button.dart';
+import 'report_button.dart';
 
 import '../../../../../core/app_constants/app_constants.dart';
 import '../../../../../core/utils/utilities.dart';

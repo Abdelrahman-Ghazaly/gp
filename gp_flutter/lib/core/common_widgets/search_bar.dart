@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:gp_flutter/core/app_constants/app_constants.dart';
+import '../app_constants/app_constants.dart';
 
 import '../../features/auction/presentation/screens/auction_search_screen.dart';
 import '../utils/utilities.dart';

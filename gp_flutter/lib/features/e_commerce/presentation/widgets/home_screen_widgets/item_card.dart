@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lottie/lottie.dart';
-import '../../bloc/product_view_bloc/product_view_bloc.dart';
 
 import '../../../../../core/app_constants/app_constants.dart';
 import '../../../../../core/utils/utilities.dart';
 import '../../../domain/entities/furniture_entity.dart';
+import '../../bloc/product_view_bloc/product_view_bloc.dart';
 import '../../screens/product_view_screen.dart';
 
 bool _isFavorite = false;

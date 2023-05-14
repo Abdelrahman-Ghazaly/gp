@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import '../../../../../core/common_widgets/common_widgets.dart'
-    hide CustomAppBar;
 import 'package:lottie/lottie.dart';
 
 import '../../../../../core/app_constants/app_constants.dart';
+import '../../../../../core/common_widgets/common_widgets.dart'
+    hide CustomAppBar;
 import '../../../../../core/utils/utilities.dart';
 import '../../../data/models/user_model.dart';
 import '../../bloc/sign_up_bloc/sign_up_bloc.dart';

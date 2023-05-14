@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:gp_flutter/features/e_commerce/presentation/bloc/user_product_bloc/user_product_bloc.dart';
+import 'features/e_commerce/presentation/bloc/user_product_bloc/user_product_bloc.dart';
 import 'features/authentication/presentation/bloc/log_in_bloc/log_in_bloc.dart';
 import 'features/authentication/presentation/bloc/sign_up_bloc/sign_up_bloc.dart';
 import 'features/e_commerce/presentation/bloc/delete_product_bloc/delete_product_bloc.dart';

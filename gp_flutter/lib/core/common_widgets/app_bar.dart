@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:gp_flutter/core/utils/utilities.dart';
-import 'package:gp_flutter/features/e_commerce/presentation/screens/search_screen.dart';
+import '../utils/utilities.dart';
+import '../../features/e_commerce/presentation/screens/search_screen.dart';
 
 import '../../features/e_commerce/presentation/screens/favorite_screen.dart';
 import '../app_constants/app_constants.dart';

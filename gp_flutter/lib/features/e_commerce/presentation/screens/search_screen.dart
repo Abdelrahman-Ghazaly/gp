@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:gp_flutter/core/app_constants/app_constants.dart';
-import 'package:gp_flutter/core/common_widgets/common_widgets.dart';
-import 'package:gp_flutter/core/common_widgets/search_bar.dart';
-import 'package:gp_flutter/features/e_commerce/domain/entities/furniture_entity.dart';
-import 'package:gp_flutter/features/e_commerce/domain/entities/query_entity.dart';
-import 'package:gp_flutter/features/e_commerce/presentation/widgets/widgets.dart';
+import '../../../../core/app_constants/app_constants.dart';
+import '../../../../core/common_widgets/common_widgets.dart';
+import '../../domain/entities/query_entity.dart';
+import '../widgets/widgets.dart';
 
 import '../bloc/search_bloc/search_furniture_bloc.dart';
 

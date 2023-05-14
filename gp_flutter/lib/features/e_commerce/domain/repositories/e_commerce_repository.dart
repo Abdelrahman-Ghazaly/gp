@@ -1,6 +1,5 @@
 import 'package:dartz/dartz.dart';
-import 'package:gp_flutter/features/authentication/domain/entities/user_entity.dart';
-import 'package:gp_flutter/features/e_commerce/domain/entities/seller_entity.dart';
+import '../../../authentication/domain/entities/user_entity.dart';
 
 import '../../../../core/error/failure.dart';
 import '../../data/models/furniture_model.dart';

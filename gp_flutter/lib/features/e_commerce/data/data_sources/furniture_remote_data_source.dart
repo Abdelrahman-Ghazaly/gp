@@ -1,7 +1,7 @@
 import 'dart:io';
 
 import 'package:dio/dio.dart';
-import 'package:gp_flutter/features/authentication/domain/entities/user_entity.dart';
+import '../../../authentication/domain/entities/user_entity.dart';
 import 'package:image_picker/image_picker.dart';
 
 import '../../../../core/app_constants/api_constants.dart';

@@ -1,11 +1,9 @@
-import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:dartz/dartz.dart';
 import 'package:equatable/equatable.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../../core/error/failure.dart';
 import '../../../../authentication/domain/entities/user_entity.dart';
-import '../../../domain/entities/seller_entity.dart';
 import '../../../domain/use_cases/delete_product.dart';
 
 part 'delete_product_event.dart';
