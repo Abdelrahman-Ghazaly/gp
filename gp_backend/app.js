@@ -53,6 +53,6 @@ app.use((error, req, res, next) => {
 
 const server= app.listen(5000, databaseConnection.init);
 
-module.exports.server = server
+require('./socket')(server)
 
 

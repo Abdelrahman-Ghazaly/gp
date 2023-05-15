@@ -1,4 +1,7 @@
-const server = require("./app")
+let server;
+module.exports = (server) => {
+    server = server
+} 
 
 const io = require("socket.io")(server, {
     cors: {
