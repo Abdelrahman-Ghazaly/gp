@@ -1,22 +1,28 @@
-import 'dart:convert';
-
-import 'package:http/http.dart' as http;
 import 'package:dio/dio.dart';
-import 'package:gp_flutter/core/app_constants/api_constants.dart';
-import 'package:gp_flutter/features/auction/data/models/auction_product_model.dart';
 
+import '../../../../core/app_constants/api_constants.dart';
 import '../../../../core/error/exceptions.dart';
 import '../../../../core/network/error_message_model.dart';
-import '../../domain/entities/auction_product.dart';
+import '../../domain/entities/auction_entities.dart';
+import '../../domain/entities/search_query_entity.dart';
+import '../models/auction_product_model.dart';
 
 abstract class BaseAuctionRemoteDataSource {
-  Future<List<AuctionProduct>> getAuctionProducts();
+  Future<List<AuctionEntities>> getAuctionProducts();
 
-  Future<List<AuctionProduct>> getAuctionProductsSearchResult();
+  Future<AuctionEntities> viewAuctionDataById(String auctionId);
 
-  Future<int> uploadAuctionProduct(AuctionProduct auctionProduct);
+  Future<List<AuctionEntities>> getAuctionProductsSearchResult(
+      SearchQueryEntity searchQueryEntity);
 
-  Future<int> deleteAuction(String userToken);
+  Future<int> uploadAuctionProduct(
+      AuctionEntities auctionProduct, String userToken);
+
+  Future<String> deleteAuction(String userToken, String auctionId);
+  Future<String> bidAuction(
+      {required String userToken,
+      required String auctionId,
+      required int bidAmount});
 }
 
 class AuctionRemoteDataSource extends BaseAuctionRemoteDataSource {
@@ -25,19 +31,11 @@ class AuctionRemoteDataSource extends BaseAuctionRemoteDataSource {
   AuctionRemoteDataSource({required this.dio});
 
   @override
-  Future<int> deleteAuction(String userToken) {
-    // TODO: implement deleteAuction
-    throw UnimplementedError();
-  }
-
-  @override
-  Future<List<AuctionProduct>> getAuctionProducts() async {
-    // TODO: Check which one @Osama
-    // final response =
-    //     await http.get(Uri.parse(ApiConstants.auctionViewProductPath));
+  Future<List<AuctionEntities>> getAuctionProducts() async {
     Response response = await dio.get(
       ApiConstants.auctionViewProductPath,
     );
+
     if (response.statusCode == 200) {
       return List.from(
         (response.data).map((element) => AuctionProductModel.fromJson(element)),
@@ -50,27 +48,81 @@ class AuctionRemoteDataSource extends BaseAuctionRemoteDataSource {
   }
 
   @override
-  Future<List<AuctionProduct>> getAuctionProductsSearchResult() async {
-    // TODO: refactor
-    final response =
-        await http.get(Uri.parse(ApiConstants.auctionViewProductPath));
+  Future<AuctionEntities> viewAuctionDataById(String auctionId) async {
+    Response response = await dio.get(
+      ApiConstants.viewAuctionDataPath(auctionId),
+    );
+
     if (response.statusCode == 200) {
-      return List<AuctionProductModel>.from(
-          (jsonDecode(response.body))["Products"]
-              .map((e) => AuctionProductModel.fromJson(e))
-              .toList());
+      return AuctionProductModel.fromJson(response.data);
     } else {
       throw ServerException(
-          errorMessageModel:
-              ErrorMessageModel.fromJson(jsonDecode(response.body)));
+        errorMessageModel: ErrorMessageModel.fromJson(response.data),
+      );
     }
-    // TODO: implement getAuctionProductsSearchResult
+  }
+
+  @override
+  Future<List<AuctionEntities>> getAuctionProductsSearchResult(
+      searchQueryEntity) async {
+    Response response = await dio.get(
+      ApiConstants.viewAuctionSearchDataPath(
+          searchQueryEntity.category,
+          searchQueryEntity.maxPrice,
+          searchQueryEntity.name,
+          searchQueryEntity.minPrice),
+    );
+
+    if (response.statusCode == 200) {
+      return List.from(
+        (response.data).map((element) => AuctionProductModel.fromJson(element)),
+      );
+    } else {
+      throw ServerException(
+        errorMessageModel: ErrorMessageModel.fromJson(response.data),
+      );
+    }
+  }
+
+  @override
+  Future<String> bidAuction(
+      {required String userToken,
+      required String auctionId,
+      required int bidAmount}) async {
+    Response response = await dio.put(
+      ApiConstants.auctionBidProductPath(
+        auctionId,
+      ),
+      data: {"bidAmount": bidAmount},
+      options: Options(
+        followRedirects: false,
+        validateStatus: (status) {
+          return status! < 600;
+        },
+        headers: {
+          'token': "bearer $userToken",
+        },
+      ),
+    );
+    if (response.statusCode == 200) {
+      return 'Bid Succesfully';
+    } else {
+      throw ServerException(
+        errorMessageModel: ErrorMessageModel.fromJson(response.data),
+      );
+    }
+  }
+
+  @override
+  Future<int> uploadAuctionProduct(
+      AuctionEntities auctionProduct, String userToken) {
+    // TODO: implement uploadAuctionProduct
     throw UnimplementedError();
   }
 
   @override
-  Future<int> uploadAuctionProduct(AuctionProduct auctionProduct) {
-    // TODO: implement uploadAuctionProduct
+  Future<String> deleteAuction(String userToken, String auctionId) async {
+    // TODO: implement deleteAuction
     throw UnimplementedError();
   }
 }

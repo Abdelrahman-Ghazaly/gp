@@ -1,5 +1,6 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
+const ObjectId = mongoose.Types.ObjectId;
 
 const reportSchema = new Schema({
     report_type: {
@@ -23,7 +24,6 @@ const reportSchema = new Schema({
 });
 
 reportSchema.post("validate", function (doc, next) {
-    console.log(doc);
     if (
         doc.report_type == "wrong Category" ||
         doc.report_type == "offensive title or description"
@@ -49,6 +49,51 @@ exports.reportProduct = async (
             product_id,
         });
         const result = await report.save();
+        return result;
+    } catch (err) {
+        console.log(err);
+        throw new Error();
+    }
+};
+
+exports.deleteProductReports = async (product_id) => {
+    try {
+        const result = await Report.deleteMany({ product_id: product_id });
+        return result;
+    } catch (err) {
+        console.log(err);
+        throw new Error();
+    }
+};
+
+exports.viewReports = async () => {
+    try {
+        const result = await Report.find().populate("product_id");
+        return result;
+    } catch (err) {
+        console.log(err);
+        throw new Error();
+    }
+};
+
+
+exports.acceptReport = async (reportId) => {
+    try {
+        const result = await Report.findOneAndDelete({
+            _id: reportId,
+        });
+        return result;
+    } catch (err) {
+        console.log(err);
+        throw new Error();
+    }
+};
+
+exports.refuseReport = async (reportId) => {
+    try {
+        const result = await Report.findOneAndDelete({
+            _id: reportId,
+        });
         return result;
     } catch (err) {
         console.log(err);

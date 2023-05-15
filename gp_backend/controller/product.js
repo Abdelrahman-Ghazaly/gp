@@ -1,15 +1,20 @@
 const db = require("../model/product");
+const reportDb = require("../model/report");
+const favDb = require("../model/fav");
 const { validateProductData } = require("../util/validation");
+const { deleteProductImages } = require("../util/images_processes");
 const errors = require("../util/error_handling");
 
 exports.productValidation = async (req, res, next) => {
+
     try {
-        const productData =  req.body;
+
+        const productData = req.body;
         const { error } = validateProductData(productData);
         if (error) {
             errors.validationError(error);
         }
-        next()
+        next();
     } catch (err) {
         console.log(err);
         next(err);
@@ -38,8 +43,11 @@ exports.createProduct = async (req, res, next) => {
 exports.deleteProduct = async (req, res, next) => {
     try {
         const productId = req.params.productId;
-        const result = await db.deleteProduct(productId, req.user.id);
-        if (result) {
+        const productResult = await db.deleteProduct(productId, req.user.id);
+        productResult && (await reportDb.deleteProductReports(productId));
+        productResult && (await favDb.removeDeletedProduct(productId));
+        productResult && (await deleteProductImages(productResult.imgURL));
+        if (productResult) {
             res.status(200).json({ message: "product deleted Successfully" });
         } else {
             throw new Error();

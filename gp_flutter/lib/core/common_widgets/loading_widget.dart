@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
+
 import '../app_constants/app_constants.dart';
 
 class LoadingWidget extends StatelessWidget {

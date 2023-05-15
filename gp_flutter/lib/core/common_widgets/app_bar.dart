@@ -1,10 +1,13 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
+import '../../features/e_commerce/presentation/screens/favorite_screen.dart';
+import '../../features/e_commerce/presentation/screens/search_screen.dart';
 import '../app_constants/app_constants.dart';
+import '../utils/utilities.dart';
 
-class AppBar extends StatelessWidget with PreferredSizeWidget {
-  const AppBar({Key? key})
+class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
+  const CustomAppBar({Key? key})
       : preferredSize = const Size.fromHeight(kAppBarHeight),
         super(key: key);
 
@@ -13,46 +16,38 @@ class AppBar extends StatelessWidget with PreferredSizeWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      height: kAppBarHeight,
-      decoration: const BoxDecoration(
-        color: Colors.white,
-        boxShadow: [
-          BoxShadow(
-            color: Colors.grey,
-            offset: Offset(0.0, 1.0),
-            blurRadius: 6.0,
-          ),
-        ],
+    return AppBar(
+      backgroundColor: Colors.white,
+      shadowColor: Colors.black.withOpacity(0.4),
+      elevation: 5,
+      title: Text(
+        'Furniture',
+        style: AppTextStyles.appBarTextStyle,
       ),
-      child: SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 5.0),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text(
-                'Furniture',
-                style: AppTextStyles.appBarTextStyle,
-              ),
-              Row(
-                children: [
-                  IconButton(
-                    onPressed: () {},
-                    icon: const Icon(
-                      CupertinoIcons.heart_fill,
-                    ),
-                  ),
-                  IconButton(
-                    onPressed: () {},
-                    icon: const Icon(CupertinoIcons.search),
-                  ),
-                ],
-              ),
-            ],
+      actions: [
+        IconButton(
+          onPressed: () {
+            Utilities().pushTo(
+              context,
+              screen: const FavoriteScreen(),
+              withNavBar: false,
+            );
+          },
+          icon: const Icon(
+            CupertinoIcons.heart_fill,
           ),
         ),
-      ),
+        IconButton(
+          onPressed: () {
+            Utilities().pushTo(
+              context,
+              screen: const SearchScreen(),
+              withNavBar: false,
+            );
+          },
+          icon: const Icon(CupertinoIcons.search),
+        ),
+      ],
     );
   }
 }

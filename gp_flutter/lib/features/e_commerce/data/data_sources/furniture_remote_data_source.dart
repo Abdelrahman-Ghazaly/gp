@@ -1,51 +1,60 @@
 import 'dart:io';
 
 import 'package:dio/dio.dart';
+import 'package:http_parser/http_parser.dart';
+import 'package:image_picker/image_picker.dart';
 
 import '../../../../core/app_constants/api_constants.dart';
-import '../../../../core/app_constants/app_values.dart';
 import '../../../../core/error/exceptions.dart';
 import '../../../../core/network/error_message_model.dart';
+import '../../../authentication/data/models/user_model.dart';
+import '../../../authentication/domain/entities/user_entity.dart';
 import '../../domain/entities/furniture_entity.dart';
-import '../../domain/entities/search_query_entity.dart';
+import '../../domain/entities/query_entity.dart';
 import '../models/furniture_model.dart';
 
 abstract class FurnitureRemoteDataSource {
-  Future<List<FurnitureEntity>> getPopularFurnitureByCategory({
-    required Category category,
+  Future<Map<String, List<FurnitureEntity>>> getPopularFurnitureByCategory();
+
+  Future<FurnitureEntity> getFurnitureFromId({
+    required String id,
   });
 
-  Future<List<FurnitureEntity>> getFurnitureFromSearchByQuery({
-    required String searchQuery,
+  Future<List<FurnitureEntity>> getFurnitureFromSearch({
+    required QueryEntity queryEntity,
   });
 
-  Future<List<FurnitureEntity>> getFurnitureFromSearchByCategory({
-    required Category category,
-  });
-
-  Future<List<FurnitureEntity>> getFurnitureFromSearchByCategoryAndPrice({
-    required CategoryQueryEntity categoryQueryEntity,
-  });
-
-  Future<List<FurnitureEntity>> getFurnitureFromSearchByPriceRange({
-    required int minPrice,
-    required int maxPrice,
-  });
-
-  Future<List<FurnitureEntity>> getFurnitureFromSearchByMinPrice({
-    required int minPrice,
-  });
-
-  Future<List<FurnitureEntity>> getFurnitureFromSearchByMaxPrice({
-    required int maxPrice,
+  Future<
+      ({
+        UserEntity userEntity,
+        List<FurnitureEntity> productsList,
+      })> getUserData({
+    required String accessToken,
+    required String userId,
   });
 
   Future<String> uploadFurniture({
     required FurnitureModel furniture,
+    required UserEntity userEntity,
   });
 
   Future<String> deleteFurniture({
     required int productId,
+    required UserEntity userEntity,
+  });
+
+  Future<String> addFavorite({
+    required String productId,
+    required String accessToken,
+  });
+
+  Future<String> deleteFavorite({
+    required String productId,
+    required String accessToken,
+  });
+
+  Future<List<FurnitureEntity>> getFavorite({
+    required String accessToken,
   });
 }
 
@@ -57,84 +66,142 @@ class FurnitureRemoteDataSourceImpl extends FurnitureRemoteDataSource {
   });
 
   @override
-  Future<List<FurnitureEntity>> getPopularFurnitureByCategory(
-          {required Category category}) =>
-      _getPopularFurnitureList(
+  Future<Map<String, List<FurnitureEntity>>> getPopularFurnitureByCategory() =>
+      _getPopularFurnitureMap(
         url: ApiConstants.popularFurnitureByCategoryPath,
-        category: category,
       );
 
   @override
-  Future<List<FurnitureEntity>> getFurnitureFromSearchByQuery(
-          {required String searchQuery}) =>
+  Future<List<FurnitureEntity>> getFurnitureFromSearch(
+          {required QueryEntity queryEntity}) =>
       _getFurnitureList(
-        url: ApiConstants.furnitureFromSearcByQueryhPath(searchQuery),
+        url: ApiConstants.getFurnitureFromSearch(queryEntity),
       );
 
   @override
-  Future<List<FurnitureEntity>> getFurnitureFromSearchByCategory(
-          {required Category category}) =>
-      _getFurnitureList(
-        url: ApiConstants.furnitureFromSearcByCategory(category),
+  Future<FurnitureEntity> getFurnitureFromId({required String id}) async {
+    String url = ApiConstants.viewProductPathById(id);
+    Response response = await dio.get(
+      url,
+      data: {
+        'Content-Type': 'application / json',
+      },
+      options: Options(
+        followRedirects: false,
+        validateStatus: (status) {
+          return status! < 600;
+        },
+      ),
+    );
+    if (response.statusCode == 200) {
+      return FurnitureModel.fromMap(response.data);
+    } else {
+      throw ServerException(
+        errorMessageModel: ErrorMessageModel(
+          statusCode: response.statusCode!,
+          statusMessage: response.statusMessage!,
+        ),
       );
+    }
+  }
 
+//
   @override
-  Future<List<FurnitureEntity>> getFurnitureFromSearchByCategoryAndPrice(
-          {required CategoryQueryEntity categoryQueryEntity}) =>
-      _getFurnitureList(
-        url: ApiConstants.furnitureFromSearcByCategoryAndPricePath(
-          categoryQueryEntity,
+  Future<
+          ({
+            UserEntity userEntity,
+            List<FurnitureEntity> productsList,
+          })>
+      getUserData({required String accessToken, required String userId}) async {
+    Response response = await dio.get(
+      ApiConstants.viewProfilePath(userId),
+      options: Options(
+        method: 'Get',
+        followRedirects: false,
+        validateStatus: (status) {
+          return status! < 600;
+        },
+        headers: {
+          'token': "Bearer $accessToken",
+        },
+      ),
+    );
+    if (response.statusCode == 200) {
+      UserEntity userEntity = UserModel.fromMap(response.data['user-data']);
+      List<FurnitureEntity> productsList = List.from(
+        (response.data['user-data']['product_logs']).map(
+          (element) => FurnitureModel.fromMap(element),
         ),
       );
 
-  @override
-  Future<List<FurnitureEntity>> getFurnitureFromSearchByMaxPrice(
-          {required int maxPrice}) =>
-      _getFurnitureList(
-        url: ApiConstants.furnitureFromSearcByMaxPricePath(maxPrice),
+      return (
+        userEntity: userEntity,
+        productsList: productsList,
       );
-
-  @override
-  Future<List<FurnitureEntity>> getFurnitureFromSearchByMinPrice(
-          {required int minPrice}) =>
-      _getFurnitureList(
-        url: ApiConstants.furnitureFromSearcByMinPricePath(minPrice),
-      );
-
-  @override
-  Future<List<FurnitureEntity>> getFurnitureFromSearchByPriceRange(
-          {required int minPrice, required int maxPrice}) =>
-      _getFurnitureList(
-        url:
-            ApiConstants.furnitureFromSearcByPriceRangePath(minPrice, maxPrice),
-      );
-
-  @override
-  Future<String> uploadFurniture({required FurnitureModel furniture}) async {
-    throw UnimplementedError();
-    Response response = await dio.post(
-      ApiConstants.uploadFurniturePath,
-      options: Options(
-        method: 'POST',
-        headers: {
-          HttpHeaders.contentTypeHeader: 'multipart/form-data',
-          // TODO: After implementing the athentication
-          // 'token': "Bearer $authenticationToken",
-        },
-      ),
-      data: furniture.toMap(),
-    );
-    if (response.statusCode == 200) {
-      return 'Uploaded Succesfully';
     } else {
       throw ServerException(
-        errorMessageModel: ErrorMessageModel.fromJson(response.data),
+        errorMessageModel: ErrorMessageModel(
+          statusCode: response.statusCode!,
+          statusMessage: response.statusMessage!,
+        ),
       );
     }
   }
 
   @override
-  Future<String> deleteFurniture({required int productId}) {
+  Future<String> uploadFurniture({
+    required FurnitureModel furniture,
+    required UserEntity userEntity,
+  }) async {
+    XFile rawImage = furniture.rawImage!;
+
+    File file = File(rawImage.path);
+    final String imageType = file.path.split('.').last;
+    var finalFile = await MultipartFile.fromFile(
+      file.path,
+      contentType: MediaType('image', imageType),
+    );
+
+    Map<String, dynamic> map = {
+      "title": furniture.title,
+      'description': furniture.description,
+      'imgURL': [finalFile],
+      'category': furniture.category,
+      'price': furniture.price,
+    };
+    FormData data = FormData.fromMap(map);
+
+    Response response = await dio.post(
+      ApiConstants.uploadFurniturePath,
+      options: Options(
+        method: 'POST',
+        followRedirects: false,
+        validateStatus: (status) {
+          return status! < 600;
+        },
+        headers: {
+          'token': "Bearer ${userEntity.accessToken}",
+        },
+      ),
+      data: data,
+    );
+    if (response.statusCode == 200) {
+      return 'Uploaded Succesfully';
+    } else {
+      throw ServerException(
+        errorMessageModel: ErrorMessageModel(
+          statusCode: response.statusCode!,
+          statusMessage: response.statusMessage!,
+        ),
+      );
+    }
+  }
+
+  @override
+  Future<String> deleteFurniture({
+    required int productId,
+    required UserEntity userEntity,
+  }) {
     // TODO: implement deleteFurniture
     throw UnimplementedError();
   }
@@ -145,6 +212,12 @@ class FurnitureRemoteDataSourceImpl extends FurnitureRemoteDataSource {
       data: {
         'Content-Type': 'application / json',
       },
+      options: Options(
+        followRedirects: false,
+        validateStatus: (status) {
+          return status! < 600;
+        },
+      ),
     );
     if (response.statusCode == 200) {
       return List.from(
@@ -152,35 +225,135 @@ class FurnitureRemoteDataSourceImpl extends FurnitureRemoteDataSource {
       );
     } else {
       throw ServerException(
-        errorMessageModel: ErrorMessageModel.fromJson(response.data),
+        errorMessageModel: ErrorMessageModel(
+          statusCode: response.statusCode!,
+          statusMessage: response.statusMessage!,
+        ),
       );
     }
   }
 
-  Future<List<FurnitureEntity>> _getPopularFurnitureList(
-      {required String url, required Category category}) async {
+  Future<Map<String, List<FurnitureEntity>>> _getPopularFurnitureMap(
+      {required String url}) async {
     Response response = await dio.get(
       url,
       data: {
         'Content-Type': 'application / json',
       },
+      options: Options(
+        followRedirects: false,
+        validateStatus: (status) {
+          return status! < 600;
+        },
+      ),
     );
-    String categoryString = mapCategoryToString(category);
-    if (response.data[categoryString] == null) {
-      response.statusCode = -1;
-      response.data = {
-        'status_code': response.statusCode,
-        'status_message': 'Data not found',
-      };
+
+    if (response.statusCode == 200) {
+      Map<String, List<FurnitureEntity>> popularFurniture = {};
+      for (var key in response.data.keys) {
+        popularFurniture.addAll({
+          key: List.from(
+            (response.data[key])
+                .map((element) => FurnitureModel.fromMap(element)),
+          )
+        });
+      }
+
+      return popularFurniture;
+    } else {
+      throw ServerException(
+        errorMessageModel: ErrorMessageModel(
+          statusCode: response.statusCode!,
+          statusMessage: response.statusMessage!,
+        ),
+      );
     }
+  }
+
+  @override
+  Future<String> addFavorite(
+      {required String productId, required String accessToken}) async {
+    Response response = await dio.post(
+      ApiConstants.addFavoritePath(productId: productId),
+      options: Options(
+        method: 'POST',
+        followRedirects: false,
+        validateStatus: (status) {
+          return status! < 600;
+        },
+        headers: {
+          'token': "Bearer $accessToken",
+        },
+      ),
+    );
+    if (response.statusCode == 200) {
+      return 'Added Succesfully';
+    } else {
+      throw ServerException(
+        errorMessageModel: ErrorMessageModel(
+          statusCode: response.statusCode!,
+          statusMessage: response.statusMessage!,
+        ),
+      );
+    }
+  }
+
+  @override
+  Future<String> deleteFavorite(
+      {required String productId, required String accessToken}) async {
+    Response response = await dio.post(
+      ApiConstants.deleteFavoritePath(productId: productId),
+      options: Options(
+        method: 'POST',
+        followRedirects: false,
+        validateStatus: (status) {
+          return status! < 600;
+        },
+        headers: {
+          'token': "Bearer $accessToken",
+        },
+      ),
+    );
+    if (response.statusCode == 200) {
+      return 'Deleted Succesfully';
+    } else {
+      throw ServerException(
+        errorMessageModel: ErrorMessageModel(
+          statusCode: response.statusCode!,
+          statusMessage: response.statusMessage!,
+        ),
+      );
+    }
+  }
+
+  @override
+  Future<List<FurnitureEntity>> getFavorite(
+      {required String accessToken}) async {
+    Response response = await dio.get(
+      ApiConstants.getFavoritePath,
+      data: {
+        'Content-Type': 'application / json',
+      },
+      options: Options(
+        followRedirects: false,
+        validateStatus: (status) {
+          return status! < 600;
+        },
+        headers: {
+          'token': "Bearer $accessToken",
+        },
+      ),
+    );
     if (response.statusCode == 200) {
       return List.from(
-        (response.data[categoryString])
-            .map((element) => FurnitureModel.fromMap(element)),
+        (response.data).map((element) => FurnitureModel.fromMap(element)),
       );
     } else {
       throw ServerException(
-        errorMessageModel: ErrorMessageModel.fromJson(response.data),
+        errorMessageModel: ErrorMessageModel(
+          statusCode: response.statusCode!,
+          statusMessage: response.statusMessage!,
+        ),
       );
     }
   }

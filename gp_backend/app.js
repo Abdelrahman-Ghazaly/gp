@@ -5,11 +5,14 @@ require("dotenv").config();
 const databaseConnection = require("./util/Database_Connection");
 
 const authRoutes = require("./routes/auth");
+const adminRoutes = require("./routes/admin");
 const userRoutes = require("./routes/user");
 const productRoutes = require("./routes/product");
 const auctionRoutes = require("./routes/auction");
 const reportRoutes = require("./routes/report");
 const cartRoutes = require("./routes/fav");
+const conversationRoute = require('./routes/conversation')
+const messageRoute = require("./routes/message");
 
 app.use(express.json());
 app.use((req, res, next) => {
@@ -26,11 +29,14 @@ app.use((req, res, next) => {
 });
 
 app.use("/auth", authRoutes);
+app.use("/admin", adminRoutes);
 app.use("/user", userRoutes);
 app.use("/product", productRoutes);
 app.use("/auction", auctionRoutes);
 app.use("/report", reportRoutes);
 app.use("/fav", cartRoutes);
+app.use("/conversation", conversationRoute);
+app.use("/message", messageRoute);
 
 app.use((req, res, next) => {
     console.log("err 404");
@@ -45,4 +51,8 @@ app.use((error, req, res, next) => {
     });
 });
 
-app.listen(5000, databaseConnection.init);
+const server= app.listen(5000, databaseConnection.init);
+
+module.exports.server = server
+
+

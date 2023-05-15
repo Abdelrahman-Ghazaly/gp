@@ -41,7 +41,7 @@ module.exports.User = User;
 
 exports.viewProfile = async (id) => {
     try {
-        console.log(id);
+
         const result = await User.aggregate([
             {
                 $match: { _id: new ObjectId(id) },
@@ -54,6 +54,14 @@ exports.viewProfile = async (id) => {
                     as: "product_logs",
                 },
             },
+            {
+                $lookup: {
+                    from: "auctions",
+                    localField: "_id",
+                    foreignField: "owner_id",
+                    as: "auction_logs",
+                },
+            },
         ]);
         return result;
     } catch (err) {
@@ -61,3 +69,15 @@ exports.viewProfile = async (id) => {
         throw new Error();
     }
 };
+
+
+exports.getUserData = async (id) => {
+    try {
+        const result = await User.findById(id, "name _id");
+        return result;
+    } catch (err) {
+        console.log(err);
+        throw new Error();
+    }
+};
+

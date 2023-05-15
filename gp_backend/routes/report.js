@@ -5,6 +5,17 @@ const router = express.Router();
 
 router.post("/:productId",auth.verifyLogedin ,reportController.reportProduct);
 
+router.get("/view", auth.verifyAdmin, reportController.viewReports);
 
+router.delete(
+    "/accept/:reportId",
+    auth.verifyAdmin,
+    reportController.acceptReport
+);
 
+router.delete(
+    "/refuse/:reportId",
+    auth.verifyAdmin,
+    reportController.refuseReport
+);
 module.exports = router;
