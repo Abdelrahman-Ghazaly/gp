@@ -1,11 +1,10 @@
 import 'package:dartz/dartz.dart';
 import 'package:equatable/equatable.dart';
-import 'package:gp_flutter/features/authentication/domain/entities/user_entity.dart';
 
-import '../../../../core/error/failure.dart';
-import '../../../../core/use_case/use_case.dart';
-import '../entities/seller_entity.dart';
-import '../repositories/e_commerce_repository.dart';
+import '../../../../../core/error/failure.dart';
+import '../../../../../core/use_case/use_case.dart';
+import '../../../../authentication/domain/entities/user_entity.dart';
+import '../../repositories/e_commerce_repository.dart';
 
 class DeleteFurniture implements BaseUseCase<String, Params> {
   final ECommerceRepository repository;

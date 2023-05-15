@@ -1,12 +1,11 @@
 import 'package:dartz/dartz.dart';
 import 'package:equatable/equatable.dart';
-import 'package:gp_flutter/features/e_commerce/domain/entities/seller_entity.dart';
 
-import '../../../../core/error/failure.dart';
-import '../../../../core/use_case/use_case.dart';
-import '../../../authentication/domain/entities/user_entity.dart';
-import '../../data/models/furniture_model.dart';
-import '../repositories/e_commerce_repository.dart';
+import '../../../../../core/error/failure.dart';
+import '../../../../../core/use_case/use_case.dart';
+import '../../../../authentication/domain/entities/user_entity.dart';
+import '../../../data/models/furniture_model.dart';
+import '../../repositories/e_commerce_repository.dart';
 
 class UploadFurniture implements BaseUseCase<String, Params> {
   final ECommerceRepository repository;

@@ -1,8 +1,7 @@
 import 'package:dartz/dartz.dart';
-import 'package:gp_flutter/features/authentication/domain/entities/user_entity.dart';
-import 'package:gp_flutter/features/e_commerce/domain/entities/seller_entity.dart';
 
 import '../../../../core/error/failure.dart';
+import '../../../authentication/domain/entities/user_entity.dart';
 import '../../data/models/furniture_model.dart';
 import '../entities/furniture_entity.dart';
 import '../entities/query_entity.dart';
@@ -19,6 +18,17 @@ abstract class ECommerceRepository {
     required QueryEntity queryEntity,
   });
 
+  Future<
+      Either<
+          Failure,
+          ({
+            UserEntity userEntity,
+            List<FurnitureEntity> productsList,
+          })>> getUserData({
+    required String userId,
+    required String accessToken,
+  });
+
   Future<Either<Failure, String>> uploadFurniture({
     required FurnitureModel furniture,
     required UserEntity userEntity,
@@ -27,5 +37,19 @@ abstract class ECommerceRepository {
   Future<Either<Failure, String>> deleteFurniture({
     required int productId,
     required UserEntity userEntity,
+  });
+
+  Future<Either<Failure, List<FurnitureEntity>>> getFavorite({
+    required String accessToken,
+  });
+
+  Future<Either<Failure, String>> addFavorite({
+    required String productId,
+    required String accessToken,
+  });
+
+  Future<Either<Failure, String>> deleteFavorite({
+    required String productId,
+    required String accessToken,
   });
 }

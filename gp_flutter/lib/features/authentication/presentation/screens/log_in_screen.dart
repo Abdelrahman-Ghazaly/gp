@@ -1,15 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:gp_flutter/core/common_widgets/bottom_nav_bar.dart';
-import '../bloc/log_in_bloc/log_in_bloc.dart';
-import 'sig_up_screen/email_screen.dart';
-import '../widgets/form_text_field.dart';
-import '../../../e_commerce/presentation/screens/home_screen.dart';
 import 'package:lottie/lottie.dart';
 
 import '../../../../core/app_constants/app_values.dart';
+import '../../../../core/common_widgets/bottom_nav_bar.dart';
 import '../../../../core/common_widgets/loading_widget.dart';
 import '../../../../core/utils/utilities.dart';
+import '../bloc/log_in_bloc/log_in_bloc.dart';
+import '../widgets/form_text_field.dart';
+import 'sig_up_screen/email_screen.dart';
 
 class LogInScreen extends StatelessWidget {
   const LogInScreen({Key? key}) : super(key: key);

@@ -78,6 +78,9 @@ class AppImages {
     '${_baseBannerUrl}banner_3.jpg',
     '${_baseBannerUrl}banner_4.png',
   ];
+  static const String profilImage = '${_baseImageUrl}profile_image.png';
+  static const String profilBackground =
+      '${_baseImageUrl}profile_background.jpg';
 }
 
 class AppTextStyles {

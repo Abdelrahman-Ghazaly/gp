@@ -1,10 +1,10 @@
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:dartz/dartz.dart';
 import 'package:equatable/equatable.dart';
-import '../../../domain/usecases/log_in.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../../core/error/failure.dart';
 import '../../../domain/entities/user_entity.dart';
+import '../../../domain/usecases/log_in.dart';
 
 part 'log_in_event.dart';
 part 'log_in_state.dart';
