@@ -2,10 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
-import '../../../../core/common_widgets/search_bar.dart';
-import '../../../e_commerce/presentation/screens/search_screen.dart';
 
 import '../../../../core/app_constants/app_constants.dart';
+import '../../../../core/common_widgets/search_bar.dart';
 import '../../../../core/utils/utilities.dart';
 import '../../domain/entities/search_query_entity.dart';
 import '../bloc/search_auctions_bloc/search_auctions_bloc.dart';

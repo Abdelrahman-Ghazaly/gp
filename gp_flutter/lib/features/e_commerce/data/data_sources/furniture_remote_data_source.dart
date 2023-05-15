@@ -1,12 +1,14 @@
 import 'dart:io';
 
 import 'package:dio/dio.dart';
-import '../../../authentication/domain/entities/user_entity.dart';
+import 'package:http_parser/http_parser.dart';
 import 'package:image_picker/image_picker.dart';
 
 import '../../../../core/app_constants/api_constants.dart';
 import '../../../../core/error/exceptions.dart';
 import '../../../../core/network/error_message_model.dart';
+import '../../../authentication/data/models/user_model.dart';
+import '../../../authentication/domain/entities/user_entity.dart';
 import '../../domain/entities/furniture_entity.dart';
 import '../../domain/entities/query_entity.dart';
 import '../models/furniture_model.dart';
@@ -22,8 +24,13 @@ abstract class FurnitureRemoteDataSource {
     required QueryEntity queryEntity,
   });
 
-  Future<List<FurnitureEntity>> getFurnitureFromUserId({
+  Future<
+      ({
+        UserEntity userEntity,
+        List<FurnitureEntity> productsList,
+      })> getUserData({
     required String accessToken,
+    required String userId,
   });
 
   Future<String> uploadFurniture({
@@ -34,6 +41,20 @@ abstract class FurnitureRemoteDataSource {
   Future<String> deleteFurniture({
     required int productId,
     required UserEntity userEntity,
+  });
+
+  Future<String> addFavorite({
+    required String productId,
+    required String accessToken,
+  });
+
+  Future<String> deleteFavorite({
+    required String productId,
+    required String accessToken,
+  });
+
+  Future<List<FurnitureEntity>> getFavorite({
+    required String accessToken,
   });
 }
 
@@ -76,18 +97,26 @@ class FurnitureRemoteDataSourceImpl extends FurnitureRemoteDataSource {
       return FurnitureModel.fromMap(response.data);
     } else {
       throw ServerException(
-        errorMessageModel: ErrorMessageModel.fromJson(response.data),
+        errorMessageModel: ErrorMessageModel(
+          statusCode: response.statusCode!,
+          statusMessage: response.statusMessage!,
+        ),
       );
     }
   }
 
+//
   @override
-  Future<List<FurnitureEntity>> getFurnitureFromUserId(
-      {required String accessToken}) async {
-    Response response = await dio.post(
-      ApiConstants.furnitureFromUserId,
+  Future<
+          ({
+            UserEntity userEntity,
+            List<FurnitureEntity> productsList,
+          })>
+      getUserData({required String accessToken, required String userId}) async {
+    Response response = await dio.get(
+      ApiConstants.viewProfilePath(userId),
       options: Options(
-        method: 'POST',
+        method: 'Get',
         followRedirects: false,
         validateStatus: (status) {
           return status! < 600;
@@ -98,12 +127,23 @@ class FurnitureRemoteDataSourceImpl extends FurnitureRemoteDataSource {
       ),
     );
     if (response.statusCode == 200) {
-      return List.from(
-        (response.data).map((element) => FurnitureModel.fromMap(element)),
+      UserEntity userEntity = UserModel.fromMap(response.data['user-data']);
+      List<FurnitureEntity> productsList = List.from(
+        (response.data['user-data']['product_logs']).map(
+          (element) => FurnitureModel.fromMap(element),
+        ),
+      );
+
+      return (
+        userEntity: userEntity,
+        productsList: productsList,
       );
     } else {
       throw ServerException(
-        errorMessageModel: ErrorMessageModel.fromJson(response.data),
+        errorMessageModel: ErrorMessageModel(
+          statusCode: response.statusCode!,
+          statusMessage: response.statusMessage!,
+        ),
       );
     }
   }
@@ -114,9 +154,14 @@ class FurnitureRemoteDataSourceImpl extends FurnitureRemoteDataSource {
     required UserEntity userEntity,
   }) async {
     XFile rawImage = furniture.rawImage!;
+
     File file = File(rawImage.path);
-    var finalFile =
-        await MultipartFile.fromFile(file.path, filename: 'image.jpg');
+    final String imageType = file.path.split('.').last;
+    var finalFile = await MultipartFile.fromFile(
+      file.path,
+      contentType: MediaType('image', imageType),
+    );
+
     Map<String, dynamic> map = {
       "title": furniture.title,
       'description': furniture.description,
@@ -135,7 +180,6 @@ class FurnitureRemoteDataSourceImpl extends FurnitureRemoteDataSource {
           return status! < 600;
         },
         headers: {
-          HttpHeaders.contentTypeHeader: 'multipart/form-data',
           'token': "Bearer ${userEntity.accessToken}",
         },
       ),
@@ -145,7 +189,10 @@ class FurnitureRemoteDataSourceImpl extends FurnitureRemoteDataSource {
       return 'Uploaded Succesfully';
     } else {
       throw ServerException(
-        errorMessageModel: ErrorMessageModel.fromJson(response.data),
+        errorMessageModel: ErrorMessageModel(
+          statusCode: response.statusCode!,
+          statusMessage: response.statusMessage!,
+        ),
       );
     }
   }
@@ -178,7 +225,10 @@ class FurnitureRemoteDataSourceImpl extends FurnitureRemoteDataSource {
       );
     } else {
       throw ServerException(
-        errorMessageModel: ErrorMessageModel.fromJson(response.data),
+        errorMessageModel: ErrorMessageModel(
+          statusCode: response.statusCode!,
+          statusMessage: response.statusMessage!,
+        ),
       );
     }
   }
@@ -212,7 +262,98 @@ class FurnitureRemoteDataSourceImpl extends FurnitureRemoteDataSource {
       return popularFurniture;
     } else {
       throw ServerException(
-        errorMessageModel: ErrorMessageModel.fromJson(response.data),
+        errorMessageModel: ErrorMessageModel(
+          statusCode: response.statusCode!,
+          statusMessage: response.statusMessage!,
+        ),
+      );
+    }
+  }
+
+  @override
+  Future<String> addFavorite(
+      {required String productId, required String accessToken}) async {
+    Response response = await dio.post(
+      ApiConstants.addFavoritePath(productId: productId),
+      options: Options(
+        method: 'POST',
+        followRedirects: false,
+        validateStatus: (status) {
+          return status! < 600;
+        },
+        headers: {
+          'token': "Bearer $accessToken",
+        },
+      ),
+    );
+    if (response.statusCode == 200) {
+      return 'Added Succesfully';
+    } else {
+      throw ServerException(
+        errorMessageModel: ErrorMessageModel(
+          statusCode: response.statusCode!,
+          statusMessage: response.statusMessage!,
+        ),
+      );
+    }
+  }
+
+  @override
+  Future<String> deleteFavorite(
+      {required String productId, required String accessToken}) async {
+    Response response = await dio.post(
+      ApiConstants.deleteFavoritePath(productId: productId),
+      options: Options(
+        method: 'POST',
+        followRedirects: false,
+        validateStatus: (status) {
+          return status! < 600;
+        },
+        headers: {
+          'token': "Bearer $accessToken",
+        },
+      ),
+    );
+    if (response.statusCode == 200) {
+      return 'Deleted Succesfully';
+    } else {
+      throw ServerException(
+        errorMessageModel: ErrorMessageModel(
+          statusCode: response.statusCode!,
+          statusMessage: response.statusMessage!,
+        ),
+      );
+    }
+  }
+
+  @override
+  Future<List<FurnitureEntity>> getFavorite(
+      {required String accessToken}) async {
+    Response response = await dio.get(
+      ApiConstants.getFavoritePath,
+      data: {
+        'Content-Type': 'application / json',
+      },
+      options: Options(
+        followRedirects: false,
+        validateStatus: (status) {
+          return status! < 600;
+        },
+        headers: {
+          'token': "Bearer $accessToken",
+        },
+      ),
+    );
+    if (response.statusCode == 200) {
+      return List.from(
+        (response.data).map((element) => FurnitureModel.fromMap(element)),
+      );
+    } else {
+      throw ServerException(
+        errorMessageModel: ErrorMessageModel(
+          statusCode: response.statusCode!,
+          statusMessage: response.statusMessage!,
+        ),
       );
     }
   }

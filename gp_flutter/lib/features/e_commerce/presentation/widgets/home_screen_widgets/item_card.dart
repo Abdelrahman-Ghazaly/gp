@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:gp_flutter/features/authentication/presentation/bloc/log_in_bloc/log_in_bloc.dart';
 import 'package:lottie/lottie.dart';
 
 import '../../../../../core/app_constants/app_constants.dart';
 import '../../../../../core/utils/utilities.dart';
 import '../../../domain/entities/furniture_entity.dart';
+import '../../bloc/favorite_bloc/favorite_bloc.dart';
 import '../../bloc/product_view_bloc/product_view_bloc.dart';
 import '../../screens/product_view_screen.dart';
 
@@ -37,7 +39,16 @@ class _ItemCardState extends State<ItemCard>
   }
 
   @override
+  void dispose() {
+    _isFavoriteController.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
+    final logInState = context.read<LogInBloc>().state;
+    final isLogedIn = logInState is Success;
+
     return GestureDetector(
       onTap: () {
         context.read<ProductViewBloc>().add(
@@ -103,14 +114,30 @@ class _ItemCardState extends State<ItemCard>
                     ),
                   ),
                   FloatingActionButton.small(
-                    onPressed: () {
-                      if (_isFavorite) {
-                        _isFavoriteController.reverse();
-                      } else {
-                        _isFavoriteController.forward();
-                      }
-                      _isFavorite = !_isFavorite;
-                    },
+                    onPressed: isLogedIn
+                        ? () {
+                            if (_isFavorite) {
+                              context.read<FavoriteBloc>().add(
+                                    DeleteFavoriteEvent(
+                                      productId: widget.furnitureEntity.id!,
+                                      accessToken:
+                                          logInState.userEntity.accessToken!,
+                                    ),
+                                  );
+                              _isFavoriteController.reverse();
+                            } else {
+                              context.read<FavoriteBloc>().add(
+                                    AddFavoriteEvent(
+                                      productId: widget.furnitureEntity.id!,
+                                      accessToken:
+                                          logInState.userEntity.accessToken!,
+                                    ),
+                                  );
+                              _isFavoriteController.forward();
+                            }
+                            _isFavorite = !_isFavorite;
+                          }
+                        : null,
                     shape: const CircleBorder(),
                     backgroundColor: Colors.white,
                     elevation: 5,

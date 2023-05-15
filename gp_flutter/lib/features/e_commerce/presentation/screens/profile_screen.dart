@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+
 import '../../../../core/app_constants/app_constants.dart';
 import '../../../../core/common_widgets/common_widgets.dart';
 import '../../../../core/utils/utilities.dart';
-import '../../../authentication/presentation/screens/authentication_screen.dart';
-import '../widgets/widgets.dart';
-
 import '../../../authentication/presentation/bloc/log_in_bloc/log_in_bloc.dart'
     as log_in;
-import '../bloc/user_product_bloc/user_product_bloc.dart';
+import '../../../authentication/presentation/screens/authentication_screen.dart';
+import '../bloc/e_commerce_user_bloc/e_commerce_user_bloc.dart';
+import '../widgets/widgets.dart';
 
 class ProfileScreen extends StatelessWidget {
   const ProfileScreen({Key? key}) : super(key: key);
@@ -18,9 +18,10 @@ class ProfileScreen extends StatelessWidget {
     final logInState = context.read<log_in.LogInBloc>().state;
     bool isLoggedIn = logInState is log_in.Success;
     if (isLoggedIn) {
-      context.read<UserProductBloc>().add(
+      context.read<ECommerceUserBloc>().add(
             GetFurnitureFromUserIdEvent(
               accessToken: logInState.userEntity.accessToken!,
+              userId: logInState.userEntity.id!,
             ),
           );
     }
@@ -77,14 +78,23 @@ class ProfileScreen extends StatelessWidget {
                   const Text('Phone Number'),
                   Text(logInState.userEntity.phoneNumber),
                   kSpacing(20),
-                  BlocBuilder<UserProductBloc, UserProductState>(
+                  BlocBuilder<ECommerceUserBloc, ECommerceUserState>(
                     builder: (context, state) {
                       if (state is Loaded) {
-                        return Column(
-                          children: List.generate(
-                            state.furnitureEntities.length,
-                            (index) => ItemCard(
-                              furnitureEntity: state.furnitureEntities[index],
+                        return SizedBox(
+                          height: Utilities.screenHeight * 0.35,
+                          width: Utilities.screenWidth,
+                          child: ListView.builder(
+                            scrollDirection: Axis.horizontal,
+                            itemCount: state.productList.length,
+                            itemBuilder: (context, index) => Row(
+                              children: [
+                                kSpacing(10),
+                                ItemCard(
+                                  furnitureEntity: state.productList[index],
+                                ),
+                                kSpacing(10),
+                              ],
                             ),
                           ),
                         );

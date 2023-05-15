@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'report_button.dart';
 
 import '../../../../../core/app_constants/app_constants.dart';
 import '../../../../../core/utils/utilities.dart';
 import '../../../domain/entities/furniture_entity.dart';
+import 'report_button.dart';
 
 class ProductDetailsForm extends StatelessWidget {
   const ProductDetailsForm({

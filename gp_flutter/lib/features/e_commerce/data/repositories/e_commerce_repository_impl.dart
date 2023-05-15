@@ -104,12 +104,61 @@ class ECommerceRepositoryImpl implements ECommerceRepository {
   }
 
   @override
-  Future<Either<Failure, List<FurnitureEntity>>> getFurnitureFromUserId(
-      {required String accessToken}) {
-    return _getFurnitureList(
-      () => remoteDataSource.getFurnitureFromUserId(
+  Future<
+      Either<
+          Failure,
+          ({
+            UserEntity userEntity,
+            List<FurnitureEntity> productsList,
+          })>> getUserData(
+      {required String accessToken, required String userId}) async {
+    try {
+      final ({
+        UserEntity userEntity,
+        List<FurnitureEntity> productsList,
+      }) result = await remoteDataSource.getUserData(
         accessToken: accessToken,
-      ),
-    );
+        userId: userId,
+      );
+      return Right(result);
+    } on ServerException catch (failure) {
+      return Left(ServerFailure(failure.errorMessageModel.statusMessage));
+    }
+  }
+
+  @override
+  Future<Either<Failure, String>> addFavorite(
+      {required String productId, required String accessToken}) async {
+    try {
+      final String result = await remoteDataSource.addFavorite(
+          accessToken: accessToken, productId: productId);
+      return Right(result);
+    } on ServerException catch (failure) {
+      return Left(ServerFailure(failure.errorMessageModel.statusMessage));
+    }
+  }
+
+  @override
+  Future<Either<Failure, String>> deleteFavorite(
+      {required String productId, required String accessToken}) async {
+    try {
+      final String result = await remoteDataSource.deleteFavorite(
+          accessToken: accessToken, productId: productId);
+      return Right(result);
+    } on ServerException catch (failure) {
+      return Left(ServerFailure(failure.errorMessageModel.statusMessage));
+    }
+  }
+
+  @override
+  Future<Either<Failure, List<FurnitureEntity>>> getFavorite(
+      {required String accessToken}) async {
+    try {
+      final List<FurnitureEntity> result =
+          await remoteDataSource.getFavorite(accessToken: accessToken);
+      return Right(result);
+    } on ServerException catch (failure) {
+      return Left(ServerFailure(failure.errorMessageModel.statusMessage));
+    }
   }
 }

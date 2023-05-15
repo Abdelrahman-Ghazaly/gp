@@ -51,7 +51,8 @@ class ApiConstants {
 
   static const String _userBaseUrl = '${_baseUrl}user/';
 
-  static const String viewProfilePath = '${_userBaseUrl}view/profile/';
+  static String viewProfilePath(String userId) =>
+      '${_userBaseUrl}view/profile/$userId';
 
   //* Auth End Points
 
@@ -60,4 +61,16 @@ class ApiConstants {
   static const String logInPath = '${_authBaseUrl}login';
 
   static const String signUpPath = '${_authBaseUrl}signup';
+
+  //* Favorite End Points
+
+  static const String _favoriteBaseUrl = '${_baseUrl}fav/';
+
+  static String addFavoritePath({required String productId}) =>
+      '${_favoriteBaseUrl}add/$productId';
+
+  static String deleteFavoritePath({required String productId}) =>
+      '${_favoriteBaseUrl}remove/$productId';
+
+  static const String getFavoritePath = '${_favoriteBaseUrl}get';
 }

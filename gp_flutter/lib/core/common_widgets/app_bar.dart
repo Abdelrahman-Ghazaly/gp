@@ -1,10 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import '../utils/utilities.dart';
-import '../../features/e_commerce/presentation/screens/search_screen.dart';
 
 import '../../features/e_commerce/presentation/screens/favorite_screen.dart';
+import '../../features/e_commerce/presentation/screens/search_screen.dart';
 import '../app_constants/app_constants.dart';
+import '../utils/utilities.dart';
 
 class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   const CustomAppBar({Key? key})

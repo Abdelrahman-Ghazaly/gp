@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'features/e_commerce/presentation/bloc/user_product_bloc/user_product_bloc.dart';
 import 'features/authentication/presentation/bloc/log_in_bloc/log_in_bloc.dart';
 import 'features/authentication/presentation/bloc/sign_up_bloc/sign_up_bloc.dart';
 import 'features/e_commerce/presentation/bloc/delete_product_bloc/delete_product_bloc.dart';
+import 'features/e_commerce/presentation/bloc/e_commerce_user_bloc/e_commerce_user_bloc.dart';
 import 'features/e_commerce/presentation/bloc/home_bloc/home_bloc.dart';
 import 'features/e_commerce/presentation/bloc/product_view_bloc/product_view_bloc.dart';
 import 'features/e_commerce/presentation/bloc/search_bloc/search_furniture_bloc.dart';
@@ -32,7 +32,7 @@ class MyApp extends StatelessWidget {
         BlocProvider(create: (context) => sl<SignUpBloc>()),
         BlocProvider(create: (context) => sl<DeleteProductBloc>()),
         BlocProvider(create: (context) => sl<HomeBloc>()),
-        BlocProvider(create: (context) => sl<UserProductBloc>()),
+        BlocProvider(create: (context) => sl<ECommerceUserBloc>()),
         BlocProvider(create: (context) => sl<ProductViewBloc>()),
         BlocProvider(create: (context) => sl<SearchBloc>()),
         BlocProvider(create: (context) => sl<UploadProductBloc>()),

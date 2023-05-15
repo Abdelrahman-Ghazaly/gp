@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import '../app_constants/app_constants.dart';
 
 import '../../features/auction/presentation/screens/auction_search_screen.dart';
+import '../app_constants/app_constants.dart';
 import '../utils/utilities.dart';
 
 String searchCatigory = '';

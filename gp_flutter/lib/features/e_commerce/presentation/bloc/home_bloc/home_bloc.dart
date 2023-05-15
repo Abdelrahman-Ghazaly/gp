@@ -5,7 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../../../core/error/failure.dart';
 import '../../../../../core/use_case/use_case.dart';
 import '../../../domain/entities/furniture_entity.dart';
-import '../../../domain/use_cases/get_popular_furniture_by_category.dart';
+import '../../../domain/use_cases/get_furniture/get_popular_furniture_by_category.dart';
 
 part 'home_event.dart';
 part 'home_state.dart';

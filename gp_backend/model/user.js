@@ -41,7 +41,7 @@ module.exports.User = User;
 
 exports.viewProfile = async (id) => {
     try {
-        console.log(id);
+
         const result = await User.aggregate([
             {
                 $match: { _id: new ObjectId(id) },

@@ -5,7 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../../../core/error/failure.dart';
 import '../../../domain/entities/furniture_entity.dart';
 import '../../../domain/entities/query_entity.dart';
-import '../../../domain/use_cases/get_furniture_from_search.dart';
+import '../../../domain/use_cases/get_furniture/get_furniture_from_search.dart';
 
 part 'search_furniture_event.dart';
 part 'search_furniture_state.dart';

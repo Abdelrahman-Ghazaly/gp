@@ -10,7 +10,6 @@ exports.productValidation = async (req, res, next) => {
     try {
 
         const productData = req.body;
-        console.log(productData);
         const { error } = validateProductData(productData);
         if (error) {
             errors.validationError(error);
