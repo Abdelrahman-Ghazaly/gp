@@ -9,6 +9,11 @@ router.get(
     userController.viewProfile
 );
 
+router.get(
+    "/:userId",
+    userController.getUserData
+);
+
 // router.delete("/:id", auth.verifyAdmin, userController.deleteUser);
 
 // router.get("/find/:id", auth.verifyAdmin, userController.getUser );

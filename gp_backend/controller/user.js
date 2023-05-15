@@ -19,3 +19,17 @@ exports.viewProfile = async (req, res, next) => {
     }
 };
 
+exports.getUserData = async (req, res, next) => {
+    try {
+        const userId = req.params.userId;
+        const result = await db.getUserData(userId);
+        if (result) {
+            res.status(200).json(result);
+        } else {
+            errors.notFoundError();
+        }
+    } catch (err) {
+        console.log(err);
+        next(err);
+    }
+};
