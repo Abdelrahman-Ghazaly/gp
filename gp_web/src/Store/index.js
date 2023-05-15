@@ -1,5 +1,6 @@
 import { configureStore } from '@reduxjs/toolkit';
 import authReducer from './authReducer';
+import chatReducer from './Chat'
 
 import searchReducer from './Ecommerce/searchReducer';
 import favoriteReducer from './Ecommerce/favoriteReducer';
@@ -14,6 +15,7 @@ export const store = configureStore({
     product: productReducer,
     filter : filterReducer,
     auth : authReducer,
-    report : reportReducer
+    report : reportReducer,
+    chat : chatReducer
   },
 });
