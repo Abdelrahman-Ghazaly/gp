@@ -3,7 +3,7 @@ import ChatSearch from './ChatSearch'
 import UsersList from './UsersList'
 import { Box } from "@mui/material";
 import { useSelector , useDispatch} from 'react-redux';
-import { getConversations , getMessages} from '../../../Store/chatReducer';
+import { getConversations , getMessages} from '../../../Store/Chat';
 
 
 const ChatMenu = () => {

@@ -1,7 +1,7 @@
 import React , {useEffect , useState} from 'react'
 import Avatar from '@mui/material/Avatar';
 import {User} from '../../../Styles/chatmenu'
-import {stringToColor} from '../../../utilities/chatUserList'
+import {stringToColor} from '../../../Utilities/chatUserList'
 import { Box } from '@mui/material';
 
 
@@ -42,9 +42,9 @@ const UsersList = ({conversation , user}) => {
         <User>
           <Avatar
             style={{ marginRight: "10px" }}
-            {...stringAvatar(userData?.username)}
+            {...stringAvatar(userData?.name)}
           />
-          <h3 style={{ textAlign: "center" , fontWeight : '500'}}>{userData?.username}</h3>
+          <h3 style={{ textAlign: "center" , fontWeight : '500'}}>{userData?.name}</h3>
         </User>
       </Box>
     </div>

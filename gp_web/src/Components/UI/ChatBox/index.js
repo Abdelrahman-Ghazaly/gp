@@ -12,10 +12,10 @@ import SendIcon from "@mui/icons-material/Send";
 import { useTheme } from "@mui/material/styles";
 import { ButtonBox } from "../../../Styles/chatbox";
 import { useDispatch ,  useSelector } from "react-redux";
-import { sendMessage } from "../../../Store/chatReducer";
-import { connectToSocket , addUserToSocket , sendMessageToSocket} from "../../../Store/chatReducer/socketClient";
-import { chatSliceAction } from "../../../Store/chatReducer";
-import { socket } from "../../../Store/chatReducer/socketObject";
+import { sendMessage } from "../../../Store/Chat/index";
+import { connectToSocket , addUserToSocket , sendMessageToSocket} from "../../../Store/Chat/socketClient";
+import { chatSliceAction } from "../../../Store/Chat";
+import { socket } from "../../../Store/Chat/socketObject";
 
 const ChatBox = () => {
   const theme = useTheme();

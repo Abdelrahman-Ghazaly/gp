@@ -4,7 +4,7 @@ export const getConversations = createAsyncThunk('getConversations/chatSlice' , 
     try{
         //let {_id} = JSON.parse(localStorage.getItem('userData'));
         let {_id} = thunkAPI.getState().auth.userData;
-        const response = await fetch(`http://localhost:8800/api/conversations/${_id}`)
+        const response = await fetch(`http://localhost:5000/conversation/${_id}`)
         if (!response.ok){
             const error = await response.json()
             return thunkAPI.rejectWithValue(error)
@@ -18,7 +18,7 @@ export const getConversations = createAsyncThunk('getConversations/chatSlice' , 
 
 export const createConversation = createAsyncThunk('createConversation/chatSlice' , async (data , thunkAPI) => {
     try{
-        const response = await fetch(`http://localhost:8800/api/conversations` , {
+        const response = await fetch(`http://localhost:5000/conversation/` , {
             method : 'POST',
             body : JSON.stringify(data),
             headers : {'Content-Type': 'application/json'}
@@ -36,7 +36,7 @@ export const createConversation = createAsyncThunk('createConversation/chatSlice
 
 export const getMessages = createAsyncThunk('getMessages/chatSlice' , async (currentChat , thunkAPI) => {
     try{
-        const response = await fetch(`http://localhost:8800/api/messages/${currentChat?._id}`)
+        const response = await fetch(`http://localhost:5000/message/${currentChat?._id}`)
         if (!response.ok){
             const error = await response.json()
             return thunkAPI.rejectWithValue(error)
@@ -50,7 +50,7 @@ export const getMessages = createAsyncThunk('getMessages/chatSlice' , async (cur
 
 export const sendMessage = createAsyncThunk('sendMessage/chatSlice' , async (message , thunkAPI) => {
     try{
-        const response = await fetch(`http://localhost:8800/api/messages` , {
+        const response = await fetch(`http://localhost:5000/message/` , {
             method : 'POST',
             body : JSON.stringify(message),
             headers : {'Content-Type': 'application/json'}
