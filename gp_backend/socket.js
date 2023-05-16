@@ -12,10 +12,8 @@ module.exports = io
 global.users = [];
 
 const addUser = (userId, socketId) => {
-
-     !global.users.some((user) => user.userId === userId) &&
-     global.users.push({ userId, socketId });
-      //console.log(users);  
+    !global.users.some((user) => user.userId === userId) &&
+    global.users.push({ userId, socketId });
 };
 
 const removeUser = (socketId) => {

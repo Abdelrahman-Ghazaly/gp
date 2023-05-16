@@ -28,7 +28,6 @@ const Message = mongoose.model("Message", MessageSchema);
 exports.createMessage = async (conversationId, sender, text) => {
     try {
         const newMessage = new Message({ conversationId, sender, text });
-        console.log("req");
         const result = await newMessage.save();
         return result;
     } catch (err) {

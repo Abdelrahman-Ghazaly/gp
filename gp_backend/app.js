@@ -28,6 +28,11 @@ app.use((req, res, next) => {
     next();
 });
 
+app.use((req, res, next) => {
+    console.log("err 404");
+    res.status(404).json("404", { pageTitle: "Page Not Found", path: "" });
+});
+
 app.use("/auth", authRoutes);
 app.use("/admin", adminRoutes);
 app.use("/user", userRoutes);
@@ -38,10 +43,6 @@ app.use("/fav", cartRoutes);
 app.use("/conversation", conversationRoute);
 app.use("/message", messageRoute);
 
-app.use((req, res, next) => {
-    console.log("err 404");
-    res.status(404).json("404", { pageTitle: "Page Not Found", path: "" });
-});
 
 app.use((error, req, res, next) => {
     const status = error.statusCode || 500;
