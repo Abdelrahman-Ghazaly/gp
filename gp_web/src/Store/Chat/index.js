@@ -3,8 +3,14 @@ import { createSlice , createAsyncThunk } from "@reduxjs/toolkit";
 export const getConversations = createAsyncThunk('getConversations/chatSlice' , async (_ , thunkAPI) => {
     try{
         //let {_id} = JSON.parse(localStorage.getItem('userData'));
-        let {_id} = thunkAPI.getState().auth.userData;
-        const response = await fetch(`http://localhost:5000/conversation/${_id}`)
+        let {_id , accessToken} = thunkAPI.getState().auth.userData;
+        console.log(_id)
+        const response = await fetch(`http://localhost:5000/conversation/${_id}` , {
+            headers: {
+                token: "Bearer " + accessToken,
+                "Content-Type": "application/json",
+            },
+        })
         if (!response.ok){
             const error = await response.json()
             return thunkAPI.rejectWithValue(error)
@@ -18,10 +24,12 @@ export const getConversations = createAsyncThunk('getConversations/chatSlice' , 
 
 export const createConversation = createAsyncThunk('createConversation/chatSlice' , async (data , thunkAPI) => {
     try{
+        let {accessToken} = thunkAPI.getState().auth.userData;
         const response = await fetch(`http://localhost:5000/conversation/` , {
             method : 'POST',
             body : JSON.stringify(data),
-            headers : {'Content-Type': 'application/json'}
+            headers : {'Content-Type': 'application/json' ,
+            token: "Bearer " + accessToken,}
         })
         if (!response.ok){
             const error = await response.json()
@@ -36,7 +44,13 @@ export const createConversation = createAsyncThunk('createConversation/chatSlice
 
 export const getMessages = createAsyncThunk('getMessages/chatSlice' , async (currentChat , thunkAPI) => {
     try{
-        const response = await fetch(`http://localhost:5000/message/${currentChat?._id}`)
+        let {accessToken} = thunkAPI.getState().auth.userData;
+        const response = await fetch(`http://localhost:5000/message/${currentChat?._id}` , {
+            headers: {
+                token: "Bearer " + accessToken,
+                "Content-Type": "application/json",
+            },
+        })
         if (!response.ok){
             const error = await response.json()
             return thunkAPI.rejectWithValue(error)
@@ -50,10 +64,12 @@ export const getMessages = createAsyncThunk('getMessages/chatSlice' , async (cur
 
 export const sendMessage = createAsyncThunk('sendMessage/chatSlice' , async (message , thunkAPI) => {
     try{
+        let {accessToken} = thunkAPI.getState().auth.userData;
         const response = await fetch(`http://localhost:5000/message/` , {
             method : 'POST',
             body : JSON.stringify(message),
-            headers : {'Content-Type': 'application/json'}
+            headers : {'Content-Type': 'application/json' , 
+            token: "Bearer " + accessToken,}
         })
         if (!response.ok){
             const error = await response.json()

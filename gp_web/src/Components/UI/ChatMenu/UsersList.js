@@ -7,14 +7,14 @@ import { Box } from '@mui/material';
 
 const UsersList = ({conversation , user}) => {
     const [userData, setUserData] = useState(null);
-
+    console.log(conversation)
     useEffect(() => {
         const friendId = conversation.members.find((m) => m !== user._id);
-        console.log(conversation.members)
+        console.log(friendId)
         const getUser = async () => {
           try {
             const res = await fetch(
-              `http://localhost:8800/user/${friendId}`
+              `http://localhost:5000/user/${friendId}`
             );
             const data = await res.json();
             setUserData(data);

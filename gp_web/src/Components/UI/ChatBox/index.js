@@ -93,6 +93,8 @@ const ChatBox = () => {
     // })
   },[dispatch])
 
+  console.log(messages)
+
   return (
     <>
       {currentChat ? (

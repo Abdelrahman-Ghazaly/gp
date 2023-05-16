@@ -26,8 +26,8 @@ export const connectToSocket = createAsyncThunk('connectToSocket/chatSlice' , as
 export const addUserToSocket = createAsyncThunk(
   "addUserToSocket/chatSlice",
   async (_ , thunkAPI) => {
-    //let {_id} = JSON.parse(localStorage.getItem('userData'));
-    let {_id} = thunkAPI.getState().auth.userData;
+    let {_id} = JSON.parse(localStorage.getItem('userData'));
+    //let {_id} = thunkAPI.getState().auth.userData;
     try {
       socket.emit("addUser", _id);
     } catch (error) {

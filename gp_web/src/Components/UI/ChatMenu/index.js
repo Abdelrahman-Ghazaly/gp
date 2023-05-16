@@ -9,7 +9,7 @@ import { getConversations , getMessages} from '../../../Store/Chat';
 const ChatMenu = () => {
     const conversations = useSelector(state => state.chat.conversations)
     const userData = useSelector(state => state.auth.userData)
-
+    console.log(conversations)
     const dispatch = useDispatch()
 
     useEffect(() => {
