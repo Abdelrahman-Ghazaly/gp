@@ -51,7 +51,7 @@ app.use((error, req, res, next) => {
     });
 });
 
-const server =  require('http').createServer(app, databaseConnection.init);
+const server= app.listen(5000, databaseConnection.init);
 
 require('./socket')(server)
 
