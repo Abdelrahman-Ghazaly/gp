@@ -1,8 +1,8 @@
-let server;
-module.exports = (server) => {
-    server = server
-} 
 
+let server;
+module.exports = (http) => {
+    server = http
+} 
 const io = require("socket.io")(server, {
     cors: {
         origin: "*",
