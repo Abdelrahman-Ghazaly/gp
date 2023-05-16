@@ -9,19 +9,22 @@ const io = require("socket.io")(5002, {
     },
 });
 module.exports = io 
-let users = [];
+global.users = [];
 
 const addUser = (userId, socketId) => {
-    !users.some((user) => user.userId === userId) &&
-        users.push({ userId, socketId });
+
+     !global.users.some((user) => user.userId === userId) &&
+     global.users.push({ userId, socketId });
+      //console.log(users);  
 };
 
 const removeUser = (socketId) => {
-    users = users.filter((user) => user.socketId !== socketId);
+    users = global.users.filter((user) => user.socketId !== socketId);
 };
 
 const getUser = (userId) => {
-    return users.find((user) => user.userId === userId);
+    //console.log(global.users);
+    return global.users.find((user) => user.userId === userId);
 };
 
 io.on("connection", (socket) => {
@@ -37,6 +40,8 @@ io.on("connection", (socket) => {
     //send and get message
     socket.on("sendMessage", ({ senderId, receiverId, text }) => {
         const user = getUser(receiverId);
+        //console.log(text);
+        console.log(user);
         io.to(user?.socketId).emit("getMessage", {
             senderId,
             text,

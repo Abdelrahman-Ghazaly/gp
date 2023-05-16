@@ -102,6 +102,11 @@ const chatSlice = createSlice({
         setArrivalMessage (state , action) {
             console.log(action.payload)
             state.arrivalMessage = action.payload
+        },
+
+        receiveMessage (state , action) {
+            console.log(action.payload)
+            state.messages =  [...state.messages , action.payload]
         }
     },
     extraReducers : builder => {

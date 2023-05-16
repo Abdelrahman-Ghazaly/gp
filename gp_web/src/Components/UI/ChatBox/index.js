@@ -32,6 +32,7 @@ const ChatBox = () => {
   useEffect(() => {
     dispatch(connectToSocket())
     socket.on("getMessage", (data) => {
+      console.log("Test")
       console.log(data)
       dispatch(
         chatSliceAction.setArrivalMessage({
@@ -43,11 +44,12 @@ const ChatBox = () => {
     });
   }, [dispatch])
 
+
   useEffect(() => {
     arrivalMessage &&
-      currentChat?.members.includes(arrivalMessage.sender) &&
-      dispatch(sendMessage(arrivalMessage));
-      console.log(arrivalMessage)
+      currentChat?.members.includes(arrivalMessage?.sender) &&
+      dispatch(chatSliceAction.receiveMessage(arrivalMessage));
+
   }, [arrivalMessage, currentChat , dispatch]);
 
 
@@ -118,7 +120,7 @@ const ChatBox = () => {
           >
             {messages.map((m, idx) => (
               <div key={idx} ref={scrollRef}>
-                <Message message={m} own={m.sender === userData._id} />
+                <Message message={m} own={m?.sender === userData?._id} />
               </div>
             ))}
           </Box>

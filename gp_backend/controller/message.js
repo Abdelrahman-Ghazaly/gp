@@ -1,4 +1,4 @@
-const db = require("../model/conversation");
+const db = require("../model/message");
 const errors = require("../util/error_handling");
 
 exports.createMessage = async (req, res, next) => {

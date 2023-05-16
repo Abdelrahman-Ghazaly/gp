@@ -7,13 +7,11 @@ const MessageSchema = new mongoose.Schema(
         conversationId: {
             type: Schema.Types.ObjectId,
             ref: "Conversation",
-            unique: true,
             required: true,
         },
         sender: {
             type: Schema.Types.ObjectId,
             ref: "User",
-            unique: true,
             required: true,
         },
         text: {
@@ -30,6 +28,7 @@ const Message = mongoose.model("Message", MessageSchema);
 exports.createMessage = async (conversationId, sender, text) => {
     try {
         const newMessage = new Message({ conversationId, sender, text });
+        console.log("req");
         const result = await newMessage.save();
         return result;
     } catch (err) {
