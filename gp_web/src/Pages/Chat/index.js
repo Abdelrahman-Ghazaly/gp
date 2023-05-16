@@ -3,7 +3,7 @@ import ChatBox from '../../Components/UI/ChatBox';
 import Stack from '@mui/material/Stack';
 import { styled } from '@mui/material/styles';
 import { Container , Box } from '@mui/material';
-
+import AppBar from '../../Components/Layout/AppBar';
 
 const Item = styled(Box)(({ theme }) => ({
   float: 'left',
@@ -38,7 +38,9 @@ const Item2 = styled(Box)(({ theme }) => ({
 const Chat = () => {
 
   return (
-    <Container style={{ padding : '10px 5px' , overflow : 'hidden' }}>
+    <>
+      <AppBar />
+      <Container style={{ padding : '10px 5px' , overflow : 'hidden' }}>
       <Stack
         direction={{ xs: "column", sm: "row" }}
         spacing={{}}
@@ -52,6 +54,7 @@ const Chat = () => {
         </Item2>
       </Stack>
     </Container>
+    </>
   )
 }
 
