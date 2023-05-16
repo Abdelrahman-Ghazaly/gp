@@ -1,14 +1,14 @@
 
-let server;
-module.exports = (http) => {
-    server = http
-} 
-const io = require("socket.io")(server, {
+// let server;
+// module.exports = (http) => {
+//     server = http
+// } 
+const io = require("socket.io")(5002, {
     cors: {
         origin: "*",
     },
 });
-
+module.exports = io 
 let users = [];
 
 const addUser = (userId, socketId) => {

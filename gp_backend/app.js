@@ -51,8 +51,8 @@ app.use((error, req, res, next) => {
     });
 });
 
-const server= app.listen(5000, databaseConnection.init);
+app.listen(5000, databaseConnection.init);
 
-require('./socket')(server)
+require('./socket')
 
 
