@@ -2,7 +2,7 @@ const express = require("express");
 const app = express();
 require("dotenv").config();
 
-const databaseConnection = require("./util/Database_Connection");
+const databaseConnection = require("./util/Database_Connection"); 
 
 const authRoutes = require("./routes/auth");
 const adminRoutes = require("./routes/admin");
