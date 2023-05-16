@@ -7,7 +7,6 @@ const ConversationSchema = new mongoose.Schema(
             {
                 type: Schema.Types.ObjectId,
                 ref: "User",
-                unique: true,
                 required: true,
             },
         ],
