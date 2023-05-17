@@ -5,6 +5,9 @@ import 'package:lottie/lottie.dart';
 import '../../../../core/app_constants/app_constants.dart';
 import '../../../../core/common_widgets/common_widgets.dart';
 import '../../../../core/utils/utilities.dart';
+import '../../../authentication/presentation/bloc/log_in_bloc/log_in_bloc.dart'
+    as log_in;
+import '../bloc/favorite_bloc/favorite_bloc.dart' as fav;
 import '../bloc/product_view_bloc/product_view_bloc.dart';
 import '../widgets/product_screen_widget/product_screen_widgets.dart';
 
@@ -38,6 +41,9 @@ class _ProductViewScreenState extends State<ProductViewScreen>
 
   @override
   Widget build(BuildContext context) {
+    final logInState = context.read<log_in.LogInBloc>().state;
+    final isLogedIn = logInState is log_in.Success;
+
     context.read<ProductViewBloc>().add(
           GetFurnitureFromIdEvent(id: widget.furnitureId),
         );
@@ -82,14 +88,38 @@ class _ProductViewScreenState extends State<ProductViewScreen>
                               Align(
                                 alignment: Alignment.bottomRight,
                                 child: FloatingActionButton.small(
-                                  onPressed: () {
-                                    if (_isFavorite) {
-                                      _isFavoriteController.reverse();
-                                    } else {
-                                      _isFavoriteController.forward();
-                                    }
-                                    _isFavorite = !_isFavorite;
-                                  },
+                                  onPressed: isLogedIn
+                                      ? () {
+                                          if (_isFavorite) {
+                                            context
+                                                .read<fav.FavoriteBloc>()
+                                                .add(
+                                                  fav.DeleteFavoriteEvent(
+                                                    productId:
+                                                        widget.furnitureId,
+                                                    accessToken: logInState
+                                                        .userEntity
+                                                        .accessToken!,
+                                                  ),
+                                                );
+                                            _isFavoriteController.reverse();
+                                          } else {
+                                            context
+                                                .read<fav.FavoriteBloc>()
+                                                .add(
+                                                  fav.AddFavoriteEvent(
+                                                    productId:
+                                                        widget.furnitureId,
+                                                    accessToken: logInState
+                                                        .userEntity
+                                                        .accessToken!,
+                                                  ),
+                                                );
+                                            _isFavoriteController.forward();
+                                          }
+                                          _isFavorite = !_isFavorite;
+                                        }
+                                      : null,
                                   shape: const CircleBorder(),
                                   backgroundColor: Colors.white,
                                   child: Lottie.asset(

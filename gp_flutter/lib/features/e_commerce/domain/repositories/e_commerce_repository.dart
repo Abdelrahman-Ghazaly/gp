@@ -39,17 +39,24 @@ abstract class ECommerceRepository {
     required UserEntity userEntity,
   });
 
-  Future<Either<Failure, List<FurnitureEntity>>> getFavorite({
+  Future<Either<Failure, List<FurnitureEntity>>>
+      getFavoriteFromRemoteDataSource({
     required String accessToken,
   });
 
-  Future<Either<Failure, String>> addFavorite({
+  Future<Either<Failure, String>> addFavoriteFromRemoteDataSource({
     required String productId,
     required String accessToken,
   });
 
-  Future<Either<Failure, String>> deleteFavorite({
+  Future<Either<Failure, String>> deleteFavoriteFromRemoteDataSource({
     required String productId,
     required String accessToken,
+  });
+
+  Future<Either<Failure, List<String>>> getFavoriteFromLocalDataSource();
+
+  Future<Either<Failure, void>> addFavoriteFromLocalDataSource({
+    required List<String> favoritesIds,
   });
 }

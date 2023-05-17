@@ -4,20 +4,20 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gp_flutter/core/error/failure.dart';
 import 'package:gp_flutter/features/authentication/presentation/bloc/log_in_bloc/log_in_bloc.dart';
 import 'package:gp_flutter/features/e_commerce/domain/entities/furniture_entity.dart';
-import 'package:gp_flutter/features/e_commerce/domain/use_cases/favorite/add_favorite.dart'
+import 'package:gp_flutter/features/e_commerce/domain/use_cases/favorite/add_favorite_to_remote_data_source.dart'
     as add_favorite;
-import 'package:gp_flutter/features/e_commerce/domain/use_cases/favorite/delete_faorite.dart'
+import 'package:gp_flutter/features/e_commerce/domain/use_cases/favorite/delete_faorite_fron_remote_data_source.dart'
     as delete_favorite;
-import 'package:gp_flutter/features/e_commerce/domain/use_cases/favorite/get_favorite.dart'
+import 'package:gp_flutter/features/e_commerce/domain/use_cases/favorite/get_favorite_fron_remote_data_source.dart'
     as get_favorite;
 
 part 'favorite_event.dart';
 part 'favorite_state.dart';
 
 class FavoriteBloc extends Bloc<FavoriteEvent, FavoriteState> {
-  final add_favorite.AddFavorite addFavorite;
-  final delete_favorite.DeleteFavorite deleteFavorite;
-  final get_favorite.GetFavorite getFavorite;
+  final add_favorite.AddFavoriteToRenoteDataSource addFavorite;
+  final delete_favorite.DeleteFavoriteFromRenoteDataSource deleteFavorite;
+  final get_favorite.GetFavoriteFromRenoteDataSource getFavorite;
 
   FavoriteBloc({
     required this.addFavorite,

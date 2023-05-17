@@ -6,6 +6,8 @@ import '../../../../core/app_constants/app_values.dart';
 import '../../../../core/common_widgets/bottom_nav_bar.dart';
 import '../../../../core/common_widgets/loading_widget.dart';
 import '../../../../core/utils/utilities.dart';
+import '../../../e_commerce/presentation/bloc/favorite_bloc/favorite_bloc.dart'
+    as fav;
 import '../bloc/log_in_bloc/log_in_bloc.dart';
 import '../widgets/form_text_field.dart';
 import 'sig_up_screen/email_screen.dart';
@@ -82,6 +84,11 @@ class LogInScreen extends StatelessWidget {
       bottomNavigationBar: BlocListener<LogInBloc, LogInState>(
         listener: (context, state) {
           if (state is Success) {
+            context.read<fav.FavoriteBloc>().add(
+                  fav.GetFavoriteEvent(
+                    accessToken: state.userEntity.accessToken!,
+                  ),
+                );
             Utilities().pushAndReplace(
               context: context,
               screen: const BottomNavBar(),
