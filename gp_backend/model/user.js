@@ -71,5 +71,13 @@ exports.viewProfile = async (id) => {
 };
 
 
-
+exports.getUserData = async (id) => {
+    try {
+        const result = await User.findById(id, "name _id");
+        return result;
+    } catch (err) {
+        console.log(err);
+        throw new Error();
+    }
+};
 

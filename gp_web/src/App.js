@@ -14,6 +14,7 @@ const AddProductForm = React.lazy(() => import('./Pages/Ecommerce/AddProductForm
 const SignupPage = React.lazy(() => import('./Pages/Ecommerce/Signup'))
 const LoginPage = React.lazy(() => import('./Pages/Ecommerce/Login'))
 const Home = React.lazy(() => import('./Pages/Ecommerce/Home'))
+const Chat = React.lazy(() => import('./Pages/Chat'))
 
 function App() {
   const dispatch = useDispatch()
@@ -100,6 +101,14 @@ function App() {
           element={
             <Suspense fallback={<LoadingSpinner />}>
               <CategoryPage />
+            </Suspense>
+          }
+        />
+        <Route
+          path="/chat"
+          element={
+            <Suspense fallback={<LoadingSpinner />}>
+              <Chat />
             </Suspense>
           }
         />

@@ -25,6 +25,8 @@ const FavoritePage = () => {
     const listLength = list.length
     const loading = useSelector(state => state.favorite.loading)
 
+    console.log(list)
+
     const removeItem = (itemId) => {
       console.log(itemId)
         dispatch(removeFromFavorites(itemId))

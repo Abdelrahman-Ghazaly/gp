@@ -40,7 +40,7 @@ const ListItems = [
   {
     name : 'inbox',
     icon : <InboxIcon />,
-    link : '/inbox'
+    link : '/chat'
   },
   {
     name : 'Auction',
