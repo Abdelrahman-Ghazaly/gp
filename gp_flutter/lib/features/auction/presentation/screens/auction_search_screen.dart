@@ -7,6 +7,7 @@ import '../../../../core/app_constants/app_constants.dart';
 import '../../../../core/utils/utilities.dart';
 import '../../domain/entities/search_query_entity.dart';
 import '../bloc/search_auctions_bloc/search_auctions_bloc.dart';
+import '../widgets/price_container.dart';
 
 class AuctionSearchScreen extends StatelessWidget {
   const AuctionSearchScreen({super.key, required this.auctionSearch});
@@ -341,43 +342,6 @@ class AuctionSearchCard extends StatelessWidget {
                 ],
               ),
             ],
-          ),
-        ),
-      ),
-    );
-  }
-}
-
-class PriceContainer extends StatelessWidget {
-  const PriceContainer(
-      {super.key,
-      required this.width,
-      required this.height,
-      required this.controller,
-      required this.label});
-
-  final double width;
-  final double height;
-  final TextEditingController controller;
-  final String label;
-
-  @override
-  Widget build(BuildContext context) {
-    return SizedBox(
-      width: width * 0.13,
-      height: height * 0.07,
-      child: TextField(
-        keyboardType: TextInputType.number,
-        inputFormatters: <TextInputFormatter>[
-          FilteringTextInputFormatter.digitsOnly
-        ],
-        controller: controller,
-        decoration: InputDecoration(
-          labelText: label,
-          enabledBorder: const UnderlineInputBorder(
-            borderSide: BorderSide(
-              width: 2,
-            ),
           ),
         ),
       ),

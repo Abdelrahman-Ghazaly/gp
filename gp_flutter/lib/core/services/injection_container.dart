@@ -1,8 +1,9 @@
 import 'package:dio/dio.dart';
 import 'package:get_it/get_it.dart';
+import 'package:gp_flutter/features/auction/domain/usecases/bid_auction_usecase.dart';
+import 'package:gp_flutter/features/auction/presentation/bloc/bid_auction_bloc/bloc/bid_auction_bloc_bloc.dart';
 import '../../features/authentication/presentation/bloc/log_in_bloc/log_in_bloc.dart';
 import '../../features/authentication/presentation/bloc/sign_up_bloc/sign_up_bloc.dart';
-
 import '../../features/auction/data/data_source/auction_reomte_data_source.dart';
 import '../../features/auction/data/repository/auction_repository.dart';
 import '../../features/auction/domain/repositories/base_auction_repository.dart';
@@ -56,6 +57,7 @@ void initBloc() {
   sl.registerFactory(() => AllAuctionsBloc(sl()));
   sl.registerFactory(() => GetAuctionByIdBloc(sl()));
   sl.registerFactory(() => SearchAuctionsBloc(sl()));
+  sl.registerFactory(() => BidAuctionBloc(sl()));
 }
 
 void initFeatures() {
@@ -75,6 +77,7 @@ void initFeatures() {
   sl.registerLazySingleton(() => GetAuctionProductsUseCase(sl()));
   sl.registerLazySingleton(() => GetAuctionProductsSearchResultUseCase(sl()));
   sl.registerLazySingleton(() => ViewAuctionDataUseCase(sl()));
+  sl.registerLazySingleton(() => BidAuctionUseCase(sl()));
 }
 
 void initRepository() {

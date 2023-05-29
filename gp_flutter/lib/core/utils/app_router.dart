@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:gp_flutter/features/authentication/presentation/screens/log_in_screen.dart';
 
 import '../../features/auction/presentation/screens/add_auction_screen.dart';
 import '../../features/auction/presentation/screens/auction_details_screen.dart';
@@ -14,13 +15,19 @@ final GoRouter router = GoRouter(routes: <GoRoute>[
       },
       routes: [
         GoRoute(
-            path: "auction_details_screen",
+            path: "login_screen",
             builder: (BuildContext context, GoRouterState state) {
-              final auctionId = state.queryParams['auction_id'];
-              return AuctionDetailsScreen(
-                auctionId: auctionId!,
-              );
+              return const LogInScreen();
             }),
+        GoRoute(
+          path: "auction_details_screen",
+          builder: (BuildContext context, GoRouterState state) {
+            final auctionId = state.queryParams['auction_id'];
+            return AuctionDetailsScreen(
+              auctionId: auctionId!,
+            );
+          },
+        ),
         GoRoute(
             path: "auction_search_screen",
             builder: (BuildContext context, GoRouterState state) {

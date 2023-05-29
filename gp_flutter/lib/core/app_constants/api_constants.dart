@@ -21,7 +21,7 @@ class ApiConstants {
   static String auctionBidProductPath(auctionId) =>
       '$auctionBaseUrl/bid/$auctionId';
   //'http://10.0.2.2:5000/'
-  static const String _baseUrl = 'http://10.0.2.2:5000/';
+  static const String _baseUrl = 'http://192.168.1.2:5000/';
 
   //* Product End Points
 
