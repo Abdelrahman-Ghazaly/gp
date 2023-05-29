@@ -1,12 +1,11 @@
 import 'package:dartz/dartz.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:gp_flutter/features/authentication/domain/entities/user_entity.dart';
 
 import '../../../../../core/error/failure.dart';
+import '../../../../authentication/domain/entities/user_entity.dart';
 import '../../../data/models/furniture_model.dart';
-import '../../../domain/entities/seller_entity.dart';
-import '../../../domain/use_cases/upload_furniture.dart';
+import '../../../domain/use_cases/product/upload_furniture.dart';
 
 part 'upload_product_event.dart';
 part 'upload_product_state.dart';

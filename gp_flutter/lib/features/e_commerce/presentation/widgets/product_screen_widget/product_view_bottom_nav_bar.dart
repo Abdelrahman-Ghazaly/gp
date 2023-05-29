@@ -23,9 +23,9 @@ class ProductViewBottomNavBar extends StatelessWidget {
           ),
         ],
       ),
-      child: Row(
+      child: const Row(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        children: const [
+        children: [
           BottomNavBarButton(
             text: 'SMS',
             icon: Icons.email_outlined,
