@@ -2,9 +2,9 @@ import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:gp_flutter/core/app_constants/app_constants.dart';
-import 'package:gp_flutter/core/utils/utilities.dart';
-import 'package:gp_flutter/features/authentication/presentation/widgets/form_text_field.dart';
+import '../app_constants/app_constants.dart';
+import '../utils/utilities.dart';
+import '../../features/authentication/presentation/widgets/form_text_field.dart';
 import 'package:gp_flutter/features/e_commerce/presentation/bloc/upload_product_bloc/upload_product_bloc.dart'
     as upload;
 import 'package:image_picker/image_picker.dart';

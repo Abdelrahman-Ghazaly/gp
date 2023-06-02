@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_swiper_view/flutter_swiper_view.dart';
 import 'package:go_router/go_router.dart';
-import 'package:gp_flutter/core/common_widgets/common_widgets.dart';
+import '../../../../core/common_widgets/common_widgets.dart';
 
 import '../../../../core/app_constants/app_colors.dart';
 import '../../../../core/utils/utilities.dart';

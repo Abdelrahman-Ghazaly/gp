@@ -1,6 +1,6 @@
 import 'package:equatable/equatable.dart';
-import '../../../auction/domain/entities/auction_entities.dart';
 
+import '../../../auction/domain/entities/auction_entities.dart';
 import 'seller_entity.dart';
 
 class FurnitureEntity extends Equatable {

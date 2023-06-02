@@ -1,7 +1,7 @@
 import 'package:dartz/dartz.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:gp_flutter/features/auction/domain/usecases/bid_auction_usecase.dart';
+import '../../../../domain/usecases/bid_auction_usecase.dart';
 
 import '../../../../../../core/error/failure.dart';
 

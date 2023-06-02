@@ -8,7 +8,6 @@ import '../../../../core/common_widgets/search_bar.dart';
 import '../../../../core/utils/utilities.dart';
 import '../../domain/entities/search_query_entity.dart';
 import '../bloc/search_auctions_bloc/search_auctions_bloc.dart';
-import '../widgets/price_container.dart';
 
 class AuctionSearchScreen extends StatelessWidget {
   const AuctionSearchScreen({super.key, required this.auctionSearch});

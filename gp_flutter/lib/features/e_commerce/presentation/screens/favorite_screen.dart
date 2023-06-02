@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:gp_flutter/core/app_constants/app_constants.dart';
-import 'package:gp_flutter/core/common_widgets/common_widgets.dart';
-import 'package:gp_flutter/core/utils/utilities.dart';
-import 'package:gp_flutter/features/e_commerce/presentation/bloc/favorite_bloc/favorite_bloc.dart';
-import 'package:gp_flutter/features/e_commerce/presentation/widgets/home_screen_widgets/home_screen_widgets.dart';
+import '../../../../core/app_constants/app_constants.dart';
+import '../../../../core/common_widgets/common_widgets.dart';
+import '../../../../core/utils/utilities.dart';
+import '../bloc/favorite_bloc/favorite_bloc.dart';
+import '../widgets/home_screen_widgets/home_screen_widgets.dart';
 import '../../../authentication/presentation/screens/authentication_screen.dart';
 import '../../../authentication/presentation/bloc/log_in_bloc/log_in_bloc.dart'
     as log_in;

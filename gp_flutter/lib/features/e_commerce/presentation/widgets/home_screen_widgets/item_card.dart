@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:gp_flutter/features/authentication/presentation/bloc/log_in_bloc/log_in_bloc.dart';
+import '../../../../authentication/presentation/bloc/log_in_bloc/log_in_bloc.dart';
 import 'package:lottie/lottie.dart';
 
 import '../../../../../core/app_constants/app_constants.dart';
