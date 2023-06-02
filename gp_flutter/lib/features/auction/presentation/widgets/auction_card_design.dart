@@ -60,7 +60,7 @@ class AuctionCardDesign extends StatelessWidget {
                                 color: Colors.white,
                                 borderRadius: BorderRadius.circular(10)),
                             child: Text(
-                                "Current Pid: ${state.auctionList[index].startPrice} \$",
+                                "Current Bid: ${state.auctionList[index].currentPrice} \$",
                                 style: const TextStyle(
                                   fontSize: 20,
                                   fontWeight: FontWeight.w400,
