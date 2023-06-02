@@ -2,7 +2,6 @@ import 'package:flutter/material.dart' hide AppBar;
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../core/app_constants/app_constants.dart';
-import '../../../../core/common_widgets/common_widgets.dart';
 import '../../../../core/utils/utilities.dart';
 import '../bloc/home_bloc/home_bloc.dart';
 import '../widgets/widgets.dart';
@@ -15,7 +14,6 @@ class HomeScreen extends StatelessWidget {
     context.read<HomeBloc>().add(const GetPopularFurniturebyCategoryEvent());
 
     return Scaffold(
-      appBar: const CustomAppBar(),
       body: SingleChildScrollView(
         child: Column(
           children: [

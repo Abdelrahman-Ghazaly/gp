@@ -89,6 +89,7 @@ class LogInScreen extends StatelessWidget {
                     accessToken: state.userEntity.accessToken!,
                   ),
                 );
+
             Utilities().pushAndReplace(
               context: context,
               screen: const BottomNavBar(),

@@ -1,24 +1,19 @@
 import 'package:dartz/dartz.dart';
 import 'package:equatable/equatable.dart';
+import 'package:gp_flutter/core/error/failure.dart';
 import 'package:gp_flutter/core/use_case/use_case.dart';
 
-import '../../../../../core/error/failure.dart';
 import '../../repositories/e_commerce_repository.dart';
 
-class DeleteFavoriteFromRenoteDataSource
-    implements BaseUseCase<String, Params> {
+class AddFavorite implements BaseUseCase<String, Params> {
   final ECommerceRepository repository;
 
-  DeleteFavoriteFromRenoteDataSource({
-    required this.repository,
-  });
+  AddFavorite({required this.repository});
 
   @override
   Future<Either<Failure, String>> call(Params params) {
-    return repository.addFavoriteFromRemoteDataSource(
-      productId: params.productId,
-      accessToken: params.accessToken,
-    );
+    return repository.addFavorite(
+        productId: params.productId, accessToken: params.accessToken);
   }
 }
 
@@ -30,7 +25,9 @@ class Params extends Equatable {
     required this.productId,
     required this.accessToken,
   });
-
   @override
-  List<Object?> get props => [productId, accessToken];
+  List<Object?> get props => [
+        productId,
+        accessToken,
+      ];
 }

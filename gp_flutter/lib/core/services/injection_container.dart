@@ -1,8 +1,9 @@
 import 'package:dio/dio.dart';
 import 'package:get_it/get_it.dart';
-import 'package:gp_flutter/features/e_commerce/domain/use_cases/favorite/add_favorite_to_remote_data_source.dart';
+import 'package:gp_flutter/features/e_commerce/domain/use_cases/favorite/add_favorite.dart';
+import 'package:gp_flutter/features/e_commerce/domain/use_cases/favorite/delete_favorite.dart';
+import 'package:gp_flutter/features/e_commerce/domain/use_cases/favorite/get_favorite.dart';
 import 'package:gp_flutter/features/e_commerce/presentation/bloc/favorite_bloc/favorite_bloc.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../features/auction/data/data_source/auction_reomte_data_source.dart';
 import '../../features/auction/data/repository/auction_repository.dart';
@@ -22,14 +23,9 @@ import '../../features/authentication/domain/usecases/log_in.dart';
 import '../../features/authentication/domain/usecases/sign_up.dart';
 import '../../features/authentication/presentation/bloc/log_in_bloc/log_in_bloc.dart';
 import '../../features/authentication/presentation/bloc/sign_up_bloc/sign_up_bloc.dart';
-import '../../features/e_commerce/data/data_sources/furniture_local_data_source.dart';
 import '../../features/e_commerce/data/data_sources/furniture_remote_data_source.dart';
 import '../../features/e_commerce/data/repositories/e_commerce_repository_impl.dart';
 import '../../features/e_commerce/domain/repositories/e_commerce_repository.dart';
-import '../../features/e_commerce/domain/use_cases/favorite/add_favorite_to_local_data_source.dart';
-import '../../features/e_commerce/domain/use_cases/favorite/delete_faorite_fron_remote_data_source.dart';
-import '../../features/e_commerce/domain/use_cases/favorite/get_favorite_fron_local_data_source.dart';
-import '../../features/e_commerce/domain/use_cases/favorite/get_favorite_fron_remote_data_source.dart';
 import '../../features/e_commerce/domain/use_cases/product/delete_product.dart';
 import '../../features/e_commerce/domain/use_cases/get_furniture/get_furniture_from_id.dart';
 import '../../features/e_commerce/domain/use_cases/get_furniture/get_furniture_from_search.dart';
@@ -60,8 +56,11 @@ void initBloc() {
   sl.registerFactory(() => SearchBloc(getFurnitureFromSearch: sl()));
   sl.registerFactory(() => UploadProductBloc(uploadFurniture: sl()));
   sl.registerFactory(() => ECommerceUserBloc(getUserData: sl()));
-  sl.registerFactory(() =>
-      FavoriteBloc(addFavorite: sl(), deleteFavorite: sl(), getFavorite: sl()));
+  sl.registerFactory(() => FavoriteBloc(
+        addFavorite: sl(),
+        deleteFavorite: sl(),
+        getFavorite: sl(),
+      ));
 
   sl.registerFactory(() => SignUpBloc(signUp: sl()));
   sl.registerFactory(() => LogInBloc(logIn: sl()));
@@ -75,18 +74,6 @@ void initFeatures() {
   sl.registerLazySingleton(() => LogIn(repository: sl()));
   sl.registerLazySingleton(() => SignUp(repository: sl()));
 
-  sl.registerLazySingleton(
-      () => AddFavoriteToRenoteDataSource(repository: sl()));
-  sl.registerLazySingleton(
-      () => GetFavoriteFromRenoteDataSource(repository: sl()));
-  sl.registerLazySingleton(
-      () => DeleteFavoriteFromRenoteDataSource(repository: sl()));
-
-  sl.registerLazySingleton(
-      () => GetFavoriteFronLocalDataSource(repository: sl()));
-  sl.registerLazySingleton(
-      () => AddFavoriteFronLocalDataSource(repository: sl()));
-
   sl.registerLazySingleton(() => GetFurnitureFromId(repository: sl()));
   sl.registerLazySingleton(() => GetFurnitureFromSearch(repository: sl()));
   sl.registerLazySingleton(() => GetUserData(repository: sl()));
@@ -94,6 +81,9 @@ void initFeatures() {
       () => GetPopularFurniturebyCategory(repository: sl()));
   sl.registerLazySingleton(() => DeleteFurniture(repository: sl()));
   sl.registerLazySingleton(() => UploadFurniture(repository: sl()));
+  sl.registerLazySingleton(() => GetFavorite(repository: sl()));
+  sl.registerLazySingleton(() => AddFavorite(repository: sl()));
+  sl.registerLazySingleton(() => DeleteFavorite(repository: sl()));
 
   sl.registerLazySingleton(() => UploadAuctionProductUseCase(sl()));
   sl.registerLazySingleton(() => DeleteAuctionUseCase(sl()));
@@ -106,7 +96,6 @@ void initRepository() {
   sl.registerLazySingleton<ECommerceRepository>(
     () => ECommerceRepositoryImpl(
       remoteDataSource: sl(),
-      localDataSource: sl(),
     ),
   );
   sl.registerLazySingleton<AuthenticationRepository>(
@@ -124,11 +113,7 @@ void initDataSources() {
       dio: sl<Dio>(),
     ),
   );
-  sl.registerLazySingleton<FurnitureLocalDataSource>(
-    () => FurnitureLocalDataSourceImpl(
-      sharedPreferences: sl<SharedPreferences>(),
-    ),
-  );
+
   sl.registerLazySingleton<AuthenticationRemoteDataSource>(
     () => AuthenticationRemoteDataSourceImpl(
       dio: sl<Dio>(),
@@ -143,6 +128,4 @@ void initDataSources() {
 
 Future<void> initExternalPackages() async {
   sl.registerLazySingleton<Dio>(() => Dio());
-  final sharedPreferences = await SharedPreferences.getInstance();
-  sl.registerLazySingleton<SharedPreferences>(() => sharedPreferences);
 }

@@ -14,11 +14,13 @@ class CustomSearchBar extends StatelessWidget {
     required this.maxPrice,
     required this.minPrice,
     required this.onPressed,
+    this.hasHero = true,
   }) : super(key: key);
   final TextEditingController searchController;
   final TextEditingController maxPrice;
   final TextEditingController minPrice;
   final void Function() onPressed;
+  final bool hasHero;
 
   @override
   Widget build(BuildContext context) {
@@ -44,36 +46,20 @@ class CustomSearchBar extends StatelessWidget {
           ),
           Padding(
             padding: const EdgeInsets.all(8.0),
-            child: Hero(
-              tag: "Search",
-              child: Material(
-                type: MaterialType.transparency,
-                child: SizedBox(
-                  height: height * 0.06,
-                  width: width * 0.5,
-                  child: TextField(
-                    controller: searchController,
-                    textAlign: TextAlign.start,
-                    style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                          fontSize: 22,
-                          fontWeight: FontWeight.normal,
-                          color: AppColors.appBlackColor,
-                        ),
-                    decoration: InputDecoration(
-                      labelText: "Search",
-                      border: InputBorder.none,
-                      labelStyle: TextStyle(
-                        color: AppColors.appBlackColor.withOpacity(0.7),
-                        fontSize: 22,
-                      ),
-                      contentPadding:
-                          const EdgeInsets.symmetric(horizontal: 10),
+            child: hasHero
+                ? Hero(
+                    tag: "Search",
+                    child: SearchTextField(
+                      height: height,
+                      width: width,
+                      searchController: searchController,
                     ),
-                    maxLines: 1,
+                  )
+                : SearchTextField(
+                    height: height,
+                    width: width,
+                    searchController: searchController,
                   ),
-                ),
-              ),
-            ),
           ),
           IconButton(
             onPressed: () => showDialog(
@@ -157,6 +143,49 @@ class CustomSearchBar extends StatelessWidget {
             ),
           ),
         ],
+      ),
+    );
+  }
+}
+
+class SearchTextField extends StatelessWidget {
+  const SearchTextField({
+    super.key,
+    required this.height,
+    required this.width,
+    required this.searchController,
+  });
+
+  final double height;
+  final double width;
+  final TextEditingController searchController;
+
+  @override
+  Widget build(BuildContext context) {
+    return Material(
+      type: MaterialType.transparency,
+      child: SizedBox(
+        height: height * 0.06,
+        width: width * 0.5,
+        child: TextField(
+          controller: searchController,
+          textAlign: TextAlign.start,
+          style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                fontSize: 22,
+                fontWeight: FontWeight.normal,
+                color: AppColors.appBlackColor,
+              ),
+          decoration: InputDecoration(
+            labelText: "Search",
+            border: InputBorder.none,
+            labelStyle: TextStyle(
+              color: AppColors.appBlackColor.withOpacity(0.7),
+              fontSize: 22,
+            ),
+            contentPadding: const EdgeInsets.symmetric(horizontal: 10),
+          ),
+          maxLines: 1,
+        ),
       ),
     );
   }

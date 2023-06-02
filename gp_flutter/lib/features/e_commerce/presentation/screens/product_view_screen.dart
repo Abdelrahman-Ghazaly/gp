@@ -11,14 +11,16 @@ import '../bloc/favorite_bloc/favorite_bloc.dart' as fav;
 import '../bloc/product_view_bloc/product_view_bloc.dart';
 import '../widgets/product_screen_widget/product_screen_widgets.dart';
 
-bool _isFavorite = false;
-
 class ProductViewScreen extends StatefulWidget {
   const ProductViewScreen({
     Key? key,
     required this.furnitureId,
+    required this.isFavorite,
+    required this.callBack,
   }) : super(key: key);
   final String furnitureId;
+  final bool isFavorite;
+  final Function callBack;
 
   @override
   State<ProductViewScreen> createState() => _ProductViewScreenState();
@@ -27,11 +29,12 @@ class ProductViewScreen extends StatefulWidget {
 class _ProductViewScreenState extends State<ProductViewScreen>
     with SingleTickerProviderStateMixin {
   late AnimationController _isFavoriteController;
-
+  late bool _isFavorite = widget.isFavorite;
   @override
   void initState() {
     super.initState();
     _isFavoriteController = AnimationController(
+      value: _isFavorite ? 1 : 0,
       vsync: this,
       duration: const Duration(
         milliseconds: 750,
@@ -48,7 +51,6 @@ class _ProductViewScreenState extends State<ProductViewScreen>
           GetFurnitureFromIdEvent(id: widget.furnitureId),
         );
     return Scaffold(
-      appBar: const CustomAppBar(),
       body: BlocBuilder<ProductViewBloc, ProductViewState>(
         builder: (context, state) {
           if (state is Loaded) {
@@ -118,6 +120,7 @@ class _ProductViewScreenState extends State<ProductViewScreen>
                                             _isFavoriteController.forward();
                                           }
                                           _isFavorite = !_isFavorite;
+                                          widget.callBack(_isFavorite);
                                         }
                                       : null,
                                   shape: const CircleBorder(),

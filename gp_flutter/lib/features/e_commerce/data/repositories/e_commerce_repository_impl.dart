@@ -1,5 +1,4 @@
 import 'package:dartz/dartz.dart';
-import 'package:gp_flutter/features/e_commerce/data/data_sources/furniture_local_data_source.dart';
 
 import '../../../../core/error/exceptions.dart';
 import '../../../../core/error/failure.dart';
@@ -18,11 +17,9 @@ typedef _RepositoryStringFunction = Future<String> Function();
 
 class ECommerceRepositoryImpl implements ECommerceRepository {
   final FurnitureRemoteDataSource remoteDataSource;
-  final FurnitureLocalDataSource localDataSource;
 
   ECommerceRepositoryImpl({
     required this.remoteDataSource,
-    required this.localDataSource,
   });
 
   @override
@@ -130,7 +127,7 @@ class ECommerceRepositoryImpl implements ECommerceRepository {
   }
 
   @override
-  Future<Either<Failure, String>> addFavoriteFromRemoteDataSource(
+  Future<Either<Failure, String>> addFavorite(
       {required String productId, required String accessToken}) async {
     try {
       final String result = await remoteDataSource.addFavorite(
@@ -142,7 +139,7 @@ class ECommerceRepositoryImpl implements ECommerceRepository {
   }
 
   @override
-  Future<Either<Failure, String>> deleteFavoriteFromRemoteDataSource(
+  Future<Either<Failure, String>> deleteFavorite(
       {required String productId, required String accessToken}) async {
     try {
       final String result = await remoteDataSource.deleteFavorite(
@@ -154,8 +151,8 @@ class ECommerceRepositoryImpl implements ECommerceRepository {
   }
 
   @override
-  Future<Either<Failure, List<FurnitureEntity>>>
-      getFavoriteFromRemoteDataSource({required String accessToken}) async {
+  Future<Either<Failure, List<FurnitureEntity>>> getFavorite(
+      {required String accessToken}) async {
     try {
       final List<FurnitureEntity> result =
           await remoteDataSource.getFavorite(accessToken: accessToken);
@@ -163,22 +160,5 @@ class ECommerceRepositoryImpl implements ECommerceRepository {
     } on ServerException catch (failure) {
       return Left(ServerFailure(failure.errorMessageModel.statusMessage));
     }
-  }
-
-  @override
-  Future<Either<Failure, List<String>>> getFavoriteFromLocalDataSource() async {
-    try {
-      final List<String> result = localDataSource.getFavorite();
-      return Right(result);
-    } on ServerException catch (failure) {
-      return Left(ServerFailure(failure.errorMessageModel.statusMessage));
-    }
-  }
-
-  @override
-  Future<Either<Failure, void>> addFavoriteFromLocalDataSource(
-      {required List<String> favoritesIds}) {
-    // TODO: implement setFavoriteFromLocalDataSource
-    throw UnimplementedError();
   }
 }

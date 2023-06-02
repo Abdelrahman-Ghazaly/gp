@@ -18,6 +18,7 @@ import 'features/auction/presentation/bloc/get_auction_by_id/get_auction_by_id_b
 import 'features/auction/presentation/bloc/search_auctions_bloc/search_auctions_bloc.dart';
 
 void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
   await init();
   runApp(const MyApp());
 }

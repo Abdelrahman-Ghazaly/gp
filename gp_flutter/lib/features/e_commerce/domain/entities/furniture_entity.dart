@@ -42,6 +42,11 @@ class FurnitureEntity extends Equatable {
       category,
       price,
       sellerEntity,
+      rawImage,
+      sellerName,
+      auctionItems,
+      favorites,
+      productList,
     ];
   }
 }

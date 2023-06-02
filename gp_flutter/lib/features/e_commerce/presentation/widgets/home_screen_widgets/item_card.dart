@@ -10,14 +10,14 @@ import '../../bloc/favorite_bloc/favorite_bloc.dart';
 import '../../bloc/product_view_bloc/product_view_bloc.dart';
 import '../../screens/product_view_screen.dart';
 
-bool _isFavorite = false;
-
 class ItemCard extends StatefulWidget {
   const ItemCard({
     super.key,
     required this.furnitureEntity,
+    this.isFavorite = false,
   });
   final FurnitureEntity furnitureEntity;
+  final bool isFavorite;
 
   @override
   State<ItemCard> createState() => _ItemCardState();
@@ -26,6 +26,7 @@ class ItemCard extends StatefulWidget {
 class _ItemCardState extends State<ItemCard>
     with SingleTickerProviderStateMixin {
   late AnimationController _isFavoriteController;
+  late bool _isFavorite = widget.isFavorite;
 
   @override
   void initState() {
@@ -48,7 +49,7 @@ class _ItemCardState extends State<ItemCard>
   Widget build(BuildContext context) {
     final logInState = context.read<LogInBloc>().state;
     final isLogedIn = logInState is Success;
-
+    _isFavoriteController.value = _isFavorite ? 1 : 0;
     return GestureDetector(
       onTap: () {
         context.read<ProductViewBloc>().add(
@@ -56,10 +57,13 @@ class _ItemCardState extends State<ItemCard>
                 id: widget.furnitureEntity.id!,
               ),
             );
+
         Utilities().pushTo(
           context,
           screen: ProductViewScreen(
             furnitureId: widget.furnitureEntity.id!,
+            isFavorite: _isFavorite,
+            callBack: (val) => setState(() => _isFavorite = val),
           ),
         );
       },
@@ -120,6 +124,12 @@ class _ItemCardState extends State<ItemCard>
                               context.read<FavoriteBloc>().add(
                                     DeleteFavoriteEvent(
                                       productId: widget.furnitureEntity.id!,
+                                      accessToken:
+                                          logInState.userEntity.accessToken!,
+                                    ),
+                                  );
+                              context.read<FavoriteBloc>().add(
+                                    GetFavoriteEvent(
                                       accessToken:
                                           logInState.userEntity.accessToken!,
                                     ),
