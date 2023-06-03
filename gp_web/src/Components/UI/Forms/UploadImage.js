@@ -1,7 +1,8 @@
 import { Grid, IconButton } from '@mui/material';
 import React , { useRef, useState, useEffect  , memo , useMemo} from 'react'
-import {AddImageButton , ImageStyle} from '../../../Styles/forms'
+import {AddImageButton , ImageStyle , Overlay} from '../../../Styles/forms'
 import DeleteIcon from '@mui/icons-material/Delete';
+
 
 
 const UploadImage = memo(({ imageValue }) => {
@@ -40,6 +41,8 @@ const UploadImage = memo(({ imageValue }) => {
     imageValue(imageFiles)
   },[imageFiles])
 
+
+
   const renderLoop = useMemo(() => {
       return (
         <Grid item xs={12} sm={4} md={6} style={{ margin: "0 auto" }}>
@@ -50,7 +53,8 @@ const UploadImage = memo(({ imageValue }) => {
             }}
           >
             <img src={imageList} style={ImageStyle} alt="" />
-            <div style={{ textAlign: "center" }}>
+
+            <div style={Overlay}>
               <IconButton
                 onClick={() => {
                   setImageFiles(null);

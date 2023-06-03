@@ -22,7 +22,7 @@ export const UploadFormContainer = styled(Box)(({theme}) => ({
 }))
 
 export const UploadFormTitle = styled(Typography)(({ theme }) => ({
-    overflow : 'auto',
+  overflow : 'auto',
   fontSize: "30px",
   textAlign: "center",
   backgroundColor: "#54E5A2",
@@ -32,7 +32,7 @@ export const UploadFormTitle = styled(Typography)(({ theme }) => ({
   [theme.breakpoints.down('sm')]: {
     fontSize : '20px',
     width : '100%',
-}
+  }
 }));
 
 // Upload Image Style
@@ -73,4 +73,9 @@ export const ImageStyle = {
     width: '100%',
     padding: '12px',
 }
+
+export const Overlay = {
+    display : 'block',
+    textAlign : 'center'
+};
 

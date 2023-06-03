@@ -5,6 +5,7 @@ import LoadingSpinner from '../../../Components/UI/Common/LoadingSpinner'
 import { useSelector , useDispatch} from 'react-redux'
 import { fetchUploadedProduct } from '../../../Store/Ecommerce/productReducer'
 import ProductImage from '../../../assets/productImage.png'
+import { ModalStyle } from '../../../Styles/viewprofile';
 
 const style = {
     position: 'absolute',
@@ -122,12 +123,12 @@ const UploadedProducts = ({tokenId , match}) => {
                           }}
                         >
                           <Fade in={open}>
-                            <Box sx={style}>
+                            <ModalStyle>
                               <Typography
                                 id="transition-modal-title"
-                                variant="h6"
+                                variant="h5"
                                 component="h2"
-                                style={{ textAlign: "center" }}
+                                style={{ textAlign: "center" , fontWeight : 700}}
                               >
                                 Are You Sure That You Want To Delete This Item !
                               </Typography>
@@ -161,7 +162,7 @@ const UploadedProducts = ({tokenId , match}) => {
                                   </>
                                 )}
                               </Box>
-                            </Box>
+                            </ModalStyle>
                           </Fade>
                         </Modal>
                       </div>
