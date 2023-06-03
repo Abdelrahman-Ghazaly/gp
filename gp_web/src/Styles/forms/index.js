@@ -40,10 +40,11 @@ export const UploadFormTitle = styled(Typography)(({ theme }) => ({
 export const AddImageButton = styled(Button)(({theme}) => ({
     display : 'flex',
     flexGrow : 1,
-    width : 'auto',
-    margin : 'auto',
+    height : '200px',
+    width : '200px',
+    margin : '0 auto',
     textAlign : 'center',
-    backgroundColor : 'black',
+    backgroundColor : 'grey',
     color : 'white',
     fontSize : '20px',
     borderRadius : '15px',
@@ -64,12 +65,12 @@ export const ImageListCOntainer = styled(Button)(({theme}) => ({
 }))
 
 export const ImageStyle = {
-    position : 'relative',
-    aspectRatio : '3/3',
-    objectFit: "cover",
-    overflow: "auto",
-    borderRadius: "50px",
-    width: "100%",
-    padding: "12px",
-
+    position: 'relative',
+    aspectRatio: '3/3',
+    objectFit: 'cover',
+    overflow: 'auto',
+    borderRadius: '15px',
+    width: '100%',
+    padding: '12px',
 }
+

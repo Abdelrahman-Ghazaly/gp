@@ -90,9 +90,6 @@ const ChatBox = () => {
 
   useEffect(() => {
     dispatch(addUserToSocket())
-    // socket.on("getUsers" , user => {
-    //   console.log(user)
-    // })
   },[dispatch])
 
   console.log(messages)

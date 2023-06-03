@@ -19,8 +19,7 @@ const LoginForm = () => {
   const dispatch = useDispatch()
   const navigate = useNavigate()
 
-  const { userData , error} = useSelector(state =>  state.auth)
-  const [isLoggedIn , setIsLoggedIn] = useState(false)
+  const { error } = useSelector(state =>  state.auth)
 
   const [showPassword, setShowPassword] = useState(false);
   const handleClickShowPassword = () => setShowPassword((show) => !show);
@@ -31,17 +30,13 @@ const LoginForm = () => {
   const handleSubmitForm = async (data) => {
 
         await dispatch(userLogin(data))
-          .then((res) => {
-            if (res.meta.requestStatus === "fulfilled")
-              setIsLoggedIn(true);
-          })
-          .catch((err) => {
-            console.log(err);
-          });
-
-        if (isLoggedIn) {
+        .then((res) => {
+          if (res.meta.requestStatus === "fulfilled")
           navigate("/");
-        }
+        })
+        .catch((err) => {
+          console.log(err);
+        });
 
   }
 
