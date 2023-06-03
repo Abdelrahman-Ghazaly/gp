@@ -1,12 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gp_flutter/core/app_constants/app_constants.dart';
+import 'package:gp_flutter/core/common_widgets/common_widgets.dart';
 import 'package:gp_flutter/core/utils/utilities.dart';
 import 'package:gp_flutter/features/e_commerce/presentation/bloc/delete_product_bloc/delete_product_bloc.dart';
+import 'package:gp_flutter/features/e_commerce/presentation/bloc/home_bloc/home_bloc.dart'
+    as home;
 
 import '../../../../authentication/presentation/bloc/log_in_bloc/log_in_bloc.dart'
     as log_in;
-import '../../bloc/e_commerce_user_bloc/e_commerce_user_bloc.dart';
+import '../../bloc/e_commerce_user_bloc/e_commerce_user_bloc.dart'
+    as e_commerce;
 
 class ProductLongCard extends StatelessWidget {
   const ProductLongCard(
@@ -41,18 +45,102 @@ class ProductLongCard extends StatelessWidget {
           IconButton(
             onPressed: () {
               if (logInState is log_in.Success) {
-                context.read<DeleteProductBloc>().add(
-                      DeleteFurnitureEvent(
-                        productId: productId,
-                        accessToken: logInState.userEntity.accessToken!,
+                showDialog(
+                  context: context,
+                  builder: (context) {
+                    return Dialog(
+                      child: SizedBox(
+                        height: Utilities.screenHeight * 0.2,
+                        child:
+                            BlocBuilder<DeleteProductBloc, DeleteProductState>(
+                          builder: (context, state) {
+                            if (state is Loading) {
+                              return const LoadingWidget();
+                            } else if (state is Empty) {
+                              return Column(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceEvenly,
+                                children: [
+                                  Text(
+                                    'Are you sure you want to delete this product?',
+                                    style: AppTextStyles.titileTextStyle,
+                                    textAlign: TextAlign.center,
+                                  ),
+                                  Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceEvenly,
+                                    children: [
+                                      ElevatedButton(
+                                        onPressed: () {
+                                          context.read<DeleteProductBloc>().add(
+                                                DeleteFurnitureEvent(
+                                                  productId: productId,
+                                                  accessToken: logInState
+                                                      .userEntity.accessToken!,
+                                                ),
+                                              );
+                                          context
+                                              .read<
+                                                  e_commerce
+                                                      .ECommerceUserBloc>()
+                                              .add(
+                                                e_commerce
+                                                    .GetFurnitureFromUserIdEvent(
+                                                  accessToken: logInState
+                                                      .userEntity.accessToken!,
+                                                  userId:
+                                                      logInState.userEntity.id!,
+                                                ),
+                                              );
+                                          context.read<home.HomeBloc>().add(
+                                                const home
+                                                    .GetPopularFurniturebyCategoryEvent(),
+                                              );
+                                        },
+                                        style: ElevatedButton.styleFrom(
+                                          backgroundColor: Colors.red,
+                                        ),
+                                        child: Text(
+                                          'Yes',
+                                          style: AppTextStyles.titileTextStyle
+                                              .copyWith(
+                                            color: Colors.white,
+                                          ),
+                                        ),
+                                      ),
+                                      ElevatedButton(
+                                        onPressed: () {
+                                          Navigator.pop(context);
+                                        },
+                                        style: ElevatedButton.styleFrom(
+                                          backgroundColor: Colors.blue,
+                                        ),
+                                        child: Text(
+                                          'No',
+                                          style: AppTextStyles.titileTextStyle
+                                              .copyWith(
+                                            color: Colors.black,
+                                          ),
+                                        ),
+                                      )
+                                    ],
+                                  )
+                                ],
+                              );
+                            } else if (state is Error) {
+                              return Center(
+                                child: Text(state.message),
+                              );
+                            } else {
+                              Navigator.pop(context);
+                              return Container();
+                            }
+                          },
+                        ),
                       ),
                     );
-                context.read<ECommerceUserBloc>().add(
-                      GetFurnitureFromUserIdEvent(
-                        accessToken: logInState.userEntity.accessToken!,
-                        userId: logInState.userEntity.id!,
-                      ),
-                    );
+                  },
+                );
               }
             },
             icon: const Icon(
