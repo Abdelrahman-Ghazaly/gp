@@ -3,10 +3,16 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_countdown_timer/flutter_countdown_timer.dart';
 import 'package:flutter_swiper_view/flutter_swiper_view.dart';
 import 'package:go_router/go_router.dart';
+import 'package:gp_flutter/features/auction/presentation/bloc/bid_auction_bloc/bloc/bid_auction_bloc_bloc.dart'
+    as bid_auction;
+import 'package:gp_flutter/features/authentication/presentation/screens/log_in_screen.dart';
 
 import '../../../../core/app_constants/app_colors.dart';
 import '../../../../core/utils/utilities.dart';
+import '../../../authentication/presentation/bloc/log_in_bloc/log_in_bloc.dart'
+    as login_bloc;
 import '../bloc/get_auction_by_id/get_auction_by_id_bloc.dart';
+import '../widgets/price_container.dart';
 
 class AuctionDetailsScreen extends StatelessWidget {
   final String auctionId;
@@ -18,6 +24,7 @@ class AuctionDetailsScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final width = Utilities.screenWidth;
     final height = Utilities.screenHeight;
+    TextEditingController bidAmount = TextEditingController();
     context.read<GetAuctionByIdBloc>().add(GetDataEvent(auctionId));
     return BlocBuilder<GetAuctionByIdBloc, GetAuctionByIdState>(
       builder: (context, state) {
@@ -242,17 +249,89 @@ class AuctionDetailsScreen extends StatelessWidget {
                             ],
                           ),
                         ),
-                        Container(
-                          height: height * 0.07,
-                          width: width * 0.4,
-                          decoration: BoxDecoration(
-                            color: const Color(0xfff9f08d),
-                            borderRadius: BorderRadius.circular(5),
-                          ),
-                          child: const Center(
-                            child: Text("Place a bid",
-                                style: TextStyle(
-                                    fontSize: 22, fontWeight: FontWeight.bold)),
+                        GestureDetector(
+                          onTap: () {
+                            final logInState =
+                                context.read<login_bloc.LogInBloc>().state;
+                            if (logInState is login_bloc.Success) {
+                              showDialog(
+                                context: context,
+                                builder: (BuildContext context) => Dialog(
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: Column(
+                                      mainAxisSize: MainAxisSize.min,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: <Widget>[
+                                        const SizedBox(height: 5),
+                                        Row(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.center,
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceEvenly,
+                                          children: [
+                                            PriceContainer(
+                                              size: 0.17,
+                                              width: width,
+                                              height: height,
+                                              controller: bidAmount,
+                                              label: 'BidAmount',
+                                            ),
+                                          ],
+                                        ),
+                                        const SizedBox(height: 15),
+                                        TextButton(
+                                          onPressed: () {
+                                            if (int.parse(bidAmount.text) >
+                                                state
+                                                    .auctionData.currentPrice) {
+                                              Navigator.pop(context);
+                                              context
+                                                  .read<
+                                                      bid_auction
+                                                          .BidAuctionBloc>()
+                                                  .add(bid_auction
+                                                      .BidAuctionEvent(
+                                                          auctionId: auctionId,
+                                                          bidAmount: int.parse(
+                                                              bidAmount.text),
+                                                          userToken: logInState
+                                                              .userEntity
+                                                              .accessToken!));
+                                            } else {
+                                              ScaffoldMessenger.of(context)
+                                                  .showSnackBar(
+                                                const SnackBar(
+                                                    content: Text(
+                                                        'please Enter a Vaild Bid')),
+                                              );
+                                            }
+                                          },
+                                          child: const Text('Done'),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                              );
+                            } else {
+                              return context.go('/login_screen');
+                            }
+                          },
+                          child: Container(
+                            height: height * 0.07,
+                            width: width * 0.4,
+                            decoration: BoxDecoration(
+                              color: const Color(0xfff9f08d),
+                              borderRadius: BorderRadius.circular(5),
+                            ),
+                            child: const Center(
+                              child: Text("Place a bid",
+                                  style: TextStyle(
+                                      fontSize: 22,
+                                      fontWeight: FontWeight.bold)),
+                            ),
                           ),
                         )
                       ],

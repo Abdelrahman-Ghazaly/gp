@@ -12,6 +12,7 @@ class FormTextField extends StatefulWidget {
     required this.keyboardType,
     this.previousPassword,
     this.validator = _defaultValidator,
+    this.maxLines = 1,
   });
   final bool isPassword;
   final IconData icon;
@@ -20,6 +21,7 @@ class FormTextField extends StatefulWidget {
   final TextInputType keyboardType;
   final String? previousPassword;
   final String? Function(String? value)? validator;
+  final int maxLines;
 
   @override
   State<FormTextField> createState() => _FormTextFieldState();
@@ -48,6 +50,7 @@ class _FormTextFieldState extends State<FormTextField> {
       keyboardType: widget.keyboardType,
       style: const TextStyle(fontSize: 15),
       obscureText: !isVisible,
+      maxLines: widget.maxLines,
       decoration: InputDecoration(
         prefixIcon: Icon(
           widget.icon,

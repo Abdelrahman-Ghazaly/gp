@@ -23,6 +23,7 @@ class SearchScreen extends StatelessWidget {
           searchController: searchController,
           maxPrice: maxPrice,
           minPrice: minPrice,
+          hasHero: false,
           onPressed: () {
             context.read<SearchBloc>().add(
                   GetFurnitireFromSearchEvent(

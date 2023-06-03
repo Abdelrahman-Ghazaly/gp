@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_swiper_view/flutter_swiper_view.dart';
 import 'package:go_router/go_router.dart';
+import '../../../../core/common_widgets/common_widgets.dart';
 
 import '../../../../core/app_constants/app_colors.dart';
 import '../../../../core/utils/utilities.dart';
@@ -19,7 +20,7 @@ class AuctionCardDesign extends StatelessWidget {
     return BlocBuilder<AllAuctionsBloc, AllAuctionsState>(
       builder: (context, state) {
         if (state is Loading) {
-          return const Center(child: CircularProgressIndicator());
+          return const LoadingWidget();
         } else if (state is Loaded) {
           return Swiper(
             itemBuilder: (context, index) {
@@ -59,7 +60,7 @@ class AuctionCardDesign extends StatelessWidget {
                                 color: Colors.white,
                                 borderRadius: BorderRadius.circular(10)),
                             child: Text(
-                                "Current Pid: ${state.auctionList[index].startPrice} \$",
+                                "Current Bid: ${state.auctionList[index].currentPrice} \$",
                                 style: const TextStyle(
                                   fontSize: 20,
                                   fontWeight: FontWeight.w400,

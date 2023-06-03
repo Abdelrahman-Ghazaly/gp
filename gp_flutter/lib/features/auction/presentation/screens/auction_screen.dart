@@ -17,8 +17,9 @@ class AuctionScreen extends StatelessWidget {
     final height = Utilities.screenHeight;
     TextEditingController searchController = TextEditingController();
     return Scaffold(
-        resizeToAvoidBottomInset: false,
-        body: Column(children: [
+      resizeToAvoidBottomInset: false,
+      body: Column(
+        children: [
           Container(
             height: height * 0.4,
             width: width,
@@ -29,34 +30,6 @@ class AuctionScreen extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                SizedBox(
-                  height: height * 0.02,
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    const Text("Discover",
-                        style: TextStyle(
-                          fontSize: 20,
-                          fontWeight: FontWeight.bold,
-                        )),
-                    CircleAvatar(
-                      backgroundColor: Colors.black26,
-                      radius: width * 0.03,
-                      child: GestureDetector(
-                        onTap: () async {
-                          return context.go(
-                              '/auction_details_screen?auction_id=5as4d646d');
-                        },
-                        child: Icon(
-                          Icons.add,
-                          size: width * 0.05,
-                          color: Colors.white,
-                        ),
-                      ),
-                    )
-                  ],
-                ),
                 const Text("Best Auction Market",
                     style: TextStyle(
                       fontSize: 30,
@@ -79,14 +52,18 @@ class AuctionScreen extends StatelessWidget {
                       IconButton(
                           onPressed: () {
                             context.read<SearchAuctionsBloc>().add(
-                                GetAuctionProductSearchEvent(
+                                  GetAuctionProductSearchEvent(
                                     searchQueryEntity: SearchQueryEntity(
-                                        name: searchController.text,
-                                        category: "",
-                                        maxPrice: "",
-                                        minPrice: "")));
+                                      name: searchController.text,
+                                      category: "",
+                                      maxPrice: "",
+                                      minPrice: "",
+                                    ),
+                                  ),
+                                );
                             return context.go(
-                                '/auction_search_screen?auction_search=${searchController.text}');
+                              '/auction_search_screen?auction_search=${searchController.text}',
+                            );
                           },
                           icon: const Icon(Icons.search)),
                       Padding(
@@ -129,11 +106,12 @@ class AuctionScreen extends StatelessWidget {
                   ),
                 ),
                 Center(
-                    child: Container(
-                  height: 2,
-                  width: width * 0.8,
-                  color: Colors.grey.withOpacity(0.3),
-                )),
+                  child: Container(
+                    height: 2,
+                    width: width * 0.8,
+                    color: Colors.grey.withOpacity(0.3),
+                  ),
+                ),
                 SizedBox(
                   height: height * 0.04,
                 )
@@ -141,9 +119,11 @@ class AuctionScreen extends StatelessWidget {
             ),
           ),
           SizedBox(
-              height: height * 0.5,
-              width: width,
-              child: const AuctionCardDesign()),
-        ]));
+            width: width,
+            child: const AuctionCardDesign(),
+          ),
+        ],
+      ),
+    );
   }
 }

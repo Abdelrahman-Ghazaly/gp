@@ -8,7 +8,6 @@ import '../../../authentication/presentation/bloc/log_in_bloc/log_in_bloc.dart'
     as log_in;
 import '../../../authentication/presentation/screens/authentication_screen.dart';
 import '../bloc/e_commerce_user_bloc/e_commerce_user_bloc.dart';
-import '../widgets/widgets.dart';
 
 class ProfileScreen extends StatelessWidget {
   const ProfileScreen({Key? key}) : super(key: key);
@@ -90,9 +89,6 @@ class ProfileScreen extends StatelessWidget {
                             itemBuilder: (context, index) => Row(
                               children: [
                                 kSpacing(10),
-                                ItemCard(
-                                  furnitureEntity: state.productList[index],
-                                ),
                                 kSpacing(10),
                               ],
                             ),

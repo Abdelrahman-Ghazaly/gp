@@ -12,21 +12,23 @@ class BidAuctionUseCase extends BaseUseCase<String, Params> {
   @override
   Future<Either<Failure, String>> call(Params params) {
     return baseAuctionRepository.bidAuction(
-      auctionId: params.productId,
-      userToken: params.userId,
+      auctionId: params.auctionId,
+      userToken: params.userToken,
       pidAmount: params.bidAmount,
     );
   }
 }
 
 class Params extends Equatable {
-  final String userId;
-  final String productId;
+  final String userToken;
+  final String auctionId;
   final int bidAmount;
 
   const Params(
-      {required this.bidAmount, required this.userId, required this.productId});
+      {required this.bidAmount,
+      required this.userToken,
+      required this.auctionId});
 
   @override
-  List<Object?> get props => [userId, productId, bidAmount];
+  List<Object?> get props => [userToken, auctionId, bidAmount];
 }
