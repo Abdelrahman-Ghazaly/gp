@@ -67,9 +67,14 @@ class ECommerceRepositoryImpl implements ECommerceRepository {
   Future<Either<Failure, String>> deleteFurniture({
     required String productId,
     required String accessToken,
-  }) {
-    // TODO: implement deleteFurniture
-    throw UnimplementedError();
+  }) async {
+    try {
+      final String result = await remoteDataSource.deleteFurniture(
+          productId: productId, accessToken: accessToken);
+      return Right(result);
+    } on ServerException catch (failure) {
+      return Left(ServerFailure(failure.errorMessageModel.statusMessage));
+    }
   }
 
   Future<Either<Failure, List<FurnitureEntity>>> _getFurnitureList(

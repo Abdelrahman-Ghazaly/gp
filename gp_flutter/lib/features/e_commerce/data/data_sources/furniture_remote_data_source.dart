@@ -40,8 +40,8 @@ abstract class FurnitureRemoteDataSource {
   });
 
   Future<String> deleteFurniture({
-    required int productId,
-    required UserEntity userEntity,
+    required String productId,
+    required String accessToken,
   });
 
   Future<String> reportFurniture({
@@ -206,11 +206,32 @@ class FurnitureRemoteDataSourceImpl extends FurnitureRemoteDataSource {
 
   @override
   Future<String> deleteFurniture({
-    required int productId,
-    required UserEntity userEntity,
-  }) {
-    // TODO: implement deleteFurniture
-    throw UnimplementedError();
+    required String productId,
+    required String accessToken,
+  }) async {
+    Response response = await dio.delete(
+      ApiConstants.deleteFurniturePath(productId),
+      options: Options(
+        method: 'DELETE',
+        followRedirects: false,
+        validateStatus: (status) {
+          return status! < 600;
+        },
+        headers: {
+          'token': "Bearer $accessToken",
+        },
+      ),
+    );
+    if (response.statusCode == 200) {
+      return 'Deleted Succesfully';
+    } else {
+      throw ServerException(
+        errorMessageModel: ErrorMessageModel(
+          statusCode: response.statusCode!,
+          statusMessage: response.statusMessage!,
+        ),
+      );
+    }
   }
 
   @override

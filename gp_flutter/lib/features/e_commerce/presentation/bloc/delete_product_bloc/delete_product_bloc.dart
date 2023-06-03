@@ -3,7 +3,6 @@ import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../../core/error/failure.dart';
-import '../../../../authentication/domain/entities/user_entity.dart';
 import '../../../domain/use_cases/product/delete_product.dart';
 
 part 'delete_product_event.dart';
