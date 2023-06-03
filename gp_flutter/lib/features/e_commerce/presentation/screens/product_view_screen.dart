@@ -5,17 +5,22 @@ import 'package:lottie/lottie.dart';
 import '../../../../core/app_constants/app_constants.dart';
 import '../../../../core/common_widgets/common_widgets.dart';
 import '../../../../core/utils/utilities.dart';
+import '../../../authentication/presentation/bloc/log_in_bloc/log_in_bloc.dart'
+    as log_in;
+import '../bloc/favorite_bloc/favorite_bloc.dart' as fav;
 import '../bloc/product_view_bloc/product_view_bloc.dart';
 import '../widgets/product_screen_widget/product_screen_widgets.dart';
-
-bool _isFavorite = false;
 
 class ProductViewScreen extends StatefulWidget {
   const ProductViewScreen({
     Key? key,
     required this.furnitureId,
+    required this.isFavorite,
+    required this.callBack,
   }) : super(key: key);
   final String furnitureId;
+  final bool isFavorite;
+  final Function callBack;
 
   @override
   State<ProductViewScreen> createState() => _ProductViewScreenState();
@@ -24,11 +29,12 @@ class ProductViewScreen extends StatefulWidget {
 class _ProductViewScreenState extends State<ProductViewScreen>
     with SingleTickerProviderStateMixin {
   late AnimationController _isFavoriteController;
-
+  late bool _isFavorite = widget.isFavorite;
   @override
   void initState() {
     super.initState();
     _isFavoriteController = AnimationController(
+      value: _isFavorite ? 1 : 0,
       vsync: this,
       duration: const Duration(
         milliseconds: 750,
@@ -38,11 +44,13 @@ class _ProductViewScreenState extends State<ProductViewScreen>
 
   @override
   Widget build(BuildContext context) {
+    final logInState = context.read<log_in.LogInBloc>().state;
+    final isLogedIn = logInState is log_in.Success;
+
     context.read<ProductViewBloc>().add(
           GetFurnitureFromIdEvent(id: widget.furnitureId),
         );
     return Scaffold(
-      appBar: const CustomAppBar(),
       body: BlocBuilder<ProductViewBloc, ProductViewState>(
         builder: (context, state) {
           if (state is Loaded) {
@@ -82,14 +90,39 @@ class _ProductViewScreenState extends State<ProductViewScreen>
                               Align(
                                 alignment: Alignment.bottomRight,
                                 child: FloatingActionButton.small(
-                                  onPressed: () {
-                                    if (_isFavorite) {
-                                      _isFavoriteController.reverse();
-                                    } else {
-                                      _isFavoriteController.forward();
-                                    }
-                                    _isFavorite = !_isFavorite;
-                                  },
+                                  onPressed: isLogedIn
+                                      ? () {
+                                          if (_isFavorite) {
+                                            context
+                                                .read<fav.FavoriteBloc>()
+                                                .add(
+                                                  fav.DeleteFavoriteEvent(
+                                                    productId:
+                                                        widget.furnitureId,
+                                                    accessToken: logInState
+                                                        .userEntity
+                                                        .accessToken!,
+                                                  ),
+                                                );
+                                            _isFavoriteController.reverse();
+                                          } else {
+                                            context
+                                                .read<fav.FavoriteBloc>()
+                                                .add(
+                                                  fav.AddFavoriteEvent(
+                                                    productId:
+                                                        widget.furnitureId,
+                                                    accessToken: logInState
+                                                        .userEntity
+                                                        .accessToken!,
+                                                  ),
+                                                );
+                                            _isFavoriteController.forward();
+                                          }
+                                          _isFavorite = !_isFavorite;
+                                          widget.callBack(_isFavorite);
+                                        }
+                                      : null,
                                   shape: const CircleBorder(),
                                   backgroundColor: Colors.white,
                                   child: Lottie.asset(

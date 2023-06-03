@@ -301,10 +301,10 @@ class FurnitureRemoteDataSourceImpl extends FurnitureRemoteDataSource {
   @override
   Future<String> deleteFavorite(
       {required String productId, required String accessToken}) async {
-    Response response = await dio.post(
+    Response response = await dio.delete(
       ApiConstants.deleteFavoritePath(productId: productId),
       options: Options(
-        method: 'POST',
+        method: 'DELETE',
         followRedirects: false,
         validateStatus: (status) {
           return status! < 600;

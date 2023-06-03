@@ -44,27 +44,7 @@ const RenderImages = ({data}) => {
                   );
                 })}
               </Swiper>
-              <Swiper
-                onSwiper={setThumbsSwiper}
-                loop={true}
-                spaceBetween={10}
-                slidesPerView={4}
-                freeMode={true}
-                watchSlidesProgress={true}
-                modules={[FreeMode, Navigation, Thumbs]}
-              >
-                {data.imgURL.map((img, idx) => {
-                  return (
-                    <SwiperSlide key={idx}>
-                      <img
-                        style={imgStyle}
-                        src={img}
-                        alt="product_image"
-                      />
-                    </SwiperSlide>
-                  );
-                })}
-              </Swiper>
+
             </>
           );
         } else {

@@ -14,17 +14,26 @@ final GoRouter router = GoRouter(routes: <GoRoute>[
       },
       routes: [
         GoRoute(
-            path: "auction_details_screen",
+            path: "login_screen",
             builder: (BuildContext context, GoRouterState state) {
-              final auctionId = state.queryParams['auction_id'];
+              final auctionId = state.queryParameters['auction_id'];
               return AuctionDetailsScreen(
                 auctionId: auctionId!,
               );
             }),
         GoRoute(
+          path: "auction_details_screen",
+          builder: (BuildContext context, GoRouterState state) {
+            final auctionId = state.queryParameters['auction_id'];
+            return AuctionDetailsScreen(
+              auctionId: auctionId!,
+            );
+          },
+        ),
+        GoRoute(
             path: "auction_search_screen",
             builder: (BuildContext context, GoRouterState state) {
-              final auctionId = state.queryParams['auction_search'];
+              final auctionId = state.queryParameters['auction_search'];
               return AuctionSearchScreen(
                 auctionSearch: auctionId!,
               );

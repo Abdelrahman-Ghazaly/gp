@@ -56,6 +56,11 @@ class FurnitureModel extends FurnitureEntity {
       category,
       price,
       sellerEntity,
+      rawImage,
+      sellerName,
+      auctionItems,
+      favorites,
+      productList,
     ];
   }
 }

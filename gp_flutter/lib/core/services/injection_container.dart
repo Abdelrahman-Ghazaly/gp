@@ -1,6 +1,13 @@
 import 'package:dio/dio.dart';
 import 'package:get_it/get_it.dart';
-
+import '../../features/e_commerce/domain/use_cases/favorite/add_favorite.dart';
+import '../../features/e_commerce/domain/use_cases/favorite/delete_favorite.dart';
+import '../../features/e_commerce/domain/use_cases/favorite/get_favorite.dart';
+import '../../features/auction/domain/usecases/bid_auction_usecase.dart';
+import '../../features/auction/presentation/bloc/bid_auction_bloc/bloc/bid_auction_bloc_bloc.dart';
+import '../../features/authentication/presentation/bloc/log_in_bloc/log_in_bloc.dart';
+import '../../features/authentication/presentation/bloc/sign_up_bloc/sign_up_bloc.dart';
+import '../../features/e_commerce/presentation/bloc/favorite_bloc/favorite_bloc.dart';
 import '../../features/auction/data/data_source/auction_reomte_data_source.dart';
 import '../../features/auction/data/repository/auction_repository.dart';
 import '../../features/auction/domain/repositories/base_auction_repository.dart';
@@ -17,8 +24,6 @@ import '../../features/authentication/data/repositories/authenitcation_repositor
 import '../../features/authentication/domain/repositories/authentication_repository.dart';
 import '../../features/authentication/domain/usecases/log_in.dart';
 import '../../features/authentication/domain/usecases/sign_up.dart';
-import '../../features/authentication/presentation/bloc/log_in_bloc/log_in_bloc.dart';
-import '../../features/authentication/presentation/bloc/sign_up_bloc/sign_up_bloc.dart';
 import '../../features/e_commerce/data/data_sources/furniture_remote_data_source.dart';
 import '../../features/e_commerce/data/repositories/e_commerce_repository_impl.dart';
 import '../../features/e_commerce/domain/repositories/e_commerce_repository.dart';
@@ -37,12 +42,12 @@ import '../../features/e_commerce/presentation/bloc/upload_product_bloc/upload_p
 
 final sl = GetIt.instance;
 
-void init() {
+Future<void> init() async {
   initBloc();
   initFeatures();
   initRepository();
   initDataSources();
-  initExternalPackages();
+  await initExternalPackages();
 }
 
 void initBloc() {
@@ -52,6 +57,11 @@ void initBloc() {
   sl.registerFactory(() => SearchBloc(getFurnitureFromSearch: sl()));
   sl.registerFactory(() => UploadProductBloc(uploadFurniture: sl()));
   sl.registerFactory(() => ECommerceUserBloc(getUserData: sl()));
+  sl.registerFactory(() => FavoriteBloc(
+        addFavorite: sl(),
+        deleteFavorite: sl(),
+        getFavorite: sl(),
+      ));
 
   sl.registerFactory(() => SignUpBloc(signUp: sl()));
   sl.registerFactory(() => LogInBloc(logIn: sl()));
@@ -59,6 +69,7 @@ void initBloc() {
   sl.registerFactory(() => AllAuctionsBloc(sl()));
   sl.registerFactory(() => GetAuctionByIdBloc(sl()));
   sl.registerFactory(() => SearchAuctionsBloc(sl()));
+  sl.registerFactory(() => BidAuctionBloc(sl()));
 }
 
 void initFeatures() {
@@ -72,12 +83,16 @@ void initFeatures() {
       () => GetPopularFurniturebyCategory(repository: sl()));
   sl.registerLazySingleton(() => DeleteFurniture(repository: sl()));
   sl.registerLazySingleton(() => UploadFurniture(repository: sl()));
+  sl.registerLazySingleton(() => GetFavorite(repository: sl()));
+  sl.registerLazySingleton(() => AddFavorite(repository: sl()));
+  sl.registerLazySingleton(() => DeleteFavorite(repository: sl()));
 
   sl.registerLazySingleton(() => UploadAuctionProductUseCase(sl()));
   sl.registerLazySingleton(() => DeleteAuctionUseCase(sl()));
   sl.registerLazySingleton(() => GetAuctionProductsUseCase(sl()));
   sl.registerLazySingleton(() => GetAuctionProductsSearchResultUseCase(sl()));
   sl.registerLazySingleton(() => ViewAuctionDataUseCase(sl()));
+  sl.registerLazySingleton(() => BidAuctionUseCase(sl()));
 }
 
 void initRepository() {
@@ -101,6 +116,7 @@ void initDataSources() {
       dio: sl<Dio>(),
     ),
   );
+
   sl.registerLazySingleton<AuthenticationRemoteDataSource>(
     () => AuthenticationRemoteDataSourceImpl(
       dio: sl<Dio>(),
@@ -113,6 +129,6 @@ void initDataSources() {
   );
 }
 
-void initExternalPackages() {
-  sl.registerLazySingleton(() => Dio());
+Future<void> initExternalPackages() async {
+  sl.registerLazySingleton<Dio>(() => Dio());
 }

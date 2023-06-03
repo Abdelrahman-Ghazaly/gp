@@ -9,6 +9,11 @@ abstract class BaseBidAuctionEvent extends Equatable {
 
 class BidAuctionEvent extends BaseBidAuctionEvent {
   final int bidAmount;
+  final String userToken;
+  final String auctionId;
 
-  const BidAuctionEvent({required this.bidAmount});
+  const BidAuctionEvent(
+      {required this.bidAmount,
+      required this.auctionId,
+      required this.userToken});
 }
