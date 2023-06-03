@@ -38,14 +38,14 @@ const DrawerHeader = styled('div')(({ theme }) => ({
 
 const ListItems = [
   {
-    name : 'inbox',
-    icon : <InboxIcon />,
-    link : '/chat'
-  },
-  {
     name : 'Auction',
     icon : <StorefrontIcon />,
     link : '/auction'
+  },
+  {
+    name : 'inbox',
+    icon : <InboxIcon />,
+    link : '/chat'
   },
   {
     name : 'View Profile',
@@ -88,9 +88,9 @@ const DrawerNav = ({open , handleDrawerClose , Categories}) => {
       </DrawerHeader>
 
       <Divider />
-      {/* Inbox And Auction */}
+      {/*  Auction */}
       <List>
-        {ListItems.slice(0, 2).map((data) => (
+        {ListItems.slice(0, 1).map((data) => (
           <ListItem key={data.name} disablePadding>
             <Link to={data.link} style={{ width: "100%" }}>
               <ListItemButton>
@@ -129,10 +129,10 @@ const DrawerNav = ({open , handleDrawerClose , Categories}) => {
 
       <Divider />
 
-      {/* View Profile */}
+      {/*Inbox && View Profile */}
       {userData && (
         <List>
-          {ListItems.slice(-1).map((data) => (
+          {ListItems.slice(1 , 3).map((data) => (
             <ListItem key={data.name} disablePadding>
               <Link to={data.link} style={{ width: "100%" }}>
                 <ListItemButton>

@@ -13,3 +13,19 @@ export const Span = styled(Typography)(() => ({
   fontWeight: "300",
   display : 'inline-block'
 }));
+
+export const ModalStyle = styled(Box)(({theme}) => ({
+  position: 'absolute',
+  top: '50%',
+  left: '50%',
+  transform: 'translate(-50%, -50%)',
+  width: '50%',
+  backgroundColor: 'white',
+  border: '2px solid #000',
+  boxShadow: 24,
+  padding : '40px  0',
+  borderRadius : '20px',
+  [theme.breakpoints.down('md')]: {
+    width : '100%',
+  }
+}));

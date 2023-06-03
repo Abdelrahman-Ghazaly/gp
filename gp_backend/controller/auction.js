@@ -2,6 +2,7 @@ const db = require("../model/auction");
 const { validateProductData } = require("../util/validation");
 const { deleteProductImages } = require("../util/images_processes");
 const errors = require("../util/error_handling");
+const {emitBidAuction} = require("../socket");
 
 exports.createAuction = async (req, res, next) => {
     try {
@@ -95,6 +96,13 @@ exports.bidAuction = async (req, res, next) => {
         const bidAmount = parseInt(req.body.bidAmount);
         const result = await db.bidAuction(auctionId, bidAmount, req.user.id);
         if (result) {
+            const socketResponse = {
+                _id: result._id,
+                current_pid: result.current_pid,
+                owner_id: result.owner_id,
+                winner_id: result.winner_id,
+            };
+            emitBidAuction(socketResponse);
             res.status(200).json(result);
         } else {
             throw new Error();
@@ -105,8 +113,7 @@ exports.bidAuction = async (req, res, next) => {
     }
 };
 
-
-exports.viewAuctionRequests = async(req,res,next)=>{
+exports.viewAuctionRequests = async (req, res, next) => {
     try {
         const result = await db.viewAuctionRequests();
         if (result) {
@@ -118,8 +125,7 @@ exports.viewAuctionRequests = async(req,res,next)=>{
         console.log(err);
         next(err);
     }
-}
-
+};
 
 exports.acceptAuctionRequest = async (req, res, next) => {
     try {

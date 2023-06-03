@@ -49,12 +49,10 @@ const AddProductForm = () => {
   const handleSubmitForm = async (data, e) => {
     e.preventDefault();
 
-    if (data.imgURL.length != 0) {
+    if (data.imgURL != null) {
       formData.append("title", data.title);
       formData.append("description", data.description);
-      for (var i = 0; i < data.imgURL.length; i++) {
-        formData.append("imgURL", data.imgURL[i]);
-      }
+      formData.append("imgURL", data.imgURL[0][0]);
       formData.append("category", data.category)
       formData.append("price", data.price)
 
@@ -66,10 +64,9 @@ const AddProductForm = () => {
     }
   }
 
-  // Get Image Array
+  // Get Image From UploadImage Component
   const imageValue = useCallback((imgArray) => {
     setValue("imgURL", imgArray);
-    console.log(imgArray)
   }, [setValue])
 
   return (
@@ -170,10 +167,6 @@ const AddProductForm = () => {
               </MenuItem>
             ))}
           </TextField>
-
-          <h3 style={{ textAlign: "center", color: "red" }}>
-            *Only 4 Images Are Allowed*
-          </h3>
 
           {/* Upload Product Component */}
           <UploadImage imageValue={imageValue} />

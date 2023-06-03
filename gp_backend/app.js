@@ -2,7 +2,7 @@ const express = require("express");
 const app = express();
 require("dotenv").config();
 
-const databaseConnection = require("./util/Database_Connection"); 
+const databaseConnection = require("./util/Database_Connection");
 
 const authRoutes = require("./routes/auth");
 const adminRoutes = require("./routes/admin");
@@ -11,7 +11,7 @@ const productRoutes = require("./routes/product");
 const auctionRoutes = require("./routes/auction");
 const reportRoutes = require("./routes/report");
 const cartRoutes = require("./routes/fav");
-const conversationRoute = require('./routes/conversation')
+const conversationRoute = require("./routes/conversation");
 const messageRoute = require("./routes/message");
 
 app.use(express.json());
@@ -53,6 +53,4 @@ app.use((error, req, res, next) => {
 
 app.listen(5000, databaseConnection.init);
 
-require('./socket')
-
-
+require("./socket");
