@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:get_it/get_it.dart';
+import 'package:gp_flutter/features/e_commerce/presentation/bloc/report_furniture_bloc/report_furniture_bloc.dart';
 import '../../features/e_commerce/domain/use_cases/favorite/add_favorite.dart';
 import '../../features/e_commerce/domain/use_cases/favorite/delete_favorite.dart';
 import '../../features/e_commerce/domain/use_cases/favorite/get_favorite.dart';
@@ -7,6 +8,7 @@ import '../../features/auction/domain/usecases/bid_auction_usecase.dart';
 import '../../features/auction/presentation/bloc/bid_auction_bloc/bloc/bid_auction_bloc_bloc.dart';
 import '../../features/authentication/presentation/bloc/log_in_bloc/log_in_bloc.dart';
 import '../../features/authentication/presentation/bloc/sign_up_bloc/sign_up_bloc.dart';
+import '../../features/e_commerce/domain/use_cases/product/report_furniture.dart';
 import '../../features/e_commerce/presentation/bloc/favorite_bloc/favorite_bloc.dart';
 import '../../features/auction/data/data_source/auction_reomte_data_source.dart';
 import '../../features/auction/data/repository/auction_repository.dart';
@@ -57,6 +59,7 @@ void initBloc() {
   sl.registerFactory(() => SearchBloc(getFurnitureFromSearch: sl()));
   sl.registerFactory(() => UploadProductBloc(uploadFurniture: sl()));
   sl.registerFactory(() => ECommerceUserBloc(getUserData: sl()));
+  sl.registerFactory(() => ReportFurnitureBloc(reportFurniture: sl()));
   sl.registerFactory(() => FavoriteBloc(
         addFavorite: sl(),
         deleteFavorite: sl(),
@@ -83,6 +86,7 @@ void initFeatures() {
       () => GetPopularFurniturebyCategory(repository: sl()));
   sl.registerLazySingleton(() => DeleteFurniture(repository: sl()));
   sl.registerLazySingleton(() => UploadFurniture(repository: sl()));
+  sl.registerLazySingleton(() => ReportFurniture(repository: sl()));
   sl.registerLazySingleton(() => GetFavorite(repository: sl()));
   sl.registerLazySingleton(() => AddFavorite(repository: sl()));
   sl.registerLazySingleton(() => DeleteFavorite(repository: sl()));

@@ -1,4 +1,5 @@
 import 'package:dartz/dartz.dart';
+import 'package:gp_flutter/features/e_commerce/domain/entities/report_entity.dart';
 
 import '../../../../core/error/exceptions.dart';
 import '../../../../core/error/failure.dart';
@@ -64,8 +65,8 @@ class ECommerceRepositoryImpl implements ECommerceRepository {
 
   @override
   Future<Either<Failure, String>> deleteFurniture({
-    required int productId,
-    required UserEntity userEntity,
+    required String productId,
+    required String accessToken,
   }) {
     // TODO: implement deleteFurniture
     throw UnimplementedError();
@@ -156,6 +157,23 @@ class ECommerceRepositoryImpl implements ECommerceRepository {
     try {
       final List<FurnitureEntity> result =
           await remoteDataSource.getFavorite(accessToken: accessToken);
+      return Right(result);
+    } on ServerException catch (failure) {
+      return Left(ServerFailure(failure.errorMessageModel.statusMessage));
+    }
+  }
+
+  @override
+  Future<Either<Failure, String>> reportFurniture(
+      {required String productId,
+      required String accessToken,
+      required ReportEntity report}) async {
+    try {
+      final String result = await remoteDataSource.reportFurniture(
+        productId: productId,
+        accessToken: accessToken,
+        report: report,
+      );
       return Right(result);
     } on ServerException catch (failure) {
       return Left(ServerFailure(failure.errorMessageModel.statusMessage));

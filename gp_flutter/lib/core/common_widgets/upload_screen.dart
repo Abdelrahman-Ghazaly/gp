@@ -2,6 +2,7 @@ import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:gp_flutter/features/authentication/presentation/screens/authentication_screen.dart';
 import '../app_constants/app_constants.dart';
 import '../utils/utilities.dart';
 import '../../features/authentication/presentation/widgets/form_text_field.dart';
@@ -21,26 +22,31 @@ class UploadScreen extends StatefulWidget {
 }
 
 class _UploadScreenState extends State<UploadScreen> {
+  final GlobalKey<FormState> formKey = GlobalKey<FormState>();
+  final TextEditingController name = TextEditingController();
+  final TextEditingController description = TextEditingController();
+  final TextEditingController price = TextEditingController();
+  final TextEditingController category = TextEditingController();
+
   Future<XFile?> _loadImage() async {
     return await ImagePicker().pickImage(source: ImageSource.gallery);
   }
 
   Uint8List? displayImage;
+  XFile? rawImage;
 
   _uploadData(BuildContext context) async {
     final logInState = context.read<LogInBloc>().state;
     if (logInState is Success) {
-      XFile? rawImage = await _loadImage();
-
       if (!context.mounted) return;
 
       context.read<upload.UploadProductBloc>().add(
             upload.UploadFurnitureEvent(
               furniture: FurnitureModel(
-                title: 'title',
-                description: 'description',
-                category: 'bed',
-                price: 500,
+                title: name.text,
+                description: description.text,
+                category: category.text.toLowerCase(),
+                price: num.tryParse(price.text) as int,
                 rawImage: rawImage,
                 sellerEntity: SellerEntity(
                   id: logInState.userEntity.id!,
@@ -55,70 +61,105 @@ class _UploadScreenState extends State<UploadScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final GlobalKey<FormState> formKey = GlobalKey<FormState>();
-    final TextEditingController name = TextEditingController();
-    final TextEditingController description = TextEditingController();
-    final TextEditingController price = TextEditingController();
-
+    final isLoggedIn = context.read<LogInBloc>().state is Success;
     return Scaffold(
-      body: SingleChildScrollView(
-        child: Form(
-          key: formKey,
-          child: Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Column(
-              children: [
-                GestureDetector(
-                  onTap: () async {
-                    final rawImage = await _loadImage();
-                    displayImage = await rawImage?.readAsBytes();
-                    setState(() {});
-                  },
-                  child: Container(
-                    height: Utilities.screenWidth * 0.5,
-                    width: Utilities.screenWidth * 0.5,
-                    decoration: BoxDecoration(
-                      color: AppColors.appGreyColor,
-                      borderRadius: BorderRadius.circular(20),
-                    ),
-                    child: displayImage == null
-                        ? const Icon(Icons.upload)
-                        : Image.memory(
-                            displayImage!,
-                            fit: BoxFit.cover,
+      body: isLoggedIn
+          ? SingleChildScrollView(
+              child: Form(
+                key: formKey,
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Column(
+                    children: [
+                      GestureDetector(
+                        onTap: () async {
+                          rawImage = await _loadImage();
+                          displayImage = await rawImage?.readAsBytes();
+                          setState(() {});
+                        },
+                        child: Container(
+                          height: Utilities.screenWidth * 0.5,
+                          width: Utilities.screenWidth * 0.5,
+                          decoration: BoxDecoration(
+                            color: AppColors.appGreyColor,
+                            borderRadius: BorderRadius.circular(20),
                           ),
+                          child: displayImage == null
+                              ? const Icon(
+                                  Icons.upload,
+                                  size: 50,
+                                )
+                              : Image.memory(
+                                  displayImage!,
+                                  fit: BoxFit.cover,
+                                ),
+                        ),
+                      ),
+                      kSpacing(20),
+                      FormTextField(
+                        icon: Icons.chair,
+                        labelText: 'Furniture Name',
+                        controller: name,
+                        keyboardType: TextInputType.name,
+                      ),
+                      kSpacing(20),
+                      FormTextField(
+                        icon: Icons.edit,
+                        labelText: 'Furniture Description',
+                        controller: description,
+                        keyboardType: TextInputType.name,
+                        maxLines: 5,
+                      ),
+                      kSpacing(20),
+                      DropdownMenu(
+                        leadingIcon: const Icon(Icons.category),
+                        width: Utilities.screenWidth,
+                        label: const Text('Furniture Category'),
+                        dropdownMenuEntries: categoryList,
+                        controller: category,
+                      ),
+                      kSpacing(20),
+                      FormTextField(
+                        icon: Icons.attach_money,
+                        labelText: 'Furniture price',
+                        controller: price,
+                        keyboardType: TextInputType.number,
+                        validator: (value) {
+                          var price = num.tryParse(value!);
+                          if (price == null || price <= 0) {
+                            return 'Please enter a valid price';
+                          } else if (price.runtimeType == double) {
+                            return 'Please enter a whole number';
+                          }
+                          return null;
+                        },
+                      ),
+                      kSpacing(20),
+                      ElevatedButton(
+                        onPressed: () async {
+                          if (formKey.currentState!.validate() ||
+                              category.text.isNotEmpty) {
+                            await _uploadData(context);
+                          }
+                        },
+                        child: const Text('Upload'),
+                      ),
+                      kSpacing(20),
+                    ],
                   ),
                 ),
-                FormTextField(
-                  icon: Icons.chair,
-                  labelText: 'Furniture Name',
-                  controller: name,
-                  keyboardType: TextInputType.name,
-                ),
-                FormTextField(
-                  icon: Icons.edit,
-                  labelText: 'Furniture Description',
-                  controller: description,
-                  keyboardType: TextInputType.name,
-                  maxLines: 5,
-                ),
-                FormTextField(
-                  icon: Icons.attach_money,
-                  labelText: 'Furniture price',
-                  controller: price,
-                  keyboardType: TextInputType.number,
-                ),
-                ElevatedButton(
-                  onPressed: () async {
-                    await _uploadData(context);
-                  },
-                  child: const Text('Upload'),
-                ),
-              ],
-            ),
-          ),
-        ),
-      ),
+              ),
+            )
+          : const AuthenticationScreen(),
     );
   }
 }
+
+const List<DropdownMenuEntry> categoryList = [
+  DropdownMenuEntry(value: 'bed', label: 'Bed'),
+  DropdownMenuEntry(value: 'chair', label: 'Chair'),
+  DropdownMenuEntry(value: 'dresser', label: 'Dresser'),
+  DropdownMenuEntry(value: 'lamp', label: 'Lamp'),
+  DropdownMenuEntry(value: 'sofa', label: 'Sofa'),
+  DropdownMenuEntry(value: 'table', label: 'Table'),
+];

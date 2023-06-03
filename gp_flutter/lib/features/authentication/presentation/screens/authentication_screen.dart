@@ -15,7 +15,7 @@ class AuthenticationScreen extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Text(
-            'Please Continue iwth an account to Have The Best Experience',
+            'Please continue with an account to have the best experience',
             style: AppTextStyles.headerTextStyle,
             textAlign: TextAlign.center,
           ),

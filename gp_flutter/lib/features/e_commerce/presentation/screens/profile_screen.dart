@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:gp_flutter/features/e_commerce/presentation/widgets/profile_screen_widget/product_long_card.dart';
 
 import '../../../../core/app_constants/app_constants.dart';
 import '../../../../core/common_widgets/common_widgets.dart';
@@ -84,12 +85,18 @@ class ProfileScreen extends StatelessWidget {
                           height: Utilities.screenHeight * 0.35,
                           width: Utilities.screenWidth,
                           child: ListView.builder(
-                            scrollDirection: Axis.horizontal,
                             itemCount: state.productList.length,
-                            itemBuilder: (context, index) => Row(
+                            itemBuilder: (context, index) => Column(
                               children: [
-                                kSpacing(10),
-                                kSpacing(10),
+                                Padding(
+                                  padding: const EdgeInsets.all(10),
+                                  child: ProductLongCard(
+                                    name: state.productList[index].title,
+                                    imageUrl: state
+                                        .productList[index].imageUrls!.first,
+                                    productId: state.productList[index].id!,
+                                  ),
+                                ),
                               ],
                             ),
                           ),

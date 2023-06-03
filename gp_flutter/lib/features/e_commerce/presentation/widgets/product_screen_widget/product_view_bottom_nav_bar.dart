@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:gp_flutter/core/app_constants/app_colors.dart';
 
 import '../../../../../core/utils/utilities.dart';
 import 'product_screen_widgets.dart';
@@ -14,7 +15,7 @@ class ProductViewBottomNavBar extends StatelessWidget {
       width: Utilities.screenWidth,
       height: Utilities.screenHeight * 0.07,
       decoration: const BoxDecoration(
-        color: Color(0xff2f314f),
+        color: AppColors.appGreemColor,
         boxShadow: [
           BoxShadow(
             color: Colors.black,

@@ -5,6 +5,7 @@ import '../../../authentication/domain/entities/user_entity.dart';
 import '../../data/models/furniture_model.dart';
 import '../entities/furniture_entity.dart';
 import '../entities/query_entity.dart';
+import '../entities/report_entity.dart';
 
 abstract class ECommerceRepository {
   Future<Either<Failure, Map<String, List<FurnitureEntity>>>>
@@ -35,8 +36,14 @@ abstract class ECommerceRepository {
   });
 
   Future<Either<Failure, String>> deleteFurniture({
-    required int productId,
-    required UserEntity userEntity,
+    required String productId,
+    required String accessToken,
+  });
+
+  Future<Either<Failure, String>> reportFurniture({
+    required String productId,
+    required String accessToken,
+    required ReportEntity report,
   });
 
   Future<Either<Failure, List<FurnitureEntity>>> getFavorite({

@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:dio/dio.dart';
+import 'package:gp_flutter/features/e_commerce/domain/entities/report_entity.dart';
 import 'package:http_parser/http_parser.dart';
 import 'package:image_picker/image_picker.dart';
 
@@ -41,6 +42,12 @@ abstract class FurnitureRemoteDataSource {
   Future<String> deleteFurniture({
     required int productId,
     required UserEntity userEntity,
+  });
+
+  Future<String> reportFurniture({
+    required String productId,
+    required String accessToken,
+    required ReportEntity report,
   });
 
   Future<String> addFavorite({
@@ -204,6 +211,42 @@ class FurnitureRemoteDataSourceImpl extends FurnitureRemoteDataSource {
   }) {
     // TODO: implement deleteFurniture
     throw UnimplementedError();
+  }
+
+  @override
+  Future<String> reportFurniture({
+    required String productId,
+    required String accessToken,
+    required ReportEntity report,
+  }) async {
+    Map data = {
+      'report_type': report.reportType,
+      'description': report.description
+    };
+    Response response = await dio.post(
+      ApiConstants.reportFurniturePath(productId),
+      options: Options(
+        followRedirects: false,
+        validateStatus: (status) {
+          return status! < 600;
+        },
+        headers: {
+          'token': "Bearer $accessToken",
+        },
+      ),
+      data: data,
+    );
+
+    if (response.statusCode == 200) {
+      return 'Reported Succesfully';
+    } else {
+      throw ServerException(
+        errorMessageModel: ErrorMessageModel(
+          statusCode: response.statusCode!,
+          statusMessage: response.statusMessage!,
+        ),
+      );
+    }
   }
 
   Future<List<FurnitureEntity>> _getFurnitureList({required String url}) async {

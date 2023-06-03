@@ -38,6 +38,9 @@ class ApiConstants {
   static String deleteFurniturePath(productId) =>
       '${_productBaseUrl}delete/$productId';
 
+  static String reportFurniturePath(productId) =>
+      '${_baseUrl}report/$productId';
+
   //* Search End Points
 
   static const String _productSearchBaseUrl =

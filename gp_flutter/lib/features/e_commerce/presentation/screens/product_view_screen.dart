@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart' hide AppBar;
+import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lottie/lottie.dart';
 
@@ -51,6 +51,7 @@ class _ProductViewScreenState extends State<ProductViewScreen>
           GetFurnitureFromIdEvent(id: widget.furnitureId),
         );
     return Scaffold(
+      appBar: AppBar(),
       body: BlocBuilder<ProductViewBloc, ProductViewState>(
         builder: (context, state) {
           if (state is Loaded) {
@@ -122,7 +123,13 @@ class _ProductViewScreenState extends State<ProductViewScreen>
                                           _isFavorite = !_isFavorite;
                                           widget.callBack(_isFavorite);
                                         }
-                                      : null,
+                                      : () {
+                                          showDialog(
+                                            context: context,
+                                            builder: (context) =>
+                                                const NotSignedInDialoge(),
+                                          );
+                                        },
                                   shape: const CircleBorder(),
                                   backgroundColor: Colors.white,
                                   child: Lottie.asset(

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:gp_flutter/features/e_commerce/presentation/bloc/report_furniture_bloc/report_furniture_bloc.dart';
 import 'features/auction/presentation/bloc/bid_auction_bloc/bloc/bid_auction_bloc_bloc.dart';
 import 'features/e_commerce/presentation/bloc/favorite_bloc/favorite_bloc.dart';
 import 'features/authentication/presentation/bloc/log_in_bloc/log_in_bloc.dart';
@@ -40,6 +41,7 @@ class MyApp extends StatelessWidget {
         BlocProvider(create: (context) => sl<ProductViewBloc>()),
         BlocProvider(create: (context) => sl<SearchBloc>()),
         BlocProvider(create: (context) => sl<UploadProductBloc>()),
+        BlocProvider(create: (context) => sl<ReportFurnitureBloc>()),
         BlocProvider(create: (context) => sl<GetAuctionByIdBloc>()),
         BlocProvider(create: (context) => sl<AllAuctionsBloc>()),
         BlocProvider(create: (context) => sl<SearchAuctionsBloc>()),
