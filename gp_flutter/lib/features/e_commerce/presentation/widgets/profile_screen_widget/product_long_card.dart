@@ -48,6 +48,24 @@ class ProductLongCard extends StatelessWidget {
                 showDialog(
                   context: context,
                   builder: (context) {
+                    delete() {
+                      context.read<DeleteProductBloc>().add(
+                            DeleteFurnitureEvent(
+                              productId: productId,
+                              accessToken: logInState.userEntity.accessToken!,
+                            ),
+                          );
+                      context.read<e_commerce.ECommerceUserBloc>().add(
+                            e_commerce.GetFurnitureFromUserIdEvent(
+                              accessToken: logInState.userEntity.accessToken!,
+                              userId: logInState.userEntity.id!,
+                            ),
+                          );
+                      context.read<home.HomeBloc>().add(
+                            const home.GetPopularFurniturebyCategoryEvent(),
+                          );
+                    }
+
                     return Dialog(
                       child: SizedBox(
                         height: Utilities.screenHeight * 0.2,
@@ -56,7 +74,10 @@ class ProductLongCard extends StatelessWidget {
                           builder: (context, state) {
                             if (state is Loading) {
                               return const LoadingWidget();
-                            } else if (state is Empty) {
+                            } else if (state is Success) {
+                              Navigator.pop(context);
+                              return Container();
+                            } else {
                               return Column(
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceEvenly,
@@ -72,30 +93,7 @@ class ProductLongCard extends StatelessWidget {
                                     children: [
                                       ElevatedButton(
                                         onPressed: () {
-                                          context.read<DeleteProductBloc>().add(
-                                                DeleteFurnitureEvent(
-                                                  productId: productId,
-                                                  accessToken: logInState
-                                                      .userEntity.accessToken!,
-                                                ),
-                                              );
-                                          context
-                                              .read<
-                                                  e_commerce
-                                                      .ECommerceUserBloc>()
-                                              .add(
-                                                e_commerce
-                                                    .GetFurnitureFromUserIdEvent(
-                                                  accessToken: logInState
-                                                      .userEntity.accessToken!,
-                                                  userId:
-                                                      logInState.userEntity.id!,
-                                                ),
-                                              );
-                                          context.read<home.HomeBloc>().add(
-                                                const home
-                                                    .GetPopularFurniturebyCategoryEvent(),
-                                              );
+                                          delete();
                                         },
                                         style: ElevatedButton.styleFrom(
                                           backgroundColor: Colors.red,
@@ -127,13 +125,6 @@ class ProductLongCard extends StatelessWidget {
                                   )
                                 ],
                               );
-                            } else if (state is Error) {
-                              return Center(
-                                child: Text(state.message),
-                              );
-                            } else {
-                              Navigator.pop(context);
-                              return Container();
                             }
                           },
                         ),

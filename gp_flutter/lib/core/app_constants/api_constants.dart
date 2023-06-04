@@ -76,4 +76,14 @@ class ApiConstants {
       '${_favoriteBaseUrl}remove/$productId';
 
   static const String getFavoritePath = '${_favoriteBaseUrl}get';
+
+  //* Chat End Points
+
+  static const String socketUrl = 'http://10.0.2.2:5002/';
+
+  static const String createConversationUrl =
+      'http://10.0.2.2:5000/conversation/';
+
+  static String getConversationUrl(String userId) =>
+      'http://10.0.2.2:5000/conversation/$userId';
 }
