@@ -1,9 +1,6 @@
 import 'package:dartz/dartz.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:gp_admin_flutter/features/auction/domain/usecases/accept_auction_usecase.dart'
-    as accept_auction;
-import 'package:gp_admin_flutter/features/auction/domain/usecases/refuse_auction_usecase.dart';
 
 import '../../../../../core/error/failure.dart';
 

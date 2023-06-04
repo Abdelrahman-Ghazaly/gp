@@ -3,15 +3,15 @@ import 'package:equatable/equatable.dart';
 
 import '../../../../core/error/failure.dart';
 import '../../../../core/use_case/use_case.dart';
-import '../repositories/base_request_repository.dart';
+import '../repositories/base_report_repository.dart';
 
-class RefuseRequestUseCase extends BaseUseCase<String, Params> {
-  final BaseAuctionRepository baseAuctionRepository;
+class RefuseReportUseCase extends BaseUseCase<String, Params> {
+  final BaseReportRepository baseAuctionRepository;
 
-  RefuseRequestUseCase(this.baseAuctionRepository);
+  RefuseReportUseCase(this.baseAuctionRepository);
   @override
   Future<Either<Failure, String>> call(Params params) {
-    return baseAuctionRepository.refuseAuction(
+    return baseAuctionRepository.refuseReport(
         params.adminToken, params.productId);
   }
 }
