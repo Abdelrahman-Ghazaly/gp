@@ -19,7 +19,7 @@ class ReportRemoteDataSource extends BaseReportRemoteDataSource {
   ReportRemoteDataSource({required this.dio});
   @override
   Future<List<ReportEntity>> getReports(String adminToken) async {
-    Response response = await dio.get(ApiConstants.auctionViewRequestsPath,
+    Response response = await dio.get(ApiConstants.viewReportsPath,
         options: Options(
           followRedirects: false,
           headers: {
@@ -40,7 +40,7 @@ class ReportRemoteDataSource extends BaseReportRemoteDataSource {
 
   @override
   Future<String> acceptReportProduct(String reportId, String adminToken) async {
-    Response response = await dio.put(
+    Response response = await dio.delete(
       ApiConstants.acceptReportPath(
         reportId,
       ),

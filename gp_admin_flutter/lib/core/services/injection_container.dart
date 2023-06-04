@@ -20,6 +20,7 @@ import '../../features/authentication/domain/usecases/log_in.dart';
 import '../../features/authentication/presentation/bloc/log_in_bloc/log_in_bloc.dart';
 import '../../features/reports/data/datasources/report_reomte_data_source.dart';
 import '../../features/reports/domain/usecases/accept_report_usecase.dart';
+import '../../features/reports/domain/usecases/get_reports_usecase.dart';
 import '../../features/reports/domain/usecases/refuse_report_usecase.dart';
 
 final sl = GetIt.instance;
@@ -53,6 +54,7 @@ void initFeatures() {
   sl.registerLazySingleton(() => RefuseAuctionUseCase(sl()));
   sl.registerLazySingleton(() => AcceptReportUseCase(sl()));
   sl.registerLazySingleton(() => RefuseReportUseCase(sl()));
+  sl.registerLazySingleton(() => GetReportsUseCase(sl()));
 }
 
 void initRepository() {
