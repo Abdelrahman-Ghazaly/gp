@@ -2,7 +2,10 @@ import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:gp_flutter/core/common_widgets/common_widgets.dart';
 import 'package:gp_flutter/features/authentication/presentation/screens/authentication_screen.dart';
+import 'package:gp_flutter/features/e_commerce/presentation/bloc/e_commerce_user_bloc/e_commerce_user_bloc.dart';
+import 'package:gp_flutter/features/e_commerce/presentation/bloc/home_bloc/home_bloc.dart';
 import '../app_constants/app_constants.dart';
 import '../utils/utilities.dart';
 import '../../features/authentication/presentation/widgets/form_text_field.dart';
@@ -61,7 +64,8 @@ class _UploadScreenState extends State<UploadScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final isLoggedIn = context.read<LogInBloc>().state is Success;
+    final logInState = context.read<LogInBloc>().state;
+    final isLoggedIn = logInState is Success;
     return Scaffold(
       body: isLoggedIn
           ? SingleChildScrollView(
@@ -135,14 +139,84 @@ class _UploadScreenState extends State<UploadScreen> {
                         },
                       ),
                       kSpacing(20),
-                      ElevatedButton(
-                        onPressed: () async {
-                          if (formKey.currentState!.validate() ||
-                              category.text.isNotEmpty) {
-                            await _uploadData(context);
+                      BlocListener<upload.UploadProductBloc,
+                          upload.UploadProductState>(
+                        listener: (context, state) {
+                          if (state is upload.Error) {
+                            showDialog(
+                              context: context,
+                              builder: (context) => Dialog(
+                                child: Center(
+                                  child: Text(state.message),
+                                ),
+                              ),
+                            );
+                            setState(() {
+                              name.clear();
+                              description.clear();
+                              displayImage = null;
+                              rawImage = null;
+                              category.clear();
+                              price.clear();
+                            });
+                          } else if (state is upload.Success) {
+                            showDialog(
+                              context: context,
+                              builder: (context) => Dialog(
+                                child: Center(
+                                  child: Text(state.message),
+                                ),
+                              ),
+                            );
+                            setState(() {
+                              name.clear();
+                              description.clear();
+                              displayImage = null;
+                              rawImage = null;
+                              category.clear();
+                              price.clear();
+                            });
+                          } else {
+                            showDialog(
+                              context: context,
+                              builder: (context) => const Dialog(
+                                child: Center(
+                                  child: LoadingWidget(),
+                                ),
+                              ),
+                            );
+                            setState(() {
+                              name.clear();
+                              description.clear();
+                              displayImage = null;
+                              rawImage = null;
+                              category.clear();
+                              price.clear();
+                            });
                           }
                         },
-                        child: const Text('Upload'),
+                        child: ElevatedButton(
+                          onPressed: () async {
+                            if (formKey.currentState!.validate() ||
+                                category.text.isNotEmpty) {
+                              await _uploadData(context);
+
+                              if (!mounted) return;
+
+                              context.read<HomeBloc>().add(
+                                    const GetPopularFurniturebyCategoryEvent(),
+                                  );
+                              context.read<ECommerceUserBloc>().add(
+                                    GetFurnitureFromUserIdEvent(
+                                      accessToken:
+                                          logInState.userEntity.accessToken!,
+                                      userId: logInState.userEntity.id!,
+                                    ),
+                                  );
+                            }
+                          },
+                          child: const Text('Upload'),
+                        ),
                       ),
                       kSpacing(20),
                     ],
