@@ -1,5 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:gp_flutter/features/chat/presentation/bloc/create_conversation_bloc/create_conversation_bloc.dart';
+import 'package:gp_flutter/features/chat/presentation/bloc/get_conversation_bloc/get_conversation_bloc.dart';
+import 'package:gp_flutter/features/chat/presentation/bloc/get_messages_bloc/get_messages_bloc.dart';
+import 'package:gp_flutter/features/chat/presentation/bloc/get_user_name_bloc/get_user_name_bloc.dart';
+import 'package:gp_flutter/features/chat/presentation/bloc/send_message_bloc/send_message_bloc.dart';
 import 'package:gp_flutter/features/e_commerce/presentation/bloc/report_furniture_bloc/report_furniture_bloc.dart';
 import 'features/auction/presentation/bloc/bid_auction_bloc/bloc/bid_auction_bloc_bloc.dart';
 import 'features/e_commerce/presentation/bloc/favorite_bloc/favorite_bloc.dart';
@@ -19,9 +24,9 @@ import 'features/auction/presentation/bloc/get_all_auctions_bloc/all_auctions_bl
 import 'features/auction/presentation/bloc/get_auction_by_id/get_auction_by_id_bloc.dart';
 import 'features/auction/presentation/bloc/search_auctions_bloc/search_auctions_bloc.dart';
 
-void main() async {
+void main() {
   WidgetsFlutterBinding.ensureInitialized();
-  await init();
+  init();
   runApp(const MyApp());
 }
 
@@ -45,7 +50,12 @@ class MyApp extends StatelessWidget {
         BlocProvider(create: (context) => sl<GetAuctionByIdBloc>()),
         BlocProvider(create: (context) => sl<AllAuctionsBloc>()),
         BlocProvider(create: (context) => sl<SearchAuctionsBloc>()),
-        BlocProvider(create: (context) => sl<BidAuctionBloc>())
+        BlocProvider(create: (context) => sl<BidAuctionBloc>()),
+        BlocProvider(create: (context) => sl<GetConversationsBloc>()),
+        BlocProvider(create: (context) => sl<CreateConversationBloc>()),
+        BlocProvider(create: (context) => sl<GetMessagesBloc>()),
+        BlocProvider(create: (context) => sl<SendMessageBloc>()),
+        BlocProvider(create: (context) => sl<GetUserNameBloc>()),
       ],
       child: MaterialApp.router(
         title: 'GP E-Commerce',

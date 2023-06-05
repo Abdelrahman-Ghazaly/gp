@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:gp_flutter/features/chat/presentation/screens/conversation_screen.dart';
 import 'custom_app_bar.dart';
 import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
 
@@ -36,7 +37,7 @@ class _BottomNavBarState extends State<BottomNavBar> {
       const AuctionScreen(),
       const UploadScreen(),
       const ProfileScreen(),
-      Container(),
+      const ConversationScreen(),
     ];
   }
 

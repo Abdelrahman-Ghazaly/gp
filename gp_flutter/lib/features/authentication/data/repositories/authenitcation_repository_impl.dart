@@ -4,7 +4,7 @@ import '../../../../core/error/exceptions.dart';
 import '../../../../core/error/failure.dart';
 import '../../domain/entities/user_entity.dart';
 import '../../domain/repositories/authentication_repository.dart';
-import '../datasources/authentication_remote_data_source.dart';
+import '../data_sources/authentication_remote_data_source.dart';
 import '../models/user_model.dart';
 
 class AuthenitcationRepositoryImpl implements AuthenticationRepository {

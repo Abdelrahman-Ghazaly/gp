@@ -12,7 +12,7 @@ class MessageModel extends MessageEntity {
     return MessageModel(
       conversationId: map['conversationId'],
       message: map['text'],
-      senderId: map['senderId'],
+      senderId: map['sender'],
       createdAt: map['createdAt'],
     );
   }

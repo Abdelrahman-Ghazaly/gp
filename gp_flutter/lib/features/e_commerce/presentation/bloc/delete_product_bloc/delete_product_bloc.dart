@@ -21,7 +21,6 @@ class DeleteProductBloc extends Bloc<DeleteProductEvent, DeleteProductState> {
           ),
         );
         emit(await _eitherSuccessOrErrorState(failureOrString));
-        emit(Empty());
       },
     );
   }

@@ -13,15 +13,19 @@ class GetMessages extends BaseUseCase<List<MessageEntity>, Params> {
 
   @override
   Future<Either<Failure, List<MessageEntity>>> call(Params params) {
-    return repository.getMessages(conversationId: params.conversationId);
+    return repository.getMessages(
+      conversationId: params.conversationId,
+      accessToken: params.accessToken,
+    );
   }
 }
 
 class Params extends Equatable {
   final String conversationId;
+  final String accessToken;
 
-  const Params({required this.conversationId});
+  const Params({required this.conversationId, required this.accessToken});
 
   @override
-  List<Object?> get props => [conversationId];
+  List<Object?> get props => [conversationId, accessToken];
 }
