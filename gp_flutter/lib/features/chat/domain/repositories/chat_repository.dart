@@ -7,20 +7,26 @@ import '../../../../core/error/failure.dart';
 abstract class ChatRepository {
   Future<Either<Failure, List<ConversationEntity>>> getConversations({
     required String userId,
+    required String accessToken,
   });
 
   Future<Either<Failure, List<MessageEntity>>> getMessages({
     required String conversationId,
+    required String accessToken,
   });
 
-  Future<Either<Failure, void>> createConversation({
+  Future<Either<Failure, String>> createConversation({
     required String userId,
     required String receiverId,
+    required String accessToken,
   });
+
+  Future<Either<Failure, String>> getUserName({required String userId});
 
   Future<Either<Failure, void>> sendMessage({
     required String message,
     required String conversationId,
     required String userId,
+    required String accessToken,
   });
 }

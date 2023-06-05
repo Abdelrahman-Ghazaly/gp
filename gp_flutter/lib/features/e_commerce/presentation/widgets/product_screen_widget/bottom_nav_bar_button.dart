@@ -7,14 +7,17 @@ class BottomNavBarButton extends StatelessWidget {
     required this.text,
     required this.icon,
     this.isCall = false,
+    this.onTap,
   });
   final String text;
   final IconData icon;
   final bool isCall;
+  final void Function()? onTap;
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
+      onTap: onTap,
       child: Container(
         decoration: BoxDecoration(
           color: isCall ? Colors.white : null,

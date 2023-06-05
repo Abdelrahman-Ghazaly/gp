@@ -54,6 +54,8 @@ class ApiConstants {
 
   static const String _userBaseUrl = '${_baseUrl}user/';
 
+  static String getUserNameUrl(String userId) => _userBaseUrl + userId;
+
   static String viewProfilePath(String userId) =>
       '${_userBaseUrl}view/profile/$userId';
 
@@ -81,9 +83,13 @@ class ApiConstants {
 
   static const String socketUrl = 'http://10.0.2.2:5002/';
 
-  static const String createConversationUrl =
-      'http://10.0.2.2:5000/conversation/';
+  static const String createConversationUrl = '${_baseUrl}conversation/';
 
   static String getConversationUrl(String userId) =>
-      'http://10.0.2.2:5000/conversation/$userId';
+      '${_baseUrl}conversation/$userId';
+
+  static String getMessagesUrl(String conversationId) =>
+      '${_baseUrl}message/$conversationId';
+
+  static String sendMessageUrl = '${_baseUrl}message/';
 }

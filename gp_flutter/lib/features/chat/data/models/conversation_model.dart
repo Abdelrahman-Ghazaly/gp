@@ -14,11 +14,4 @@ class ConversationModel extends ConversationEntity {
       recieverId: map['members'][1],
     );
   }
-
-  Map<String, dynamic> toMap() {
-    return {
-      'senderId': senderId,
-      'recieverId': recieverId,
-    };
-  }
 }
