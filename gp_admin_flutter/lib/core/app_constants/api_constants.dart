@@ -14,11 +14,14 @@ class ApiConstants {
       '${_auctionBaseUrl}accept/$auctionId';
   static String auctionRefuseRequestsPath(auctionId) =>
       '${_auctionBaseUrl}refuse/$auctionId';
-  //* User End Points
+  //* Report End Points
 
-  static const String _userBaseUrl = '${_baseUrl}user/';
-
-  static const String viewProfilePath = '${_userBaseUrl}view/profile/';
+  static const String _reportBaseUrl = '${_baseUrl}report/';
+  static const String viewReportsPath = '${_reportBaseUrl}view';
+  static String acceptReportPath(reportId) =>
+      '${_reportBaseUrl}accept/$reportId';
+  static String refuseReportPath(reportId) =>
+      '${_reportBaseUrl}refuse/$reportId';
 
   //* Auth End Points
 

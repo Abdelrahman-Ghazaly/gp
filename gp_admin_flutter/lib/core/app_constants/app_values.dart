@@ -1,48 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-enum Category {
-  bed,
-  chair,
-  sofa,
-  lamp,
-  table,
-  dresser,
-}
-
-extension MapToString on Category? {
-  String mapToString() {
-    switch (this) {
-      case Category.bed:
-        return 'bed';
-      case Category.chair:
-        return 'chair';
-      case Category.sofa:
-        return 'sofa';
-      case Category.lamp:
-        return 'lamp';
-      case Category.table:
-        return 'table';
-      case Category.dresser:
-        return 'dresser';
-      case null:
-        return '';
-      default:
-        return '';
-    }
-  }
-}
-
-const List<String> searchCategory = [
-  "All",
-  "bed",
-  "chair",
-  "sofa",
-  'lamp',
-  "table",
-  "dresser",
-];
-
 const double kAppBarHeight = 75;
 
 const String _baseIconUrl = 'assets/icons/';

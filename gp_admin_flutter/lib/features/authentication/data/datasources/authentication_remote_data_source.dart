@@ -25,8 +25,8 @@ class AuthenticationRemoteDataSourceImpl
   Future<UserEntity> logIn(
       {required String email, required String password}) async {
     Map<String, String> data = {
-      'email': email,
-      'password': password,
+      'email': "Admin@gmail.com",
+      'password': "Admin@pass_admin",
     };
     Response response = await dio.post(
       ApiConstants.logInPath,
