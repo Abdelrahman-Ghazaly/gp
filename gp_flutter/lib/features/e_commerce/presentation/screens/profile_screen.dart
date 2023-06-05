@@ -25,6 +25,8 @@ class ProfileScreen extends StatelessWidget {
             ),
           );
     }
+    List<String> myProduct = ["Auctions", "E-Commerce"];
+    int activeMenu = 0;
     return Scaffold(
       body: isLoggedIn
           ? SingleChildScrollView(
@@ -78,38 +80,121 @@ class ProfileScreen extends StatelessWidget {
                   const Text('Phone Number'),
                   Text(logInState.userEntity.phoneNumber),
                   kSpacing(20),
-                  BlocBuilder<ECommerceUserBloc, ECommerceUserState>(
-                    builder: (context, state) {
-                      if (state is Loaded) {
-                        return SizedBox(
-                          height: Utilities.screenHeight * 0.35,
-                          width: Utilities.screenWidth,
-                          child: ListView.builder(
-                            itemCount: state.productList.length,
-                            itemBuilder: (context, index) => Column(
-                              children: [
-                                Padding(
-                                  padding: const EdgeInsets.all(10),
-                                  child: ProductLongCard(
-                                    name: state.productList[index].title,
-                                    imageUrl: state
-                                        .productList[index].imageUrls!.first,
-                                    productId: state.productList[index].id!,
-                                  ),
+                  StatefulBuilder(
+                      builder: (BuildContext context, StateSetter setState) {
+                    return Column(
+                      children: [
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: List.generate(myProduct.length, (index) {
+                            return Padding(
+                              padding: const EdgeInsets.only(right: 25.0),
+                              child: GestureDetector(
+                                onTap: () {
+                                  setState(() {
+                                    activeMenu = index;
+                                  });
+                                },
+                                child: Column(
+                                  children: [
+                                    Container(
+                                      decoration: BoxDecoration(
+                                        border: activeMenu == index
+                                            ? const Border(
+                                                top: BorderSide(
+                                                    color:
+                                                        AppColors.appBlackColor,
+                                                    width: 4),
+                                              )
+                                            : null,
+                                      ),
+                                      child: Padding(
+                                        padding:
+                                            const EdgeInsets.only(top: 12.0),
+                                        child: Text(
+                                          myProduct[index],
+                                          style: TextStyle(
+                                              fontSize: 16,
+                                              color: activeMenu == index
+                                                  ? AppColors.appBlackColor
+                                                      .withOpacity(0.9)
+                                                  : AppColors.appBlackColor
+                                                      .withOpacity(0.5)),
+                                        ),
+                                      ),
+                                    )
+                                  ],
                                 ),
-                              ],
-                            ),
-                          ),
-                        );
-                      } else if (state is Error) {
-                        return Text(state.message);
-                      } else {
-                        return const Center(
-                          child: LoadingWidget(),
-                        );
-                      }
-                    },
-                  ),
+                              ),
+                            );
+                          }),
+                        ),
+                        BlocBuilder<ECommerceUserBloc, ECommerceUserState>(
+                          builder: (context, state) {
+                            if (state is Loaded) {
+                              return SizedBox(
+                                  height: Utilities.screenHeight * 0.35,
+                                  width: Utilities.screenWidth,
+                                  child: activeMenu == 0
+                                      ? ListView.builder(
+                                          itemCount: state.auctionList.length,
+                                          itemBuilder: (context, index) =>
+                                              Column(
+                                            children: [
+                                              Padding(
+                                                padding:
+                                                    const EdgeInsets.all(10),
+                                                child: ProductLongCard(
+                                                  name: state
+                                                      .auctionList[index].title,
+                                                  imageUrl: state
+                                                      .auctionList[index]
+                                                      .image
+                                                      .first,
+                                                  productId: state
+                                                      .auctionList[index]
+                                                      .auctionId,
+                                                  isAuction: true,
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                        )
+                                      : ListView.builder(
+                                          itemCount: state.productList.length,
+                                          itemBuilder: (context, index) =>
+                                              Column(
+                                            children: [
+                                              Padding(
+                                                padding:
+                                                    const EdgeInsets.all(10),
+                                                child: ProductLongCard(
+                                                  name: state
+                                                      .productList[index].title,
+                                                  imageUrl: state
+                                                      .productList[index]
+                                                      .imageUrls!
+                                                      .first,
+                                                  productId: state
+                                                      .productList[index].id!,
+                                                  isAuction: false,
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                        ));
+                            } else if (state is Error) {
+                              return Text(state.message);
+                            } else {
+                              return const Center(
+                                child: LoadingWidget(),
+                              );
+                            }
+                          },
+                        )
+                      ],
+                    );
+                  }),
                 ],
               ),
             )

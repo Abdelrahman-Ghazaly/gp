@@ -14,8 +14,12 @@ class Loading extends ECommerceUserState {}
 class Loaded extends ECommerceUserState {
   final UserEntity userEntity;
   final List<FurnitureEntity> productList;
+  final List<AuctionEntities> auctionList;
 
-  const Loaded({required this.productList, required this.userEntity});
+  const Loaded(
+      {required this.auctionList,
+      required this.productList,
+      required this.userEntity});
 
   @override
   List<Object> get props => [productList, userEntity];

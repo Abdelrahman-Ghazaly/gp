@@ -5,10 +5,10 @@ import '../../../../../core/error/failure.dart';
 import '../../../../../core/use_case/use_case.dart';
 import '../../repositories/e_commerce_repository.dart';
 
-class DeleteFurniture implements BaseUseCase<String, Params> {
+class DeleteAuction implements BaseUseCase<String, Params> {
   final ECommerceRepository repository;
 
-  DeleteFurniture({required this.repository});
+  DeleteAuction({required this.repository});
 
   @override
   Future<Either<Failure, String>> call(Params params) {
@@ -25,11 +25,12 @@ class Params extends Equatable {
   final String accessToken;
   final bool isAuction;
 
-  const Params(
-      {required this.productId,
-      required this.accessToken,
-      required this.isAuction});
+  const Params({
+    required this.productId,
+    required this.isAuction,
+    required this.accessToken,
+  });
 
   @override
-  List<Object?> get props => [productId, accessToken, isAuction];
+  List<Object?> get props => [productId, accessToken];
 }

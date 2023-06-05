@@ -20,8 +20,11 @@ class AuctionScreen extends StatelessWidget {
       resizeToAvoidBottomInset: false,
       body: Column(
         children: [
+          SizedBox(
+            height: height * 0.02,
+          ),
           Container(
-            height: height * 0.4,
+            height: height * 0.2,
             width: width,
             padding: EdgeInsets.symmetric(
               horizontal: width * 0.05,
@@ -119,6 +122,7 @@ class AuctionScreen extends StatelessWidget {
             ),
           ),
           SizedBox(
+            height: height * 0.5,
             width: width,
             child: const AuctionCardDesign(),
           ),

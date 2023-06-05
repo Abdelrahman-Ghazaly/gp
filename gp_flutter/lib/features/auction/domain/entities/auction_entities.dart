@@ -8,7 +8,7 @@ class AuctionEntities extends Equatable {
   final String category;
   final String duration;
   final String auctionId;
-  final OwnerEntities owner;
+  final OwnerEntities? owner;
   final double startPrice;
   final double currentPrice;
   final bool isAccepted;
@@ -38,12 +38,12 @@ class AuctionEntities extends Equatable {
         currentPrice,
         auctionId,
         isAccepted,
-        owner
+        owner!
       ];
 }
 
 class OwnerEntities {
- final String id;
+  final String id;
   final String name;
 
   OwnerEntities({required this.id, required this.name});

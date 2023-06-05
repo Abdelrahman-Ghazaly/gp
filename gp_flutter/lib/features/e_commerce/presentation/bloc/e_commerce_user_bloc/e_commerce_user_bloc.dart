@@ -1,6 +1,7 @@
 import 'package:dartz/dartz.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:gp_flutter/features/auction/domain/entities/auction_entities.dart';
 
 import '../../../../../core/error/failure.dart';
 import '../../../../authentication/domain/entities/user_entity.dart';
@@ -33,6 +34,7 @@ class ECommerceUserBloc extends Bloc<ECommerceUserEvent, ECommerceUserState> {
             ({
               UserEntity userEntity,
               List<FurnitureEntity> productsList,
+              List<AuctionEntities> auctionList
             })>
         failureOrFurniture,
   ) async {
@@ -41,6 +43,7 @@ class ECommerceUserBloc extends Bloc<ECommerceUserEvent, ECommerceUserState> {
       (result) => Loaded(
         productList: result.productsList,
         userEntity: result.userEntity,
+        auctionList: result.auctionList,
       ),
     );
   }

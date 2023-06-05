@@ -17,11 +17,13 @@ class ProductLongCard extends StatelessWidget {
       {Key? key,
       required this.imageUrl,
       required this.name,
-      required this.productId})
+      required this.productId,
+      required this.isAuction})
       : super(key: key);
   final String imageUrl;
   final String productId;
   final String name;
+  final bool isAuction;
 
   @override
   Widget build(BuildContext context) {
@@ -53,6 +55,7 @@ class ProductLongCard extends StatelessWidget {
                             DeleteFurnitureEvent(
                               productId: productId,
                               accessToken: logInState.userEntity.accessToken!,
+                              isAuction: isAuction,
                             ),
                           );
                       context.read<e_commerce.ECommerceUserBloc>().add(
