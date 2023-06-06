@@ -160,15 +160,19 @@ const ProductView = () => {
                   >
                     Add To Favorite
                   </Button>
-                  <Button
-                    variant="contained"
-                    size="small"
-                    color="primary"
-                    onClick={() => handleSubmit()}
-                    style={{display : 'block', margin : '15px 0'}}
-                  >
-                    Chat With {data.user_id?.name}
-                  </Button>
+
+                  {userData?._id !== sellerId && (
+                    <Button
+                      variant="contained"
+                      size="small"
+                      color="primary"
+                      onClick={() => handleSubmit()}
+                      style={{ display: "block", margin: "15px 0" }}
+                    >
+                      Chat With {data.user_id?.name}
+                    </Button>
+                  )}
+                  
                   {show && rednerToast()}
                 </Grid>
               </Grid>
