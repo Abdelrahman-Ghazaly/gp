@@ -65,6 +65,7 @@ class ConversationScreen extends StatelessWidget {
                           child: UserCard(
                             name: otherUsers.elementAt(index),
                             conversation: state.conversations[index],
+                            userId: logInState.userEntity.id!,
                           ),
                         );
                       } else {

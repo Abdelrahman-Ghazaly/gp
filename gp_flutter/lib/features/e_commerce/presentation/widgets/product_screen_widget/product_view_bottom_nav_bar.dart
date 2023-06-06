@@ -38,14 +38,20 @@ class ProductViewBottomNavBar extends StatelessWidget {
           ),
           BlocListener<CreateConversationBloc, CreateConversationState>(
             listener: (context, state) {
-              if (state is Success) {
-                Utilities().pushTo(
-                  context,
-                  screen: ChatRoom(
-                    conversationId: state.conversationId,
-                    name: seller.name,
-                  ),
-                );
+              final logInState = context.read<log_in.LogInBloc>().state;
+
+              if (logInState is log_in.Success) {
+                if (state is Success) {
+                  Utilities().pushTo(
+                    context,
+                    screen: ChatRoom(
+                      conversationId: state.conversationId,
+                      name: seller.name,
+                      userId: logInState.userEntity.id!,
+                      recieverId: seller.id,
+                    ),
+                  );
+                }
               }
             },
             child: BottomNavBarButton(

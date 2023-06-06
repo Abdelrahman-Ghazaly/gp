@@ -1,5 +1,4 @@
 import 'package:dartz/dartz.dart';
-import 'package:flutter/widgets.dart';
 
 import 'package:gp_flutter/core/error/failure.dart';
 import 'package:gp_flutter/features/chat/data/data_sources/chat_remote_data_source.dart';

@@ -19,7 +19,7 @@ class MessageModel extends MessageEntity {
 
   Map<String, dynamic> toMap() {
     return {
-      'senderId': senderId,
+      'sender': senderId,
       'text': message,
       'conversationId': conversationId,
     };
