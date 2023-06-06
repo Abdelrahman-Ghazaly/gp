@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-
-import '../../../../../core/app_constants/app_values.dart';
+import 'package:gp_flutter/core/app_constants/app_constants.dart';
 
 class BottomNavBarButton extends StatelessWidget {
   const BottomNavBarButton({
@@ -8,20 +7,23 @@ class BottomNavBarButton extends StatelessWidget {
     required this.text,
     required this.icon,
     this.isCall = false,
+    this.onTap,
   });
   final String text;
   final IconData icon;
   final bool isCall;
+  final void Function()? onTap;
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
+      onTap: onTap,
       child: Container(
         decoration: BoxDecoration(
           color: isCall ? Colors.white : null,
           border: Border.all(
             width: 1,
-            color: isCall ? Colors.black : Colors.white,
+            color: isCall ? AppColors.appGreemColor : Colors.white,
           ),
         ),
         child: Padding(
@@ -33,13 +35,13 @@ class BottomNavBarButton extends StatelessWidget {
             children: [
               Icon(
                 icon,
-                color: isCall ? Colors.black : Colors.white,
+                color: isCall ? Colors.black54 : Colors.white,
               ),
               kSpacing(5),
               Text(
                 text,
                 style: TextStyle(
-                  color: isCall ? Colors.black : Colors.white,
+                  color: isCall ? Colors.black54 : Colors.white,
                 ),
               ),
             ],

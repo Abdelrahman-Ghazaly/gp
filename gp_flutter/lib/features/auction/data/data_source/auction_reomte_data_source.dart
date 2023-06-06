@@ -1,4 +1,8 @@
+import 'dart:io';
+
 import 'package:dio/dio.dart';
+import 'package:http_parser/http_parser.dart';
+import 'package:image_picker/image_picker.dart';
 
 import '../../../../core/app_constants/api_constants.dart';
 import '../../../../core/error/exceptions.dart';
@@ -15,7 +19,7 @@ abstract class BaseAuctionRemoteDataSource {
   Future<List<AuctionEntities>> getAuctionProductsSearchResult(
       SearchQueryEntity searchQueryEntity);
 
-  Future<int> uploadAuctionProduct(
+  Future<String> uploadAuctionProduct(
       AuctionEntities auctionProduct, String userToken);
 
   Future<String> deleteAuction(String userToken, String auctionId);
@@ -114,10 +118,51 @@ class AuctionRemoteDataSource extends BaseAuctionRemoteDataSource {
   }
 
   @override
-  Future<int> uploadAuctionProduct(
-      AuctionEntities auctionProduct, String userToken) {
-    // TODO: implement uploadAuctionProduct
-    throw UnimplementedError();
+  Future<String> uploadAuctionProduct(
+      AuctionEntities auctionProduct, String userToken) async {
+    XFile rawImage = auctionProduct.rawImage!;
+
+    File file = File(rawImage.path);
+    final String imageType = file.path.split('.').last;
+    var finalFile = await MultipartFile.fromFile(
+      file.path,
+      contentType: MediaType('image', imageType),
+    );
+
+    Map<String, dynamic> map = {
+      "title": auctionProduct.title,
+      'description': auctionProduct.description,
+      'imgURL': [finalFile],
+      'category': auctionProduct.category,
+      'startPrice': auctionProduct.startPrice,
+      "duration": int.parse(auctionProduct.duration),
+    };
+    FormData data = FormData.fromMap(map);
+
+    Response response = await dio.post(
+      ApiConstants.auctionUploadProductPath,
+      options: Options(
+        method: 'POST',
+        followRedirects: false,
+        validateStatus: (status) {
+          return status! < 600;
+        },
+        headers: {
+          'token': "Bearer $userToken",
+        },
+      ),
+      data: data,
+    );
+    if (response.statusCode == 201) {
+      return 'Uploaded Succesfully';
+    } else {
+      throw ServerException(
+        errorMessageModel: ErrorMessageModel(
+          statusCode: response.statusCode!,
+          statusMessage: response.statusMessage!,
+        ),
+      );
+    }
   }
 
   @override

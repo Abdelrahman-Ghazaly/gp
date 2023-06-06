@@ -2,7 +2,6 @@ import 'package:flutter/material.dart' hide AppBar;
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../core/app_constants/app_constants.dart';
-import '../../../../core/utils/utilities.dart';
 import '../bloc/home_bloc/home_bloc.dart';
 import '../widgets/widgets.dart';
 
@@ -24,11 +23,8 @@ class HomeScreen extends StatelessWidget {
               ),
               child: Column(
                 children: [
-                  const HeaderText(title: 'Our Categories'),
-                  kSpacing(20),
-                  SizedBox(
-                    height: Utilities.screenHeight * 0.1,
-                    child: const Placeholder(),
+                  const HeaderText(
+                    title: 'Our Categories',
                   ),
                   kSpacing(20),
                   ...List.generate(

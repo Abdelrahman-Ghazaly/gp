@@ -20,7 +20,7 @@ class ApiConstants {
   static String auctionBidProductPath(auctionId) =>
       '$auctionBaseUrl/bid/$auctionId';
   //'http://10.0.2.2:5000/'
-  static const String _baseUrl = 'http://10.0.2.2:5000/';
+  static const String _baseUrl = 'http://192.168.1.2:5000/';
 
   //* Product End Points
 
@@ -38,6 +38,9 @@ class ApiConstants {
   static String deleteFurniturePath(productId) =>
       '${_productBaseUrl}delete/$productId';
 
+  static String reportFurniturePath(productId) =>
+      '${_baseUrl}report/$productId';
+
   //* Search End Points
 
   static const String _productSearchBaseUrl =
@@ -50,6 +53,8 @@ class ApiConstants {
   //* User End Points
 
   static const String _userBaseUrl = '${_baseUrl}user/';
+
+  static String getUserNameUrl(String userId) => _userBaseUrl + userId;
 
   static String viewProfilePath(String userId) =>
       '${_userBaseUrl}view/profile/$userId';
@@ -73,4 +78,18 @@ class ApiConstants {
       '${_favoriteBaseUrl}remove/$productId';
 
   static const String getFavoritePath = '${_favoriteBaseUrl}get';
+
+  //* Chat End Points
+
+  static const String socketUrl = 'http://10.0.2.2:5002/';
+
+  static const String createConversationUrl = '${_baseUrl}conversation/';
+
+  static String getConversationUrl(String userId) =>
+      '${_baseUrl}conversation/$userId';
+
+  static String getMessagesUrl(String conversationId) =>
+      '${_baseUrl}message/$conversationId';
+
+  static String sendMessageUrl = '${_baseUrl}message/';
 }

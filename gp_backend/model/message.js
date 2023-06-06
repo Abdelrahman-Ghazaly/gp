@@ -1,7 +1,6 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
-
 const MessageSchema = new mongoose.Schema(
     {
         conversationId: {
@@ -35,7 +34,6 @@ exports.createMessage = async (conversationId, sender, text) => {
         throw new Error();
     }
 };
-
 
 exports.getMessages = async (conversationId) => {
     try {

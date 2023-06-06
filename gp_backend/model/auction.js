@@ -62,7 +62,7 @@ exports.createAuction = async (auctionData, user_id, imgURL) => {
     try {
         const { title, description, category, startPrice, duration } =
             auctionData;
-        // const currentDate = moment();
+            imgURL = [imgURL]
         const auction = new Auction({
             title,
             description,
@@ -72,8 +72,6 @@ exports.createAuction = async (auctionData, user_id, imgURL) => {
             start_price: startPrice,
             current_pid: startPrice,
             duration,
-            // start_date: currentDate.toISOString(),
-            // end_date: currentDate.add(duration, "milliseconds").toISOString(),
         });
         const result = await auction.save();
         return result;

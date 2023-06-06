@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:gp_flutter/core/common_widgets/common_widgets.dart';
 import '../../../../authentication/presentation/bloc/log_in_bloc/log_in_bloc.dart';
 import 'package:lottie/lottie.dart';
 
@@ -147,7 +148,12 @@ class _ItemCardState extends State<ItemCard>
                             }
                             _isFavorite = !_isFavorite;
                           }
-                        : null,
+                        : () {
+                            showDialog(
+                              context: context,
+                              builder: (context) => const NotSignedInDialoge(),
+                            );
+                          },
                     shape: const CircleBorder(),
                     backgroundColor: Colors.white,
                     elevation: 5,

@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 
 import '../app_constants/app_constants.dart';
 
-class AppBar extends StatelessWidget with PreferredSizeWidget {
-  const AppBar({Key? key})
+class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
+  const CustomAppBar({Key? key})
       : preferredSize = const Size.fromHeight(kAppBarHeight),
         super(key: key);
 
@@ -13,45 +13,27 @@ class AppBar extends StatelessWidget with PreferredSizeWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      height: kAppBarHeight,
-      decoration: const BoxDecoration(
-        color: Colors.white,
-        boxShadow: [
-          BoxShadow(
-            color: Colors.grey,
-            offset: Offset(0.0, 1.0),
-            blurRadius: 6.0,
+    return SafeArea(
+      child: AppBar(
+        backgroundColor: Colors.white,
+        shadowColor: Colors.black.withOpacity(0.4),
+        elevation: 5,
+        title: Text(
+          'Furniture',
+          style: AppTextStyles.appBarTextStyle,
+        ),
+        actions: [
+          IconButton(
+            onPressed: () {},
+            icon: const Icon(
+              CupertinoIcons.heart_fill,
+            ),
+          ),
+          IconButton(
+            onPressed: () {},
+            icon: const Icon(CupertinoIcons.search),
           ),
         ],
-      ),
-      child: SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 5.0),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text(
-                'Furniture',
-                style: AppTextStyles.appBarTextStyle,
-              ),
-              Row(
-                children: [
-                  IconButton(
-                    onPressed: () {},
-                    icon: const Icon(
-                      CupertinoIcons.heart_fill,
-                    ),
-                  ),
-                  IconButton(
-                    onPressed: () {},
-                    icon: const Icon(CupertinoIcons.search),
-                  ),
-                ],
-              ),
-            ],
-          ),
-        ),
       ),
     );
   }

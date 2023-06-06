@@ -1,6 +1,7 @@
 const errors = require("./error_handling");
 const { initializeApp } = require("firebase/app");
-const productDb = require("../model/product")
+const productDb = require("../model/product");
+const axios = require("axios");
 const {
     getStorage,
     ref,
@@ -10,6 +11,7 @@ const {
 } = require("firebase/storage");
 const firebaseConfig = require("../config/firebase.config");
 const multerConfig = require("../config/multer.config");
+const { categoriesFilter } = require("../config/AI_model_categories");
 const multer = require("multer");
 
 //Initialize a firebase application
@@ -21,33 +23,62 @@ const storage = getStorage();
 exports.uploadImage = multer({
     storage: multer.memoryStorage(),
     fileFilter: multerConfig.fileFilter,
-}).array((fieldName = "imgURL"), (maxCount = 4));
+}).single((fieldName = "imgURL"));
 
-exports.uploadToFirebase = async (req, res, next) => {
+const roboflowRequest = async (image) => {
     try {
-        const images = req.files;
-        const imageURLs = [];
-        if (!images[0]) {
-            errors.validationError("no images sent");
+        const params = {
+            api_key: "7CVuFQZ0jkW9W7LywkTh",
+        };
+        const headers = {
+            "Content-Type": "application/x-www-form-urlencoded",
+        };
+        const response = await axios.post(
+            "https://detect.roboflow.com/furniture-detection-qiufc/20",
+            image,
+            {
+                params,
+                headers,
+            }
+        );
+        const data = await response.data;
+        return data["predictions"];
+    } catch (err) {
+        throw err;
+    }
+};
+
+const getImageCategory = async (image) => {
+    try {
+        const predictions = await roboflowRequest(image);
+        !predictions[0] && errors.validationError("Image isn't Clear");
+        let prediction = predictions[0]["class"];
+        for ([index, predict] in predictions) {
+            if (predictions.length - 1 == index) {
+                break;
+            }
+            if (predict["confidence"] < predictions[index + 1]["confidence"]) {
+                prediction = predictions[index + 1]["class"];
+            }
         }
-        for (const image of images) {
-            const dateTime = new Date();
-            const storageRef = ref(
-                storage,
-                `products/${image.originalname + dateTime}`
-            );
-            const metadata = {
-                contentType: image.mimetype,
-            };
-            const snapshot = await uploadBytesResumable(
-                storageRef,
-                image.buffer,
-                metadata
-            );
-            const URL = await getDownloadURL(snapshot.ref);
-            imageURLs.push(URL);
+        !categoriesFilter[prediction.toLowerCase()] &&
+            errors.validationError("Image isn't Clear");
+        return categoriesFilter[prediction.toLowerCase()];
+    } catch (err) {
+        throw err;
+    }
+};
+
+exports.classifyImageCategory = async (req, res, next) => {
+    try {
+        const image = req.file;
+        if (!image) {
+            errors.validationError("no image sent");
         }
-        req.imageURLs = imageURLs;
+        const imageBase64File = image.buffer.toString("base64");
+        categoriesFilter;
+        const prediction = await getImageCategory(imageBase64File);
+        req.category = prediction;
         next();
     } catch (err) {
         console.log(err);
@@ -55,6 +86,30 @@ exports.uploadToFirebase = async (req, res, next) => {
     }
 };
 
+exports.uploadToFirebase = async (req, res, next) => {
+    try {
+        const image = req.file;
+        const dateTime = new Date();
+        const storageRef = ref(
+            storage,
+            `products/${image.originalname + dateTime}`
+        );
+        const metadata = {
+            contentType: image.mimetype,
+        };
+        const snapshot = await uploadBytesResumable(
+            storageRef,
+            image.buffer,
+            metadata
+        );
+        const URL = await getDownloadURL(snapshot.ref);
+        req.imageURL = URL;
+        next();
+    } catch (err) {
+        console.log(err);
+        next(err);
+    }
+};
 
 exports.deleteProductImages = async (imgURL) => {
     try {

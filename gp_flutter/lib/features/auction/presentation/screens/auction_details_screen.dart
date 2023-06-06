@@ -158,7 +158,7 @@ class AuctionDetailsScreen extends StatelessWidget {
                                               ),
                                               Flexible(
                                                 child: Text(
-                                                  state.auctionData.owner.name,
+                                                  state.auctionData.owner!.name,
                                                   overflow:
                                                       TextOverflow.ellipsis,
                                                   style: const TextStyle(

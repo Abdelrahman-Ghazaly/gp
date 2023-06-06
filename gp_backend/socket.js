@@ -8,12 +8,12 @@ const io = require("socket.io")(5002, {
         origin: "*",
     },
 });
-module.exports = io 
+// module.exports = io 
 global.users = [];
 
 const addUser = (userId, socketId) => {
     !global.users.some((user) => user.userId === userId) &&
-    global.users.push({ userId, socketId });
+        global.users.push({ userId, socketId });
 };
 
 
@@ -55,3 +55,7 @@ io.on("connection", (socket) => {
         io.emit("getUsers", users);
     });
 });
+
+exports.emitBidAuction = (auctionData) => {
+    io.emit("bidAuction", auctionData);
+}

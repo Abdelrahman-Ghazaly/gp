@@ -15,7 +15,7 @@ class HeaderText extends StatelessWidget {
       alignment: Alignment.centerLeft,
       child: Text(
         title,
-        style: AppTextStyles.headerTextStyle,
+        style: AppTextStyles.appBarTextStyle,
       ),
     );
   }

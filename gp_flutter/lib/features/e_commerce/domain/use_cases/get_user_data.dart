@@ -1,5 +1,6 @@
 import 'package:dartz/dartz.dart';
 import 'package:equatable/equatable.dart';
+import 'package:gp_flutter/features/auction/domain/entities/auction_entities.dart';
 
 import '../../../../core/error/failure.dart';
 import '../../../../core/use_case/use_case.dart';
@@ -13,6 +14,7 @@ class GetUserData
             ({
               UserEntity userEntity,
               List<FurnitureEntity> productsList,
+              List<AuctionEntities> auctionList,
             }),
             Params> {
   final ECommerceRepository repository;
@@ -26,6 +28,7 @@ class GetUserData
           ({
             UserEntity userEntity,
             List<FurnitureEntity> productsList,
+            List<AuctionEntities> auctionList,
           })>> call(Params params) async {
     return await repository.getUserData(
       accessToken: params.accessToken,
