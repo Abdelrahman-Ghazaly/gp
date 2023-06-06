@@ -8,8 +8,11 @@ export const ButtonBox = styled(Box)(({ theme }) => ({
     position: "absolute",
     bottom: 0,
     alignItems: "center",
-    width : '69%',
+    width : '73%',
+    zIndex : 5000,
       [theme.breakpoints.down('sm')]: {
-        width: '90%',
+        width: '100%',
+        bottom : '5%',
+        zIndex : 500,
       },
 }));

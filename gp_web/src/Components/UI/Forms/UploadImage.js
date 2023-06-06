@@ -2,10 +2,12 @@ import { Grid, IconButton } from '@mui/material';
 import React , { useRef, useState, useEffect  , memo , useMemo} from 'react'
 import {AddImageButton , ImageStyle , Overlay} from '../../../Styles/forms'
 import DeleteIcon from '@mui/icons-material/Delete';
-
+import useSendRequest from '../../../CustomHooks/api/useSendRequest'
 
 
 const UploadImage = memo(({ imageValue }) => {
+  const {data, statusCode , error , loading , sendRequest} = useSendRequest()
+
   const [image, setImage] = useState();
   const [imageList, setImageList] = useState('');
   const [imageFiles, setImageFiles] = useState();
@@ -13,10 +15,10 @@ const UploadImage = memo(({ imageValue }) => {
   const fileInputRef = useRef();
 
   // Get The Image File From User
-  const handleImageInput = (e) => {
+  const handleImageInput = async (e) => {
     let files = e.target.files;
     setImageFiles([files]);
-
+    //await sendRequest( e.target.files[0] , "https://api.edenai.run/v2/image/object_detection" , "POST")
     let singleFile = e.target.files[0]
     if (singleFile && singleFile.type.substr(0, 5) === "image" ) {
       setImage(singleFile);
@@ -38,6 +40,8 @@ const UploadImage = memo(({ imageValue }) => {
 
   // Send The Image To The AddProductForm Component
   useEffect(() => {
+    // console.log(data)
+    // console.log(statusCode)
     imageValue(imageFiles)
   },[imageFiles])
 
