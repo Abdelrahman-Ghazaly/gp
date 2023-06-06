@@ -10,10 +10,12 @@ class UserCard extends StatelessWidget {
     super.key,
     required this.name,
     required this.conversation,
+    required this.userId,
   });
 
   final String name;
   final ConversationEntity conversation;
+  final String userId;
 
   @override
   Widget build(BuildContext context) {
@@ -24,6 +26,10 @@ class UserCard extends StatelessWidget {
           screen: ChatRoom(
             conversationId: conversation.conversationId,
             name: name,
+            userId: userId,
+            recieverId: conversation.recieverId == userId
+                ? conversation.senderId
+                : conversation.recieverId,
           ),
         );
       },
