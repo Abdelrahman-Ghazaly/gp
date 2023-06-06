@@ -16,9 +16,9 @@ class DeleteProductBloc extends Bloc<DeleteProductEvent, DeleteProductState> {
         emit(Loading());
         final failureOrString = await deleteFurniture(
           Params(
-            productId: event.productId,
-            accessToken: event.accessToken,
-          ),
+              productId: event.productId,
+              accessToken: event.accessToken,
+              isAuction: event.isAuction),
         );
         emit(await _eitherSuccessOrErrorState(failureOrString));
       },

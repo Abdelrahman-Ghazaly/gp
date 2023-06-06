@@ -14,20 +14,27 @@ class AuctionProductModel extends AuctionEntities {
       required super.owner,
       required super.isAccepted});
 
-  factory AuctionProductModel.fromJson(Map<String, dynamic> json) =>
-      AuctionProductModel(
-        userId: json['userId'] ?? "",
-        title: json['title'] ?? "",
-        currentPrice: json['current_pid'].toDouble() ?? 0,
-        description: json['description'] ?? "",
-        image: json['imgURL'].cast<String>() ?? [],
-        category: json['category'] ?? "",
-        duration: json['end_date'] ?? "",
-        startPrice: json['start_price'].toDouble() ?? 0,
-        auctionId: json['_id'] ?? "",
-        owner: OwnerModel.fromJson(json['owner_id']),
-        isAccepted: json['is_accepted'] ?? false,
-      );
+  factory AuctionProductModel.fromJson(Map<String, dynamic> json) {
+    late bool ignor;
+    if (json['owner_id'] is Map<String, dynamic>) {
+      ignor = false;
+    } else {
+      ignor = true;
+    }
+    return AuctionProductModel(
+      userId: json['userId'] ?? "",
+      title: json['title'] ?? "",
+      currentPrice: json['current_pid'].toDouble() ?? 0,
+      description: json['description'] ?? "",
+      image: json['imgURL'].cast<String>() ?? [],
+      category: json['category'] ?? "",
+      duration: json['end_date'] ?? "",
+      startPrice: json['start_price'].toDouble() ?? 0,
+      auctionId: json['_id'] ?? "",
+      owner: ignor ? null : OwnerModel.fromJson(json['owner_id']),
+      isAccepted: json['is_accepted'] ?? false,
+    );
+  }
 
   Map<String, dynamic> toJson(AuctionEntities product) => {
         "userId": product.userId,
@@ -44,16 +51,10 @@ class AuctionProductModel extends AuctionEntities {
 class OwnerModel extends OwnerEntities {
   OwnerModel({required super.id, required super.name});
 
-  factory OwnerModel.fromJson(Map<String, dynamic>? json) {
-    json ??= {"_id": "", "name": ""};
+  factory OwnerModel.fromJson(Map<String, dynamic> json) {
     return OwnerModel(
       id: json['_id'] ?? "",
       name: json['name'] ?? "",
     );
   }
-
-  Map<String, dynamic> toJson(OwnerEntities owner) => {
-        "_id": owner.id,
-        "name": owner.name,
-      };
 }

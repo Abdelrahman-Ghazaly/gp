@@ -1,6 +1,8 @@
 import 'dart:io';
 
 import 'package:dio/dio.dart';
+import 'package:gp_flutter/features/auction/data/models/auction_product_model.dart';
+import 'package:gp_flutter/features/auction/domain/entities/auction_entities.dart';
 import 'package:gp_flutter/features/e_commerce/domain/entities/report_entity.dart';
 import 'package:http_parser/http_parser.dart';
 import 'package:image_picker/image_picker.dart';
@@ -29,6 +31,7 @@ abstract class FurnitureRemoteDataSource {
       ({
         UserEntity userEntity,
         List<FurnitureEntity> productsList,
+        List<AuctionEntities> auctionList,
       })> getUserData({
     required String accessToken,
     required String userId,
@@ -42,6 +45,7 @@ abstract class FurnitureRemoteDataSource {
   Future<String> deleteFurniture({
     required String productId,
     required String accessToken,
+    required bool isAuction,
   });
 
   Future<String> reportFurniture({
@@ -118,6 +122,7 @@ class FurnitureRemoteDataSourceImpl extends FurnitureRemoteDataSource {
           ({
             UserEntity userEntity,
             List<FurnitureEntity> productsList,
+            List<AuctionEntities> auctionList
           })>
       getUserData({required String accessToken, required String userId}) async {
     Response response = await dio.get(
@@ -140,10 +145,15 @@ class FurnitureRemoteDataSourceImpl extends FurnitureRemoteDataSource {
           (element) => FurnitureModel.fromMap(element),
         ),
       );
-
+      List<AuctionEntities> auctionList = List.from(
+        (response.data['user-data']['auction_logs']).map(
+          (element) => AuctionProductModel.fromJson(element),
+        ),
+      );
       return (
         userEntity: userEntity,
         productsList: productsList,
+        auctionList: auctionList
       );
     } else {
       throw ServerException(
@@ -208,9 +218,12 @@ class FurnitureRemoteDataSourceImpl extends FurnitureRemoteDataSource {
   Future<String> deleteFurniture({
     required String productId,
     required String accessToken,
+    required bool isAuction,
   }) async {
     Response response = await dio.delete(
-      ApiConstants.deleteFurniturePath(productId),
+      isAuction
+          ? ApiConstants.auctionDeleteProductPath(productId)
+          : ApiConstants.deleteFurniturePath(productId),
       options: Options(
         method: 'DELETE',
         followRedirects: false,

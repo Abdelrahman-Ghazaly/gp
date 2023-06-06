@@ -1,4 +1,5 @@
 import 'package:dartz/dartz.dart';
+import 'package:gp_flutter/features/auction/domain/entities/auction_entities.dart';
 
 import '../../../../core/error/failure.dart';
 import '../../../authentication/domain/entities/user_entity.dart';
@@ -25,6 +26,7 @@ abstract class ECommerceRepository {
           ({
             UserEntity userEntity,
             List<FurnitureEntity> productsList,
+            List<AuctionEntities> auctionList
           })>> getUserData({
     required String userId,
     required String accessToken,
@@ -38,6 +40,7 @@ abstract class ECommerceRepository {
   Future<Either<Failure, String>> deleteFurniture({
     required String productId,
     required String accessToken,
+    required bool isAuction,
   });
 
   Future<Either<Failure, String>> reportFurniture({
