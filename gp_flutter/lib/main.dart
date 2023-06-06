@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:gp_flutter/features/auction/presentation/bloc/upload_auction_bloc/upload_auction_bloc.dart';
 import 'package:gp_flutter/features/chat/presentation/bloc/create_conversation_bloc/create_conversation_bloc.dart';
 import 'package:gp_flutter/features/chat/presentation/bloc/get_conversation_bloc/get_conversation_bloc.dart';
 import 'package:gp_flutter/features/chat/presentation/bloc/get_messages_bloc/get_messages_bloc.dart';
@@ -56,6 +57,7 @@ class MyApp extends StatelessWidget {
         BlocProvider(create: (context) => sl<GetMessagesBloc>()),
         BlocProvider(create: (context) => sl<SendMessageBloc>()),
         BlocProvider(create: (context) => sl<GetUserNameBloc>()),
+        BlocProvider(create: (context) => sl<UploadAuctionBloc>()),
       ],
       child: MaterialApp.router(
         title: 'GP E-Commerce',

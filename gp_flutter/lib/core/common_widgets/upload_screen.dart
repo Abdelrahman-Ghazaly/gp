@@ -3,6 +3,7 @@ import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gp_flutter/core/common_widgets/common_widgets.dart';
+import 'package:gp_flutter/features/auction/domain/entities/auction_entities.dart';
 import 'package:gp_flutter/features/authentication/presentation/screens/authentication_screen.dart';
 import 'package:gp_flutter/features/e_commerce/presentation/bloc/e_commerce_user_bloc/e_commerce_user_bloc.dart';
 import 'package:gp_flutter/features/e_commerce/presentation/bloc/home_bloc/home_bloc.dart';
@@ -10,9 +11,10 @@ import '../app_constants/app_constants.dart';
 import '../utils/utilities.dart';
 import '../../features/authentication/presentation/widgets/form_text_field.dart';
 import 'package:gp_flutter/features/e_commerce/presentation/bloc/upload_product_bloc/upload_product_bloc.dart'
-    as upload;
+    as upload_product;
 import 'package:image_picker/image_picker.dart';
-
+import 'package:gp_flutter/features/auction/presentation/bloc/upload_auction_bloc/upload_auction_bloc.dart'
+    as upload_auction;
 import '../../features/authentication/presentation/bloc/log_in_bloc/log_in_bloc.dart';
 import '../../features/e_commerce/data/models/furniture_model.dart';
 import '../../features/e_commerce/domain/entities/seller_entity.dart';
@@ -29,7 +31,9 @@ class _UploadScreenState extends State<UploadScreen> {
   final TextEditingController name = TextEditingController();
   final TextEditingController description = TextEditingController();
   final TextEditingController price = TextEditingController();
-  final TextEditingController category = TextEditingController();
+  TextEditingController duration = TextEditingController();
+  TextEditingController category = TextEditingController();
+  bool isAuction = false;
 
   Future<XFile?> _loadImage() async {
     return await ImagePicker().pickImage(source: ImageSource.gallery);
@@ -42,23 +46,46 @@ class _UploadScreenState extends State<UploadScreen> {
     final logInState = context.read<LogInBloc>().state;
     if (logInState is Success) {
       if (!context.mounted) return;
+      if (isAuction) {
+        int houreNum = int.parse(duration.text) * 60 * 60 * 1000;
 
-      context.read<upload.UploadProductBloc>().add(
-            upload.UploadFurnitureEvent(
-              furniture: FurnitureModel(
-                title: name.text,
-                description: description.text,
-                category: category.text.toLowerCase(),
-                price: num.tryParse(price.text) as int,
-                rawImage: rawImage,
-                sellerEntity: SellerEntity(
-                  id: logInState.userEntity.id!,
-                  name: logInState.userEntity.name,
+        context.read<upload_auction.UploadAuctionBloc>().add(
+              upload_auction.UploadAuctionEvent(
+                auctionEntities: AuctionEntities(
+                  title: name.text,
+                  description: description.text,
+                  category: category.text.toLowerCase(),
+                  startPrice: double.parse(price.text),
+                  rawImage: rawImage,
+                  auctionId: '',
+                  currentPrice: 0,
+                  duration: houreNum.toString(),
+                  image: [],
+                  isAccepted: false,
+                  owner: null,
+                  userId: '',
                 ),
+                userToken: logInState.userEntity.accessToken!,
               ),
-              userEntity: logInState.userEntity,
-            ),
-          );
+            );
+      } else {
+        context.read<upload_product.UploadProductBloc>().add(
+              upload_product.UploadFurnitureEvent(
+                furniture: FurnitureModel(
+                  title: name.text,
+                  description: description.text,
+                  category: category.text.toLowerCase(),
+                  price: num.tryParse(price.text) as int,
+                  rawImage: rawImage,
+                  sellerEntity: SellerEntity(
+                    id: logInState.userEntity.id!,
+                    name: logInState.userEntity.name,
+                  ),
+                ),
+                userEntity: logInState.userEntity,
+              ),
+            );
+      }
     }
   }
 
@@ -102,30 +129,33 @@ class _UploadScreenState extends State<UploadScreen> {
                       kSpacing(20),
                       FormTextField(
                         icon: Icons.chair,
-                        labelText: 'Furniture Name',
+                        labelText: 'Product Name',
                         controller: name,
                         keyboardType: TextInputType.name,
                       ),
                       kSpacing(20),
                       FormTextField(
                         icon: Icons.edit,
-                        labelText: 'Furniture Description',
+                        labelText: 'Product Description',
                         controller: description,
                         keyboardType: TextInputType.name,
                         maxLines: 5,
                       ),
                       kSpacing(20),
-                      DropdownMenu(
-                        leadingIcon: const Icon(Icons.category),
-                        width: Utilities.screenWidth,
-                        label: const Text('Furniture Category'),
-                        dropdownMenuEntries: categoryList,
-                        controller: category,
+                      Visibility(
+                        visible: isAuction,
+                        child: DropdownMenu(
+                          leadingIcon: const Icon(Icons.category),
+                          width: Utilities.screenWidth,
+                          label: const Text('Product Category'),
+                          dropdownMenuEntries: categoryList,
+                          onSelected: (value) => category.text = value,
+                        ),
                       ),
                       kSpacing(20),
                       FormTextField(
                         icon: Icons.attach_money,
-                        labelText: 'Furniture price',
+                        labelText: 'Product price',
                         controller: price,
                         keyboardType: TextInputType.number,
                         validator: (value) {
@@ -139,10 +169,47 @@ class _UploadScreenState extends State<UploadScreen> {
                         },
                       ),
                       kSpacing(20),
-                      BlocListener<upload.UploadProductBloc,
-                          upload.UploadProductState>(
+                      Visibility(
+                        visible: isAuction,
+                        child: FormTextField(
+                          icon: Icons.timelapse_outlined,
+                          labelText: 'Number Of Hours',
+                          controller: duration,
+                          keyboardType: TextInputType.number,
+                          validator: (value) {
+                            var price = num.tryParse(value!);
+                            if (price == null) {
+                              return 'Please enter a valid Number Of Hours';
+                            } else if (price.runtimeType == double) {
+                              return 'Please enter a whole Number Of Hours';
+                            }
+                            return null;
+                          },
+                        ),
+                      ),
+                      kSpacing(20),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          const Text("Auction"),
+                          Checkbox(
+                            checkColor: Colors.white,
+                            value: isAuction,
+                            onChanged: (bool? value) {
+                              setState(() {
+                                duration = TextEditingController();
+                                isAuction = value!;
+                              });
+                            },
+                          ),
+                          kSpacing(20),
+                        ],
+                      ),
+                      kSpacing(20),
+                      BlocListener<upload_product.UploadProductBloc,
+                          upload_product.UploadProductState>(
                         listener: (context, state) {
-                          if (state is upload.Error) {
+                          if (state is upload_product.Error) {
                             showDialog(
                               context: context,
                               builder: (context) => Dialog(
@@ -159,7 +226,7 @@ class _UploadScreenState extends State<UploadScreen> {
                               category.clear();
                               price.clear();
                             });
-                          } else if (state is upload.Success) {
+                          } else if (state is upload_product.Success) {
                             showDialog(
                               context: context,
                               builder: (context) => Dialog(
@@ -195,27 +262,115 @@ class _UploadScreenState extends State<UploadScreen> {
                             });
                           }
                         },
-                        child: ElevatedButton(
-                          onPressed: () async {
-                            if (formKey.currentState!.validate() ||
-                                category.text.isNotEmpty) {
-                              await _uploadData(context);
+                        child: Visibility(
+                          visible: !isAuction,
+                          child: ElevatedButton(
+                            onPressed: () async {
+                              if (formKey.currentState!.validate() ||
+                                  category.text.isNotEmpty) {
+                                await _uploadData(context);
 
-                              if (!mounted) return;
+                                if (!mounted) return;
 
-                              context.read<HomeBloc>().add(
-                                    const GetPopularFurniturebyCategoryEvent(),
-                                  );
-                              context.read<ECommerceUserBloc>().add(
-                                    GetFurnitureFromUserIdEvent(
-                                      accessToken:
-                                          logInState.userEntity.accessToken!,
-                                      userId: logInState.userEntity.id!,
-                                    ),
-                                  );
-                            }
-                          },
-                          child: const Text('Upload'),
+                                context.read<HomeBloc>().add(
+                                      const GetPopularFurniturebyCategoryEvent(),
+                                    );
+                                context.read<ECommerceUserBloc>().add(
+                                      GetFurnitureFromUserIdEvent(
+                                        accessToken:
+                                            logInState.userEntity.accessToken!,
+                                        userId: logInState.userEntity.id!,
+                                      ),
+                                    );
+                              }
+                            },
+                            child: const Text('Upload'),
+                          ),
+                        ),
+                      ),
+                      BlocListener<upload_auction.UploadAuctionBloc,
+                          upload_auction.UploadAuctionState>(
+                        listener: (context, state) {
+                          if (state is upload_auction.Error) {
+                            showDialog(
+                              context: context,
+                              builder: (context) => Dialog(
+                                child: Center(
+                                  child: Text(state.message),
+                                ),
+                              ),
+                            );
+                            setState(() {
+                              name.clear();
+                              description.clear();
+                              displayImage = null;
+                              rawImage = null;
+                              category.clear();
+                              price.clear();
+                              duration.clear();
+                            });
+                          } else if (state is upload_auction.Success) {
+                            showDialog(
+                              context: context,
+                              builder: (context) => Dialog(
+                                child: Center(
+                                  child: Text(state.message),
+                                ),
+                              ),
+                            );
+                            setState(() {
+                              name.clear();
+                              description.clear();
+                              displayImage = null;
+                              rawImage = null;
+                              category.clear();
+                              price.clear();
+                              duration.clear();
+                            });
+                          } else {
+                            showDialog(
+                              context: context,
+                              builder: (context) => const Dialog(
+                                child: Center(
+                                  child: LoadingWidget(),
+                                ),
+                              ),
+                            );
+                            setState(() {
+                              name.clear();
+                              description.clear();
+                              displayImage = null;
+                              rawImage = null;
+                              category.clear();
+                              price.clear();
+                              duration.clear();
+                            });
+                          }
+                        },
+                        child: Visibility(
+                          visible: isAuction,
+                          child: ElevatedButton(
+                            onPressed: () async {
+                              if (formKey.currentState!.validate() ||
+                                  category.text.isNotEmpty) {
+                                await _uploadData(context);
+
+                                if (!mounted) return;
+
+                                context.read<HomeBloc>().add(
+                                      const GetPopularFurniturebyCategoryEvent(),
+                                    );
+                                context.read<ECommerceUserBloc>().add(
+                                      GetFurnitureFromUserIdEvent(
+                                        accessToken:
+                                            logInState.userEntity.accessToken!,
+                                        userId: logInState.userEntity.id!,
+                                      ),
+                                    );
+                              }
+                            },
+                            child: const Text('Upload'),
+                          ),
                         ),
                       ),
                       kSpacing(20),

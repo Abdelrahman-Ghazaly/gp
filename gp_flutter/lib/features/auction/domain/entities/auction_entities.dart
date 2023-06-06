@@ -12,6 +12,7 @@ class AuctionEntities extends Equatable {
   final double startPrice;
   final double currentPrice;
   final bool isAccepted;
+  final dynamic rawImage;
 
   const AuctionEntities(
       {required this.auctionId,
@@ -24,7 +25,8 @@ class AuctionEntities extends Equatable {
       required this.image,
       required this.category,
       required this.duration,
-      required this.startPrice});
+      required this.startPrice,
+      this.rawImage});
 
   @override
   List<Object> get props => [
