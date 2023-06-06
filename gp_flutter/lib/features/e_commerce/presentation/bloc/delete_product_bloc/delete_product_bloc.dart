@@ -3,7 +3,6 @@ import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../../core/error/failure.dart';
-import '../../../../authentication/domain/entities/user_entity.dart';
 import '../../../domain/use_cases/product/delete_product.dart';
 
 part 'delete_product_event.dart';
@@ -17,9 +16,9 @@ class DeleteProductBloc extends Bloc<DeleteProductEvent, DeleteProductState> {
         emit(Loading());
         final failureOrString = await deleteFurniture(
           Params(
-            productId: event.productId,
-            userEntity: event.userEntity,
-          ),
+              productId: event.productId,
+              accessToken: event.accessToken,
+              isAuction: event.isAuction),
         );
         emit(await _eitherSuccessOrErrorState(failureOrString));
       },

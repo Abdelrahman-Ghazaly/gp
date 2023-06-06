@@ -1,9 +1,7 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
 
 import '../../features/auction/presentation/screens/view_requests_screen.dart';
-import '../../features/authentication/presentation/screens/authentication_screen.dart';
+import '../../features/reports/presentation/screens/view_reports_screen.dart';
 
 class BottomNavBar extends StatefulWidget {
   const BottomNavBar({Key? key}) : super(key: key);
@@ -13,92 +11,39 @@ class BottomNavBar extends StatefulWidget {
 }
 
 class _BottomNavBarState extends State<BottomNavBar> {
-  late PersistentTabController _controller;
+  final List<Widget> _pages = [
+    const ViewReportsScreen(),
+    const ViewRequestsScreen(),
+  ];
 
-  @override
-  void initState() {
-    super.initState();
-    _controller = PersistentTabController(initialIndex: 0);
-  }
-
-  @override
-  void dispose() {
-    _controller.dispose();
-    super.dispose();
-  }
-
-  List<Widget> _buildScreens() {
-    return [
-      Container(),
-      const ViewRequestsScreen(),
-      Container(),
-      const AuthenticationScreen(),
-      Container(),
-    ];
-  }
-
-  List<PersistentBottomNavBarItem> _navBarsItems() {
-    return [
-      PersistentBottomNavBarItem(
-        icon: const Icon(CupertinoIcons.home),
-        title: ("Home"),
-        activeColorPrimary: CupertinoColors.activeGreen,
-        inactiveColorPrimary: CupertinoColors.systemGrey,
-      ),
-      PersistentBottomNavBarItem(
-        icon: const Icon(Icons.storefront),
-        title: ("Auctoin"),
-        activeColorPrimary: CupertinoColors.activeGreen,
-        inactiveColorPrimary: CupertinoColors.systemGrey,
-      ),
-      PersistentBottomNavBarItem(
-        icon: const Icon(
-          Icons.add,
-          color: CupertinoColors.white,
-        ),
-        activeColorPrimary: CupertinoColors.activeGreen,
-        inactiveColorPrimary: CupertinoColors.systemGrey,
-        title: 'Sell',
-      ),
-      PersistentBottomNavBarItem(
-        icon: const Icon(CupertinoIcons.profile_circled),
-        title: ("Profile"),
-        activeColorPrimary: CupertinoColors.activeGreen,
-        inactiveColorPrimary: CupertinoColors.systemGrey,
-      ),
-      PersistentBottomNavBarItem(
-        icon: const Icon(CupertinoIcons.chat_bubble_2_fill),
-        title: ("Chat"),
-        activeColorPrimary: CupertinoColors.activeGreen,
-        inactiveColorPrimary: CupertinoColors.systemGrey,
-      ),
-    ];
+  int _selectedIndex = 0;
+  void _onItemTapped(int index) {
+    setState(() {
+      _selectedIndex = index;
+    });
   }
 
   @override
   Widget build(BuildContext context) {
     return SafeArea(
-      child: PersistentTabView(
-        context,
-        controller: _controller,
-        screens: _buildScreens(),
-        items: _navBarsItems(),
-        confineInSafeArea: true,
-        decoration: NavBarDecoration(
-          borderRadius: BorderRadius.circular(10.0),
-          colorBehindNavBar: Colors.white,
+      child: Scaffold(
+        body: Center(
+          child: _pages.elementAt(_selectedIndex), //ew
         ),
-        popActionScreens: PopActionScreensType.all,
-        itemAnimationProperties: const ItemAnimationProperties(
-          duration: Duration(milliseconds: 200),
-          curve: Curves.ease,
+        bottomNavigationBar: BottomNavigationBar(
+          items: const <BottomNavigationBarItem>[
+            BottomNavigationBarItem(
+              icon: Icon(Icons.report_problem_outlined),
+              label: 'Reports',
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.storefront),
+              label: 'Auctoin',
+            ),
+          ],
+          currentIndex: _selectedIndex, //New
+          onTap: _onItemTapped,
         ),
-        screenTransitionAnimation: const ScreenTransitionAnimation(
-          animateTabTransition: true,
-          curve: Curves.ease,
-          duration: Duration(milliseconds: 200),
-        ),
-        navBarStyle: NavBarStyle.style15,
       ),
     );
   }

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart' hide AppBar;
-import '../../../../core/common_widgets/app_bar copy.dart';
+import '../../../../core/common_widgets/app_bar.dart';
 import 'log_in_screen.dart';
 
 import '../../../../core/app_constants/app_constants.dart';

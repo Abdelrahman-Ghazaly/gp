@@ -13,7 +13,7 @@ global.users = [];
 
 const addUser = (userId, socketId) => {
     !global.users.some((user) => user.userId === userId) &&
-    global.users.push({ userId, socketId });
+        global.users.push({ userId, socketId });
 };
 
 const removeUser = (socketId) => {
@@ -55,5 +55,5 @@ io.on("connection", (socket) => {
 });
 
 exports.emitBidAuction = (auctionData) => {
-    io.emit("bidAuction", auctionData );
+    io.emit("bidAuction", auctionData);
 }

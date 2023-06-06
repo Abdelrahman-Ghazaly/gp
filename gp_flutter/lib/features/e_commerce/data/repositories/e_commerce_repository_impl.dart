@@ -1,4 +1,6 @@
 import 'package:dartz/dartz.dart';
+import 'package:gp_flutter/features/auction/domain/entities/auction_entities.dart';
+import 'package:gp_flutter/features/e_commerce/domain/entities/report_entity.dart';
 
 import '../../../../core/error/exceptions.dart';
 import '../../../../core/error/failure.dart';
@@ -64,11 +66,17 @@ class ECommerceRepositoryImpl implements ECommerceRepository {
 
   @override
   Future<Either<Failure, String>> deleteFurniture({
-    required int productId,
-    required UserEntity userEntity,
-  }) {
-    // TODO: implement deleteFurniture
-    throw UnimplementedError();
+    required String productId,
+    required String accessToken,
+    required bool isAuction,
+  }) async {
+    try {
+      final String result = await remoteDataSource.deleteFurniture(
+          productId: productId, accessToken: accessToken, isAuction: isAuction);
+      return Right(result);
+    } on ServerException catch (failure) {
+      return Left(ServerFailure(failure.errorMessageModel.statusMessage));
+    }
   }
 
   Future<Either<Failure, List<FurnitureEntity>>> _getFurnitureList(
@@ -110,12 +118,14 @@ class ECommerceRepositoryImpl implements ECommerceRepository {
           ({
             UserEntity userEntity,
             List<FurnitureEntity> productsList,
+            List<AuctionEntities> auctionList,
           })>> getUserData(
       {required String accessToken, required String userId}) async {
     try {
       final ({
         UserEntity userEntity,
         List<FurnitureEntity> productsList,
+        List<AuctionEntities> auctionList,
       }) result = await remoteDataSource.getUserData(
         accessToken: accessToken,
         userId: userId,
@@ -156,6 +166,23 @@ class ECommerceRepositoryImpl implements ECommerceRepository {
     try {
       final List<FurnitureEntity> result =
           await remoteDataSource.getFavorite(accessToken: accessToken);
+      return Right(result);
+    } on ServerException catch (failure) {
+      return Left(ServerFailure(failure.errorMessageModel.statusMessage));
+    }
+  }
+
+  @override
+  Future<Either<Failure, String>> reportFurniture(
+      {required String productId,
+      required String accessToken,
+      required ReportEntity report}) async {
+    try {
+      final String result = await remoteDataSource.reportFurniture(
+        productId: productId,
+        accessToken: accessToken,
+        report: report,
+      );
       return Right(result);
     } on ServerException catch (failure) {
       return Left(ServerFailure(failure.errorMessageModel.statusMessage));

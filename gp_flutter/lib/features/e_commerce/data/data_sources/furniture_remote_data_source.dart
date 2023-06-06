@@ -1,6 +1,9 @@
 import 'dart:io';
 
 import 'package:dio/dio.dart';
+import 'package:gp_flutter/features/auction/data/models/auction_product_model.dart';
+import 'package:gp_flutter/features/auction/domain/entities/auction_entities.dart';
+import 'package:gp_flutter/features/e_commerce/domain/entities/report_entity.dart';
 import 'package:http_parser/http_parser.dart';
 import 'package:image_picker/image_picker.dart';
 
@@ -28,6 +31,7 @@ abstract class FurnitureRemoteDataSource {
       ({
         UserEntity userEntity,
         List<FurnitureEntity> productsList,
+        List<AuctionEntities> auctionList,
       })> getUserData({
     required String accessToken,
     required String userId,
@@ -39,8 +43,15 @@ abstract class FurnitureRemoteDataSource {
   });
 
   Future<String> deleteFurniture({
-    required int productId,
-    required UserEntity userEntity,
+    required String productId,
+    required String accessToken,
+    required bool isAuction,
+  });
+
+  Future<String> reportFurniture({
+    required String productId,
+    required String accessToken,
+    required ReportEntity report,
   });
 
   Future<String> addFavorite({
@@ -111,6 +122,7 @@ class FurnitureRemoteDataSourceImpl extends FurnitureRemoteDataSource {
           ({
             UserEntity userEntity,
             List<FurnitureEntity> productsList,
+            List<AuctionEntities> auctionList
           })>
       getUserData({required String accessToken, required String userId}) async {
     Response response = await dio.get(
@@ -133,10 +145,15 @@ class FurnitureRemoteDataSourceImpl extends FurnitureRemoteDataSource {
           (element) => FurnitureModel.fromMap(element),
         ),
       );
-
+      List<AuctionEntities> auctionList = List.from(
+        (response.data['user-data']['auction_logs']).map(
+          (element) => AuctionProductModel.fromJson(element),
+        ),
+      );
       return (
         userEntity: userEntity,
         productsList: productsList,
+        auctionList: auctionList
       );
     } else {
       throw ServerException(
@@ -199,11 +216,71 @@ class FurnitureRemoteDataSourceImpl extends FurnitureRemoteDataSource {
 
   @override
   Future<String> deleteFurniture({
-    required int productId,
-    required UserEntity userEntity,
-  }) {
-    // TODO: implement deleteFurniture
-    throw UnimplementedError();
+    required String productId,
+    required String accessToken,
+    required bool isAuction,
+  }) async {
+    Response response = await dio.delete(
+      isAuction
+          ? ApiConstants.auctionDeleteProductPath(productId)
+          : ApiConstants.deleteFurniturePath(productId),
+      options: Options(
+        method: 'DELETE',
+        followRedirects: false,
+        validateStatus: (status) {
+          return status! < 600;
+        },
+        headers: {
+          'token': "Bearer $accessToken",
+        },
+      ),
+    );
+    if (response.statusCode == 200) {
+      return 'Deleted Succesfully';
+    } else {
+      throw ServerException(
+        errorMessageModel: ErrorMessageModel(
+          statusCode: response.statusCode!,
+          statusMessage: response.statusMessage!,
+        ),
+      );
+    }
+  }
+
+  @override
+  Future<String> reportFurniture({
+    required String productId,
+    required String accessToken,
+    required ReportEntity report,
+  }) async {
+    Map data = {
+      'report_type': report.reportType,
+      'description': report.description
+    };
+    Response response = await dio.post(
+      ApiConstants.reportFurniturePath(productId),
+      options: Options(
+        followRedirects: false,
+        validateStatus: (status) {
+          return status! < 600;
+        },
+        headers: {
+          'token': "Bearer $accessToken",
+        },
+      ),
+      data: data,
+    );
+
+    if (response.statusCode == 200) {
+      return 'Reported Succesfully';
+    } else {
+      throw ServerException(
+        errorMessageModel: ErrorMessageModel(
+          statusCode: response.statusCode!,
+          statusMessage: response.statusMessage!,
+        ),
+      );
+    }
   }
 
   Future<List<FurnitureEntity>> _getFurnitureList({required String url}) async {
