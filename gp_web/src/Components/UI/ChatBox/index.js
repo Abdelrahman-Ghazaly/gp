@@ -32,8 +32,6 @@ const ChatBox = () => {
   useEffect(() => {
     dispatch(connectToSocket())
     socket.on("getMessage", (data) => {
-      console.log("Test")
-      console.log(data)
       dispatch(
         chatSliceAction.setArrivalMessage({
           sender: data.senderId,
