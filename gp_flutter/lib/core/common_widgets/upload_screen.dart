@@ -60,7 +60,7 @@ class _UploadScreenState extends State<UploadScreen> {
                   auctionId: '',
                   currentPrice: 0,
                   duration: houreNum.toString(),
-                  image: [],
+                  image: const [],
                   isAccepted: false,
                   owner: null,
                   userId: '',
