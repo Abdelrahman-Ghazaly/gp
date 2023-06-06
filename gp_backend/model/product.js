@@ -33,9 +33,10 @@ const productSchema = new Schema({
 
 const Product = mongoose.model("Product", productSchema);
 
-exports.createProduct = async (productData, user_id, imgURL) => {
+exports.createProduct = async (productData, user_id, imgURL, category) => {
     try {
-        const { title, description, category, price } = productData;
+        const { title, description, price } = productData;
+        imgURL = [imgURL]
         const product = new Product({
             title,
             description,
@@ -174,7 +175,6 @@ exports.search = async (query, category, minPrice, maxPrice) => {
         throw new Error();
     }
 };
-
 
 exports.getUserProducts = async (userId) => {
     try {
