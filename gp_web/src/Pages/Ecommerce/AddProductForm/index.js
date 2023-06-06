@@ -53,7 +53,6 @@ const AddProductForm = () => {
       formData.append("title", data.title);
       formData.append("description", data.description);
       formData.append("imgURL", data.imgURL[0][0]);
-      formData.append("category", data.category)
       formData.append("price", data.price)
 
       setIsLoading(true)
@@ -144,7 +143,7 @@ const AddProductForm = () => {
             error={!!errors.description}
             helperText={errors.description?.message}
           />
-          <TextField
+          {/* <TextField
             fullWidth
             margin="normal"
             select
@@ -166,7 +165,7 @@ const AddProductForm = () => {
                 {option.categoryName}
               </MenuItem>
             ))}
-          </TextField>
+          </TextField> */}
 
           {/* Upload Product Component */}
           <UploadImage imageValue={imageValue} />

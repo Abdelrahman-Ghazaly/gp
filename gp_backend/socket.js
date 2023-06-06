@@ -16,6 +16,7 @@ const addUser = (userId, socketId) => {
     global.users.push({ userId, socketId });
 };
 
+
 const removeUser = (socketId) => {
     users = global.users.filter((user) => user.socketId !== socketId);
 };
@@ -35,6 +36,7 @@ io.on("connection", (socket) => {
         io.emit("getUsers", users);
     });
 
+    
     //send and get message
     socket.on("sendMessage", ({ senderId, receiverId, text }) => {
         const user = getUser(receiverId);
