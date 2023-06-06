@@ -74,7 +74,7 @@ class _UploadScreenState extends State<UploadScreen> {
                 furniture: FurnitureModel(
                   title: name.text,
                   description: description.text,
-                  category: category.text.toLowerCase(),
+                  category: "",
                   price: num.tryParse(price.text) as int,
                   rawImage: rawImage,
                   sellerEntity: SellerEntity(
