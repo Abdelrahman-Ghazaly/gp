@@ -4,7 +4,6 @@ import {AddImageButton , ImageStyle , Overlay} from '../../../Styles/forms'
 import DeleteIcon from '@mui/icons-material/Delete';
 
 
-
 const UploadImage = memo(({ imageValue }) => {
   const [image, setImage] = useState();
   const [imageList, setImageList] = useState('');
@@ -13,10 +12,9 @@ const UploadImage = memo(({ imageValue }) => {
   const fileInputRef = useRef();
 
   // Get The Image File From User
-  const handleImageInput = (e) => {
+  const handleImageInput = async (e) => {
     let files = e.target.files;
     setImageFiles([files]);
-
     let singleFile = e.target.files[0]
     if (singleFile && singleFile.type.substr(0, 5) === "image" ) {
       setImage(singleFile);
@@ -67,11 +65,12 @@ const UploadImage = memo(({ imageValue }) => {
                 <DeleteIcon fontSize="inherit" />
               </IconButton>
             </div>
+           
           </div>
         </Grid>
       );
 
-  } , [imageList])
+  } , [imageList ])
 
 
   return (
