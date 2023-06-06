@@ -51,9 +51,10 @@ const roboflowRequest = async (image) => {
 const getImageCategory = async (image) => {
     try {
         const predictions = await roboflowRequest(image);
-        !predictions[0] && errors.validationError("Image isn't Clear");
+        !predictions[0]["class"] && errors.validationError("Image isn't Clear");
         let prediction = predictions[0]["class"];
-        for ([index, predict] in predictions) {
+        for (let index = 0; index < predictions.length - 1; index++) {
+            const predict = predictions[index];
             if (predictions.length - 1 == index) {
                 break;
             }
