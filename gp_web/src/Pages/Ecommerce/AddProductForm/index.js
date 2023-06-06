@@ -11,35 +11,11 @@ import SubtitlesIcon from '@mui/icons-material/Subtitles';
 import DescriptionIcon from '@mui/icons-material/Description';
 import CurrencyPoundIcon from '@mui/icons-material/CurrencyPound';
 
-const CategoriesList = [
-  {
-    id: 0,
-    categoryName: 'bed',
-  },
-  {
-    id: 1,
-    categoryName: 'chair',
-  },
-  {
-    id: 2,
-    categoryName: 'dresser',
-  },
-  {
-    id: 3,
-    categoryName: 'table',
-  },
-  {
-    id: 4,
-    categoryName: 'sofa',
-  },
-  {
-    id: 5,
-    categoryName: 'lamp',
-  },
-]
+
 const AddProductForm = () => {
   const formData = new FormData();
   const [loading, setIsLoading] = useState(false)
+  const [error , setError] = useState(null)
   const dispatch = useDispatch()
   const navigate = useNavigate()
   const pricePattern = `(\d+\.\d{1,2})`
@@ -57,8 +33,19 @@ const AddProductForm = () => {
 
       setIsLoading(true)
       await dispatch(uploadProduct(formData))
+        .then((res) => {
+          console.log(res)
+          if (!res.payload?.message)
+            {
+              navigate("/");
+            }else {
+              setError(res.payload?.message)
+            }
+        })
+        .catch((err) => {
+          console.log(err);
+        });
       setIsLoading(false)
-      navigate("/")
 
     }
   }
@@ -143,32 +130,10 @@ const AddProductForm = () => {
             error={!!errors.description}
             helperText={errors.description?.message}
           />
-          {/* <TextField
-            fullWidth
-            margin="normal"
-            select
-            defaultValue={defaultValues.category}
-            label="Select Category"
-            name="category"
-            {...register("category", {
-              required: "Please Enter The Category",
-            })}
-            error={!!errors.category}
-            helperText={errors.category?.message}
-          >
-            {CategoriesList.map((option) => (
-              <MenuItem
-                key={option.id}
-                value={option.categoryName}
-                style={{ textTransform: "capitalize" }}
-              >
-                {option.categoryName}
-              </MenuItem>
-            ))}
-          </TextField> */}
 
           {/* Upload Product Component */}
           <UploadImage imageValue={imageValue} />
+          <p style={{color : 'red' , textTransform : 'uppercase' , textAlign : 'center' , fontSize : '22px'}}>{error}</p>
 
           <TextField
             margin="normal"

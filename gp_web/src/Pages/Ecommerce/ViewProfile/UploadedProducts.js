@@ -86,9 +86,10 @@ const UploadedProducts = ({tokenId , match}) => {
                             width: `${match ? "100% " : "50%"}`,
                           }}
                           src={
-                            typeof item.imgURL == "string"
-                              ? item.imgURL
-                              : item.imgURL[0]
+                            // typeof item.imgURL == "string"
+                            //   ? item.imgURL
+                            //   : item.imgURL[0]
+                            item.imgURL[0]
                           }
                           alt={item.title}
                         />
