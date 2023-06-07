@@ -5,7 +5,7 @@ enum Category {
   bed,
   chair,
   sofa,
-  lamp,
+  accessories,
   table,
   dresser,
 }
@@ -19,8 +19,8 @@ extension MapToString on Category? {
         return 'chair';
       case Category.sofa:
         return 'sofa';
-      case Category.lamp:
-        return 'lamp';
+      case Category.accessories:
+        return 'accessories';
       case Category.table:
         return 'table';
       case Category.dresser:
@@ -38,7 +38,7 @@ const List<String> searchCategory = [
   "bed",
   "chair",
   "sofa",
-  'lamp',
+  'accessories',
   "table",
   "dresser",
 ];
