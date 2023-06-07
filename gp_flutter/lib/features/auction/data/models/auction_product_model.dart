@@ -1,18 +1,20 @@
 import '../../domain/entities/auction_entities.dart';
 
 class AuctionProductModel extends AuctionEntities {
-  const AuctionProductModel(
-      {required super.userId,
-      required super.title,
-      required super.currentPrice,
-      required super.description,
-      required super.image,
-      required super.category,
-      required super.duration,
-      required super.startPrice,
-      required super.auctionId,
-      required super.owner,
-      required super.isAccepted});
+  const AuctionProductModel({
+    required super.userId,
+    required super.title,
+    required super.currentPrice,
+    required super.description,
+    required super.image,
+    required super.category,
+    required super.duration,
+    required super.startPrice,
+    required super.auctionId,
+    required super.owner,
+    required super.isAccepted,
+    super.rawImage,
+  });
 
   factory AuctionProductModel.fromJson(Map<String, dynamic> json) {
     late bool ignor;
@@ -37,14 +39,11 @@ class AuctionProductModel extends AuctionEntities {
   }
 
   Map<String, dynamic> toJson(AuctionEntities product) => {
-        "userId": product.userId,
-        "title": product.title,
-        "currentPrice": product.currentPrice,
-        "description": product.description,
-        "image": product.image,
-        "category": product.category,
-        "duration": product.duration,
-        "startPrice": product.startPrice
+        'title': title,
+        'description': description,
+        'imgURL': rawImage,
+        'category': category,
+        'price': startPrice,
       };
 }
 

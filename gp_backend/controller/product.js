@@ -6,9 +6,7 @@ const { deleteProductImages } = require("../util/images_processes");
 const errors = require("../util/error_handling");
 
 exports.productValidation = async (req, res, next) => {
-
     try {
-
         const productData = req.body;
         const { error } = validateProductData(productData);
         if (error) {
@@ -27,7 +25,8 @@ exports.createProduct = async (req, res, next) => {
         const result = await db.createProduct(
             productData,
             req.user.id,
-            req.imageURLs
+            req.imageURL,
+            req.category
         );
         if (result) {
             res.status(201).json(result);

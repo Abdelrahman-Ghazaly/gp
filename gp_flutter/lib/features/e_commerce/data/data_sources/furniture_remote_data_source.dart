@@ -183,7 +183,6 @@ class FurnitureRemoteDataSourceImpl extends FurnitureRemoteDataSource {
       "title": furniture.title,
       'description': furniture.description,
       'imgURL': [finalFile],
-      'category': furniture.category,
       'price': furniture.price,
     };
     FormData data = FormData.fromMap(map);

@@ -46,7 +46,7 @@ class AuctionRepository extends BaseAuctionRepository {
   }
 
   @override
-  Future<Either<Failure, int>> uploadAuctionProduct(
+  Future<Either<Failure, String>> uploadAuctionProduct(
       AuctionEntities auctionProduct, String userToken) async {
     final result = await baseAuctionRemoteDataSource.uploadAuctionProduct(
         auctionProduct, userToken);

@@ -72,11 +72,16 @@ const productSlice = createSlice({
     extraReducers : builder => {
         builder
             .addCase(uploadProduct.fulfilled , (state , action) => {
-                console.log(action.payload)
-                const existingIndex = state.uploadedList.findIndex((Item) => Item._id === action.payload._id);
-                if (existingIndex === -1) {
-                  state.uploadedList.push(action.payload);
+                
+                if(action.payload?.message){
+                  state.error = action.payload.message
+                }else {
+                  const existingIndex = state.uploadedList.findIndex((Item) => Item._id === action.payload._id);
+                  if (existingIndex === -1) {
+                    state.uploadedList.push(action.payload);
+                  }
                 }
+
                 state.loading = false
             })
             .addCase(deleteProduct.fulfilled, (state, action) => {
@@ -85,6 +90,7 @@ const productSlice = createSlice({
                 state.loading = false
             })
             .addCase(fetchUploadedProduct.fulfilled , (state , action) => {
+              console.log(action.payload)
                 state.uploadedList = action.payload
                 state.loading = false
             })

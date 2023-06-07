@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:get_it/get_it.dart';
+import 'package:gp_flutter/features/auction/presentation/bloc/upload_auction_bloc/upload_auction_bloc.dart';
 import 'package:gp_flutter/features/chat/data/data_sources/chat_remote_data_source.dart';
 import 'package:gp_flutter/features/chat/data/repositories/chat_repository_impl.dart';
 import 'package:gp_flutter/features/chat/domain/repositories/chat_repository.dart';
@@ -71,6 +72,7 @@ void initBloc() {
   sl.registerFactory(() => ProductViewBloc(getFurnitureFromId: sl()));
   sl.registerFactory(() => SearchBloc(getFurnitureFromSearch: sl()));
   sl.registerFactory(() => UploadProductBloc(uploadFurniture: sl()));
+
   sl.registerFactory(() => ECommerceUserBloc(getUserData: sl()));
   sl.registerFactory(() => ReportFurnitureBloc(reportFurniture: sl()));
   sl.registerFactory(() => FavoriteBloc(
@@ -86,6 +88,7 @@ void initBloc() {
   sl.registerFactory(() => GetAuctionByIdBloc(sl()));
   sl.registerFactory(() => SearchAuctionsBloc(sl()));
   sl.registerFactory(() => BidAuctionBloc(sl()));
+  sl.registerFactory(() => UploadAuctionBloc(sl()));
 
   sl.registerFactory(() => CreateConversationBloc(createConversation: sl()));
   sl.registerFactory(() => GetConversationsBloc(getConversation: sl()));

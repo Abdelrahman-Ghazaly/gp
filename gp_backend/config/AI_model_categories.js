@@ -1,0 +1,15 @@
+exports.categoriesFilter = {
+    sofa: "sofa",
+    table: "table",
+    bed: "bed",
+    chair: "chair",
+    cabinet: "dresser",
+    nightstand: "dresser",
+    closet: "dresser",
+    cupboard: "accessories",
+    lamp: "accessories",
+    shelf: "accessories",
+    curtains: "accessories",
+    "tv stand": "accessories",
+    sideboard: "accessories",
+};

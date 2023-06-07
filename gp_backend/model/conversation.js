@@ -29,7 +29,6 @@ exports.createConversation = async (senderId, receiverId) => {
     }
 };
 
-
 exports.getUserConversations = async (userId) => {
     try {
         const conversation = await Conversation.find({

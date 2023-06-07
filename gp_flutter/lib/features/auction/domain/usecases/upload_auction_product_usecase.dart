@@ -6,13 +6,13 @@ import '../../../../core/use_case/use_case.dart';
 import '../entities/auction_entities.dart';
 import '../repositories/base_auction_repository.dart';
 
-class UploadAuctionProductUseCase extends BaseUseCase<int, Params> {
+class UploadAuctionProductUseCase extends BaseUseCase<String, Params> {
   final BaseAuctionRepository baseAuctionRepository;
 
   UploadAuctionProductUseCase(this.baseAuctionRepository);
 
   @override
-  Future<Either<Failure, int>> call(Params params) {
+  Future<Either<Failure, String>> call(Params params) {
     return baseAuctionRepository.uploadAuctionProduct(
         params.auctionEntities, params.userToken);
   }
