@@ -7,10 +7,10 @@ const {emitBidAuction} = require("../socket");
 exports.createAuction = async (req, res, next) => {
     try {
         const auctionData = req.body;
-        //  const { error } = validateAuctionData(auctionData);
-        // if (error) {
-        //     errors.validationError(error);
-        // }
+        const { error } = validateAuctionData(auctionData);
+        if (error) {
+            errors.validationError(error);
+        }
         const result = await db.createAuction(
             auctionData,
             req.user.id,
