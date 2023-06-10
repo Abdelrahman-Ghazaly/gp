@@ -5,32 +5,93 @@ import 'package:flutter_swiper_view/flutter_swiper_view.dart';
 import 'package:go_router/go_router.dart';
 import 'package:gp_flutter/features/auction/presentation/bloc/bid_auction_bloc/bloc/bid_auction_bloc_bloc.dart'
     as bid_auction;
-import 'package:gp_flutter/features/authentication/presentation/screens/log_in_screen.dart';
+import 'package:socket_io_client/socket_io_client.dart' as io;
 
+import '../../../../core/app_constants/api_constants.dart';
 import '../../../../core/app_constants/app_colors.dart';
 import '../../../../core/utils/utilities.dart';
 import '../../../authentication/presentation/bloc/log_in_bloc/log_in_bloc.dart'
     as login_bloc;
+import '../bloc/get_all_auctions_bloc/all_auctions_bloc.dart' as all_auction;
 import '../bloc/get_auction_by_id/get_auction_by_id_bloc.dart';
 import '../widgets/price_container.dart';
 
-class AuctionDetailsScreen extends StatelessWidget {
+class AuctionDetailsScreen extends StatefulWidget {
   final String auctionId;
 
   const AuctionDetailsScreen({Key? key, required this.auctionId})
       : super(key: key);
 
   @override
+  State<AuctionDetailsScreen> createState() => _AuctionDetailsScreenState();
+}
+
+class _AuctionDetailsScreenState extends State<AuctionDetailsScreen> {
+  late io.Socket _socket;
+  Map<String, dynamic> newbid = {"": ""};
+  bool isWinner = false;
+  @override
+  void initState() {
+    _socket = io.io(
+      ApiConstants.socketUrl,
+      io.OptionBuilder().setTransports(
+        ['websocket'],
+      ).build(),
+    );
+    _connectSocket();
+    super.initState();
+  }
+
+  _connectSocket() {
+    _socket.on('connection', (data) => print('connected'));
+    _socket.on('bidAuction', ((data) {
+      print(data);
+      newbid = data;
+
+      setState(() {});
+    }));
+
+    _socket.onConnect((data) => print('Connection established'));
+    _socket.onConnectError((data) => print('Connect Error: $data'));
+  }
+
+  @override
+  void dispose() {
+    _socket.emit("disconnect", (_) => print('disconnected'));
+    _socket.onDisconnect((data) => print('Socket.IO server disconnected'));
+
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
+    final logInState = context.read<login_bloc.LogInBloc>().state;
+    if (newbid["winner_id"] != null) {
+      context
+          .read<all_auction.AllAuctionsBloc>()
+          .add(all_auction.GetAuctionProductsEvent());
+    }
+    if (logInState is login_bloc.Success) {
+      if (newbid["winner_id"] != null) {
+        if (newbid["winner_id"] == logInState.userEntity.id) {
+          isWinner = true;
+        }
+      }
+    }
     final width = Utilities.screenWidth;
     final height = Utilities.screenHeight;
     TextEditingController bidAmount = TextEditingController();
-    context.read<GetAuctionByIdBloc>().add(GetDataEvent(auctionId));
+    context.read<GetAuctionByIdBloc>().add(GetDataEvent(widget.auctionId));
     return BlocBuilder<GetAuctionByIdBloc, GetAuctionByIdState>(
       builder: (context, state) {
         if (state is Loading) {
           return const Center(child: CircularProgressIndicator());
         } else if (state is Loaded) {
+          if (logInState is login_bloc.Success) {
+            if (state.auctionData.winnerId == logInState.userEntity.id) {
+              isWinner = true;
+            }
+          }
           return Scaffold(
               resizeToAvoidBottomInset: false,
               body: Column(
@@ -85,7 +146,7 @@ class AuctionDetailsScreen extends StatelessWidget {
                                 ),
                               ],
                             ),
-                            Container(
+                            SizedBox(
                               width: width,
                               height: height * 0.37,
                               child: Swiper(
@@ -243,7 +304,10 @@ class AuctionDetailsScreen extends StatelessWidget {
                                       fontWeight: FontWeight.w900,
                                       fontSize: 22,
                                       color: Colors.white)),
-                              Text("${state.auctionData.currentPrice} USD",
+                              Text(
+                                  newbid["current_pid"] == null
+                                      ? "${state.auctionData.currentPrice} USD"
+                                      : "${newbid["current_pid"]} USD",
                                   style: const TextStyle(
                                       fontSize: 22, color: Colors.white))
                             ],
@@ -251,8 +315,6 @@ class AuctionDetailsScreen extends StatelessWidget {
                         ),
                         GestureDetector(
                           onTap: () {
-                            final logInState =
-                                context.read<login_bloc.LogInBloc>().state;
                             if (logInState is login_bloc.Success) {
                               showDialog(
                                 context: context,
@@ -293,7 +355,8 @@ class AuctionDetailsScreen extends StatelessWidget {
                                                           .BidAuctionBloc>()
                                                   .add(bid_auction
                                                       .BidAuctionEvent(
-                                                          auctionId: auctionId,
+                                                          auctionId:
+                                                              widget.auctionId,
                                                           bidAmount: int.parse(
                                                               bidAmount.text),
                                                           userToken: logInState
@@ -319,20 +382,35 @@ class AuctionDetailsScreen extends StatelessWidget {
                               return context.go('/login_screen');
                             }
                           },
-                          child: Container(
-                            height: height * 0.07,
-                            width: width * 0.4,
-                            decoration: BoxDecoration(
-                              color: const Color(0xfff9f08d),
-                              borderRadius: BorderRadius.circular(5),
-                            ),
-                            child: const Center(
-                              child: Text("Place a bid",
-                                  style: TextStyle(
-                                      fontSize: 22,
-                                      fontWeight: FontWeight.bold)),
-                            ),
-                          ),
+                          child: isWinner
+                              ? Container(
+                                  height: height * 0.07,
+                                  width: width * 0.4,
+                                  decoration: BoxDecoration(
+                                    color: const Color(0xfff9f08d),
+                                    borderRadius: BorderRadius.circular(5),
+                                  ),
+                                  child: const Center(
+                                    child: Text("You are winner",
+                                        style: TextStyle(
+                                            fontSize: 22,
+                                            fontWeight: FontWeight.bold)),
+                                  ),
+                                )
+                              : Container(
+                                  height: height * 0.07,
+                                  width: width * 0.4,
+                                  decoration: BoxDecoration(
+                                    color: const Color(0xfff9f08d),
+                                    borderRadius: BorderRadius.circular(5),
+                                  ),
+                                  child: const Center(
+                                    child: Text("Place a bid",
+                                        style: TextStyle(
+                                            fontSize: 22,
+                                            fontWeight: FontWeight.bold)),
+                                  ),
+                                ),
                         )
                       ],
                     ),
