@@ -3,7 +3,7 @@ import '../../features/e_commerce/domain/entities/query_entity.dart';
 class ApiConstants {
   //* Auction End Points
 
-  static const String auctionBaseUrl = 'http://192.168.1.2:5000/auction';
+  static const String auctionBaseUrl = 'http://10.0.2.2:5000/auction';
 
   static const String auctionViewProductPath = '$auctionBaseUrl/view';
   static const String auctionUploadProductPath = '$auctionBaseUrl/upload';
