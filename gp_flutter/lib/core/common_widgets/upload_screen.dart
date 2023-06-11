@@ -64,6 +64,7 @@ class _UploadScreenState extends State<UploadScreen> {
                   isAccepted: false,
                   owner: null,
                   userId: '',
+                  winnerId: '',
                 ),
                 userToken: logInState.userEntity.accessToken!,
               ),

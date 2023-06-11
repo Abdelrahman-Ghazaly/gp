@@ -1,0 +1,28 @@
+.sidebar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 70px;
+  max-width: 100px;
+  height: 90%;
+  margin-top: 40px;
+  background-color: #f1f1f1;
+  /* padding: 20px; */
+ min-height: 80vh;
+ border-radius: 8px;
+ margin-left: 20px;
+  
+}
+.sidebar-wrapper{
+  /* max-height: ; */
+  height: 100%;
+}
+@media (max-width: 767px) {
+  .sidebar {
+    position: static;
+    width: 100%;
+    height: auto;
+    margin-bottom: 20px;
+    box-shadow: none;
+  }
+}

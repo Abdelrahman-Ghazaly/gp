@@ -14,6 +14,7 @@ class AuctionProductModel extends AuctionEntities {
     required super.owner,
     required super.isAccepted,
     super.rawImage,
+    required super.winnerId,
   });
 
   factory AuctionProductModel.fromJson(Map<String, dynamic> json) {
@@ -35,6 +36,7 @@ class AuctionProductModel extends AuctionEntities {
       auctionId: json['_id'] ?? "",
       owner: ignor ? null : OwnerModel.fromJson(json['owner_id']),
       isAccepted: json['is_accepted'] ?? false,
+      winnerId: json["winner_id"] ?? "",
     );
   }
 
