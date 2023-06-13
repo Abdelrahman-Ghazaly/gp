@@ -16,7 +16,7 @@ const arrayOfCategories = [
   },
   {
     id : 3,
-    name : "lamp",
+    name : "accessories",
   },
   {
     id : 4,
@@ -39,7 +39,7 @@ const HomeProductsSlider = ({ match }) => {
   const scrollRef = useRef(null);
   const getAllObjestInOneArray = Object.values(data)
   const mixedData = [].concat(...getAllObjestInOneArray)
-
+  console.log(data)
   const CategoryTitleStyle = {
     color: "#20284f",
     padding: "18px 5px",
