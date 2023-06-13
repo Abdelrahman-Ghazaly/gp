@@ -41,8 +41,15 @@ const roboflowRequest = async (image) => {
                 headers,
             }
         );
-        const data = await response.data;
-        return data["predictions"];
+        const data = await response.data["predictions"];
+        let predictions = [];
+        for (let index = 0; index < data.length ; index++) {
+            predict = data[index];
+            if (predict["class"] && predict["confidence"]) {
+                predictions.push(predict);
+            }
+        }
+        return predictions;
     } catch (err) {
         throw err;
     }
@@ -51,9 +58,9 @@ const roboflowRequest = async (image) => {
 const getImageCategory = async (image) => {
     try {
         const predictions = await roboflowRequest(image);
-        !predictions[0]["class"] && errors.validationError("Image isn't Clear");
+        !predictions[0] && errors.validationError("Image isn't Clear");
         let prediction = predictions[0]["class"];
-        for (let index = 0; index < predictions.length - 1; index++) {
+        for (let index = 0; index < predictions.length ; index++) {
             const predict = predictions[index];
             if (predictions.length - 1 == index) {
                 break;
