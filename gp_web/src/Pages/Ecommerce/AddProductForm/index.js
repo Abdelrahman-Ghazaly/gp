@@ -147,7 +147,7 @@ const AddProductForm = () => {
                   <CurrencyPoundIcon />
                 </InputAdornment>
               ),
-              inputProps: { min: 0 },
+              inputProps: { min: 0 , max : 11 },
             }}
             {...register("price", {
               required: "Please Enter the Product's Price",

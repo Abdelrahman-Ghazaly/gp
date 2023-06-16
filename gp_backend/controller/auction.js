@@ -14,7 +14,7 @@ exports.createAuction = async (req, res, next) => {
         const result = await db.createAuction(
             auctionData,
             req.user.id,
-            req.imageURLs
+            req.imageURL
         );
         if (result) {
             res.status(201).json(result);

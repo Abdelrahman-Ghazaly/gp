@@ -27,7 +27,7 @@ function App() {
     }
   }, [dispatch]);
 
-  const userData = useSelector((state) => state.auth.userData);
+  const userData = useSelector((state) => state.auth.userToken);
   console.log(userData);
   return (
     <>

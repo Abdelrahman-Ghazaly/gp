@@ -40,9 +40,7 @@ flutter:
   uses-material-design: true
   assets:
     - assets/lottie_animations/
-    - assets/images/
-    - assets/images/banners/
-    - assets/icons/
+    
    
 
    
