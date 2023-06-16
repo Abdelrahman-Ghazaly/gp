@@ -167,7 +167,6 @@ class AuctionRemoteDataSource extends BaseAuctionRemoteDataSource {
 
   @override
   Future<String> deleteAuction(String userToken, String auctionId) async {
-    // TODO: implement deleteAuction
     throw UnimplementedError();
   }
 }
