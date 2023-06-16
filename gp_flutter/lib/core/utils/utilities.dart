@@ -3,10 +3,10 @@ import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
 
 class Utilities {
   static final double screenHeight =
-      MediaQueryData.fromWindow(WidgetsBinding.instance.window).size.height;
+      MediaQueryData.fromView(WidgetsBinding.instance.window).size.height;
 
   static final double screenWidth =
-      MediaQueryData.fromWindow(WidgetsBinding.instance.window).size.width;
+      MediaQueryData.fromView(WidgetsBinding.instance.window).size.width;
 
   pushAndReplace({required BuildContext context, required Widget screen}) {
     Future.delayed(
@@ -15,7 +15,7 @@ class Utilities {
         Navigator.pushReplacement(
           context,
           _MyRoute(
-            builder: (context) => screen,
+            builder: (BuildContext context) => screen,
           ),
         );
       },

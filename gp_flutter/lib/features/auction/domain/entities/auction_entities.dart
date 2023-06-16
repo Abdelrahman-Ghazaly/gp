@@ -1,20 +1,6 @@
 import 'package:equatable/equatable.dart';
 
 class AuctionEntities extends Equatable {
-  final String userId;
-  final String title;
-  final String description;
-  final List<String> image;
-  final String category;
-  final String duration;
-  final String auctionId;
-  final OwnerEntities? owner;
-  final double startPrice;
-  final double currentPrice;
-  final bool isAccepted;
-  final dynamic rawImage;
-  final String winnerId;
-
   const AuctionEntities(
       {required this.auctionId,
       required this.owner,
@@ -29,6 +15,19 @@ class AuctionEntities extends Equatable {
       required this.startPrice,
       required this.winnerId,
       this.rawImage});
+  final String userId;
+  final String title;
+  final String description;
+  final List<String> image;
+  final String category;
+  final String duration;
+  final String auctionId;
+  final OwnerEntities? owner;
+  final double startPrice;
+  final double currentPrice;
+  final bool isAccepted;
+  final dynamic rawImage;
+  final String winnerId;
 
   @override
   List<Object> get props => [
@@ -48,8 +47,7 @@ class AuctionEntities extends Equatable {
 }
 
 class OwnerEntities {
+  OwnerEntities({required this.id, required this.name});
   final String id;
   final String name;
-
-  OwnerEntities({required this.id, required this.name});
 }

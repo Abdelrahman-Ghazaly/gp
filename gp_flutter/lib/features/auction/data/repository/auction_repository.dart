@@ -1,4 +1,5 @@
 import 'package:dartz/dartz.dart';
+import 'package:gp_flutter/features/auction/domain/entities/search_query_entity.dart';
 
 import '../../../../core/error/exceptions.dart';
 import '../../../../core/error/failure.dart';
@@ -7,14 +8,13 @@ import '../../domain/repositories/base_auction_repository.dart';
 import '../data_source/auction_reomte_data_source.dart';
 
 class AuctionRepository extends BaseAuctionRepository {
-  final BaseAuctionRemoteDataSource baseAuctionRemoteDataSource;
-
   AuctionRepository(this.baseAuctionRemoteDataSource);
+  final BaseAuctionRemoteDataSource baseAuctionRemoteDataSource;
 
   @override
   Future<Either<Failure, String>> deleteAuction(
       String userToken, String productId) async {
-    final result =
+    final String result =
         await baseAuctionRemoteDataSource.deleteAuction(userToken, productId);
     try {
       return Right(result);
@@ -25,7 +25,8 @@ class AuctionRepository extends BaseAuctionRepository {
 
   @override
   Future<Either<Failure, List<AuctionEntities>>> getAuctionProducts() async {
-    final result = await baseAuctionRemoteDataSource.getAuctionProducts();
+    final List<AuctionEntities> result =
+        await baseAuctionRemoteDataSource.getAuctionProducts();
     try {
       return Right(result);
     } on ServerException catch (failure) {
@@ -35,8 +36,8 @@ class AuctionRepository extends BaseAuctionRepository {
 
   @override
   Future<Either<Failure, List<AuctionEntities>>> getAuctionProductsSearchResult(
-      searchQueryEntity) async {
-    final result = await baseAuctionRemoteDataSource
+      SearchQueryEntity searchQueryEntity) async {
+    final List<AuctionEntities> result = await baseAuctionRemoteDataSource
         .getAuctionProductsSearchResult(searchQueryEntity);
     try {
       return Right(result);
@@ -48,8 +49,8 @@ class AuctionRepository extends BaseAuctionRepository {
   @override
   Future<Either<Failure, String>> uploadAuctionProduct(
       AuctionEntities auctionProduct, String userToken) async {
-    final result = await baseAuctionRemoteDataSource.uploadAuctionProduct(
-        auctionProduct, userToken);
+    final String result = await baseAuctionRemoteDataSource
+        .uploadAuctionProduct(auctionProduct, userToken);
     try {
       return Right(result);
     } on ServerException catch (failure) {
@@ -60,7 +61,7 @@ class AuctionRepository extends BaseAuctionRepository {
   @override
   Future<Either<Failure, AuctionEntities>> viewAuctionData(
       String auctionId) async {
-    final result =
+    final AuctionEntities result =
         await baseAuctionRemoteDataSource.viewAuctionDataById(auctionId);
 
     try {
@@ -76,7 +77,7 @@ class AuctionRepository extends BaseAuctionRepository {
     required String auctionId,
     required int pidAmount,
   }) async {
-    final result = await baseAuctionRemoteDataSource.bidAuction(
+    final String result = await baseAuctionRemoteDataSource.bidAuction(
         auctionId: auctionId, bidAmount: pidAmount, userToken: userToken);
 
     try {

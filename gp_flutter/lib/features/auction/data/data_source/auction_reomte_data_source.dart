@@ -30,9 +30,8 @@ abstract class BaseAuctionRemoteDataSource {
 }
 
 class AuctionRemoteDataSource extends BaseAuctionRemoteDataSource {
-  final Dio dio;
-
   AuctionRemoteDataSource({required this.dio});
+  final Dio dio;
 
   @override
   Future<List<AuctionEntities>> getAuctionProducts() async {
@@ -68,7 +67,7 @@ class AuctionRemoteDataSource extends BaseAuctionRemoteDataSource {
 
   @override
   Future<List<AuctionEntities>> getAuctionProductsSearchResult(
-      searchQueryEntity) async {
+      SearchQueryEntity searchQueryEntity) async {
     Response response = await dio.get(
       ApiConstants.viewAuctionSearchDataPath(
           searchQueryEntity.category,
@@ -100,7 +99,7 @@ class AuctionRemoteDataSource extends BaseAuctionRemoteDataSource {
       data: {"bidAmount": bidAmount},
       options: Options(
         followRedirects: false,
-        validateStatus: (status) {
+        validateStatus: (int? status) {
           return status! < 600;
         },
         headers: {
@@ -124,7 +123,7 @@ class AuctionRemoteDataSource extends BaseAuctionRemoteDataSource {
 
     File file = File(rawImage.path);
     final String imageType = file.path.split('.').last;
-    var finalFile = await MultipartFile.fromFile(
+    MultipartFile finalFile = await MultipartFile.fromFile(
       file.path,
       contentType: MediaType('image', imageType),
     );
@@ -144,7 +143,7 @@ class AuctionRemoteDataSource extends BaseAuctionRemoteDataSource {
       options: Options(
         method: 'POST',
         followRedirects: false,
-        validateStatus: (status) {
+        validateStatus: (int? status) {
           return status! < 600;
         },
         headers: {
