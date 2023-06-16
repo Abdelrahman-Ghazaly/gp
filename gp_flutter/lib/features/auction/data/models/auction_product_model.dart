@@ -25,18 +25,18 @@ class AuctionProductModel extends AuctionEntities {
       ignor = true;
     }
     return AuctionProductModel(
-      userId: json['userId'] ?? "",
-      title: json['title'] ?? "",
+      userId: json['userId'] ?? '',
+      title: json['title'] ?? '',
       currentPrice: json['current_pid'].toDouble() ?? 0,
-      description: json['description'] ?? "",
+      description: json['description'] ?? '',
       image: json['imgURL'].cast<String>() ?? [],
-      category: json['category'] ?? "",
-      duration: json['end_date'] ?? "",
+      category: json['category'] ?? '',
+      duration: json['end_date'] ?? '',
       startPrice: json['start_price'].toDouble() ?? 0,
-      auctionId: json['_id'] ?? "",
+      auctionId: json['_id'] ?? '',
       owner: ignor ? null : OwnerModel.fromJson(json['owner_id']),
       isAccepted: json['is_accepted'] ?? false,
-      winnerId: json["winner_id"] ?? "",
+      winnerId: json['winner_id'] ?? '',
     );
   }
 
@@ -54,8 +54,8 @@ class OwnerModel extends OwnerEntities {
 
   factory OwnerModel.fromJson(Map<String, dynamic> json) {
     return OwnerModel(
-      id: json['_id'] ?? "",
-      name: json['name'] ?? "",
+      id: json['_id'] ?? '',
+      name: json['name'] ?? '',
     );
   }
 }
