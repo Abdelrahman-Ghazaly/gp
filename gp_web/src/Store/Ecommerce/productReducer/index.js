@@ -5,7 +5,6 @@ export const uploadProduct = createAsyncThunk(
   async (item , thunkAPI) => {
     try {
         let userToken = thunkAPI.getState().auth.userToken;
-        console.log(userToken)
         console.log(item)
         const response = await fetch("http://localhost:5000/product/upload", {
           method: "POST",
