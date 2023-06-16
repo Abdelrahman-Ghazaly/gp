@@ -13,8 +13,8 @@ class AuctionScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final width = Utilities.screenWidth;
-    final height = Utilities.screenHeight;
+    final double width = Utilities.screenWidth;
+    final double height = Utilities.screenHeight;
     TextEditingController searchController = TextEditingController();
     return Scaffold(
       resizeToAvoidBottomInset: false,
@@ -33,7 +33,7 @@ class AuctionScreen extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                const Text("Best Auction Market",
+                const Text('Best Auction Market',
                     style: TextStyle(
                       fontSize: 30,
                       fontWeight: FontWeight.bold,
@@ -58,9 +58,9 @@ class AuctionScreen extends StatelessWidget {
                                   GetAuctionProductSearchEvent(
                                     searchQueryEntity: SearchQueryEntity(
                                       name: searchController.text,
-                                      category: "",
-                                      maxPrice: "",
-                                      minPrice: "",
+                                      category: '',
+                                      maxPrice: '',
+                                      minPrice: '',
                                     ),
                                   ),
                                 );
@@ -72,7 +72,7 @@ class AuctionScreen extends StatelessWidget {
                       Padding(
                         padding: const EdgeInsets.all(8.0),
                         child: Hero(
-                          tag: "Search",
+                          tag: 'Search',
                           child: Material(
                             type: MaterialType.transparency,
                             child: SizedBox(
@@ -89,7 +89,7 @@ class AuctionScreen extends StatelessWidget {
                                         fontWeight: FontWeight.normal,
                                         color: AppColors.appBlackColor),
                                 decoration: InputDecoration(
-                                  labelText: "Search",
+                                  labelText: 'Search',
                                   border: InputBorder.none,
                                   labelStyle: TextStyle(
                                     color: AppColors.appBlackColor
