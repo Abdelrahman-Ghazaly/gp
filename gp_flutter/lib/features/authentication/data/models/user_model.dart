@@ -1,6 +1,16 @@
 import '../../domain/entities/user_entity.dart';
 
 class UserModel extends UserEntity {
+  factory UserModel.fromMap(Map<String, dynamic> map) {
+    return UserModel(
+      id: map['_id'] ?? '',
+      accessToken: map['accessToken'] ?? '',
+      name: map['name'] ?? '',
+      email: map['email'] ?? '',
+      address: map['address'] ?? '',
+      phoneNumber: map['phone'] ?? '',
+    );
+  }
   const UserModel({
     super.id,
     super.accessToken,
@@ -12,7 +22,7 @@ class UserModel extends UserEntity {
   });
 
   Map<String, dynamic> toMap() {
-    return {
+    return <String, dynamic>{
       'name': name,
       'email': email,
       'password': password,
@@ -20,17 +30,6 @@ class UserModel extends UserEntity {
       'address': address,
       'phone': phoneNumber,
     };
-  }
-
-  factory UserModel.fromMap(Map<String, dynamic> map) {
-    return UserModel(
-      id: map['_id'] ?? '',
-      accessToken: map['accessToken'] ?? '',
-      name: map['name'] ?? '',
-      email: map['email'] ?? '',
-      address: map['address'] ?? '',
-      phoneNumber: map['phone'] ?? '',
-    );
   }
 
   @override
